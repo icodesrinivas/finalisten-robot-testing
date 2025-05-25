@@ -3,11 +3,11 @@ Library    SeleniumLibrary
 
 *** Variables ***
 ${BROWSER}        chrome
-${URL}           https://preproderp.finalisten.se/login/
+${URL}           https://erp.finalisten.se/login/
 ${USERNAME}      erpadmin@finalisten.se
 ${PASSWORD}      Djangocrm123
 ${LOGIN_BUTTON}  xpath=//button[@type='submit' and contains(@class,'btn-primary') and contains(@class,'btn-block')]
-${HOMEPAGE_URL}  https://preproderp.finalisten.se/homepage/
+${HOMEPAGE_URL}  https://erp.finalisten.se/homepage/
 
 *** Keywords ***
 Open And Login

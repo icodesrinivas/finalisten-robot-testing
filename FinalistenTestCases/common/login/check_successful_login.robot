@@ -3,12 +3,12 @@ Library  SeleniumLibrary
 
 *** Variables ***
 ${BROWSER}        chrome
-${URL}           https://preproderp.finalisten.se/login/
+${URL}           https://erp.finalisten.se/login/
 ${USERNAME}      erpadmin@finalisten.se
 ${PASSWORD}      Djangocrm123
 ${LOGIN_BUTTON}  xpath=//button[@type='submit' and contains(@class,'btn-primary') and contains(@class,'btn-block')]
 ${PRODUCTION_LINK}  xpath=//a[@class='nav-link dropdown-toggle' and @role='button' and @data-toggle='dropdown' and @id='production']
-${HOMEPAGE_URL}  https://preproderp.finalisten.se/homepage/
+${HOMEPAGE_URL}  https://erp.finalisten.se/homepage/
 
 *** Test Cases ***
 Login And Verify Production Link
