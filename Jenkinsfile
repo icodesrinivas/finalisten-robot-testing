@@ -50,7 +50,7 @@ pipeline {
         always {
             // Clean up previous results and archive new ones
             archiveArtifacts artifacts: 'results/**/*', allowEmptyArchive: true
-            junit '*-results.xml'
+            junit 'results/**/*.xml'
         }
     }
 }
