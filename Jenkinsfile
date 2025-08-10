@@ -18,11 +18,11 @@ pipeline {
                 script {
                     // It is a good practice to use a relative path
                     // In Jenkins workspace the project root is the root of the repository
-                    sh '''
+                    sh """
                         echo "Running test case: ${params.TEST_CASE_FILE}"
                         source dsaenv/bin/activate
                         robot "${params.TEST_CASE_FILE}"
-                    '''
+                    """
                 }
             }
         }
