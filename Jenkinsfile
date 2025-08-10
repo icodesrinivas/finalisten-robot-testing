@@ -49,51 +49,25 @@ pipeline {
 
                 def testResults = currentBuild.rawBuild.getAction(hudson.tasks.test.AbstractTestResultAction.class)?.result
 
-                def subject = "Jenkins Pipeline Build ${currentBuild.fullDisplayName} - ${currentBuild.result}"
-                def body = """
-                    <p>Build Status: <b>${currentBuild.result}</b></p>
-                    <p>Build URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-                    <p>Test Results Summary:</p>
-                    <table border="1" style="border-collapse: collapse;">
-                        <tr>
-                            <th>Total Tests</th>
-                            <th>Passed</th>
-                            <th>Failed</th>
-                        </tr>
-                        <tr>
-                            <td>${testResults?.totalCount ?: 0}</td>
-                            <td>${testResults?.passCount ?: 0}</td>
-                            <td>${testResults?.failCount ?: 0}</td>
-                        </tr>
-                    </table>
-                """
+                def reportContent = "Test Execution Report\n"
+                reportContent += "---------------------\n"
+                reportContent += "Total Test Cases: ${testResults?.totalCount ?: 0}\n"
+                reportContent += "Passed Test Cases: ${testResults?.passCount ?: 0}\n"
+                reportContent += "Failed Test Cases: ${testResults?.failCount ?: 0}\n"
 
                 if (testResults?.failCount > 0) {
-                    body += """
-                        <p>Failed Test Cases:</p>
-                        <table border="1" style="border-collapse: collapse;">
-                            <tr>
-                                <th>Test Name</th>
-                                <th>Error Message</th>
-                            </tr>
-                    """
+                    reportContent += "\nFailed Test Cases Details:\n"
                     testResults.failedTests.each { test ->
-                        body += """
-                            <tr>
-                                <td>${test.name}</td>
-                                <td>${test.errorDetails ?: 'No error details available'}</td>
-                            </tr>
-                        """
+                        reportContent += "- ${test.name} (Error: ${test.errorDetails ?: 'No error details available'})\n"
                     }
-                    body += "</table>"
+                } else {
+                    reportContent += "\nAll tests passed!\n"
                 }
 
-                emailext (
-                    to: 'srinivas8862@gmail.com',
-                    subject: subject,
-                    body: body,
-                    mimeType: 'text/html'
-                )
+                def timestamp = new Date().format('yyyyMMdd_HHmmss')
+                def fileName = "test_report_${timestamp}.txt"
+
+                writeFile file: fileName, text: reportContent
             }
         }
     }
