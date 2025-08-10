@@ -25,16 +25,22 @@ pipeline {
         stage('Run Robot Tests Sequentially') {
             steps {
                 script {
-                    def filePath = 'FinalistenTestCases/contact/open_contact_create.robot'
-                    def fileName = filePath.split('/').last()
-                    def suiteName = fileName.take(fileName.lastIndexOf('.'))
+                    // Use a shell command to find the test files, excluding __init__.robot
+                    def testFiles = sh(script: '''find FinalistenTestCases -name '*.robot' -not -name '__init__.robot' -not -path '*/keywords/*' ''', returnStdout: true).trim().split('\n')
 
-                    sh """
-                        # Activate the virtual environment for each test run
-                        source venv/bin/activate
-                        echo "Running single test case: ${filePath}"
-                        robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--window-size=1920,1080')" --name "${suiteName}" --outputdir "results/${suiteName}" --xunit "${fileName}-results.xml" "${filePath}"
-                    """
+                    // Loop through each test file path and execute it
+                    for (filePath in testFiles) {
+                        // Extract file name and suite name from the path for reporting
+                        def fileName = filePath.split('/').last()
+                        def suiteName = fileName.take(fileName.lastIndexOf('.'))
+
+                        sh """
+                            # Activate the virtual environment for each test run
+                            source venv/bin/activate
+                            echo "Running test case: ${filePath}"
+                            robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--window-size=1920,1080')" --name "${suiteName}" --outputdir "results/${suiteName}" --xunit "${fileName}-results.xml" "${filePath}"
+                        """
+                    }
                 }
             }
         }
