@@ -35,8 +35,10 @@ pipeline {
 
     post {
         always {
-            // This publishes the robot framework results after every run
-            robot 'output.xml'
+            script {
+                // This publishes the robot framework results after every run
+                robot 'output.xml'
+            }
         }
     }
 }
