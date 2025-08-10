@@ -47,6 +47,8 @@ pipeline {
                 archiveArtifacts artifacts: 'results/**/*', allowEmptyArchive: true
                 junit 'results/**/*.xml'
 
+                def testResults = currentBuild.rawBuild.getAction(hudson.tasks.test.AbstractTestResultAction.class)?.result
+
                 def subject = "Jenkins Pipeline Build ${currentBuild.fullDisplayName} - ${currentBuild.result}"
                 def body = """
                     <p>Build Status: <b>${currentBuild.result}</b></p>
@@ -59,14 +61,14 @@ pipeline {
                             <th>Failed</th>
                         </tr>
                         <tr>
-                            <td>${currentBuild.testResults.totalCount}</td>
-                            <td>${currentBuild.testResults.passCount}</td>
-                            <td>${currentBuild.testResults.failCount}</td>
+                            <td>${testResults?.totalCount ?: 0}</td>
+                            <td>${testResults?.passCount ?: 0}</td>
+                            <td>${testResults?.failCount ?: 0}</td>
                         </tr>
                     </table>
                 """
 
-                if (currentBuild.testResults.failCount > 0) {
+                if (testResults?.failCount > 0) {
                     body += """
                         <p>Failed Test Cases:</p>
                         <table border="1" style="border-collapse: collapse;">
@@ -75,7 +77,7 @@ pipeline {
                                 <th>Error Message</th>
                             </tr>
                     """
-                    currentBuild.testResults.failedTests.each { test ->
+                    testResults.failedTests.each { test ->
                         body += """
                             <tr>
                                 <td>${test.name}</td>
