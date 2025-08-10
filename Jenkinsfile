@@ -26,7 +26,7 @@ pipeline {
 
                         # Run the test
                         echo "Running test case: ${params.TEST_CASE_FILE}"
-                        robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--window-size=1920,1080')" "${params.TEST_CASE_FILE}"
+                        robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--window-size=1920,1080')" --xunit junit_results.xml "${params.TEST_CASE_FILE}"
                     """
                 }
             }
@@ -35,10 +35,8 @@ pipeline {
 
     post {
         always {
-            script {
-                // This publishes the robot framework results after every run
-                robot 'output.xml'
-            }
+            // Publish test results in JUnit format
+            junit 'junit_results.xml'
         }
     }
 }
