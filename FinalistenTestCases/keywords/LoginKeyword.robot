@@ -13,7 +13,7 @@ ${HOMEPAGE_URL}  https://erp.finalisten.se/homepage/
 
 *** Keywords ***
 Open And Login
-    Open Browser    ${URL}    ${BROWSER}    headlesschrome
+    Open Browser    ${URL}    ${BROWSER}    options=${CHROME_OPTIONS}
     Maximize Browser Window
     Handle SSL Warning
     Input Text    xpath=//input[@name='username']    ${USERNAME}

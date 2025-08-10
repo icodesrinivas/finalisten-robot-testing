@@ -26,7 +26,7 @@ pipeline {
 
                         # Run the test
                         echo "Running test case: ${params.TEST_CASE_FILE}"
-                        robot "${params.TEST_CASE_FILE}"
+                        robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--window-size=1920,1080')" "${params.TEST_CASE_FILE}"
                     """
                 }
             }
