@@ -13,8 +13,8 @@ Verify Product Register Create Page Opens Successfully
     Hover Over Register Menu
     Click On Product Register Menu
     Click On Product Register Add Button
-    Wait Until Page Contains    PRODUCT REGISTER    timeout=10s
-    Log To Console    "PRODUCT REGISTER text found. Create view opened successfully."
+    Wait Until Page Contains    SALES PRODUCT    timeout=10s
+    Log To Console    "SALES PRODUCT text found. Create view opened successfully."
     Close Browser
 
 *** Keywords ***

@@ -13,7 +13,6 @@ Verify Guest User List Opens Successfully
     Click On Guest User Menu
     Wait Until Page Contains    Filters    timeout=10s
     Log To Console    "Filters text found. Guest user list opened successfully."
-    Close Browser
 
 *** Keywords ***
 Hover Over Register Menu

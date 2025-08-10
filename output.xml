@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.9.2 on darwin)" generated="2025-08-10T13:55:51.026950" rpa="false" schemaversion="5">
+<suite id="s1" name="Verify Successful Login" source="/Users/sreesrini/PycharmProjects/finalistenRobotTesting/FinalistenTestCases/common/login/verify_successful_login.robot">
+<test id="s1-t1" name="Verify Successful Login" line="5">
+<kw name="Open And Login" owner="LoginKeyword">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-08-10T13:55:51.219293" level="INFO">Opening browser 'chrome' to base url 'https://erp.finalisten.se/login/'.</msg>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+<arg>headlesschrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-08-10T13:55:51.218972" elapsed="3.311471"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-08-10T13:55:54.534359" elapsed="1.432029"/>
+</kw>
+<kw name="Handle SSL Warning" owner="LoginKeyword">
+<kw name="Get WebElements" owner="SeleniumLibrary">
+<msg time="2025-08-10T13:55:55.985119" level="INFO">${advanced_button} = []</msg>
+<var>${advanced_button}</var>
+<arg>xpath=//button[contains(text(),'Advanced')]</arg>
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<status status="PASS" start="2025-08-10T13:55:55.968417" elapsed="0.016783"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>${advanced_button}</arg>
+<arg>Click Button</arg>
+<arg>xpath=//button[contains(text(),'Advanced')]</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-08-10T13:55:55.985478" elapsed="0.000247"/>
+</kw>
+<kw name="Get WebElements" owner="SeleniumLibrary">
+<msg time="2025-08-10T13:55:55.996305" level="INFO">${proceed_link} = []</msg>
+<var>${proceed_link}</var>
+<arg>xpath=//a[contains(text(),'Proceed')]</arg>
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<status status="PASS" start="2025-08-10T13:55:55.985897" elapsed="0.010472"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>${proceed_link}</arg>
+<arg>Click Element</arg>
+<arg>xpath=//a[contains(text(),'Proceed')]</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-08-10T13:55:55.996599" elapsed="0.000212"/>
+</kw>
+<status status="PASS" start="2025-08-10T13:55:55.967329" elapsed="0.029675"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-08-10T13:55:55.997527" level="INFO">Typing text 'erpadmin@finalisten.se' into text field 'xpath=//input[@name='username']'.</msg>
+<arg>xpath=//input[@name='username']</arg>
+<arg>${USERNAME}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-08-10T13:55:55.997215" elapsed="0.221516"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-08-10T13:55:56.219637" level="INFO">Typing text 'Djangocrm123' into text field 'xpath=//input[@name='password']'.</msg>
+<arg>xpath=//input[@name='password']</arg>
+<arg>${PASSWORD}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-08-10T13:55:56.219130" elapsed="0.090644"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-08-10T13:55:56.310374" level="INFO">Clicking button 'xpath=//button[@type='submit' and contains(@class,'btn-primary') and contains(@class,'btn-block')]'.</msg>
+<arg>${LOGIN_BUTTON}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-08-10T13:55:56.310056" elapsed="2.862022"/>
+</kw>
+<kw name="Wait Until Location Contains" owner="SeleniumLibrary">
+<arg>${HOMEPAGE_URL}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the current URL contains ``expected``.</doc>
+<status status="PASS" start="2025-08-10T13:55:59.172436" elapsed="0.006910"/>
+</kw>
+<status status="PASS" start="2025-08-10T13:55:51.217890" elapsed="7.961706"/>
+</kw>
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-08-10T13:55:59.186249" level="INFO">Page title is 'Finalisten ERP - Home Page'.</msg>
+<arg>Finalisten ERP - Home Page</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-08-10T13:55:59.180010" elapsed="0.006442"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>"Login successful."</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-08-10T13:55:59.186688" elapsed="0.000269"/>
+</kw>
+<status status="PASS" start="2025-08-10T13:55:51.217032" elapsed="7.970140"/>
+</test>
+<status status="PASS" start="2025-08-10T13:55:51.028756" elapsed="8.159237"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Verify Successful Login" id="s1" pass="1" fail="0" skip="0">Verify Successful Login</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

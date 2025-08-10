@@ -13,8 +13,8 @@ Verify Product Register Edit Page Opens Successfully
     Hover Over Register Menu
     Click On Product Register Menu
     Click On Product Register Edit Link
-    Wait Until Page Contains    PRODUCT REGISTER    timeout=10s
-    Log To Console    "PRODUCT REGISTER text found. Edit view opened successfully."
+    Wait Until Page Contains    SALES PRODUCT    timeout=10s
+    Log To Console    "SALES PRODUCT text found. Edit view opened successfully."
     Close Browser
 
 *** Keywords ***

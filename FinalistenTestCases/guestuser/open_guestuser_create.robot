@@ -15,7 +15,6 @@ Verify Guest User Create Page Opens Successfully
     Click On Add Guest User Button
     Wait Until Page Contains    PERSONAL DATA    timeout=10s
     Log To Console    "PERSONAL DATA found. Guest user create page opened successfully."
-    Close Browser
 
 *** Keywords ***
 Hover Over Register Menu

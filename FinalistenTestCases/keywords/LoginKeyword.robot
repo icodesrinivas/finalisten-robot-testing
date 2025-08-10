@@ -1,5 +1,7 @@
 *** Settings ***
 Library    SeleniumLibrary
+Library    OperatingSystem
+Library    OperatingSystem
 
 *** Variables ***
 ${BROWSER}        chrome
@@ -11,7 +13,7 @@ ${HOMEPAGE_URL}  https://erp.finalisten.se/homepage/
 
 *** Keywords ***
 Open And Login
-    Open Browser    ${URL}    ${BROWSER}
+    Open Browser    ${URL}    ${BROWSER}    headlesschrome
     Maximize Browser Window
     Handle SSL Warning
     Input Text    xpath=//input[@name='username']    ${USERNAME}
@@ -25,3 +27,9 @@ Handle SSL Warning
 
     ${proceed_link}=    Get WebElements    xpath=//a[contains(text(),'Proceed')]
     Run Keyword If    ${proceed_link}    Click Element    xpath=//a[contains(text(),'Proceed')]
+
+Close Browser
+    ${browsers}=    SeleniumLibrary.Get Browser Ids
+    IF    ${browsers}
+        SeleniumLibrary.Close All Browsers
+    END
