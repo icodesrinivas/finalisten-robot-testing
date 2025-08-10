@@ -13,14 +13,19 @@ pipeline {
             }
         }
 
-        stage('Run Robot Test') {
+        stage('Setup and Run Robot Test') {
             steps {
                 script {
-                    // It is a good practice to use a relative path
-                    // In Jenkins workspace the project root is the root of the repository
                     sh """
+                        # Create and activate a virtual environment
+                        python3 -m venv venv
+                        source venv/bin/activate
+
+                        # Install dependencies
+                        pip install -r requirements.txt
+
+                        # Run the test
                         echo "Running test case: ${params.TEST_CASE_FILE}"
-                        source dsaenv/bin/activate
                         robot "${params.TEST_CASE_FILE}"
                     """
                 }
