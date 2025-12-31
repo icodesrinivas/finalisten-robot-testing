@@ -10,6 +10,7 @@ ${USERNAME}      erpadmin@finalisten.se
 ${PASSWORD}      Djangocrm123
 ${LOGIN_BUTTON}  xpath=//button[@type='submit' and contains(@class,'btn-primary') and contains(@class,'btn-block')]
 ${HOMEPAGE_URL}  https://erp.finalisten.se/homepage/
+${CHROME_OPTIONS}    add_argument("--ignore-certificate-errors");add_argument("--disable-web-security");add_argument("--allow-running-insecure-content")
 
 *** Keywords ***
 Open And Login

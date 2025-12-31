@@ -1,0 +1,16 @@
+# Screenshots from test runs
+robot-results/*.png
+
+# Virtual environment
+fintest/
+
+# GEMINI documentation (local only)
+GEMINI.md
+
+# ChromeDriver downloads
+chromedriver-mac-x64-new.zip
+
+# Test output files (optional - uncomment if you don't want to track)
+# robot-results/output.xml
+# robot-results/log.html
+# robot-results/report.html
