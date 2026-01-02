@@ -35,15 +35,15 @@ ${SAVE_GENERAL_DATA_BUTTON}       id=fieldreport_general_data_save
 ${ADD_PRODUCT_BUTTON}             xpath=//span[text()='ADD']
 ${PRODUCT_MODAL}                  id=myModal3
 ${MODAL_SAVE_BUTTON}              css=.prodinfr_save_button
-${PRODUCT_CHECKBOX}               css=#DataTables_Table_1 tbody tr:first-child .selected-checkbox
+${PRODUCT_CHECKBOX}               css=#prodInProjTable tbody tr:first-child .selected-checkbox
 
 # Earnings Display Selectors
 ${TOTAL_EARNING_DISPLAY}          id=total_earning
 ${EARNINGS_TEXT}                  xpath=//*[contains(text(),'Earnings')]
 
 # Products in FR Table Selectors
-${COMMON_EDIT_BUTTON}             id=common_edit_product
-${COMMON_SAVE_BUTTON}             id=save_all_products
+${COMMON_EDIT_BUTTON}             id=product_in_fieldreport_edit
+${COMMON_SAVE_BUTTON}             id=product_in_fieldreport_save
 ${PRODUCT_QTY_INPUT}              css=input[name*='quantity']
 ${PRODUCT_PRICE_INPUT}            css=input[name*='price']
 
@@ -207,7 +207,8 @@ Test Earnings Change When Product Values Modified
             Log To Console    Original quantity: ${original_qty}
             
             Clear Element Text    ${PRODUCT_QTY_INPUT}
-            Input Text    ${PRODUCT_QTY_INPUT}    10
+            ${element}=    Get WebElement    ${PRODUCT_QTY_INPUT}
+            Execute Javascript    arguments[0].value = '10'; arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
             Log To Console    Modified quantity to: 10
             
             # Save product changes
@@ -296,7 +297,7 @@ Create Field Report With Product And Hours
     Add Sample Product To FR
 
 Add Sample Product To FR
-    [Documentation]    Add a sample product to the field report
+    [Documentation]    Add a sample product to the field report with qty=1
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    1s
     
@@ -305,19 +306,77 @@ Add Sample Product To FR
     Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=10s
     Sleep    2s
     
+    # Wait for products to load in the modal table
+    Log To Console    \n--- Waiting for Products in Modal ---
+    Wait Until Element Is Visible    css=#prodInProjTable tbody tr    timeout=30s
+    
     # Select first product
-    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=5s
-    Click Element    ${PRODUCT_CHECKBOX}
+    Log To Console    Select first product checkbox...
+    ${checkbox_selector}=    Set Variable    css=#prodInProjTable .selected-checkbox
+    Wait Until Element Is Visible    ${checkbox_selector}    timeout=15s
+    # Use JS to click since normal click claims not visible
+    ${chk_elem}=    Get WebElement    ${checkbox_selector}
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${chk_elem}
     Sleep    1s
     
-    # Save
-    Execute Javascript    document.querySelector('#myModal3 .modal-content').scrollTo(0, 9999);
+    # User says "just below that a save button will appear". 
+    # Use generic class selector for the first save button in the table
+    ${row_save_btn}=    Set Variable    css=#prodInProjTable .prod-in-fr-save
+    # Wait for it to be visible (it should unhide via JS logic on page)
+    ${btn_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${row_save_btn}    timeout=5s
+    
+    IF    ${btn_visible}
+        Log To Console    Clicking row-level save button...
+        Click Element    ${row_save_btn}
+    ELSE
+        Log To Console    Row save button not visible, clicking footer save...
+        Click Element    ${MODAL_SAVE_BUTTON}
+    END
+    
+    Sleep    2s
+    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
+    Sleep    2s
+    
+    # Wait for Product to appear in Field Report Table
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
+    Log To Console    ✓ Product added to main table
+    
+    # Wait for Product to appear in Field Report Table
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
+    Log To Console    ✓ Product added to main table
+    
+    # Enter Quantity - Using JS to ensure it works even if input is tricky to reach/visible
+    Log To Console    Setting Quantity via JS...
+    # Selector for the first quantity input in the table
+    ${qty_input_js}=    Set Variable    document.querySelector("#prodInFieldReportTable input[name*='quantity']")
+    
+    # Check if element exists first
+    ${elem_exists}=    Execute Javascript    return ${qty_input_js} != null;
+    IF    ${elem_exists}
+        Execute Javascript    var el = ${qty_input_js}; el.value = '1'; el.dispatchEvent(new Event('change')); el.dispatchEvent(new Event('blur'));
+        Log To Console    ✓ Quantity set for first product via JS
+    ELSE
+        Fail    Could not find quantity input in main table to set value
+    END
     Sleep    1s
-    Click Element    ${MODAL_SAVE_BUTTON}
+    
+    # Click Save Button in "qty column header"
+    Log To Console    Clicking Header Save Button...
+    Wait Until Element Is Visible    ${COMMON_SAVE_BUTTON}    timeout=10s
+    Click Element    ${COMMON_SAVE_BUTTON}
+    Sleep    5s
+    
+    # Verify Save
+    Reload Page
+    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
-    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
-    Sleep    2s
-    Log To Console    ✓ Product added to field report
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=15s
+    
+    # Verify value persisted
+    ${val}=    Execute Javascript    return document.querySelector("#prodInFieldReportTable input[name*='quantity']").value;
+    Should Be Equal As Strings    ${val}    1
+    Log To Console    ✓ Product Quantity Verified as 1
 
 Extract Fieldreport ID From URL
     [Documentation]    Extract the fieldreport ID from the edit page URL

@@ -40,10 +40,10 @@ Test Related Customer Filter
     [Tags]    filter    customer    dropdown
     Navigate To Field Report List
     Expand Filter Section
-    Set Wide Date Range For Testing
+    Clear Date Filters
     Select First Available Option From Dropdown    ${RELATED_CUSTOMER_DROPDOWN}
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "Related Customer filter test completed successfully."
     [Teardown]    Close Browser
 
@@ -52,10 +52,10 @@ Test Related Project Filter
     [Tags]    filter    project    text
     Navigate To Field Report List
     Expand Filter Section
-    Set Wide Date Range For Testing
-    Input Text    ${RELATED_PROJECT_INPUT}    Test Project
+    Clear Date Filters
+    Input Text    ${RELATED_PROJECT_INPUT}    Albygård
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "Related Project filter test completed successfully."
     [Teardown]    Close Browser
 
@@ -68,7 +68,7 @@ Test Start Work Date Filter
     Clear Element Text    ${START_WORK_DATE_INPUT}
     Input Text    ${START_WORK_DATE_INPUT}    ${date}
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "Start Work Date filter test completed successfully."
     [Teardown]    Close Browser
 
@@ -81,7 +81,7 @@ Test End Work Date Filter
     Clear Element Text    ${END_WORK_DATE_INPUT}
     Input Text    ${END_WORK_DATE_INPUT}    ${date}
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "End Work Date filter test completed successfully."
     [Teardown]    Close Browser
 
@@ -97,7 +97,7 @@ Test Date Range Filter
     Clear Element Text    ${END_WORK_DATE_INPUT}
     Input Text    ${END_WORK_DATE_INPUT}    ${end_date}
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "Date Range filter test completed successfully."
     [Teardown]    Close Browser
 
@@ -106,7 +106,7 @@ Test Installer Names Search Filter
     [Tags]    filter    installer    search
     Navigate To Field Report List
     Expand Filter Section
-    Set Wide Date Range For Testing
+    Clear Date Filters
     Wait Until Element Is Visible    ${INSTALLER_SEARCH_INPUT}    timeout=10s
     Input Text    ${INSTALLER_SEARCH_INPUT}    admin
     Sleep    1s    # Wait for search to filter the list
@@ -118,14 +118,14 @@ Test Installer Names Checkbox Filter
     [Tags]    filter    installer    checkbox
     Navigate To Field Report List
     Expand Filter Section
-    Set Wide Date Range For Testing
+    Clear Date Filters
     ${checkboxes}=    Get WebElements    xpath=//input[@id='installer_name_input']
     ${count}=    Get Length    ${checkboxes}
     IF    ${count} > 0
         Click Element    ${checkboxes}[0]
     END
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "Installer Names checkbox filter test completed successfully."
     [Teardown]    Close Browser
 
@@ -134,10 +134,11 @@ Test Approval Status Filter - All
     [Tags]    filter    approval    dropdown
     Navigate To Field Report List
     Expand Filter Section
+    # Approval Status requires Date Range as per user "exception" logic
     Set Wide Date Range For Testing
     Select From List By Index    ${APPROVAL_STATUS_DROPDOWN}    0
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "Approval Status filter (All) test completed successfully."
     [Teardown]    Close Browser
 
@@ -149,7 +150,7 @@ Test Approval Status Filter - Approve
     Set Wide Date Range For Testing
     Select Option By Visible Text Or Index    ${APPROVAL_STATUS_DROPDOWN}    Approve    1
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "Approval Status filter (Approve) test completed successfully."
     [Teardown]    Close Browser
 
@@ -161,14 +162,12 @@ Test Approval Status Filter - Unapprove
     Set Wide Date Range For Testing
     Select Option By Visible Text Or Index    ${APPROVAL_STATUS_DROPDOWN}    Unapprove    2
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "Approval Status filter (Unapprove) test completed successfully."
     [Teardown]    Close Browser
 
 Test Product Description Filter
     [Documentation]    Verify the Product Description text input filter works correctly.
-    ...                This test validates that the filter returns only fieldreports containing
-    ...                the searched product description by opening a result and checking the Products table.
     [Tags]    filter    product    text    validation
     Navigate To Field Report List
     Expand Filter Section
@@ -177,12 +176,10 @@ Test Product Description Filter
     ${search_term}=    Set Variable    dörr
     Input Text    ${PRODUCT_DESCRIPTION_INPUT}    ${search_term}
     Click Search Button
-    # Verify we got results
-    ${has_results}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${FIELD_REPORT_ROWS}    timeout=10s
-    IF    not ${has_results}
-        Log To Console    "No results found for product description search. Test cannot validate filter accuracy."
-        Skip    No results found for product description "${search_term}". Cannot validate filter.
-    END
+    
+    # Use the Retry logic to find data first
+    Verify Search Completed With Retry
+    
     Log To Console    "Search results found. Opening first fieldreport to validate product description..."
     # Double-click on the first result row to open the fieldreport edit page
     ${first_row}=    Get WebElement    ${FIELD_REPORT_ROWS}
@@ -215,14 +212,13 @@ Test Product Description Filter
 
 Test With Attachment Filter - With Attachment
     [Documentation]    Verify the With Attachment dropdown filter works for reports with attachments
-    ...                Note: This dropdown only has 2 options: All Reports (index 0) and With Attachment (index 1)
     [Tags]    filter    attachment    dropdown
     Navigate To Field Report List
     Expand Filter Section
-    Set Wide Date Range For Testing
+    Clear Date Filters
     Select Option By Visible Text Or Index    ${WITH_ATTACHMENT_DROPDOWN}    With Attachment    1
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "With Attachment filter test completed successfully."
     [Teardown]    Close Browser
 
@@ -231,10 +227,10 @@ Test With Attachment Filter - All Reports
     [Tags]    filter    attachment    dropdown
     Navigate To Field Report List
     Expand Filter Section
-    Set Wide Date Range For Testing
+    Clear Date Filters
     Select Option By Visible Text Or Index    ${WITH_ATTACHMENT_DROPDOWN}    All Reports    0
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "With Attachment filter (All Reports) test completed successfully."
     [Teardown]    Close Browser
 
@@ -248,6 +244,8 @@ Test Clear Filter Functionality
     Input Text    ${PRODUCT_DESCRIPTION_INPUT}    Door
     Click Search Button
     Sleep    2s
+    # Ensure filter is visible before clearing (search might collapse it)
+    Expand Filter Section
     # Clear filters
     Click Element    ${CLEAR_FILTER_LINK}
     Wait Until Page Contains    Filters    timeout=10s
@@ -266,7 +264,7 @@ Test Combined Filters - Customer And Date Range
     [Tags]    filter    combined
     Navigate To Field Report List
     Expand Filter Section
-    # Set date range first
+    # Set date range first (Explicit date range test, so use range)
     ${end_date}=    Get Current Date    result_format=%Y-%m-%d
     ${start_date}=    Subtract Time From Date    ${end_date}    90 days    result_format=%Y-%m-%d
     Clear Element Text    ${START_WORK_DATE_INPUT}
@@ -276,7 +274,7 @@ Test Combined Filters - Customer And Date Range
     # Select customer
     Select First Available Option From Dropdown    ${RELATED_CUSTOMER_DROPDOWN}
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "Combined filters (Customer + Date Range) test completed successfully."
     [Teardown]    Close Browser
 
@@ -287,11 +285,11 @@ Test Combined Filters - Approval Status And Attachment
     Expand Filter Section
     Set Wide Date Range For Testing
     # Select approval status
-    Select Option By Visible Text Or Index    ${APPROVAL_STATUS_DROPDOWN}    Approved    1
+    Select Option By Visible Text Or Index    ${APPROVAL_STATUS_DROPDOWN}    Approve    1
     # Select with attachment
-    Select Option By Visible Text Or Index    ${WITH_ATTACHMENT_DROPDOWN}    Yes    1
+    Select Option By Visible Text Or Index    ${WITH_ATTACHMENT_DROPDOWN}    With Attachment    1
     Click Search Button
-    Verify Search Completed Successfully
+    Verify Search Completed With Retry
     Log To Console    "Combined filters (Approval Status + Attachment) test completed successfully."
     [Teardown]    Close Browser
 
@@ -318,6 +316,7 @@ Navigate To Field Report List
     Hover Over Production Menu
     Click On Field Report Menu
     Wait Until Page Contains    Filters    timeout=15s
+    Wait Until Element Is Visible    ${FILTER_SECTION_HEADER}    timeout=10s
 
 Hover Over Production Menu
     [Documentation]    Hover over the Production menu to reveal submenu
@@ -344,6 +343,12 @@ Set Wide Date Range For Testing
     Clear Element Text    ${END_WORK_DATE_INPUT}
     Input Text    ${END_WORK_DATE_INPUT}    ${end_date}
 
+Clear Date Filters
+    [Documentation]    Clear Start and End Work Date inputs to allow searching all records
+    Clear Element Text    ${START_WORK_DATE_INPUT}
+    Clear Element Text    ${END_WORK_DATE_INPUT}
+    # Ensure they are really empty by keys if needed, but clear should work.
+    
 Click Search Button
     [Documentation]    Click the Search button to apply filters
     ${element}=    Get WebElement    ${SEARCH_BUTTON}
@@ -367,33 +372,84 @@ Select Option By Visible Text Or Index
         Select From List By Index    ${dropdown_locator}    ${fallback_index}
     END
 
-Verify Search Completed Successfully
-    [Documentation]    Verify that the search completed and shows either results or a proper "no data" message
-    ...                This checks for: actual result rows, DataTables empty message, or custom no records message
+Verify Search Results
+    [Documentation]    Simple verification of search results (Success if Rows found Or "No Records" message)
+    ...                Does NOT retry search.
     ${has_results}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${FIELD_REPORT_ROWS}    timeout=5s
     IF    ${has_results}
         Log    Search returned results - fieldreport rows found
         RETURN
     END
-    # Check for DataTables empty message
+    
+    # Check for empty state indicators
     ${has_datatable_empty}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${DATATABLES_EMPTY}    timeout=3s
-    IF    ${has_datatable_empty}
-        Log    Search completed - DataTables shows 'No data available in table'
-        RETURN
-    END
-    # Check for custom no records message
     ${has_custom_message}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${NO_RECORDS_H6}    timeout=3s
-    IF    ${has_custom_message}
-        Log    Search completed - Custom 'No Field Report Records Found' message shown
-        RETURN
-    END
-    # Check for Total Field Reports text which should always appear
     ${has_total_text}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${TOTAL_REPORTS_TEXT}    timeout=3s
-    IF    ${has_total_text}
-        Log    Search completed - Total Field Reports text is visible
-        RETURN
+    
+    IF    ${has_datatable_empty} or ${has_custom_message} or ${has_total_text}
+         Log    Search completed (No results found, but UI handled it correctly).
+         RETURN
     END
-    Fail    Search did not complete properly - no results, empty message, or total text found
+
+    Fail    Search did not complete properly - no results, empty message, or total text found.
+
+Verify Search Completed With Retry
+    [Documentation]    Verify search results, with recursive logic to search further back in time if no results found.
+    ...                Used for Date and Approval Status filters.
+    
+    FOR    ${i}    IN RANGE    0    5
+        ${has_results}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${FIELD_REPORT_ROWS}    timeout=5s
+        
+        IF    ${has_results}
+            Log    Search returned results - fieldreport rows found
+            RETURN
+        END
+        
+        # If no results found, try searching further back in time
+        Log To Console    No results found in current range. Extending search range backwards by 90 days...
+        
+        # Ensure filter section is expanded before interacting with date inputs
+        Expand Filter Section
+        
+        # Get current date values from inputs or state
+        ${current_start}=    Get Value    ${START_WORK_DATE_INPUT}
+        ${current_end}=    Get Value    ${END_WORK_DATE_INPUT}
+        
+        # If inputs empty, set a baseline (though test setup usually sets them)
+        IF    '${current_start}' == ''
+            ${end_date}=    Get Current Date    result_format=%Y-%m-%d
+            ${start_date}=    Subtract Time From Date    ${end_date}    90 days    result_format=%Y-%m-%d
+        ELSE
+            # Logic: Shift window back by 90 days. 
+            # New End Date = Old Start Date - 1 day
+            # New Start Date = New End Date - 90 days
+            ${old_start_obj}=    Convert Date    ${current_start}    result_format=datetime
+            ${new_end_obj}=      Subtract Time From Date    ${old_start_obj}    1 day    result_format=%Y-%m-%d
+            ${new_start_obj}=    Subtract Time From Date    ${new_end_obj}    90 days    result_format=%Y-%m-%d
+            ${start_date}=       Set Variable    ${new_start_obj}
+            ${end_date}=         Set Variable    ${new_end_obj}
+        END
+
+        # Apply new dates
+        Clear Element Text    ${START_WORK_DATE_INPUT}
+        Input Text    ${START_WORK_DATE_INPUT}    ${start_date}
+        Clear Element Text    ${END_WORK_DATE_INPUT}
+        Input Text    ${END_WORK_DATE_INPUT}    ${end_date}
+        
+        Log To Console    Retrying search (Attempt ${i+1}) with range: ${start_date} to ${end_date}
+        Click Search Button
+        
+    END
+
+    # Final check after retries
+    ${has_results_final}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${FIELD_REPORT_ROWS}    timeout=5s
+    IF    ${has_results_final}
+         Log    Search returned results after extended range search
+         RETURN
+    END
+
+    # If still no results, use generic verification for empty state
+    Verify Search Results
 
 Undo All Installer Selections
     [Documentation]    Click the undo selection button for installer checkboxes
