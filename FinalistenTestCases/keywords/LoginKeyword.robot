@@ -18,15 +18,15 @@ Open And Login
     Maximize Browser Window
     Set Selenium Implicit Wait    10s
     Set Selenium Timeout    30s
-    Sleep    2s
-    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=15s
+    Sleep    3s
     Handle SSL Warning
-    Wait Until Element Is Visible    xpath=//input[@name='username']    timeout=10s
+    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=20s
+    Wait Until Element Is Visible    xpath=//input[@name='username']    timeout=15s
     Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Wait Until Element Is Visible    xpath=//input[@name='password']    timeout=10s
+    Wait Until Element Is Visible    xpath=//input[@name='password']    timeout=15s
     Input Text    xpath=//input[@name='password']    ${PASSWORD}
     Click Button    ${LOGIN_BUTTON}
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
+    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=20s
     Sleep    5s
 
 Handle SSL Warning
