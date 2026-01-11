@@ -62,10 +62,8 @@ pipeline {
                 reportContent += "Failed Test Cases: ${testResults?.failCount ?: 0}\n"
 
                 if (testResults?.failCount > 0) {
-                    reportContent += "\nFailed Test Cases Details:\n"
-                    testResults.failedTests.each { test ->
-                        reportContent += "- ${test.name} (Error: ${test.errorDetails ?: 'No error details available'})\n"
-                    }
+                    reportContent += "\nPlease check the Jenkins build artifacts for detailed failure information.\n"
+                    reportContent += "View the Robot Framework HTML reports in the archived results.\n"
                 } else {
                     reportContent += "\nAll tests passed!\n"
                 }

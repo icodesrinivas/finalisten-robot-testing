@@ -27,5 +27,8 @@ Click On Quotation List Menu
     Click Element    ${QUOTATION_LIST_MENU}
 
 Click First Available Quotation Edit Link
-    Wait Until Element Is Visible    ${QUOTATION_EDIT_LINKS}    timeout=10s
+    Wait Until Element Is Visible    ${QUOTATION_EDIT_LINKS}    timeout=15s
+    Sleep    1s
+    Scroll Element Into View    ${QUOTATION_EDIT_LINKS}
+    Wait Until Element Is Enabled    ${QUOTATION_EDIT_LINKS}    timeout=5s
     Click Element    xpath=(//a[@class="open-quotation-edit"])[1]
