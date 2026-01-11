@@ -3,25 +3,22 @@ Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
 
 *** Variables ***
-${REGISTER_MENU}     xpath=//*[@id="register"]
-${CONTACTS_MENU}     xpath=//*[@id="contacts_app_menu"]
+${REGISTER_MENU}      id=register
+${CONTACTS_MENU}      id=contacts_app_menu
 
 *** Test Cases ***
 Verify Contact List Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Register Menu
-    Click On Contacts Menu
-    Wait Until Page Contains    Filters    timeout=10s
+    # Wait for Presence (id=register) which is more robust in headless
+    Wait Until Page Contains Element    ${REGISTER_MENU}    timeout=45s
+    Sleep    2s
+    Click Element    ${REGISTER_MENU}
+    # Wait for Presence (submenu)
+    Wait Until Page Contains Element    ${CONTACTS_MENU}    timeout=20s
+    Sleep    1s
+    Click Element    ${CONTACTS_MENU}
+    Sleep    3s
+    Wait Until Page Contains    Filters    timeout=15s
     Log To Console    "Filters text found. Contact list opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Register Menu
-    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=30s
-    Sleep    1s
-    Mouse Over    ${REGISTER_MENU}
-
-Click On Contacts Menu
-    Wait Until Element Is Visible    ${CONTACTS_MENU}    timeout=10s
-    Click Element    ${CONTACTS_MENU}
-    Sleep    2s

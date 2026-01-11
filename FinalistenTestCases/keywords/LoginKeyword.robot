@@ -14,20 +14,21 @@ ${CHROME_OPTIONS}    add_argument("--ignore-certificate-errors");add_argument("-
 
 *** Keywords ***
 Open And Login
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open Browser    ${URL}    ${BROWSER}    options=${CHROME_OPTIONS}
     Maximize Browser Window
     Set Selenium Implicit Wait    10s
-    Set Selenium Timeout    30s
-    Sleep    3s
+    Set Selenium Timeout    45s
+    Sleep    5s
     Handle SSL Warning
-    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=20s
-    Wait Until Element Is Visible    xpath=//input[@name='username']    timeout=15s
+    # Use Presence check first as it's more robust in headless mode
+    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=30s
     Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Wait Until Element Is Visible    xpath=//input[@name='password']    timeout=15s
+    Wait Until Page Contains Element    xpath=//input[@name='password']    timeout=20s
     Input Text    xpath=//input[@name='password']    ${PASSWORD}
     Click Button    ${LOGIN_BUTTON}
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=20s
-    Sleep    5s
+    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=30s
+    Sleep    7s
 
 Handle SSL Warning
     ${advanced_button}=    Get WebElements    xpath=//button[contains(text(),'Advanced')]

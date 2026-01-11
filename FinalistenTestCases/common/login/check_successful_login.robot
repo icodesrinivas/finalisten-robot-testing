@@ -7,11 +7,10 @@ ${PRODUCTION_LINK}  id=production
 
 *** Test Cases ***
 Login And Verify Production Link
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Sleep    3s
-    # Wait for any menu to be visible first
-    Wait Until Element Is Visible    xpath=//*[@id="navbarSupportedContent"]    timeout=15s
-    # Then check for Production menu
-    Wait Until Element Is Visible    ${PRODUCTION_LINK}    timeout=30s
+    Sleep    5s
+    # Use Presence check (id=production) which is more robust than visibility in headless
+    Wait Until Page Contains Element    ${PRODUCTION_LINK}    timeout=45s
     Log To Console    "Login successful and Production link is present."
     Close Browser

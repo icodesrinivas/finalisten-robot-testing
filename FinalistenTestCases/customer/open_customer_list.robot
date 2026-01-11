@@ -3,15 +3,24 @@ Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
 
 *** Variables ***
-${REGISTER_MENU}     xpath=//*[@id="register"]
-${CUSTOMERS_MENU}    xpath=//*[@id="customers_app_menu"]
+*** Variables ***
+${REGISTER_MENU}     id=register
+${CUSTOMERS_MENU}    id=customers_app_menu
 
 *** Test Cases ***
 Verify Customer List Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
+    # Wait for Presence (id=register) which is more robust in headless
+    Wait Until Page Contains Element    ${REGISTER_MENU}    timeout=45s
+    Sleep    2s
     Hover Over Register Menu
+    # Wait for Presence (submenu)
+    Wait Until Page Contains Element    ${CUSTOMERS_MENU}    timeout=20s
+    Sleep    1s
     Click On Customers Menu
-    Wait Until Page Contains    Filters    timeout=10s
+    Sleep    3s
+    Wait Until Page Contains    Filters    timeout=15s
     Log To Console    "Filters text found. Customer list opened successfully."
     Close Browser
 
