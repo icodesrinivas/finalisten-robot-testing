@@ -97,7 +97,7 @@ pipeline {
                 """
 
                 emailext (
-                    to: 'srinivas8862@gmail.com, otso.nieminen@finalisten.se',
+                    to: 'srinivas8862@gmail.com',
                     subject: subject,
                     body: body,
                     mimeType: 'text/html',
