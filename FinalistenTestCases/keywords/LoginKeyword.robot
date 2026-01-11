@@ -12,10 +12,12 @@ ${LOGIN_BUTTON}  xpath=//button[@type='submit' and contains(@class,'btn-primary'
 ${HOMEPAGE_URL}  https://preproderp.finalisten.se/homepage/
 ${CHROME_OPTIONS}    add_argument("--ignore-certificate-errors");add_argument("--disable-web-security");add_argument("--allow-running-insecure-content")
 
+
 *** Keywords ***
 Open And Login
     Register Keyword To Run On Failure    Capture Page Screenshot
     Open Browser    ${URL}    ${BROWSER}    options=${CHROME_OPTIONS}
+    Set Window Size    1920    1080
     Maximize Browser Window
     Set Selenium Implicit Wait    10s
     Set Selenium Timeout    45s
@@ -28,6 +30,8 @@ Open And Login
     Input Text    xpath=//input[@name='password']    ${PASSWORD}
     Click Button    ${LOGIN_BUTTON}
     Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=30s
+    # Ensure navigation bar or sidebar is present before proceeding
+    Wait Until Page Contains Element    id=register    timeout=20s
     Sleep    7s
 
 Handle SSL Warning
