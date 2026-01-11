@@ -74,6 +74,38 @@ pipeline {
                 def fileName = "test_report_${timestamp}.txt"
 
                 writeFile file: fileName, text: reportContent
+
+                // Send email notification
+                def buildStatus = currentBuild.result ?: 'SUCCESS'
+                def subject = "Robot Framework Test Results - ${buildStatus} - Build #${env.BUILD_NUMBER}"
+                def body = """
+                    <h2>Robot Framework Test Execution Report</h2>
+                    <p><strong>Build:</strong> #${env.BUILD_NUMBER}</p>
+                    <p><strong>Status:</strong> ${buildStatus}</p>
+                    <p><strong>Date:</strong> ${timestamp}</p>
+                    
+                    <h3>Test Results Summary:</h3>
+                    <ul>
+                        <li><strong>Total Test Cases:</strong> ${testResults?.totalCount ?: 0}</li>
+                        <li><strong>Passed:</strong> <span style="color: green;">${testResults?.passCount ?: 0}</span></li>
+                        <li><strong>Failed:</strong> <span style="color: red;">${testResults?.failCount ?: 0}</span></li>
+                    </ul>
+                    
+                    <p><strong>Jenkins Build URL:</strong> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                    <p><strong>Test Report:</strong> <a href="${env.BUILD_URL}artifact/${fileName}">${fileName}</a></p>
+                    
+                    <hr/>
+                    <pre>${reportContent}</pre>
+                """
+
+                emailext (
+                    to: 'srinivas8862@gmail.com, otso.nieminen@finalisten.se',
+                    subject: subject,
+                    body: body,
+                    mimeType: 'text/html',
+                    attachLog: true,
+                    compressLog: true
+                )
             }
         }
     }
