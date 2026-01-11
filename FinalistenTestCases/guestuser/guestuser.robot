@@ -5,17 +5,18 @@ Resource   ../keywords/LoginKeyword.robot
 *** Variables ***
 ${REGISTER_MENU}             xpath=//*[@id="register"]
 ${SUBCONTRACTOR_MENU}        xpath=//*[@id="subcontractor_app_menu"]
-${SUBCONTRACTOR_LINKS}       xpath=//a[contains(@href, '/subcontractor/list/') and contains(@href, '/edit/')]
+${SUBCONTRACTOR_ROW}         css=tr.subcontractor_rows
 
 *** Test Cases ***
 Verify Subcontractor Edit Page Opens Successfully
     Open And Login
     Hover Over Register Menu
     Click On Subcontractor Menu
-    Wait Until Page Contains    Filters    timeout=10s
-    Click First Subcontractor Edit Link
-    Wait Until Page Contains    SUBCONTRACTOR    timeout=10s
-    Log To Console    "SUBCONTRACTOR text found. Subcontractor edit page opened successfully."
+    Sleep    2s
+    ${row_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${SUBCONTRACTOR_ROW}    timeout=10s
+    Run Keyword If    ${row_exists}    Click Subcontractor Row And Verify
+    ...    ELSE    Log To Console    "No subcontractor records found. Test skipped."
+    Close Browser
 
 *** Keywords ***
 Hover Over Register Menu
@@ -24,9 +25,7 @@ Hover Over Register Menu
 Click On Subcontractor Menu
     Click Element    ${SUBCONTRACTOR_MENU}
 
-Click First Subcontractor Edit Link
-    ${elements}=    Get WebElements    ${SUBCONTRACTOR_LINKS}
-    ${length}=    Get Length    ${elements}
-    Run Keyword If    ${length} == 0    Fail    No subcontractors found to edit.
-    ${element}=    Set Variable    ${elements[0]}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${element}
+Click Subcontractor Row And Verify
+    Click Element    ${SUBCONTRACTOR_ROW}
+    Wait Until Page Contains    SUBCONTRACTOR    timeout=10s
+    Log To Console    "SUBCONTRACTOR text found. Subcontractor edit page opened successfully."

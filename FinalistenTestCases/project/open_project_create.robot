@@ -13,7 +13,8 @@ Verify Project Create View Opens Successfully
     Open And Login
     Hover Over Production Menu
     Click On Project Menu
-    Wait Until Page Contains    Filters    timeout=10s
+    Sleep    2s
+    Wait Until Page Contains Element    ${PROJECT_ADD_BUTTON}    timeout=10s
     Click On Project Add Button
     Wait Until Page Contains    ${PROJECT_CREATE_TEXT}    timeout=10s
     Log To Console    "GENERAL DATA text found. Project Create view opened successfully."

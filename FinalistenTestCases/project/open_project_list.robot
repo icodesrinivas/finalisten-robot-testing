@@ -11,8 +11,9 @@ Verify Project List View Opens Successfully
     Open And Login
     Hover Over Production Menu
     Click On Project Menu
-    Wait Until Page Contains    Filters    timeout=10s
-    Log To Console    "Filters text found. Project list view opened successfully."
+    Sleep    2s
+    Wait Until Page Contains Element    xpath=//*[@id="project_list_filter"]    timeout=10s
+    Log To Console    "Project list page loaded successfully."
     Close Browser
 
 *** Keywords ***
