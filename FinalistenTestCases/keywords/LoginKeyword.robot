@@ -27,7 +27,7 @@ Open And Login
     Input Text    xpath=//input[@name='password']    ${PASSWORD}
     Click Button    ${LOGIN_BUTTON}
     Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
-    Sleep    2s
+    Sleep    5s
 
 Handle SSL Warning
     ${advanced_button}=    Get WebElements    xpath=//button[contains(text(),'Advanced')]

@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="FinalistenTestCases" tests="138" errors="0" failures="115" skipped="2" time="1413.230" timestamp="2026-01-11T12:10:53.207929">
+<testsuite name="Common" tests="2" errors="0" failures="1" skipped="0" time="29.774" timestamp="2026-01-11T12:10:53.430922">
+<testsuite name="Login" tests="2" errors="0" failures="1" skipped="0" time="29.771" timestamp="2026-01-11T12:10:53.432251">
+<testsuite name="Check Successful Login" tests="1" errors="0" failures="1" skipped="0" time="13.776" timestamp="2026-01-11T12:11:06.557661">
+<testcase classname="FinalistenTestCases.Common.Login.Check Successful Login" name="Login And Verify Production Link" time="13.771">
+<failure message="Element 'xpath=//a[@class='nav-link dropdown-toggle' and @role='button' and @data-toggle='dropdown' and @id='production']' not visible after 10 seconds." type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Verify Successful Login" tests="1" errors="0" failures="0" skipped="0" time="2.868" timestamp="2026-01-11T12:11:20.334831">
+<testcase classname="FinalistenTestCases.Common.Login.Verify Successful Login" name="Verify Successful Login" time="2.864">
+</testcase>
+</testsuite>
+</testsuite>
+</testsuite>
+<testsuite name="Contact" tests="3" errors="0" failures="3" skipped="0" time="8.507" timestamp="2026-01-11T12:11:23.205230">
+<testsuite name="Open Contact Create" tests="1" errors="0" failures="1" skipped="0" time="2.689" timestamp="2026-01-11T12:11:23.206994">
+<testcase classname="FinalistenTestCases.Contact.Open Contact Create" name="Verify Contact Create Page Opens Successfully" time="2.684">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55ee3f16961a &lt;unknown&gt;&#10;#1 0x55ee3ebe620b &lt;unknown&gt;&#10;#2 0x55ee3ebecf5f &lt;unknown&gt;&#10;#3 0x55ee3ebef5f4 &lt;unknown&gt;&#10;#4 0x55ee3ebef6c3 &lt;unknown&gt;&#10;#5 0x55ee3ec3dbd0 &lt;unknown&gt;&#10;#6 0x55ee3ec3cf98 &lt;unknown&gt;&#10;#7 0x55ee3ec8c2c2 &lt;unknown&gt;&#10;#8 0x55ee3ec8320e &lt;unknown&gt;&#10;#9 0x55ee3ec2a232 &lt;unknown&gt;&#10;#10 0x55ee3ec2aee1 &lt;unknown&gt;&#10;#11 0x55ee3f1323f9 &lt;unknown&gt;&#10;#12 0x55ee3f13534d &lt;unknown&gt;&#10;#13 0x55ee3f11b122 &lt;unknown&gt;&#10;#14 0x55ee3f135f2b &lt;unknown&gt;&#10;#15 0x55ee3f101c30 &lt;unknown&gt;&#10;#16 0x55ee3f156d78 &lt;unknown&gt;&#10;#17 0x55ee3f156f4c &lt;unknown&gt;&#10;#18 0x55ee3f168973 &lt;unknown&gt;&#10;#19 0x7f055a69caa4 &lt;unknown&gt;&#10;#20 0x7f055a729c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Contact Edit" tests="1" errors="0" failures="1" skipped="0" time="2.931" timestamp="2026-01-11T12:11:25.896533">
+<testcase classname="FinalistenTestCases.Contact.Open Contact Edit" name="Verify Edit Contact Page Opens Successfully" time="2.927">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5573debd661a &lt;unknown&gt;&#10;#1 0x5573de65320b &lt;unknown&gt;&#10;#2 0x5573de659f5f &lt;unknown&gt;&#10;#3 0x5573de65c5f4 &lt;unknown&gt;&#10;#4 0x5573de65c6c3 &lt;unknown&gt;&#10;#5 0x5573de6aabd0 &lt;unknown&gt;&#10;#6 0x5573de6a9f98 &lt;unknown&gt;&#10;#7 0x5573de6f92c2 &lt;unknown&gt;&#10;#8 0x5573de6f020e &lt;unknown&gt;&#10;#9 0x5573de697232 &lt;unknown&gt;&#10;#10 0x5573de697ee1 &lt;unknown&gt;&#10;#11 0x5573deb9f3f9 &lt;unknown&gt;&#10;#12 0x5573deba234d &lt;unknown&gt;&#10;#13 0x5573deb88122 &lt;unknown&gt;&#10;#14 0x5573deba2f2b &lt;unknown&gt;&#10;#15 0x5573deb6ec30 &lt;unknown&gt;&#10;#16 0x5573debc3d78 &lt;unknown&gt;&#10;#17 0x5573debc3f4c &lt;unknown&gt;&#10;#18 0x5573debd5973 &lt;unknown&gt;&#10;#19 0x7f41f8c9caa4 &lt;unknown&gt;&#10;#20 0x7f41f8d29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Contact List" tests="1" errors="0" failures="1" skipped="0" time="2.882" timestamp="2026-01-11T12:11:28.828821">
+<testcase classname="FinalistenTestCases.Contact.Open Contact List" name="Verify Contact List Opens Successfully" time="2.877">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x56330bb1461a &lt;unknown&gt;&#10;#1 0x56330b59120b &lt;unknown&gt;&#10;#2 0x56330b597f5f &lt;unknown&gt;&#10;#3 0x56330b59a5f4 &lt;unknown&gt;&#10;#4 0x56330b59a6c3 &lt;unknown&gt;&#10;#5 0x56330b5e8bd0 &lt;unknown&gt;&#10;#6 0x56330b5e7f98 &lt;unknown&gt;&#10;#7 0x56330b6372c2 &lt;unknown&gt;&#10;#8 0x56330b62e20e &lt;unknown&gt;&#10;#9 0x56330b5d5232 &lt;unknown&gt;&#10;#10 0x56330b5d5ee1 &lt;unknown&gt;&#10;#11 0x56330badd3f9 &lt;unknown&gt;&#10;#12 0x56330bae034d &lt;unknown&gt;&#10;#13 0x56330bac6122 &lt;unknown&gt;&#10;#14 0x56330bae0f2b &lt;unknown&gt;&#10;#15 0x56330baacc30 &lt;unknown&gt;&#10;#16 0x56330bb01d78 &lt;unknown&gt;&#10;#17 0x56330bb01f4c &lt;unknown&gt;&#10;#18 0x56330bb13973 &lt;unknown&gt;&#10;#19 0x7fa9ec69caa4 &lt;unknown&gt;&#10;#20 0x7fa9ec729c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Customer" tests="3" errors="0" failures="3" skipped="0" time="8.882" timestamp="2026-01-11T12:11:31.713023">
+<testsuite name="Open Customer Create" tests="1" errors="0" failures="1" skipped="0" time="3.147" timestamp="2026-01-11T12:11:31.714665">
+<testcase classname="FinalistenTestCases.Customer.Open Customer Create" name="Verify Customer Create Page Opens Successfully" time="3.143">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5589a87e561a &lt;unknown&gt;&#10;#1 0x5589a826220b &lt;unknown&gt;&#10;#2 0x5589a8268f5f &lt;unknown&gt;&#10;#3 0x5589a826b5f4 &lt;unknown&gt;&#10;#4 0x5589a826b6c3 &lt;unknown&gt;&#10;#5 0x5589a82b9bd0 &lt;unknown&gt;&#10;#6 0x5589a82b8f98 &lt;unknown&gt;&#10;#7 0x5589a83082c2 &lt;unknown&gt;&#10;#8 0x5589a82ff20e &lt;unknown&gt;&#10;#9 0x5589a82a6232 &lt;unknown&gt;&#10;#10 0x5589a82a6ee1 &lt;unknown&gt;&#10;#11 0x5589a87ae3f9 &lt;unknown&gt;&#10;#12 0x5589a87b134d &lt;unknown&gt;&#10;#13 0x5589a8797122 &lt;unknown&gt;&#10;#14 0x5589a87b1f2b &lt;unknown&gt;&#10;#15 0x5589a877dc30 &lt;unknown&gt;&#10;#16 0x5589a87d2d78 &lt;unknown&gt;&#10;#17 0x5589a87d2f4c &lt;unknown&gt;&#10;#18 0x5589a87e4973 &lt;unknown&gt;&#10;#19 0x7f8364a9caa4 &lt;unknown&gt;&#10;#20 0x7f8364b29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Customer Edit" tests="1" errors="0" failures="1" skipped="0" time="2.947" timestamp="2026-01-11T12:11:34.862513">
+<testcase classname="FinalistenTestCases.Customer.Open Customer Edit" name="Verify Customer Edit Page Opens Successfully" time="2.943">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5611ed3ac61a &lt;unknown&gt;&#10;#1 0x5611ece2920b &lt;unknown&gt;&#10;#2 0x5611ece2ff5f &lt;unknown&gt;&#10;#3 0x5611ece325f4 &lt;unknown&gt;&#10;#4 0x5611ece326c3 &lt;unknown&gt;&#10;#5 0x5611ece80bd0 &lt;unknown&gt;&#10;#6 0x5611ece7ff98 &lt;unknown&gt;&#10;#7 0x5611ececf2c2 &lt;unknown&gt;&#10;#8 0x5611ecec620e &lt;unknown&gt;&#10;#9 0x5611ece6d232 &lt;unknown&gt;&#10;#10 0x5611ece6dee1 &lt;unknown&gt;&#10;#11 0x5611ed3753f9 &lt;unknown&gt;&#10;#12 0x5611ed37834d &lt;unknown&gt;&#10;#13 0x5611ed35e122 &lt;unknown&gt;&#10;#14 0x5611ed378f2b &lt;unknown&gt;&#10;#15 0x5611ed344c30 &lt;unknown&gt;&#10;#16 0x5611ed399d78 &lt;unknown&gt;&#10;#17 0x5611ed399f4c &lt;unknown&gt;&#10;#18 0x5611ed3ab973 &lt;unknown&gt;&#10;#19 0x7fd101c9caa4 &lt;unknown&gt;&#10;#20 0x7fd101d29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Customer List" tests="1" errors="0" failures="1" skipped="0" time="2.783" timestamp="2026-01-11T12:11:37.810629">
+<testcase classname="FinalistenTestCases.Customer.Open Customer List" name="Verify Customer List Opens Successfully" time="2.779">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5613d56c061a &lt;unknown&gt;&#10;#1 0x5613d513d20b &lt;unknown&gt;&#10;#2 0x5613d5143f5f &lt;unknown&gt;&#10;#3 0x5613d51465f4 &lt;unknown&gt;&#10;#4 0x5613d51466c3 &lt;unknown&gt;&#10;#5 0x5613d5194bd0 &lt;unknown&gt;&#10;#6 0x5613d5193f98 &lt;unknown&gt;&#10;#7 0x5613d51e32c2 &lt;unknown&gt;&#10;#8 0x5613d51da20e &lt;unknown&gt;&#10;#9 0x5613d5181232 &lt;unknown&gt;&#10;#10 0x5613d5181ee1 &lt;unknown&gt;&#10;#11 0x5613d56893f9 &lt;unknown&gt;&#10;#12 0x5613d568c34d &lt;unknown&gt;&#10;#13 0x5613d5672122 &lt;unknown&gt;&#10;#14 0x5613d568cf2b &lt;unknown&gt;&#10;#15 0x5613d5658c30 &lt;unknown&gt;&#10;#16 0x5613d56add78 &lt;unknown&gt;&#10;#17 0x5613d56adf4c &lt;unknown&gt;&#10;#18 0x5613d56bf973 &lt;unknown&gt;&#10;#19 0x7fae9c09caa4 &lt;unknown&gt;&#10;#20 0x7fae9c129c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Dailyplanner" tests="2" errors="0" failures="2" skipped="0" time="5.931" timestamp="2026-01-11T12:11:40.595532">
+<testsuite name="Open Dailyplanner Boards" tests="1" errors="0" failures="1" skipped="0" time="2.714" timestamp="2026-01-11T12:11:40.597131">
+<testcase classname="FinalistenTestCases.Dailyplanner.Open Dailyplanner Boards" name="Verify All Daily Planner Boards Open Successfully" time="2.710">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5621fe23461a &lt;unknown&gt;&#10;#1 0x5621fdcb120b &lt;unknown&gt;&#10;#2 0x5621fdcb7f5f &lt;unknown&gt;&#10;#3 0x5621fdcba5f4 &lt;unknown&gt;&#10;#4 0x5621fdcba6c3 &lt;unknown&gt;&#10;#5 0x5621fdd08bd0 &lt;unknown&gt;&#10;#6 0x5621fdd07f98 &lt;unknown&gt;&#10;#7 0x5621fdd572c2 &lt;unknown&gt;&#10;#8 0x5621fdd4e20e &lt;unknown&gt;&#10;#9 0x5621fdcf5232 &lt;unknown&gt;&#10;#10 0x5621fdcf5ee1 &lt;unknown&gt;&#10;#11 0x5621fe1fd3f9 &lt;unknown&gt;&#10;#12 0x5621fe20034d &lt;unknown&gt;&#10;#13 0x5621fe1e6122 &lt;unknown&gt;&#10;#14 0x5621fe200f2b &lt;unknown&gt;&#10;#15 0x5621fe1ccc30 &lt;unknown&gt;&#10;#16 0x5621fe221d78 &lt;unknown&gt;&#10;#17 0x5621fe221f4c &lt;unknown&gt;&#10;#18 0x5621fe233973 &lt;unknown&gt;&#10;#19 0x7fd41109caa4 &lt;unknown&gt;&#10;#20 0x7fd411129c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Dailyplanner Home" tests="1" errors="0" failures="1" skipped="0" time="3.214" timestamp="2026-01-11T12:11:43.312228">
+<testcase classname="FinalistenTestCases.Dailyplanner.Open Dailyplanner Home" name="Verify Daily Planner Board Opens Successfully" time="3.209">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55808af2c61a &lt;unknown&gt;&#10;#1 0x55808a9a920b &lt;unknown&gt;&#10;#2 0x55808a9aff5f &lt;unknown&gt;&#10;#3 0x55808a9b25f4 &lt;unknown&gt;&#10;#4 0x55808a9b26c3 &lt;unknown&gt;&#10;#5 0x55808aa00bd0 &lt;unknown&gt;&#10;#6 0x55808a9fff98 &lt;unknown&gt;&#10;#7 0x55808aa4f2c2 &lt;unknown&gt;&#10;#8 0x55808aa4620e &lt;unknown&gt;&#10;#9 0x55808a9ed232 &lt;unknown&gt;&#10;#10 0x55808a9edee1 &lt;unknown&gt;&#10;#11 0x55808aef53f9 &lt;unknown&gt;&#10;#12 0x55808aef834d &lt;unknown&gt;&#10;#13 0x55808aede122 &lt;unknown&gt;&#10;#14 0x55808aef8f2b &lt;unknown&gt;&#10;#15 0x55808aec4c30 &lt;unknown&gt;&#10;#16 0x55808af19d78 &lt;unknown&gt;&#10;#17 0x55808af19f4c &lt;unknown&gt;&#10;#18 0x55808af2b973 &lt;unknown&gt;&#10;#19 0x7f4616c9caa4 &lt;unknown&gt;&#10;#20 0x7f4616d29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Doorplanning" tests="1" errors="0" failures="1" skipped="0" time="3.068" timestamp="2026-01-11T12:11:46.527039">
+<testsuite name="Open Doorplanning App" tests="1" errors="0" failures="1" skipped="0" time="3.065" timestamp="2026-01-11T12:11:46.528867">
+<testcase classname="FinalistenTestCases.Doorplanning.Open Doorplanning App" name="Verify Door Planning Board Opens Successfully" time="3.061">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55af8ae6661a &lt;unknown&gt;&#10;#1 0x55af8a8e320b &lt;unknown&gt;&#10;#2 0x55af8a8e9f5f &lt;unknown&gt;&#10;#3 0x55af8a8ec5f4 &lt;unknown&gt;&#10;#4 0x55af8a8ec6c3 &lt;unknown&gt;&#10;#5 0x55af8a93abd0 &lt;unknown&gt;&#10;#6 0x55af8a939f98 &lt;unknown&gt;&#10;#7 0x55af8a9892c2 &lt;unknown&gt;&#10;#8 0x55af8a98020e &lt;unknown&gt;&#10;#9 0x55af8a927232 &lt;unknown&gt;&#10;#10 0x55af8a927ee1 &lt;unknown&gt;&#10;#11 0x55af8ae2f3f9 &lt;unknown&gt;&#10;#12 0x55af8ae3234d &lt;unknown&gt;&#10;#13 0x55af8ae18122 &lt;unknown&gt;&#10;#14 0x55af8ae32f2b &lt;unknown&gt;&#10;#15 0x55af8adfec30 &lt;unknown&gt;&#10;#16 0x55af8ae53d78 &lt;unknown&gt;&#10;#17 0x55af8ae53f4c &lt;unknown&gt;&#10;#18 0x55af8ae65973 &lt;unknown&gt;&#10;#19 0x7f657349caa4 &lt;unknown&gt;&#10;#20 0x7f6573529c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Employee" tests="3" errors="0" failures="3" skipped="0" time="8.381" timestamp="2026-01-11T12:11:49.595713">
+<testsuite name="Open Employee Create" tests="1" errors="0" failures="1" skipped="0" time="2.780" timestamp="2026-01-11T12:11:49.597374">
+<testcase classname="FinalistenTestCases.Employee.Open Employee Create" name="Verify Employee Create Page Opens Successfully" time="2.776">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5632bf60361a &lt;unknown&gt;&#10;#1 0x5632bf08020b &lt;unknown&gt;&#10;#2 0x5632bf086f5f &lt;unknown&gt;&#10;#3 0x5632bf0895f4 &lt;unknown&gt;&#10;#4 0x5632bf0896c3 &lt;unknown&gt;&#10;#5 0x5632bf0d7bd0 &lt;unknown&gt;&#10;#6 0x5632bf0d6f98 &lt;unknown&gt;&#10;#7 0x5632bf1262c2 &lt;unknown&gt;&#10;#8 0x5632bf11d20e &lt;unknown&gt;&#10;#9 0x5632bf0c4232 &lt;unknown&gt;&#10;#10 0x5632bf0c4ee1 &lt;unknown&gt;&#10;#11 0x5632bf5cc3f9 &lt;unknown&gt;&#10;#12 0x5632bf5cf34d &lt;unknown&gt;&#10;#13 0x5632bf5b5122 &lt;unknown&gt;&#10;#14 0x5632bf5cff2b &lt;unknown&gt;&#10;#15 0x5632bf59bc30 &lt;unknown&gt;&#10;#16 0x5632bf5f0d78 &lt;unknown&gt;&#10;#17 0x5632bf5f0f4c &lt;unknown&gt;&#10;#18 0x5632bf602973 &lt;unknown&gt;&#10;#19 0x7f19b4e9caa4 &lt;unknown&gt;&#10;#20 0x7f19b4f29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Employee Edit" tests="1" errors="0" failures="1" skipped="0" time="2.748" timestamp="2026-01-11T12:11:52.378200">
+<testcase classname="FinalistenTestCases.Employee.Open Employee Edit" name="Verify Employee Edit Page Opens Successfully" time="2.744">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5628ffc2861a &lt;unknown&gt;&#10;#1 0x5628ff6a520b &lt;unknown&gt;&#10;#2 0x5628ff6abf5f &lt;unknown&gt;&#10;#3 0x5628ff6ae5f4 &lt;unknown&gt;&#10;#4 0x5628ff6ae6c3 &lt;unknown&gt;&#10;#5 0x5628ff6fcbd0 &lt;unknown&gt;&#10;#6 0x5628ff6fbf98 &lt;unknown&gt;&#10;#7 0x5628ff74b2c2 &lt;unknown&gt;&#10;#8 0x5628ff74220e &lt;unknown&gt;&#10;#9 0x5628ff6e9232 &lt;unknown&gt;&#10;#10 0x5628ff6e9ee1 &lt;unknown&gt;&#10;#11 0x5628ffbf13f9 &lt;unknown&gt;&#10;#12 0x5628ffbf434d &lt;unknown&gt;&#10;#13 0x5628ffbda122 &lt;unknown&gt;&#10;#14 0x5628ffbf4f2b &lt;unknown&gt;&#10;#15 0x5628ffbc0c30 &lt;unknown&gt;&#10;#16 0x5628ffc15d78 &lt;unknown&gt;&#10;#17 0x5628ffc15f4c &lt;unknown&gt;&#10;#18 0x5628ffc27973 &lt;unknown&gt;&#10;#19 0x7f32d529caa4 &lt;unknown&gt;&#10;#20 0x7f32d5329c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Employee List" tests="1" errors="0" failures="1" skipped="0" time="2.848" timestamp="2026-01-11T12:11:55.127204">
+<testcase classname="FinalistenTestCases.Employee.Open Employee List" name="Verify Employee List Opens Successfully" time="2.844">
+<failure message="ElementNotInteractableException: Message: element not interactable&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x564a8e39961a &lt;unknown&gt;&#10;#1 0x564a8de16038 &lt;unknown&gt;&#10;#2 0x564a8de68a55 &lt;unknown&gt;&#10;#3 0x564a8de5c0c2 &lt;unknown&gt;&#10;#4 0x564a8de5ba67 &lt;unknown&gt;&#10;#5 0x564a8deb320e &lt;unknown&gt;&#10;#6 0x564a8de5a232 &lt;unknown&gt;&#10;#7 0x564a8de5aee1 &lt;unknown&gt;&#10;#8 0x564a8e3623f9 &lt;unknown&gt;&#10;#9 0x564a8e36534d &lt;unknown&gt;&#10;#10 0x564a8e34b122 &lt;unknown&gt;&#10;#11 0x564a8e365f2b &lt;unknown&gt;&#10;#12 0x564a8e331c30 &lt;unknown&gt;&#10;#13 0x564a8e386d78 &lt;unknown&gt;&#10;#14 0x564a8e386f4c &lt;unknown&gt;&#10;#15 0x564a8e398973 &lt;unknown&gt;&#10;#16 0x7f81e009caa4 &lt;unknown&gt;&#10;#17 0x7f81e0129c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Fieldreport" tests="91" errors="0" failures="69" skipped="2" time="1246.614" timestamp="2026-01-11T12:11:57.976978">
+<testsuite name="Approval Workflow Extended Fieldreport" tests="4" errors="0" failures="4" skipped="0" time="55.257" timestamp="2026-01-11T12:11:57.979220">
+<testcase classname="FinalistenTestCases.Fieldreport.Approval Workflow Extended Fieldreport" name="Test Approved FR Products Are Read Only" time="15.292">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/wbmKHu/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Approval Workflow Extended Fieldreport" name="Test Approved FR General Data Is Read Only" time="13.457">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/euNhKw/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Approval Workflow Extended Fieldreport" name="Test Unapproved FR Fields Become Editable" time="13.213">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/LI4V6r/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Approval Workflow Extended Fieldreport" name="Test Approve Empty FR Behavior" time="13.270">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/6vmUlk/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for extended approval workflow testing in Field Report.&#10;&#10;Tests include:&#10;34. Approve FR with products - verify product fields become read-only&#10;35. Approve FR - verify general data fields become read-only&#10;36. Unapprove FR - verify fields become editable again&#10;37. Approve empty FR (no products) - verify behavior"/>
+</properties>
+</testsuite>
+<testsuite name="Approve Unapprove Fieldreport" tests="1" errors="0" failures="1" skipped="0" time="13.558" timestamp="2026-01-11T12:12:53.236800">
+<testcase classname="FinalistenTestCases.Fieldreport.Approve Unapprove Fieldreport" name="Test Approve And Unapprove Field Report" time="13.551">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/QVHoF7/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Approve/Unapprove functionality on Field Report.&#10;&#10;Test Flow:&#10;1. Create a new field report (setup)&#10;2. Verify initial status is Unapproved&#10;3. Click Approve button and verify status changes&#10;4. Click Unapprove button and verify status reverts&#10;5. Delete the field report (teardown)"/>
+</properties>
+</testsuite>
+<testsuite name="Attachment Validation Fieldreport" tests="4" errors="0" failures="4" skipped="0" time="53.236" timestamp="2026-01-11T12:13:06.795506">
+<testcase classname="FinalistenTestCases.Fieldreport.Attachment Validation Fieldreport" name="Test Upload Large File Size Limit" time="13.732">
+<failure message="Setup failed:&#10;Could not extract ID from URL" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Attachment Validation Fieldreport" name="Test Upload Unsupported File Type" time="12.748">
+<failure message="Setup failed:&#10;Could not extract ID from URL" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Attachment Validation Fieldreport" name="Test Upload Multiple Attachments" time="13.567">
+<failure message="Setup failed:&#10;Could not extract ID from URL" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Attachment Validation Fieldreport" name="Test Download Attachment Integrity" time="13.180">
+<failure message="Setup failed:&#10;Could not extract ID from URL" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for attachment validation in Field Report products.&#10;&#10;Tests include:&#10;54. Upload file exceeding size limit - verify error&#10;55. Upload unsupported file type - verify rejection&#10;56. Upload multiple attachments to single product - verify saved&#10;57. Download attachment - verify file integrity"/>
+</properties>
+</testsuite>
+<testsuite name="Calculation Edge Cases Fieldreport" tests="4" errors="0" failures="4" skipped="0" time="54.397" timestamp="2026-01-11T12:14:00.032746">
+<testcase classname="FinalistenTestCases.Fieldreport.Calculation Edge Cases Fieldreport" name="Test Zero Total Hours Per Hour Calculation" time="13.349">
+<failure message="Setup failed:&#10;Could not extract ID from URL" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Calculation Edge Cases Fieldreport" name="Test Very Large Total Hours Calculation" time="14.467">
+<failure message="Setup failed:&#10;Could not extract ID from URL" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Calculation Edge Cases Fieldreport" name="Test Negative Product Price Earnings Calculation" time="13.190">
+<failure message="Setup failed:&#10;Could not extract ID from URL" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Calculation Edge Cases Fieldreport" name="Test Modify Quantity Updates Earnings" time="13.383">
+<failure message="Setup failed:&#10;Could not extract ID from URL" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for calculation edge cases in Field Report.&#10;&#10;Tests include:&#10;46. Total Hours = 0 - verify Per Hour calculation (division by zero)&#10;47. Very large Total Hours - verify calculation accuracy&#10;48. Product with negative price - verify Earnings calculation&#10;49. Modify product quantity - verify Earnings recalculates"/>
+</properties>
+</testsuite>
+<testsuite name="Cancel Edit Fieldreport" tests="1" errors="0" failures="1" skipped="0" time="14.562" timestamp="2026-01-11T12:14:54.430627">
+<testcase classname="FinalistenTestCases.Fieldreport.Cancel Edit Fieldreport" name="Test Cancel Reverts All Field Changes" time="14.552">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/YpqRZ7/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Cancel functionality on Field Report edit page.&#10;&#10;Test Flow:&#10;1. Create a new field report (setup)&#10;2. Record the original values&#10;3. Modify each editable field with new values&#10;4. Click Cancel instead of Save&#10;5. Accept confirmation dialog&#10;6. Verify all fields are reverted to original values&#10;7. Delete the field report (teardown)"/>
+</properties>
+</testsuite>
+<testsuite name="Cascade Dropdown Fieldreport" tests="4" errors="0" failures="0" skipped="0" time="33.544" timestamp="2026-01-11T12:15:08.993963">
+<testcase classname="FinalistenTestCases.Fieldreport.Cascade Dropdown Fieldreport" name="Test Customer Change Clears And Reloads Project Dropdown" time="8.573">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Cascade Dropdown Fieldreport" name="Test Project Change Clears And Reloads SubProject Dropdown" time="8.080">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Cascade Dropdown Fieldreport" name="Test Projects Belong To Selected Customer" time="8.345">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Cascade Dropdown Fieldreport" name="Test SubProjects Belong To Selected Project" time="8.538">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for validating cascade dropdown behavior in Field Report.&#10;&#10;Tests include:&#10;30. Change Customer - verify Project dropdown clears and reloads&#10;31. Change Project - verify SubProject dropdown clears and reloads&#10;32. Verify Projects belong only to selected Customer&#10;33. Verify SubProjects belong only to selected Project"/>
+</properties>
+</testsuite>
+<testsuite name="Close Reopen Fieldreport" tests="1" errors="0" failures="1" skipped="0" time="13.465" timestamp="2026-01-11T12:15:42.538636">
+<testcase classname="FinalistenTestCases.Fieldreport.Close Reopen Fieldreport" name="Test Close Button And Reopen Field Report" time="13.456">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/RRtVhx/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Close button and reopening Field Report.&#10;&#10;Test Flow:&#10;1. Create a new field report (setup)&#10;2. Record the field report values&#10;3. Click Close button and verify we return to list&#10;4. Reopen the same field report from list&#10;5. Verify all values are still intact&#10;6. Delete the field report (teardown)"/>
+</properties>
+</testsuite>
+<testsuite name="Copy Fieldreport" tests="1" errors="0" failures="1" skipped="0" time="13.420" timestamp="2026-01-11T12:15:56.004561">
+<testcase classname="FinalistenTestCases.Fieldreport.Copy Fieldreport" name="Test Copy Field Report Creates Duplicate" time="13.412">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/G9902n/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Copy functionality on Field Report.&#10;&#10;Test Flow:&#10;1. Create a new field report with specific values (setup)&#10;2. Click Copy button to create a duplicate&#10;3. Verify new field report is created with copied values&#10;4. Verify original field report still exists&#10;5. Delete both field reports (teardown)"/>
+</properties>
+</testsuite>
+<testsuite name="Create Fieldreport Preprod" tests="1" errors="0" failures="1" skipped="0" time="14.076" timestamp="2026-01-11T12:16:09.425637">
+<testcase classname="FinalistenTestCases.Fieldreport.Create Fieldreport Preprod" name="Test Create Field Report And Verify Stored Values" time="14.068">
+<failure message="Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/NkcJQp/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for creating a Field Report, verifying stored values, and cleanup.&#10;Tests are run on PRE-PRODUCTION environment: https://preproderp.finalisten.se/&#10;IMPORTANT: Created fieldreports are deleted in teardown to maintain data cleanliness."/>
+</properties>
+</testsuite>
+<testsuite name="Date Validation Extended Fieldreport" tests="4" errors="0" failures="3" skipped="0" time="73.849" timestamp="2026-01-11T12:16:23.502489">
+<testcase classname="FinalistenTestCases.Fieldreport.Date Validation Extended Fieldreport" name="Test Work Date Today Accepted" time="18.385">
+<failure message="Could not extract ID from URL" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Date Validation Extended Fieldreport" name="Test Work Date Tomorrow Future Validation" time="19.983">
+<failure message="Could not extract ID from URL" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Date Validation Extended Fieldreport" name="Test Work Date Weekend Handling" time="18.411">
+<failure message="Could not extract ID from URL" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Date Validation Extended Fieldreport" name="Test Leap Year Date Handling" time="17.063">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for extended date validation in Field Report.&#10;&#10;Tests include:&#10;50. Work Date = Today - verify accepted&#10;51. Work Date = Tomorrow (future beyond range) - verify validation&#10;52. Work Date on weekend - verify behavior&#10;53. Leap year date (Feb 29) - verify handling"/>
+</properties>
+</testsuite>
+<testsuite name="Debug Earnings" tests="1" errors="0" failures="1" skipped="0" time="14.390" timestamp="2026-01-11T12:17:37.352277">
+<testcase classname="FinalistenTestCases.Fieldreport.Debug Earnings" name="Debug Field Report Creation And Products" time="14.387">
+<failure message="Element with locator 'css=#prodInProjTable tbody tr:first-child .selected-checkbox' not found." type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Debug test to dump sources."/>
+</properties>
+</testsuite>
+<testsuite name="Delete Fieldreport" tests="1" errors="0" failures="1" skipped="0" time="13.017" timestamp="2026-01-11T12:17:51.743072">
+<testcase classname="FinalistenTestCases.Fieldreport.Delete Fieldreport" name="Test Delete Field Report" time="13.009">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/BMbNp7/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Delete button functionality on Field Report.&#10;&#10;Test Flow:&#10;1. Create a new field report (setup)&#10;2. Navigate to edit page&#10;3. Click Delete button&#10;4. Accept confirmation dialog&#10;5. Verify field report no longer exists"/>
+</properties>
+</testsuite>
+<testsuite name="Earnings Calculation Fieldreport" tests="3" errors="0" failures="3" skipped="0" time="38.784" timestamp="2026-01-11T12:18:04.761430">
+<testcase classname="FinalistenTestCases.Fieldreport.Earnings Calculation Fieldreport" name="Test Earnings And Per Hour Display" time="12.697">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/oBuFpL/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Earnings Calculation Fieldreport" name="Test Earnings Change When Total Hours Modified" time="13.101">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/nSZu0I/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Earnings Calculation Fieldreport" name="Test Earnings Change When Product Values Modified" time="12.977">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/yPKLg1/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Earnings and Per Hour calculations in Field Report.&#10;&#10;Tests include:&#10;- Validating initial Earnings and Per Hour values&#10;- Modifying product values and verifying calculation changes&#10;- Verifying calculation formula accuracy"/>
+</properties>
+</testsuite>
+<testsuite name="Edit Fieldreport Preprod" tests="1" errors="0" failures="1" skipped="0" time="14.357" timestamp="2026-01-11T12:18:43.546216">
+<testcase classname="FinalistenTestCases.Fieldreport.Edit Fieldreport Preprod" name="Test Edit Field Report And Verify Modified Values" time="14.348">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/5SRnqJ/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for editing a Field Report, modifying all fields, saving, and validating.&#10;Tests are run on PRE-PRODUCTION environment: https://preproderp.finalisten.se/&#10;IMPORTANT: Created fieldreports are deleted in teardown to maintain data cleanliness.&#10;&#10;Test Flow:&#10;1. Create a new field report (setup)&#10;2. Modify each editable field with new values&#10;3. Save the changes&#10;4. Refresh the page&#10;5. Validate all fields contain the modified values&#10;6. Delete the field report (teardown)"/>
+</properties>
+</testsuite>
+<testsuite name="Filter Combinations Fieldreport" tests="4" errors="0" failures="1" skipped="0" time="128.478" timestamp="2026-01-11T12:18:57.903965">
+<testcase classname="FinalistenTestCases.Fieldreport.Filter Combinations Fieldreport" name="Test Customer And Project Filter Combined" time="53.466">
+<failure message="Element 'id=fieldreport_list_filter' did not appear in 15 seconds." type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Filter Combinations Fieldreport" name="Test Date Range And Approval Status Filter Combined" time="18.056">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Filter Combinations Fieldreport" name="Test Installer And Product Description Filter Combined" time="12.921">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Filter Combinations Fieldreport" name="Test Clear All Filters Shows All Results" time="44.027">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for filter combination testing in Field Report list.&#10;&#10;Tests include:&#10;42. Apply Customer + Project filter together&#10;43. Apply Date Range + Approval Status filter together&#10;44. Apply Installer + Product Description filter together&#10;45. Clear all filters - verify all FR displayed"/>
+</properties>
+</testsuite>
+<testsuite name="Open Fieldreport Create" tests="1" errors="0" failures="1" skipped="0" time="2.855" timestamp="2026-01-11T12:21:06.383003">
+<testcase classname="FinalistenTestCases.Fieldreport.Open Fieldreport Create" name="Verify Field Report Create Page Opens Successfully" time="2.850">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x561388bbb61a &lt;unknown&gt;&#10;#1 0x56138863820b &lt;unknown&gt;&#10;#2 0x56138863ef5f &lt;unknown&gt;&#10;#3 0x5613886415f4 &lt;unknown&gt;&#10;#4 0x5613886416c3 &lt;unknown&gt;&#10;#5 0x56138868fbd0 &lt;unknown&gt;&#10;#6 0x56138868ef98 &lt;unknown&gt;&#10;#7 0x5613886de2c2 &lt;unknown&gt;&#10;#8 0x5613886d520e &lt;unknown&gt;&#10;#9 0x56138867c232 &lt;unknown&gt;&#10;#10 0x56138867cee1 &lt;unknown&gt;&#10;#11 0x561388b843f9 &lt;unknown&gt;&#10;#12 0x561388b8734d &lt;unknown&gt;&#10;#13 0x561388b6d122 &lt;unknown&gt;&#10;#14 0x561388b87f2b &lt;unknown&gt;&#10;#15 0x561388b53c30 &lt;unknown&gt;&#10;#16 0x561388ba8d78 &lt;unknown&gt;&#10;#17 0x561388ba8f4c &lt;unknown&gt;&#10;#18 0x561388bba973 &lt;unknown&gt;&#10;#19 0x7f00b589caa4 &lt;unknown&gt;&#10;#20 0x7f00b5929c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Fieldreport Edit" tests="1" errors="0" failures="1" skipped="0" time="3.001" timestamp="2026-01-11T12:21:09.238305">
+<testcase classname="FinalistenTestCases.Fieldreport.Open Fieldreport Edit" name="Verify Field Report Edit Page Opens Successfully" time="2.995">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55602bc2461a &lt;unknown&gt;&#10;#1 0x55602b6a120b &lt;unknown&gt;&#10;#2 0x55602b6a7f5f &lt;unknown&gt;&#10;#3 0x55602b6aa5f4 &lt;unknown&gt;&#10;#4 0x55602b6aa6c3 &lt;unknown&gt;&#10;#5 0x55602b6f8bd0 &lt;unknown&gt;&#10;#6 0x55602b6f7f98 &lt;unknown&gt;&#10;#7 0x55602b7472c2 &lt;unknown&gt;&#10;#8 0x55602b73e20e &lt;unknown&gt;&#10;#9 0x55602b6e5232 &lt;unknown&gt;&#10;#10 0x55602b6e5ee1 &lt;unknown&gt;&#10;#11 0x55602bbed3f9 &lt;unknown&gt;&#10;#12 0x55602bbf034d &lt;unknown&gt;&#10;#13 0x55602bbd6122 &lt;unknown&gt;&#10;#14 0x55602bbf0f2b &lt;unknown&gt;&#10;#15 0x55602bbbcc30 &lt;unknown&gt;&#10;#16 0x55602bc11d78 &lt;unknown&gt;&#10;#17 0x55602bc11f4c &lt;unknown&gt;&#10;#18 0x55602bc23973 &lt;unknown&gt;&#10;#19 0x7f677969caa4 &lt;unknown&gt;&#10;#20 0x7f6779729c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Fieldreport List" tests="1" errors="0" failures="1" skipped="0" time="2.748" timestamp="2026-01-11T12:21:12.240016">
+<testcase classname="FinalistenTestCases.Fieldreport.Open Fieldreport List" name="Verify Field Report List View Opens Successfully" time="2.743">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55986139461a &lt;unknown&gt;&#10;#1 0x559860e1120b &lt;unknown&gt;&#10;#2 0x559860e17f5f &lt;unknown&gt;&#10;#3 0x559860e1a5f4 &lt;unknown&gt;&#10;#4 0x559860e1a6c3 &lt;unknown&gt;&#10;#5 0x559860e68bd0 &lt;unknown&gt;&#10;#6 0x559860e67f98 &lt;unknown&gt;&#10;#7 0x559860eb72c2 &lt;unknown&gt;&#10;#8 0x559860eae20e &lt;unknown&gt;&#10;#9 0x559860e55232 &lt;unknown&gt;&#10;#10 0x559860e55ee1 &lt;unknown&gt;&#10;#11 0x55986135d3f9 &lt;unknown&gt;&#10;#12 0x55986136034d &lt;unknown&gt;&#10;#13 0x559861346122 &lt;unknown&gt;&#10;#14 0x559861360f2b &lt;unknown&gt;&#10;#15 0x55986132cc30 &lt;unknown&gt;&#10;#16 0x559861381d78 &lt;unknown&gt;&#10;#17 0x559861381f4c &lt;unknown&gt;&#10;#18 0x559861393973 &lt;unknown&gt;&#10;#19 0x7fbf4e49caa4 &lt;unknown&gt;&#10;#20 0x7fbf4e529c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Pagination List Fieldreport" tests="4" errors="0" failures="0" skipped="0" time="162.948" timestamp="2026-01-11T12:21:14.988588">
+<testcase classname="FinalistenTestCases.Fieldreport.Pagination List Fieldreport" name="Test Navigate Through List Pages" time="41.660">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Pagination List Fieldreport" name="Test Page Number And Record Count Display" time="41.351">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Pagination List Fieldreport" name="Test Navigate To Last Page" time="36.395">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Pagination List Fieldreport" name="Test Page Position Maintained After Detail View" time="43.534">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for pagination in Field Report list view.&#10;&#10;Tests include:&#10;58. Navigate through list pages - verify correct records&#10;59. Verify page number display and total record count&#10;60. Navigate to last page - verify correct FR&#10;61. View FR detail, return to list - verify page position"/>
+</properties>
+</testsuite>
+<testsuite name="Product Add Modal Fieldreport" tests="5" errors="0" failures="5" skipped="0" time="64.070" timestamp="2026-01-11T12:23:57.937265">
+<testcase classname="FinalistenTestCases.Fieldreport.Product Add Modal Fieldreport" name="Test Open ADD Product Modal" time="12.960">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/3fXy63/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Add Modal Fieldreport" name="Test Product Modal Search Functionality" time="12.367">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/WbFN0K/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Add Modal Fieldreport" name="Test Product Modal Pagination" time="12.929">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/JPrHEA/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Add Modal Fieldreport" name="Test Select Product With Row Save Button" time="12.959">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/yEn928/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Add Modal Fieldreport" name="Test Select Product With Modal Save Button" time="12.843">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/0SmEIu/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Product ADD table functionality in Field Report.&#10;&#10;Tests include:&#10;- Opening the ADD product modal&#10;- Search functionality within the modal&#10;- Pagination of products in the modal&#10;- Selecting products and saving from checkbox (row-wise)&#10;- Selecting products and saving from bottom Save button&#10;- Verifying fields are correctly copied from sales product to FR product"/>
+</properties>
+</testsuite>
+<testsuite name="Product Data Integrity Fieldreport" tests="4" errors="0" failures="4" skipped="0" time="52.261" timestamp="2026-01-11T12:25:02.007910">
+<testcase classname="FinalistenTestCases.Fieldreport.Product Data Integrity Fieldreport" name="Test Fields Copied From Sales Product To FR Product" time="12.778">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/ZGrDio/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Data Integrity Fieldreport" name="Test Modify FR Product Sales Product Unchanged" time="13.137">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/iWxpbd/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Data Integrity Fieldreport" name="Test Add Same Product Twice Duplicate Handling" time="13.264">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/IWAp6A/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Data Integrity Fieldreport" name="Test Add Product With Zero Quantity" time="13.073">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/aIke5e/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for product data integrity in Field Report.&#10;&#10;Tests include:&#10;38. Verify fields copied correctly from sales product to FR product&#10;39. Modify FR product - verify sales product unchanged&#10;40. Add same product twice - verify duplicate handling&#10;41. Add product with zero quantity - verify behavior"/>
+</properties>
+</testsuite>
+<testsuite name="Product Delete Attachment Fieldreport" tests="3" errors="0" failures="3" skipped="0" time="39.015" timestamp="2026-01-11T12:25:54.270148">
+<testcase classname="FinalistenTestCases.Fieldreport.Product Delete Attachment Fieldreport" name="Test Delete Product From Field Report" time="13.171">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/kKBzd2/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Delete Attachment Fieldreport" name="Test Upload Attachment To Product" time="13.281">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/rnQU5C/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Delete Attachment Fieldreport" name="Test Delete Attachment From Product" time="12.555">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/EYdtCF/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Product Delete and Attachment functionality in Field Report.&#10;&#10;Tests include:&#10;- Deleting a product from the FR products table&#10;- Uploading attachment to a product&#10;- Deleting attachment from a product"/>
+</properties>
+</testsuite>
+<testsuite name="Product Edit Save Cancel Fieldreport" tests="4" errors="0" failures="4" skipped="0" time="51.046" timestamp="2026-01-11T12:26:33.286460">
+<testcase classname="FinalistenTestCases.Fieldreport.Product Edit Save Cancel Fieldreport" name="Test Common Edit Button Enables All Fields" time="12.816">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/e0Kfwf/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Edit Save Cancel Fieldreport" name="Test Row Wise Edit Button" time="12.651">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/Mko7NQ/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Edit Save Cancel Fieldreport" name="Test Common Save Button Persists Changes" time="12.793">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/x3nXT6/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Edit Save Cancel Fieldreport" name="Test Common Cancel Button Reverts Changes" time="12.776">
+<failure message="Setup failed:&#10;Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/gDKwad/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Product Edit/Save/Cancel functionality in Field Report.&#10;&#10;Tests include:&#10;- Common (bulk) edit button for all products&#10;- Row-wise edit button for individual products&#10;- Common save button with modification validation&#10;- Row-wise save button with modification validation&#10;- Common cancel button reverting values&#10;- Row-wise cancel button reverting values"/>
+</properties>
+</testsuite>
+<testsuite name="Search Filter Fieldreport" tests="17" errors="0" failures="17" skipped="0" time="46.834" timestamp="2026-01-11T12:27:24.332986">
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Related Customer Filter" time="2.600">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5558ee76161a &lt;unknown&gt;&#10;#1 0x5558ee1de20b &lt;unknown&gt;&#10;#2 0x5558ee1e4f5f &lt;unknown&gt;&#10;#3 0x5558ee1e75f4 &lt;unknown&gt;&#10;#4 0x5558ee1e76c3 &lt;unknown&gt;&#10;#5 0x5558ee235bd0 &lt;unknown&gt;&#10;#6 0x5558ee234f98 &lt;unknown&gt;&#10;#7 0x5558ee2842c2 &lt;unknown&gt;&#10;#8 0x5558ee27b20e &lt;unknown&gt;&#10;#9 0x5558ee222232 &lt;unknown&gt;&#10;#10 0x5558ee222ee1 &lt;unknown&gt;&#10;#11 0x5558ee72a3f9 &lt;unknown&gt;&#10;#12 0x5558ee72d34d &lt;unknown&gt;&#10;#13 0x5558ee713122 &lt;unknown&gt;&#10;#14 0x5558ee72df2b &lt;unknown&gt;&#10;#15 0x5558ee6f9c30 &lt;unknown&gt;&#10;#16 0x5558ee74ed78 &lt;unknown&gt;&#10;#17 0x5558ee74ef4c &lt;unknown&gt;&#10;#18 0x5558ee760973 &lt;unknown&gt;&#10;#19 0x7f116a89caa4 &lt;unknown&gt;&#10;#20 0x7f116a929c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Related Project Filter" time="2.599">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55d15486361a &lt;unknown&gt;&#10;#1 0x55d1542e020b &lt;unknown&gt;&#10;#2 0x55d1542e6f5f &lt;unknown&gt;&#10;#3 0x55d1542e95f4 &lt;unknown&gt;&#10;#4 0x55d1542e96c3 &lt;unknown&gt;&#10;#5 0x55d154337bd0 &lt;unknown&gt;&#10;#6 0x55d154336f98 &lt;unknown&gt;&#10;#7 0x55d1543862c2 &lt;unknown&gt;&#10;#8 0x55d15437d20e &lt;unknown&gt;&#10;#9 0x55d154324232 &lt;unknown&gt;&#10;#10 0x55d154324ee1 &lt;unknown&gt;&#10;#11 0x55d15482c3f9 &lt;unknown&gt;&#10;#12 0x55d15482f34d &lt;unknown&gt;&#10;#13 0x55d154815122 &lt;unknown&gt;&#10;#14 0x55d15482ff2b &lt;unknown&gt;&#10;#15 0x55d1547fbc30 &lt;unknown&gt;&#10;#16 0x55d154850d78 &lt;unknown&gt;&#10;#17 0x55d154850f4c &lt;unknown&gt;&#10;#18 0x55d154862973 &lt;unknown&gt;&#10;#19 0x7fe9dd29caa4 &lt;unknown&gt;&#10;#20 0x7fe9dd329c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Start Work Date Filter" time="2.667">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55dbd90fe61a &lt;unknown&gt;&#10;#1 0x55dbd8b7b20b &lt;unknown&gt;&#10;#2 0x55dbd8b81f5f &lt;unknown&gt;&#10;#3 0x55dbd8b845f4 &lt;unknown&gt;&#10;#4 0x55dbd8b846c3 &lt;unknown&gt;&#10;#5 0x55dbd8bd2bd0 &lt;unknown&gt;&#10;#6 0x55dbd8bd1f98 &lt;unknown&gt;&#10;#7 0x55dbd8c212c2 &lt;unknown&gt;&#10;#8 0x55dbd8c1820e &lt;unknown&gt;&#10;#9 0x55dbd8bbf232 &lt;unknown&gt;&#10;#10 0x55dbd8bbfee1 &lt;unknown&gt;&#10;#11 0x55dbd90c73f9 &lt;unknown&gt;&#10;#12 0x55dbd90ca34d &lt;unknown&gt;&#10;#13 0x55dbd90b0122 &lt;unknown&gt;&#10;#14 0x55dbd90caf2b &lt;unknown&gt;&#10;#15 0x55dbd9096c30 &lt;unknown&gt;&#10;#16 0x55dbd90ebd78 &lt;unknown&gt;&#10;#17 0x55dbd90ebf4c &lt;unknown&gt;&#10;#18 0x55dbd90fd973 &lt;unknown&gt;&#10;#19 0x7f136329caa4 &lt;unknown&gt;&#10;#20 0x7f1363329c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test End Work Date Filter" time="2.848">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x557a49d2e61a &lt;unknown&gt;&#10;#1 0x557a497ab20b &lt;unknown&gt;&#10;#2 0x557a497b1f5f &lt;unknown&gt;&#10;#3 0x557a497b45f4 &lt;unknown&gt;&#10;#4 0x557a497b46c3 &lt;unknown&gt;&#10;#5 0x557a49802bd0 &lt;unknown&gt;&#10;#6 0x557a49801f98 &lt;unknown&gt;&#10;#7 0x557a498512c2 &lt;unknown&gt;&#10;#8 0x557a4984820e &lt;unknown&gt;&#10;#9 0x557a497ef232 &lt;unknown&gt;&#10;#10 0x557a497efee1 &lt;unknown&gt;&#10;#11 0x557a49cf73f9 &lt;unknown&gt;&#10;#12 0x557a49cfa34d &lt;unknown&gt;&#10;#13 0x557a49ce0122 &lt;unknown&gt;&#10;#14 0x557a49cfaf2b &lt;unknown&gt;&#10;#15 0x557a49cc6c30 &lt;unknown&gt;&#10;#16 0x557a49d1bd78 &lt;unknown&gt;&#10;#17 0x557a49d1bf4c &lt;unknown&gt;&#10;#18 0x557a49d2d973 &lt;unknown&gt;&#10;#19 0x7effc189caa4 &lt;unknown&gt;&#10;#20 0x7effc1929c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Date Range Filter" time="2.883">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x555f8f33961a &lt;unknown&gt;&#10;#1 0x555f8edb620b &lt;unknown&gt;&#10;#2 0x555f8edbcf5f &lt;unknown&gt;&#10;#3 0x555f8edbf5f4 &lt;unknown&gt;&#10;#4 0x555f8edbf6c3 &lt;unknown&gt;&#10;#5 0x555f8ee0dbd0 &lt;unknown&gt;&#10;#6 0x555f8ee0cf98 &lt;unknown&gt;&#10;#7 0x555f8ee5c2c2 &lt;unknown&gt;&#10;#8 0x555f8ee5320e &lt;unknown&gt;&#10;#9 0x555f8edfa232 &lt;unknown&gt;&#10;#10 0x555f8edfaee1 &lt;unknown&gt;&#10;#11 0x555f8f3023f9 &lt;unknown&gt;&#10;#12 0x555f8f30534d &lt;unknown&gt;&#10;#13 0x555f8f2eb122 &lt;unknown&gt;&#10;#14 0x555f8f305f2b &lt;unknown&gt;&#10;#15 0x555f8f2d1c30 &lt;unknown&gt;&#10;#16 0x555f8f326d78 &lt;unknown&gt;&#10;#17 0x555f8f326f4c &lt;unknown&gt;&#10;#18 0x555f8f338973 &lt;unknown&gt;&#10;#19 0x7f582ee9caa4 &lt;unknown&gt;&#10;#20 0x7f582ef29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Installer Names Search Filter" time="2.887">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55b78ce6161a &lt;unknown&gt;&#10;#1 0x55b78c8de20b &lt;unknown&gt;&#10;#2 0x55b78c8e4f5f &lt;unknown&gt;&#10;#3 0x55b78c8e75f4 &lt;unknown&gt;&#10;#4 0x55b78c8e76c3 &lt;unknown&gt;&#10;#5 0x55b78c935bd0 &lt;unknown&gt;&#10;#6 0x55b78c934f98 &lt;unknown&gt;&#10;#7 0x55b78c9842c2 &lt;unknown&gt;&#10;#8 0x55b78c97b20e &lt;unknown&gt;&#10;#9 0x55b78c922232 &lt;unknown&gt;&#10;#10 0x55b78c922ee1 &lt;unknown&gt;&#10;#11 0x55b78ce2a3f9 &lt;unknown&gt;&#10;#12 0x55b78ce2d34d &lt;unknown&gt;&#10;#13 0x55b78ce13122 &lt;unknown&gt;&#10;#14 0x55b78ce2df2b &lt;unknown&gt;&#10;#15 0x55b78cdf9c30 &lt;unknown&gt;&#10;#16 0x55b78ce4ed78 &lt;unknown&gt;&#10;#17 0x55b78ce4ef4c &lt;unknown&gt;&#10;#18 0x55b78ce60973 &lt;unknown&gt;&#10;#19 0x7f31c009caa4 &lt;unknown&gt;&#10;#20 0x7f31c0129c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Installer Names Checkbox Filter" time="2.859">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55c431cc961a &lt;unknown&gt;&#10;#1 0x55c43174620b &lt;unknown&gt;&#10;#2 0x55c43174cf5f &lt;unknown&gt;&#10;#3 0x55c43174f5f4 &lt;unknown&gt;&#10;#4 0x55c43174f6c3 &lt;unknown&gt;&#10;#5 0x55c43179dbd0 &lt;unknown&gt;&#10;#6 0x55c43179cf98 &lt;unknown&gt;&#10;#7 0x55c4317ec2c2 &lt;unknown&gt;&#10;#8 0x55c4317e320e &lt;unknown&gt;&#10;#9 0x55c43178a232 &lt;unknown&gt;&#10;#10 0x55c43178aee1 &lt;unknown&gt;&#10;#11 0x55c431c923f9 &lt;unknown&gt;&#10;#12 0x55c431c9534d &lt;unknown&gt;&#10;#13 0x55c431c7b122 &lt;unknown&gt;&#10;#14 0x55c431c95f2b &lt;unknown&gt;&#10;#15 0x55c431c61c30 &lt;unknown&gt;&#10;#16 0x55c431cb6d78 &lt;unknown&gt;&#10;#17 0x55c431cb6f4c &lt;unknown&gt;&#10;#18 0x55c431cc8973 &lt;unknown&gt;&#10;#19 0x7efd8b09caa4 &lt;unknown&gt;&#10;#20 0x7efd8b129c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Approval Status Filter - All" time="2.867">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x56180e20761a &lt;unknown&gt;&#10;#1 0x56180dc8420b &lt;unknown&gt;&#10;#2 0x56180dc8af5f &lt;unknown&gt;&#10;#3 0x56180dc8d5f4 &lt;unknown&gt;&#10;#4 0x56180dc8d6c3 &lt;unknown&gt;&#10;#5 0x56180dcdbbd0 &lt;unknown&gt;&#10;#6 0x56180dcdaf98 &lt;unknown&gt;&#10;#7 0x56180dd2a2c2 &lt;unknown&gt;&#10;#8 0x56180dd2120e &lt;unknown&gt;&#10;#9 0x56180dcc8232 &lt;unknown&gt;&#10;#10 0x56180dcc8ee1 &lt;unknown&gt;&#10;#11 0x56180e1d03f9 &lt;unknown&gt;&#10;#12 0x56180e1d334d &lt;unknown&gt;&#10;#13 0x56180e1b9122 &lt;unknown&gt;&#10;#14 0x56180e1d3f2b &lt;unknown&gt;&#10;#15 0x56180e19fc30 &lt;unknown&gt;&#10;#16 0x56180e1f4d78 &lt;unknown&gt;&#10;#17 0x56180e1f4f4c &lt;unknown&gt;&#10;#18 0x56180e206973 &lt;unknown&gt;&#10;#19 0x7fa39ea9caa4 &lt;unknown&gt;&#10;#20 0x7fa39eb29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Approval Status Filter - Approve" time="2.598">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55b3d17a161a &lt;unknown&gt;&#10;#1 0x55b3d121e20b &lt;unknown&gt;&#10;#2 0x55b3d1224f5f &lt;unknown&gt;&#10;#3 0x55b3d12275f4 &lt;unknown&gt;&#10;#4 0x55b3d12276c3 &lt;unknown&gt;&#10;#5 0x55b3d1275bd0 &lt;unknown&gt;&#10;#6 0x55b3d1274f98 &lt;unknown&gt;&#10;#7 0x55b3d12c42c2 &lt;unknown&gt;&#10;#8 0x55b3d12bb20e &lt;unknown&gt;&#10;#9 0x55b3d1262232 &lt;unknown&gt;&#10;#10 0x55b3d1262ee1 &lt;unknown&gt;&#10;#11 0x55b3d176a3f9 &lt;unknown&gt;&#10;#12 0x55b3d176d34d &lt;unknown&gt;&#10;#13 0x55b3d1753122 &lt;unknown&gt;&#10;#14 0x55b3d176df2b &lt;unknown&gt;&#10;#15 0x55b3d1739c30 &lt;unknown&gt;&#10;#16 0x55b3d178ed78 &lt;unknown&gt;&#10;#17 0x55b3d178ef4c &lt;unknown&gt;&#10;#18 0x55b3d17a0973 &lt;unknown&gt;&#10;#19 0x7f8ca649caa4 &lt;unknown&gt;&#10;#20 0x7f8ca6529c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Approval Status Filter - Unapprove" time="3.067">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x561dec16361a &lt;unknown&gt;&#10;#1 0x561debbe020b &lt;unknown&gt;&#10;#2 0x561debbe6f5f &lt;unknown&gt;&#10;#3 0x561debbe95f4 &lt;unknown&gt;&#10;#4 0x561debbe96c3 &lt;unknown&gt;&#10;#5 0x561debc37bd0 &lt;unknown&gt;&#10;#6 0x561debc36f98 &lt;unknown&gt;&#10;#7 0x561debc862c2 &lt;unknown&gt;&#10;#8 0x561debc7d20e &lt;unknown&gt;&#10;#9 0x561debc24232 &lt;unknown&gt;&#10;#10 0x561debc24ee1 &lt;unknown&gt;&#10;#11 0x561dec12c3f9 &lt;unknown&gt;&#10;#12 0x561dec12f34d &lt;unknown&gt;&#10;#13 0x561dec115122 &lt;unknown&gt;&#10;#14 0x561dec12ff2b &lt;unknown&gt;&#10;#15 0x561dec0fbc30 &lt;unknown&gt;&#10;#16 0x561dec150d78 &lt;unknown&gt;&#10;#17 0x561dec150f4c &lt;unknown&gt;&#10;#18 0x561dec162973 &lt;unknown&gt;&#10;#19 0x7f2d04a9caa4 &lt;unknown&gt;&#10;#20 0x7f2d04b29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Product Description Filter" time="2.751">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55646cc0a61a &lt;unknown&gt;&#10;#1 0x55646c68720b &lt;unknown&gt;&#10;#2 0x55646c68df5f &lt;unknown&gt;&#10;#3 0x55646c6905f4 &lt;unknown&gt;&#10;#4 0x55646c6906c3 &lt;unknown&gt;&#10;#5 0x55646c6debd0 &lt;unknown&gt;&#10;#6 0x55646c6ddf98 &lt;unknown&gt;&#10;#7 0x55646c72d2c2 &lt;unknown&gt;&#10;#8 0x55646c72420e &lt;unknown&gt;&#10;#9 0x55646c6cb232 &lt;unknown&gt;&#10;#10 0x55646c6cbee1 &lt;unknown&gt;&#10;#11 0x55646cbd33f9 &lt;unknown&gt;&#10;#12 0x55646cbd634d &lt;unknown&gt;&#10;#13 0x55646cbbc122 &lt;unknown&gt;&#10;#14 0x55646cbd6f2b &lt;unknown&gt;&#10;#15 0x55646cba2c30 &lt;unknown&gt;&#10;#16 0x55646cbf7d78 &lt;unknown&gt;&#10;#17 0x55646cbf7f4c &lt;unknown&gt;&#10;#18 0x55646cc09973 &lt;unknown&gt;&#10;#19 0x7fb39e69caa4 &lt;unknown&gt;&#10;#20 0x7fb39e729c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test With Attachment Filter - With Attachment" time="2.763">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55f00517561a &lt;unknown&gt;&#10;#1 0x55f004bf220b &lt;unknown&gt;&#10;#2 0x55f004bf8f5f &lt;unknown&gt;&#10;#3 0x55f004bfb5f4 &lt;unknown&gt;&#10;#4 0x55f004bfb6c3 &lt;unknown&gt;&#10;#5 0x55f004c49bd0 &lt;unknown&gt;&#10;#6 0x55f004c48f98 &lt;unknown&gt;&#10;#7 0x55f004c982c2 &lt;unknown&gt;&#10;#8 0x55f004c8f20e &lt;unknown&gt;&#10;#9 0x55f004c36232 &lt;unknown&gt;&#10;#10 0x55f004c36ee1 &lt;unknown&gt;&#10;#11 0x55f00513e3f9 &lt;unknown&gt;&#10;#12 0x55f00514134d &lt;unknown&gt;&#10;#13 0x55f005127122 &lt;unknown&gt;&#10;#14 0x55f005141f2b &lt;unknown&gt;&#10;#15 0x55f00510dc30 &lt;unknown&gt;&#10;#16 0x55f005162d78 &lt;unknown&gt;&#10;#17 0x55f005162f4c &lt;unknown&gt;&#10;#18 0x55f005174973 &lt;unknown&gt;&#10;#19 0x7f3c83e9caa4 &lt;unknown&gt;&#10;#20 0x7f3c83f29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test With Attachment Filter - All Reports" time="2.733">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55f71430f61a &lt;unknown&gt;&#10;#1 0x55f713d8c20b &lt;unknown&gt;&#10;#2 0x55f713d92f5f &lt;unknown&gt;&#10;#3 0x55f713d955f4 &lt;unknown&gt;&#10;#4 0x55f713d956c3 &lt;unknown&gt;&#10;#5 0x55f713de3bd0 &lt;unknown&gt;&#10;#6 0x55f713de2f98 &lt;unknown&gt;&#10;#7 0x55f713e322c2 &lt;unknown&gt;&#10;#8 0x55f713e2920e &lt;unknown&gt;&#10;#9 0x55f713dd0232 &lt;unknown&gt;&#10;#10 0x55f713dd0ee1 &lt;unknown&gt;&#10;#11 0x55f7142d83f9 &lt;unknown&gt;&#10;#12 0x55f7142db34d &lt;unknown&gt;&#10;#13 0x55f7142c1122 &lt;unknown&gt;&#10;#14 0x55f7142dbf2b &lt;unknown&gt;&#10;#15 0x55f7142a7c30 &lt;unknown&gt;&#10;#16 0x55f7142fcd78 &lt;unknown&gt;&#10;#17 0x55f7142fcf4c &lt;unknown&gt;&#10;#18 0x55f71430e973 &lt;unknown&gt;&#10;#19 0x7f6d8a49caa4 &lt;unknown&gt;&#10;#20 0x7f6d8a529c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Clear Filter Functionality" time="2.950">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55727605a61a &lt;unknown&gt;&#10;#1 0x557275ad720b &lt;unknown&gt;&#10;#2 0x557275addf5f &lt;unknown&gt;&#10;#3 0x557275ae05f4 &lt;unknown&gt;&#10;#4 0x557275ae06c3 &lt;unknown&gt;&#10;#5 0x557275b2ebd0 &lt;unknown&gt;&#10;#6 0x557275b2df98 &lt;unknown&gt;&#10;#7 0x557275b7d2c2 &lt;unknown&gt;&#10;#8 0x557275b7420e &lt;unknown&gt;&#10;#9 0x557275b1b232 &lt;unknown&gt;&#10;#10 0x557275b1bee1 &lt;unknown&gt;&#10;#11 0x5572760233f9 &lt;unknown&gt;&#10;#12 0x55727602634d &lt;unknown&gt;&#10;#13 0x55727600c122 &lt;unknown&gt;&#10;#14 0x557276026f2b &lt;unknown&gt;&#10;#15 0x557275ff2c30 &lt;unknown&gt;&#10;#16 0x557276047d78 &lt;unknown&gt;&#10;#17 0x557276047f4c &lt;unknown&gt;&#10;#18 0x557276059973 &lt;unknown&gt;&#10;#19 0x7f2958e9caa4 &lt;unknown&gt;&#10;#20 0x7f2958f29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Combined Filters - Customer And Date Range" time="2.655">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55616b56a61a &lt;unknown&gt;&#10;#1 0x55616afe720b &lt;unknown&gt;&#10;#2 0x55616afedf5f &lt;unknown&gt;&#10;#3 0x55616aff05f4 &lt;unknown&gt;&#10;#4 0x55616aff06c3 &lt;unknown&gt;&#10;#5 0x55616b03ebd0 &lt;unknown&gt;&#10;#6 0x55616b03df98 &lt;unknown&gt;&#10;#7 0x55616b08d2c2 &lt;unknown&gt;&#10;#8 0x55616b08420e &lt;unknown&gt;&#10;#9 0x55616b02b232 &lt;unknown&gt;&#10;#10 0x55616b02bee1 &lt;unknown&gt;&#10;#11 0x55616b5333f9 &lt;unknown&gt;&#10;#12 0x55616b53634d &lt;unknown&gt;&#10;#13 0x55616b51c122 &lt;unknown&gt;&#10;#14 0x55616b536f2b &lt;unknown&gt;&#10;#15 0x55616b502c30 &lt;unknown&gt;&#10;#16 0x55616b557d78 &lt;unknown&gt;&#10;#17 0x55616b557f4c &lt;unknown&gt;&#10;#18 0x55616b569973 &lt;unknown&gt;&#10;#19 0x7f74b4e9caa4 &lt;unknown&gt;&#10;#20 0x7f74b4f29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Combined Filters - Approval Status And Attachment" time="2.476">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x564e727f761a &lt;unknown&gt;&#10;#1 0x564e7227420b &lt;unknown&gt;&#10;#2 0x564e7227af5f &lt;unknown&gt;&#10;#3 0x564e7227d5f4 &lt;unknown&gt;&#10;#4 0x564e7227d6c3 &lt;unknown&gt;&#10;#5 0x564e722cbbd0 &lt;unknown&gt;&#10;#6 0x564e722caf98 &lt;unknown&gt;&#10;#7 0x564e7231a2c2 &lt;unknown&gt;&#10;#8 0x564e7231120e &lt;unknown&gt;&#10;#9 0x564e722b8232 &lt;unknown&gt;&#10;#10 0x564e722b8ee1 &lt;unknown&gt;&#10;#11 0x564e727c03f9 &lt;unknown&gt;&#10;#12 0x564e727c334d &lt;unknown&gt;&#10;#13 0x564e727a9122 &lt;unknown&gt;&#10;#14 0x564e727c3f2b &lt;unknown&gt;&#10;#15 0x564e7278fc30 &lt;unknown&gt;&#10;#16 0x564e727e4d78 &lt;unknown&gt;&#10;#17 0x564e727e4f4c &lt;unknown&gt;&#10;#18 0x564e727f6973 &lt;unknown&gt;&#10;#19 0x7f0d2c69caa4 &lt;unknown&gt;&#10;#20 0x7f0d2c729c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Filter Section Collapse And Expand" time="2.616">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x56322cb1761a &lt;unknown&gt;&#10;#1 0x56322c59420b &lt;unknown&gt;&#10;#2 0x56322c59af5f &lt;unknown&gt;&#10;#3 0x56322c59d5f4 &lt;unknown&gt;&#10;#4 0x56322c59d6c3 &lt;unknown&gt;&#10;#5 0x56322c5ebbd0 &lt;unknown&gt;&#10;#6 0x56322c5eaf98 &lt;unknown&gt;&#10;#7 0x56322c63a2c2 &lt;unknown&gt;&#10;#8 0x56322c63120e &lt;unknown&gt;&#10;#9 0x56322c5d8232 &lt;unknown&gt;&#10;#10 0x56322c5d8ee1 &lt;unknown&gt;&#10;#11 0x56322cae03f9 &lt;unknown&gt;&#10;#12 0x56322cae334d &lt;unknown&gt;&#10;#13 0x56322cac9122 &lt;unknown&gt;&#10;#14 0x56322cae3f2b &lt;unknown&gt;&#10;#15 0x56322caafc30 &lt;unknown&gt;&#10;#16 0x56322cb04d78 &lt;unknown&gt;&#10;#17 0x56322cb04f4c &lt;unknown&gt;&#10;#18 0x56322cb16973 &lt;unknown&gt;&#10;#19 0x7fe08b49caa4 &lt;unknown&gt;&#10;#20 0x7fe08b529c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying all search filter fields in the Field Report list view.&#10;Each filter field is tested individually to ensure proper functionality.&#10;NOTE: The fieldreport list has a default start date filter, so we extend the date range&#10;for non-date-specific tests to ensure meaningful results."/>
+</properties>
+</testsuite>
+<testsuite name="User Permission Fieldreport" tests="3" errors="0" failures="0" skipped="2" time="68.118" timestamp="2026-01-11T12:28:11.168181">
+<testcase classname="FinalistenTestCases.Fieldreport.User Permission Fieldreport" name="Test Admin User Can View All Field Reports" time="35.457">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.User Permission Fieldreport" name="Test Regular User View Own Field Reports" time="16.323">
+<skipped message="Regular user credentials not configured" type="SkipExecution"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.User Permission Fieldreport" name="Test Guest User Read Only Access" time="16.330">
+<skipped message="Guest user credentials not configured" type="SkipExecution"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for user permission testing in Field Report.&#10;&#10;Tests include:&#10;62. Regular user can only view/edit their own FRs&#10;63. Manager/Admin can view and approve all FRs&#10;64. Guest user has read-only access&#10;&#10;Note: These tests require different user accounts with different roles.&#10;The test structure is provided; actual execution depends on available test users."/>
+</properties>
+</testsuite>
+<testsuite name="Validation Datatype Fieldreport" tests="4" errors="0" failures="2" skipped="0" time="65.607" timestamp="2026-01-11T12:29:19.287149">
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Datatype Fieldreport" name="Test Alphabetic Characters In Total Hours Rejected" time="13.719">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Datatype Fieldreport" name="Test Negative Value In Total Hours Rejected" time="15.191">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Datatype Fieldreport" name="Test Decimal Value In Total Hours Accepted" time="17.992">
+<failure message="Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/ZAO4bt/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Datatype Fieldreport" name="Test Long Text In Message Field Handled" time="18.696">
+<failure message="Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/Ft9eb4/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for validating data types in Field Report fields.&#10;&#10;Tests include:&#10;26. Enter alphabetic characters in Total Hours - verify rejection&#10;27. Enter negative value in Total Hours - verify rejection&#10;28. Enter decimal value in Total Hours - verify acceptance&#10;29. Enter extremely long text in Message - verify handling"/>
+</properties>
+</testsuite>
+<testsuite name="Validation Required Fields Fieldreport" tests="5" errors="0" failures="1" skipped="0" time="64.509" timestamp="2026-01-11T12:30:24.894654">
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Required Fields Fieldreport" name="Test Submit Without Customer Shows Error" time="9.750">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Required Fields Fieldreport" name="Test Submit Without Project Shows Error" time="11.919">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Required Fields Fieldreport" name="Test Submit Without SubProject Shows Error" time="13.837">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Required Fields Fieldreport" name="Test Submit Without Work Date Shows Error" time="13.920">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Required Fields Fieldreport" name="Test Submit Without Installer Shows Error" time="15.074">
+<failure message="System should prevent submission without Installer" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for validating required fields in Field Report creation.&#10;&#10;Tests include:&#10;21. Submit without Customer - verify error&#10;22. Submit without Project - verify error&#10;23. Submit without SubProject - verify error&#10;24. Submit without Work Date - verify error&#10;25. Submit without Installer - verify error"/>
+</properties>
+</testsuite>
+<testsuite name="Work Date Validation Fieldreport" tests="4" errors="0" failures="3" skipped="0" time="75.185" timestamp="2026-01-11T12:31:29.404959">
+<testcase classname="FinalistenTestCases.Fieldreport.Work Date Validation Fieldreport" name="Test Create Field Report With Valid Work Date" time="18.845">
+<failure message="Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/uHhlkU/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Work Date Validation Fieldreport" name="Test Reject Field Report With Closed Period Date" time="18.941">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Work Date Validation Fieldreport" name="Test Reject Field Report With Future Date" time="19.224">
+<failure message="Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/R5406h/edit/" type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Work Date Validation Fieldreport" name="Test Boundary Work Date Within Range" time="18.165">
+<failure message="Could not extract fieldreport ID from URL: https://preproderp.finalisten.se/fieldreport/list/wusQFo/edit/" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Work Date Range validation in Field Report.&#10;&#10;Tests include:&#10;- Creating field report with valid work date (within allowed range)&#10;- Attempting to create field report with work date outside allowed range&#10;- Verifying error message when work date is outside range&#10;&#10;Note: The allowed work date range is configured in the Settings app.&#10;Pre-production has October 2025 as the last open period."/>
+</properties>
+</testsuite>
+</testsuite>
+<testsuite name="Fieldreportapproval" tests="1" errors="0" failures="1" skipped="0" time="3.018" timestamp="2026-01-11T12:32:44.592657">
+<testsuite name="Open Fieldreportapproval App" tests="1" errors="0" failures="1" skipped="0" time="3.015" timestamp="2026-01-11T12:32:44.594241">
+<testcase classname="FinalistenTestCases.Fieldreportapproval.Open Fieldreportapproval App" name="Verify Field Report Approval App Opens Successfully" time="3.011">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x561577da561a &lt;unknown&gt;&#10;#1 0x56157782220b &lt;unknown&gt;&#10;#2 0x561577828f5f &lt;unknown&gt;&#10;#3 0x56157782b5f4 &lt;unknown&gt;&#10;#4 0x56157782b6c3 &lt;unknown&gt;&#10;#5 0x561577879bd0 &lt;unknown&gt;&#10;#6 0x561577878f98 &lt;unknown&gt;&#10;#7 0x5615778c82c2 &lt;unknown&gt;&#10;#8 0x5615778bf20e &lt;unknown&gt;&#10;#9 0x561577866232 &lt;unknown&gt;&#10;#10 0x561577866ee1 &lt;unknown&gt;&#10;#11 0x561577d6e3f9 &lt;unknown&gt;&#10;#12 0x561577d7134d &lt;unknown&gt;&#10;#13 0x561577d57122 &lt;unknown&gt;&#10;#14 0x561577d71f2b &lt;unknown&gt;&#10;#15 0x561577d3dc30 &lt;unknown&gt;&#10;#16 0x561577d92d78 &lt;unknown&gt;&#10;#17 0x561577d92f4c &lt;unknown&gt;&#10;#18 0x561577da4973 &lt;unknown&gt;&#10;#19 0x7fb67389caa4 &lt;unknown&gt;&#10;#20 0x7fb673929c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Guestuser" tests="3" errors="0" failures="3" skipped="0" time="11.617" timestamp="2026-01-11T12:32:47.610924">
+<testsuite name="Guestuser" tests="1" errors="0" failures="1" skipped="0" time="2.632" timestamp="2026-01-11T12:32:50.777794">
+<testcase classname="FinalistenTestCases.Guestuser.Guestuser" name="Verify Subcontractor Edit Page Opens Successfully" time="2.625">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x56547288e61a &lt;unknown&gt;&#10;#1 0x56547230b20b &lt;unknown&gt;&#10;#2 0x565472311f5f &lt;unknown&gt;&#10;#3 0x5654723145f4 &lt;unknown&gt;&#10;#4 0x5654723146c3 &lt;unknown&gt;&#10;#5 0x565472362bd0 &lt;unknown&gt;&#10;#6 0x565472361f98 &lt;unknown&gt;&#10;#7 0x5654723b12c2 &lt;unknown&gt;&#10;#8 0x5654723a820e &lt;unknown&gt;&#10;#9 0x56547234f232 &lt;unknown&gt;&#10;#10 0x56547234fee1 &lt;unknown&gt;&#10;#11 0x5654728573f9 &lt;unknown&gt;&#10;#12 0x56547285a34d &lt;unknown&gt;&#10;#13 0x565472840122 &lt;unknown&gt;&#10;#14 0x56547285af2b &lt;unknown&gt;&#10;#15 0x565472826c30 &lt;unknown&gt;&#10;#16 0x56547287bd78 &lt;unknown&gt;&#10;#17 0x56547287bf4c &lt;unknown&gt;&#10;#18 0x56547288d973 &lt;unknown&gt;&#10;#19 0x7f9b89a9caa4 &lt;unknown&gt;&#10;#20 0x7f9b89b29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Guestuser Create" tests="1" errors="0" failures="1" skipped="0" time="2.966" timestamp="2026-01-11T12:32:53.410170">
+<testcase classname="FinalistenTestCases.Guestuser.Open Guestuser Create" name="Verify Guest User Create Page Opens Successfully" time="2.961">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x560c20a8761a &lt;unknown&gt;&#10;#1 0x560c2050420b &lt;unknown&gt;&#10;#2 0x560c2050af5f &lt;unknown&gt;&#10;#3 0x560c2050d5f4 &lt;unknown&gt;&#10;#4 0x560c2050d6c3 &lt;unknown&gt;&#10;#5 0x560c2055bbd0 &lt;unknown&gt;&#10;#6 0x560c2055af98 &lt;unknown&gt;&#10;#7 0x560c205aa2c2 &lt;unknown&gt;&#10;#8 0x560c205a120e &lt;unknown&gt;&#10;#9 0x560c20548232 &lt;unknown&gt;&#10;#10 0x560c20548ee1 &lt;unknown&gt;&#10;#11 0x560c20a503f9 &lt;unknown&gt;&#10;#12 0x560c20a5334d &lt;unknown&gt;&#10;#13 0x560c20a39122 &lt;unknown&gt;&#10;#14 0x560c20a53f2b &lt;unknown&gt;&#10;#15 0x560c20a1fc30 &lt;unknown&gt;&#10;#16 0x560c20a74d78 &lt;unknown&gt;&#10;#17 0x560c20a74f4c &lt;unknown&gt;&#10;#18 0x560c20a86973 &lt;unknown&gt;&#10;#19 0x7fd72aa9caa4 &lt;unknown&gt;&#10;#20 0x7fd72ab29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Guestuser List" tests="1" errors="0" failures="1" skipped="0" time="2.850" timestamp="2026-01-11T12:32:56.377505">
+<testcase classname="FinalistenTestCases.Guestuser.Open Guestuser List" name="Verify Guest User List Opens Successfully" time="2.845">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55752df2761a &lt;unknown&gt;&#10;#1 0x55752d9a420b &lt;unknown&gt;&#10;#2 0x55752d9aaf5f &lt;unknown&gt;&#10;#3 0x55752d9ad5f4 &lt;unknown&gt;&#10;#4 0x55752d9ad6c3 &lt;unknown&gt;&#10;#5 0x55752d9fbbd0 &lt;unknown&gt;&#10;#6 0x55752d9faf98 &lt;unknown&gt;&#10;#7 0x55752da4a2c2 &lt;unknown&gt;&#10;#8 0x55752da4120e &lt;unknown&gt;&#10;#9 0x55752d9e8232 &lt;unknown&gt;&#10;#10 0x55752d9e8ee1 &lt;unknown&gt;&#10;#11 0x55752def03f9 &lt;unknown&gt;&#10;#12 0x55752def334d &lt;unknown&gt;&#10;#13 0x55752ded9122 &lt;unknown&gt;&#10;#14 0x55752def3f2b &lt;unknown&gt;&#10;#15 0x55752debfc30 &lt;unknown&gt;&#10;#16 0x55752df14d78 &lt;unknown&gt;&#10;#17 0x55752df14f4c &lt;unknown&gt;&#10;#18 0x55752df26973 &lt;unknown&gt;&#10;#19 0x7f4ec749caa4 &lt;unknown&gt;&#10;#20 0x7f4ec7529c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Invoicereport" tests="1" errors="0" failures="1" skipped="0" time="2.932" timestamp="2026-01-11T12:32:59.229083">
+<testsuite name="Open Invoicereport App" tests="1" errors="0" failures="1" skipped="0" time="2.929" timestamp="2026-01-11T12:32:59.230773">
+<testcase classname="FinalistenTestCases.Invoicereport.Open Invoicereport App" name="Verify Project Report App Opens Successfully" time="2.925">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x556e1756661a &lt;unknown&gt;&#10;#1 0x556e16fe320b &lt;unknown&gt;&#10;#2 0x556e16fe9f5f &lt;unknown&gt;&#10;#3 0x556e16fec5f4 &lt;unknown&gt;&#10;#4 0x556e16fec6c3 &lt;unknown&gt;&#10;#5 0x556e1703abd0 &lt;unknown&gt;&#10;#6 0x556e17039f98 &lt;unknown&gt;&#10;#7 0x556e170892c2 &lt;unknown&gt;&#10;#8 0x556e1708020e &lt;unknown&gt;&#10;#9 0x556e17027232 &lt;unknown&gt;&#10;#10 0x556e17027ee1 &lt;unknown&gt;&#10;#11 0x556e1752f3f9 &lt;unknown&gt;&#10;#12 0x556e1753234d &lt;unknown&gt;&#10;#13 0x556e17518122 &lt;unknown&gt;&#10;#14 0x556e17532f2b &lt;unknown&gt;&#10;#15 0x556e174fec30 &lt;unknown&gt;&#10;#16 0x556e17553d78 &lt;unknown&gt;&#10;#17 0x556e17553f4c &lt;unknown&gt;&#10;#18 0x556e17565973 &lt;unknown&gt;&#10;#19 0x7fcfbc09caa4 &lt;unknown&gt;&#10;#20 0x7fcfbc129c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Invoicing" tests="3" errors="0" failures="3" skipped="0" time="8.651" timestamp="2026-01-11T12:33:02.161765">
+<testsuite name="Open Invoice Edit" tests="1" errors="0" failures="1" skipped="0" time="2.981" timestamp="2026-01-11T12:33:02.163589">
+<testcase classname="FinalistenTestCases.Invoicing.Open Invoice Edit" name="Verify Invoice Edit View Opens Successfully" time="2.976">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x556e08ad161a &lt;unknown&gt;&#10;#1 0x556e0854e20b &lt;unknown&gt;&#10;#2 0x556e08554f5f &lt;unknown&gt;&#10;#3 0x556e085575f4 &lt;unknown&gt;&#10;#4 0x556e085576c3 &lt;unknown&gt;&#10;#5 0x556e085a5bd0 &lt;unknown&gt;&#10;#6 0x556e085a4f98 &lt;unknown&gt;&#10;#7 0x556e085f42c2 &lt;unknown&gt;&#10;#8 0x556e085eb20e &lt;unknown&gt;&#10;#9 0x556e08592232 &lt;unknown&gt;&#10;#10 0x556e08592ee1 &lt;unknown&gt;&#10;#11 0x556e08a9a3f9 &lt;unknown&gt;&#10;#12 0x556e08a9d34d &lt;unknown&gt;&#10;#13 0x556e08a83122 &lt;unknown&gt;&#10;#14 0x556e08a9df2b &lt;unknown&gt;&#10;#15 0x556e08a69c30 &lt;unknown&gt;&#10;#16 0x556e08abed78 &lt;unknown&gt;&#10;#17 0x556e08abef4c &lt;unknown&gt;&#10;#18 0x556e08ad0973 &lt;unknown&gt;&#10;#19 0x7f2ca489caa4 &lt;unknown&gt;&#10;#20 0x7f2ca4929c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Invoice List" tests="1" errors="0" failures="1" skipped="0" time="2.832" timestamp="2026-01-11T12:33:05.145366">
+<testcase classname="FinalistenTestCases.Invoicing.Open Invoice List" name="Verify Invoice List View Opens Successfully" time="2.827">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55993018061a &lt;unknown&gt;&#10;#1 0x55992fbfd20b &lt;unknown&gt;&#10;#2 0x55992fc03f5f &lt;unknown&gt;&#10;#3 0x55992fc065f4 &lt;unknown&gt;&#10;#4 0x55992fc066c3 &lt;unknown&gt;&#10;#5 0x55992fc54bd0 &lt;unknown&gt;&#10;#6 0x55992fc53f98 &lt;unknown&gt;&#10;#7 0x55992fca32c2 &lt;unknown&gt;&#10;#8 0x55992fc9a20e &lt;unknown&gt;&#10;#9 0x55992fc41232 &lt;unknown&gt;&#10;#10 0x55992fc41ee1 &lt;unknown&gt;&#10;#11 0x5599301493f9 &lt;unknown&gt;&#10;#12 0x55993014c34d &lt;unknown&gt;&#10;#13 0x559930132122 &lt;unknown&gt;&#10;#14 0x55993014cf2b &lt;unknown&gt;&#10;#15 0x559930118c30 &lt;unknown&gt;&#10;#16 0x55993016dd78 &lt;unknown&gt;&#10;#17 0x55993016df4c &lt;unknown&gt;&#10;#18 0x55993017f973 &lt;unknown&gt;&#10;#19 0x7f957329caa4 &lt;unknown&gt;&#10;#20 0x7f9573329c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Invoicing Tree" tests="1" errors="0" failures="1" skipped="0" time="2.834" timestamp="2026-01-11T12:33:07.978061">
+<testcase classname="FinalistenTestCases.Invoicing.Open Invoicing Tree" name="Verify Invoicing App Opens Successfully" time="2.829">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55ecd761b61a &lt;unknown&gt;&#10;#1 0x55ecd709820b &lt;unknown&gt;&#10;#2 0x55ecd709ef5f &lt;unknown&gt;&#10;#3 0x55ecd70a15f4 &lt;unknown&gt;&#10;#4 0x55ecd70a16c3 &lt;unknown&gt;&#10;#5 0x55ecd70efbd0 &lt;unknown&gt;&#10;#6 0x55ecd70eef98 &lt;unknown&gt;&#10;#7 0x55ecd713e2c2 &lt;unknown&gt;&#10;#8 0x55ecd713520e &lt;unknown&gt;&#10;#9 0x55ecd70dc232 &lt;unknown&gt;&#10;#10 0x55ecd70dcee1 &lt;unknown&gt;&#10;#11 0x55ecd75e43f9 &lt;unknown&gt;&#10;#12 0x55ecd75e734d &lt;unknown&gt;&#10;#13 0x55ecd75cd122 &lt;unknown&gt;&#10;#14 0x55ecd75e7f2b &lt;unknown&gt;&#10;#15 0x55ecd75b3c30 &lt;unknown&gt;&#10;#16 0x55ecd7608d78 &lt;unknown&gt;&#10;#17 0x55ecd7608f4c &lt;unknown&gt;&#10;#18 0x55ecd761a973 &lt;unknown&gt;&#10;#19 0x7f13dfc9caa4 &lt;unknown&gt;&#10;#20 0x7f13dfd29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Myproduction" tests="1" errors="0" failures="1" skipped="0" time="2.697" timestamp="2026-01-11T12:33:10.813807">
+<testsuite name="Open Myproduction App" tests="1" errors="0" failures="1" skipped="0" time="2.694" timestamp="2026-01-11T12:33:10.815327">
+<testcase classname="FinalistenTestCases.Myproduction.Open Myproduction App" name="Verify MyProduction App Opens Successfully" time="2.691">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5559d873f61a &lt;unknown&gt;&#10;#1 0x5559d81bc20b &lt;unknown&gt;&#10;#2 0x5559d81c2f5f &lt;unknown&gt;&#10;#3 0x5559d81c55f4 &lt;unknown&gt;&#10;#4 0x5559d81c56c3 &lt;unknown&gt;&#10;#5 0x5559d8213bd0 &lt;unknown&gt;&#10;#6 0x5559d8212f98 &lt;unknown&gt;&#10;#7 0x5559d82622c2 &lt;unknown&gt;&#10;#8 0x5559d825920e &lt;unknown&gt;&#10;#9 0x5559d8200232 &lt;unknown&gt;&#10;#10 0x5559d8200ee1 &lt;unknown&gt;&#10;#11 0x5559d87083f9 &lt;unknown&gt;&#10;#12 0x5559d870b34d &lt;unknown&gt;&#10;#13 0x5559d86f1122 &lt;unknown&gt;&#10;#14 0x5559d870bf2b &lt;unknown&gt;&#10;#15 0x5559d86d7c30 &lt;unknown&gt;&#10;#16 0x5559d872cd78 &lt;unknown&gt;&#10;#17 0x5559d872cf4c &lt;unknown&gt;&#10;#18 0x5559d873e973 &lt;unknown&gt;&#10;#19 0x7eff0be9caa4 &lt;unknown&gt;&#10;#20 0x7eff0bf29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Performancereport" tests="1" errors="0" failures="1" skipped="0" time="3.131" timestamp="2026-01-11T12:33:13.511826">
+<testsuite name="Open Performancereport App" tests="1" errors="0" failures="1" skipped="0" time="3.129" timestamp="2026-01-11T12:33:13.513454">
+<testcase classname="FinalistenTestCases.Performancereport.Open Performancereport App" name="Verify Performance Report App Opens Successfully" time="3.125">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5595924f361a &lt;unknown&gt;&#10;#1 0x559591f7020b &lt;unknown&gt;&#10;#2 0x559591f76f5f &lt;unknown&gt;&#10;#3 0x559591f795f4 &lt;unknown&gt;&#10;#4 0x559591f796c3 &lt;unknown&gt;&#10;#5 0x559591fc7bd0 &lt;unknown&gt;&#10;#6 0x559591fc6f98 &lt;unknown&gt;&#10;#7 0x5595920162c2 &lt;unknown&gt;&#10;#8 0x55959200d20e &lt;unknown&gt;&#10;#9 0x559591fb4232 &lt;unknown&gt;&#10;#10 0x559591fb4ee1 &lt;unknown&gt;&#10;#11 0x5595924bc3f9 &lt;unknown&gt;&#10;#12 0x5595924bf34d &lt;unknown&gt;&#10;#13 0x5595924a5122 &lt;unknown&gt;&#10;#14 0x5595924bff2b &lt;unknown&gt;&#10;#15 0x55959248bc30 &lt;unknown&gt;&#10;#16 0x5595924e0d78 &lt;unknown&gt;&#10;#17 0x5595924e0f4c &lt;unknown&gt;&#10;#18 0x5595924f2973 &lt;unknown&gt;&#10;#19 0x7fae5709caa4 &lt;unknown&gt;&#10;#20 0x7fae57129c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Productregister" tests="3" errors="0" failures="3" skipped="0" time="8.266" timestamp="2026-01-11T12:33:16.643577">
+<testsuite name="Open Productregister Create" tests="1" errors="0" failures="1" skipped="0" time="2.914" timestamp="2026-01-11T12:33:16.645434">
+<testcase classname="FinalistenTestCases.Productregister.Open Productregister Create" name="Verify Product Register Create Page Opens Successfully" time="2.910">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5603d957961a &lt;unknown&gt;&#10;#1 0x5603d8ff620b &lt;unknown&gt;&#10;#2 0x5603d8ffcf5f &lt;unknown&gt;&#10;#3 0x5603d8fff5f4 &lt;unknown&gt;&#10;#4 0x5603d8fff6c3 &lt;unknown&gt;&#10;#5 0x5603d904dbd0 &lt;unknown&gt;&#10;#6 0x5603d904cf98 &lt;unknown&gt;&#10;#7 0x5603d909c2c2 &lt;unknown&gt;&#10;#8 0x5603d909320e &lt;unknown&gt;&#10;#9 0x5603d903a232 &lt;unknown&gt;&#10;#10 0x5603d903aee1 &lt;unknown&gt;&#10;#11 0x5603d95423f9 &lt;unknown&gt;&#10;#12 0x5603d954534d &lt;unknown&gt;&#10;#13 0x5603d952b122 &lt;unknown&gt;&#10;#14 0x5603d9545f2b &lt;unknown&gt;&#10;#15 0x5603d9511c30 &lt;unknown&gt;&#10;#16 0x5603d9566d78 &lt;unknown&gt;&#10;#17 0x5603d9566f4c &lt;unknown&gt;&#10;#18 0x5603d9578973 &lt;unknown&gt;&#10;#19 0x7fc2f549caa4 &lt;unknown&gt;&#10;#20 0x7fc2f5529c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Productregister Edit" tests="1" errors="0" failures="1" skipped="0" time="2.684" timestamp="2026-01-11T12:33:19.559711">
+<testcase classname="FinalistenTestCases.Productregister.Open Productregister Edit" name="Verify Product Register Edit Page Opens Successfully" time="2.678">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x563f9dd2a61a &lt;unknown&gt;&#10;#1 0x563f9d7a720b &lt;unknown&gt;&#10;#2 0x563f9d7adf5f &lt;unknown&gt;&#10;#3 0x563f9d7b05f4 &lt;unknown&gt;&#10;#4 0x563f9d7b06c3 &lt;unknown&gt;&#10;#5 0x563f9d7febd0 &lt;unknown&gt;&#10;#6 0x563f9d7fdf98 &lt;unknown&gt;&#10;#7 0x563f9d84d2c2 &lt;unknown&gt;&#10;#8 0x563f9d84420e &lt;unknown&gt;&#10;#9 0x563f9d7eb232 &lt;unknown&gt;&#10;#10 0x563f9d7ebee1 &lt;unknown&gt;&#10;#11 0x563f9dcf33f9 &lt;unknown&gt;&#10;#12 0x563f9dcf634d &lt;unknown&gt;&#10;#13 0x563f9dcdc122 &lt;unknown&gt;&#10;#14 0x563f9dcf6f2b &lt;unknown&gt;&#10;#15 0x563f9dcc2c30 &lt;unknown&gt;&#10;#16 0x563f9dd17d78 &lt;unknown&gt;&#10;#17 0x563f9dd17f4c &lt;unknown&gt;&#10;#18 0x563f9dd29973 &lt;unknown&gt;&#10;#19 0x7f98ba69caa4 &lt;unknown&gt;&#10;#20 0x7f98ba729c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Productregister List" tests="1" errors="0" failures="1" skipped="0" time="2.664" timestamp="2026-01-11T12:33:22.244424">
+<testcase classname="FinalistenTestCases.Productregister.Open Productregister List" name="Verify Product Register List Page Opens Successfully" time="2.659">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55b4272c661a &lt;unknown&gt;&#10;#1 0x55b426d4320b &lt;unknown&gt;&#10;#2 0x55b426d49f5f &lt;unknown&gt;&#10;#3 0x55b426d4c5f4 &lt;unknown&gt;&#10;#4 0x55b426d4c6c3 &lt;unknown&gt;&#10;#5 0x55b426d9abd0 &lt;unknown&gt;&#10;#6 0x55b426d99f98 &lt;unknown&gt;&#10;#7 0x55b426de92c2 &lt;unknown&gt;&#10;#8 0x55b426de020e &lt;unknown&gt;&#10;#9 0x55b426d87232 &lt;unknown&gt;&#10;#10 0x55b426d87ee1 &lt;unknown&gt;&#10;#11 0x55b42728f3f9 &lt;unknown&gt;&#10;#12 0x55b42729234d &lt;unknown&gt;&#10;#13 0x55b427278122 &lt;unknown&gt;&#10;#14 0x55b427292f2b &lt;unknown&gt;&#10;#15 0x55b42725ec30 &lt;unknown&gt;&#10;#16 0x55b4272b3d78 &lt;unknown&gt;&#10;#17 0x55b4272b3f4c &lt;unknown&gt;&#10;#18 0x55b4272c5973 &lt;unknown&gt;&#10;#19 0x7fb24509caa4 &lt;unknown&gt;&#10;#20 0x7fb245129c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Project" tests="3" errors="0" failures="3" skipped="0" time="8.516" timestamp="2026-01-11T12:33:24.910178">
+<testsuite name="Open Project Create" tests="1" errors="0" failures="1" skipped="0" time="2.780" timestamp="2026-01-11T12:33:24.912423">
+<testcase classname="FinalistenTestCases.Project.Open Project Create" name="Verify Project Create View Opens Successfully" time="2.776">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x5579a5ff461a &lt;unknown&gt;&#10;#1 0x5579a5a7120b &lt;unknown&gt;&#10;#2 0x5579a5a77f5f &lt;unknown&gt;&#10;#3 0x5579a5a7a5f4 &lt;unknown&gt;&#10;#4 0x5579a5a7a6c3 &lt;unknown&gt;&#10;#5 0x5579a5ac8bd0 &lt;unknown&gt;&#10;#6 0x5579a5ac7f98 &lt;unknown&gt;&#10;#7 0x5579a5b172c2 &lt;unknown&gt;&#10;#8 0x5579a5b0e20e &lt;unknown&gt;&#10;#9 0x5579a5ab5232 &lt;unknown&gt;&#10;#10 0x5579a5ab5ee1 &lt;unknown&gt;&#10;#11 0x5579a5fbd3f9 &lt;unknown&gt;&#10;#12 0x5579a5fc034d &lt;unknown&gt;&#10;#13 0x5579a5fa6122 &lt;unknown&gt;&#10;#14 0x5579a5fc0f2b &lt;unknown&gt;&#10;#15 0x5579a5f8cc30 &lt;unknown&gt;&#10;#16 0x5579a5fe1d78 &lt;unknown&gt;&#10;#17 0x5579a5fe1f4c &lt;unknown&gt;&#10;#18 0x5579a5ff3973 &lt;unknown&gt;&#10;#19 0x7faa88c9caa4 &lt;unknown&gt;&#10;#20 0x7faa88d29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Project Edit" tests="1" errors="0" failures="1" skipped="0" time="2.849" timestamp="2026-01-11T12:33:27.693705">
+<testcase classname="FinalistenTestCases.Project.Open Project Edit" name="Verify Project Edit View Opens Successfully" time="2.844">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55d0a865861a &lt;unknown&gt;&#10;#1 0x55d0a80d520b &lt;unknown&gt;&#10;#2 0x55d0a80dbf5f &lt;unknown&gt;&#10;#3 0x55d0a80de5f4 &lt;unknown&gt;&#10;#4 0x55d0a80de6c3 &lt;unknown&gt;&#10;#5 0x55d0a812cbd0 &lt;unknown&gt;&#10;#6 0x55d0a812bf98 &lt;unknown&gt;&#10;#7 0x55d0a817b2c2 &lt;unknown&gt;&#10;#8 0x55d0a817220e &lt;unknown&gt;&#10;#9 0x55d0a8119232 &lt;unknown&gt;&#10;#10 0x55d0a8119ee1 &lt;unknown&gt;&#10;#11 0x55d0a86213f9 &lt;unknown&gt;&#10;#12 0x55d0a862434d &lt;unknown&gt;&#10;#13 0x55d0a860a122 &lt;unknown&gt;&#10;#14 0x55d0a8624f2b &lt;unknown&gt;&#10;#15 0x55d0a85f0c30 &lt;unknown&gt;&#10;#16 0x55d0a8645d78 &lt;unknown&gt;&#10;#17 0x55d0a8645f4c &lt;unknown&gt;&#10;#18 0x55d0a8657973 &lt;unknown&gt;&#10;#19 0x7f10cec9caa4 &lt;unknown&gt;&#10;#20 0x7f10ced29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Project List" tests="1" errors="0" failures="1" skipped="0" time="2.881" timestamp="2026-01-11T12:33:30.544320">
+<testcase classname="FinalistenTestCases.Project.Open Project List" name="Verify Project List View Opens Successfully" time="2.876">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x558d7aaf061a &lt;unknown&gt;&#10;#1 0x558d7a56d20b &lt;unknown&gt;&#10;#2 0x558d7a573f5f &lt;unknown&gt;&#10;#3 0x558d7a5765f4 &lt;unknown&gt;&#10;#4 0x558d7a5766c3 &lt;unknown&gt;&#10;#5 0x558d7a5c4bd0 &lt;unknown&gt;&#10;#6 0x558d7a5c3f98 &lt;unknown&gt;&#10;#7 0x558d7a6132c2 &lt;unknown&gt;&#10;#8 0x558d7a60a20e &lt;unknown&gt;&#10;#9 0x558d7a5b1232 &lt;unknown&gt;&#10;#10 0x558d7a5b1ee1 &lt;unknown&gt;&#10;#11 0x558d7aab93f9 &lt;unknown&gt;&#10;#12 0x558d7aabc34d &lt;unknown&gt;&#10;#13 0x558d7aaa2122 &lt;unknown&gt;&#10;#14 0x558d7aabcf2b &lt;unknown&gt;&#10;#15 0x558d7aa88c30 &lt;unknown&gt;&#10;#16 0x558d7aaddd78 &lt;unknown&gt;&#10;#17 0x558d7aaddf4c &lt;unknown&gt;&#10;#18 0x558d7aaef973 &lt;unknown&gt;&#10;#19 0x7fc340c9caa4 &lt;unknown&gt;&#10;#20 0x7fc340d29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Projectreport" tests="1" errors="0" failures="1" skipped="0" time="4.121" timestamp="2026-01-11T12:33:33.427034">
+<testsuite name="Open Projectreport App" tests="1" errors="0" failures="1" skipped="0" time="4.117" timestamp="2026-01-11T12:33:33.429143">
+<testcase classname="FinalistenTestCases.Projectreport.Open Projectreport App" name="Verify Project Report App Opens Successfully" time="4.113">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55f09e9ea61a &lt;unknown&gt;&#10;#1 0x55f09e46720b &lt;unknown&gt;&#10;#2 0x55f09e46df5f &lt;unknown&gt;&#10;#3 0x55f09e4705f4 &lt;unknown&gt;&#10;#4 0x55f09e4706c3 &lt;unknown&gt;&#10;#5 0x55f09e4bebd0 &lt;unknown&gt;&#10;#6 0x55f09e4bdf98 &lt;unknown&gt;&#10;#7 0x55f09e50d2c2 &lt;unknown&gt;&#10;#8 0x55f09e50420e &lt;unknown&gt;&#10;#9 0x55f09e4ab232 &lt;unknown&gt;&#10;#10 0x55f09e4abee1 &lt;unknown&gt;&#10;#11 0x55f09e9b33f9 &lt;unknown&gt;&#10;#12 0x55f09e9b634d &lt;unknown&gt;&#10;#13 0x55f09e99c122 &lt;unknown&gt;&#10;#14 0x55f09e9b6f2b &lt;unknown&gt;&#10;#15 0x55f09e982c30 &lt;unknown&gt;&#10;#16 0x55f09e9d7d78 &lt;unknown&gt;&#10;#17 0x55f09e9d7f4c &lt;unknown&gt;&#10;#18 0x55f09e9e9973 &lt;unknown&gt;&#10;#19 0x7f590a29caa4 &lt;unknown&gt;&#10;#20 0x7f590a329c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Purchaseproductregister" tests="3" errors="0" failures="3" skipped="0" time="8.943" timestamp="2026-01-11T12:33:37.549594">
+<testsuite name="Open Purchaseproductregister Create" tests="1" errors="0" failures="1" skipped="0" time="2.958" timestamp="2026-01-11T12:33:37.551431">
+<testcase classname="FinalistenTestCases.Purchaseproductregister.Open Purchaseproductregister Create" name="Verify Purchase Product Register Create Page Opens Successfully" time="2.953">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x56215b9dc61a &lt;unknown&gt;&#10;#1 0x56215b45920b &lt;unknown&gt;&#10;#2 0x56215b45ff5f &lt;unknown&gt;&#10;#3 0x56215b4625f4 &lt;unknown&gt;&#10;#4 0x56215b4626c3 &lt;unknown&gt;&#10;#5 0x56215b4b0bd0 &lt;unknown&gt;&#10;#6 0x56215b4aff98 &lt;unknown&gt;&#10;#7 0x56215b4ff2c2 &lt;unknown&gt;&#10;#8 0x56215b4f620e &lt;unknown&gt;&#10;#9 0x56215b49d232 &lt;unknown&gt;&#10;#10 0x56215b49dee1 &lt;unknown&gt;&#10;#11 0x56215b9a53f9 &lt;unknown&gt;&#10;#12 0x56215b9a834d &lt;unknown&gt;&#10;#13 0x56215b98e122 &lt;unknown&gt;&#10;#14 0x56215b9a8f2b &lt;unknown&gt;&#10;#15 0x56215b974c30 &lt;unknown&gt;&#10;#16 0x56215b9c9d78 &lt;unknown&gt;&#10;#17 0x56215b9c9f4c &lt;unknown&gt;&#10;#18 0x56215b9db973 &lt;unknown&gt;&#10;#19 0x7f80f409caa4 &lt;unknown&gt;&#10;#20 0x7f80f4129c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Purchaseproductregister Edit" tests="1" errors="0" failures="1" skipped="0" time="2.752" timestamp="2026-01-11T12:33:40.510429">
+<testcase classname="FinalistenTestCases.Purchaseproductregister.Open Purchaseproductregister Edit" name="Verify Purchase Product Register Edit Page Opens Successfully" time="2.747">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x561542a4361a &lt;unknown&gt;&#10;#1 0x5615424c020b &lt;unknown&gt;&#10;#2 0x5615424c6f5f &lt;unknown&gt;&#10;#3 0x5615424c95f4 &lt;unknown&gt;&#10;#4 0x5615424c96c3 &lt;unknown&gt;&#10;#5 0x561542517bd0 &lt;unknown&gt;&#10;#6 0x561542516f98 &lt;unknown&gt;&#10;#7 0x5615425662c2 &lt;unknown&gt;&#10;#8 0x56154255d20e &lt;unknown&gt;&#10;#9 0x561542504232 &lt;unknown&gt;&#10;#10 0x561542504ee1 &lt;unknown&gt;&#10;#11 0x561542a0c3f9 &lt;unknown&gt;&#10;#12 0x561542a0f34d &lt;unknown&gt;&#10;#13 0x5615429f5122 &lt;unknown&gt;&#10;#14 0x561542a0ff2b &lt;unknown&gt;&#10;#15 0x5615429dbc30 &lt;unknown&gt;&#10;#16 0x561542a30d78 &lt;unknown&gt;&#10;#17 0x561542a30f4c &lt;unknown&gt;&#10;#18 0x561542a42973 &lt;unknown&gt;&#10;#19 0x7fa5e729caa4 &lt;unknown&gt;&#10;#20 0x7fa5e7329c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Purchaseproductregister List" tests="1" errors="0" failures="1" skipped="0" time="3.228" timestamp="2026-01-11T12:33:43.263818">
+<testcase classname="FinalistenTestCases.Purchaseproductregister.Open Purchaseproductregister List" name="Verify Purchase Product Register List View Opens Successfully" time="3.223">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x56164437b61a &lt;unknown&gt;&#10;#1 0x561643df820b &lt;unknown&gt;&#10;#2 0x561643dfef5f &lt;unknown&gt;&#10;#3 0x561643e015f4 &lt;unknown&gt;&#10;#4 0x561643e016c3 &lt;unknown&gt;&#10;#5 0x561643e4fbd0 &lt;unknown&gt;&#10;#6 0x561643e4ef98 &lt;unknown&gt;&#10;#7 0x561643e9e2c2 &lt;unknown&gt;&#10;#8 0x561643e9520e &lt;unknown&gt;&#10;#9 0x561643e3c232 &lt;unknown&gt;&#10;#10 0x561643e3cee1 &lt;unknown&gt;&#10;#11 0x5616443443f9 &lt;unknown&gt;&#10;#12 0x56164434734d &lt;unknown&gt;&#10;#13 0x56164432d122 &lt;unknown&gt;&#10;#14 0x561644347f2b &lt;unknown&gt;&#10;#15 0x561644313c30 &lt;unknown&gt;&#10;#16 0x561644368d78 &lt;unknown&gt;&#10;#17 0x561644368f4c &lt;unknown&gt;&#10;#18 0x56164437a973 &lt;unknown&gt;&#10;#19 0x7fa06389caa4 &lt;unknown&gt;&#10;#20 0x7fa063929c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Quotation" tests="3" errors="0" failures="3" skipped="0" time="8.649" timestamp="2026-01-11T12:33:46.493565">
+<testsuite name="Open Quotation Create" tests="1" errors="0" failures="1" skipped="0" time="2.830" timestamp="2026-01-11T12:33:46.495153">
+<testcase classname="FinalistenTestCases.Quotation.Open Quotation Create" name="Verify Quotation Create Page Opens Successfully" time="2.826">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x56503082361a &lt;unknown&gt;&#10;#1 0x5650302a020b &lt;unknown&gt;&#10;#2 0x5650302a6f5f &lt;unknown&gt;&#10;#3 0x5650302a95f4 &lt;unknown&gt;&#10;#4 0x5650302a96c3 &lt;unknown&gt;&#10;#5 0x5650302f7bd0 &lt;unknown&gt;&#10;#6 0x5650302f6f98 &lt;unknown&gt;&#10;#7 0x5650303462c2 &lt;unknown&gt;&#10;#8 0x56503033d20e &lt;unknown&gt;&#10;#9 0x5650302e4232 &lt;unknown&gt;&#10;#10 0x5650302e4ee1 &lt;unknown&gt;&#10;#11 0x5650307ec3f9 &lt;unknown&gt;&#10;#12 0x5650307ef34d &lt;unknown&gt;&#10;#13 0x5650307d5122 &lt;unknown&gt;&#10;#14 0x5650307eff2b &lt;unknown&gt;&#10;#15 0x5650307bbc30 &lt;unknown&gt;&#10;#16 0x565030810d78 &lt;unknown&gt;&#10;#17 0x565030810f4c &lt;unknown&gt;&#10;#18 0x565030822973 &lt;unknown&gt;&#10;#19 0x7f8b20a9caa4 &lt;unknown&gt;&#10;#20 0x7f8b20b29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Quotation Edit" tests="1" errors="0" failures="1" skipped="0" time="2.815" timestamp="2026-01-11T12:33:49.326849">
+<testcase classname="FinalistenTestCases.Quotation.Open Quotation Edit" name="Verify Quotation Edit Page Opens Successfully" time="2.810">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x557464f3d61a &lt;unknown&gt;&#10;#1 0x5574649ba20b &lt;unknown&gt;&#10;#2 0x5574649c0f5f &lt;unknown&gt;&#10;#3 0x5574649c35f4 &lt;unknown&gt;&#10;#4 0x5574649c36c3 &lt;unknown&gt;&#10;#5 0x557464a11bd0 &lt;unknown&gt;&#10;#6 0x557464a10f98 &lt;unknown&gt;&#10;#7 0x557464a602c2 &lt;unknown&gt;&#10;#8 0x557464a5720e &lt;unknown&gt;&#10;#9 0x5574649fe232 &lt;unknown&gt;&#10;#10 0x5574649feee1 &lt;unknown&gt;&#10;#11 0x557464f063f9 &lt;unknown&gt;&#10;#12 0x557464f0934d &lt;unknown&gt;&#10;#13 0x557464eef122 &lt;unknown&gt;&#10;#14 0x557464f09f2b &lt;unknown&gt;&#10;#15 0x557464ed5c30 &lt;unknown&gt;&#10;#16 0x557464f2ad78 &lt;unknown&gt;&#10;#17 0x557464f2af4c &lt;unknown&gt;&#10;#18 0x557464f3c973 &lt;unknown&gt;&#10;#19 0x7fb41ac9caa4 &lt;unknown&gt;&#10;#20 0x7fb41ad29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Quotation List" tests="1" errors="0" failures="1" skipped="0" time="2.998" timestamp="2026-01-11T12:33:52.142865">
+<testcase classname="FinalistenTestCases.Quotation.Open Quotation List" name="Verify Quotation List View Opens Successfully" time="2.993">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x560a9a2fe61a &lt;unknown&gt;&#10;#1 0x560a99d7b20b &lt;unknown&gt;&#10;#2 0x560a99d81f5f &lt;unknown&gt;&#10;#3 0x560a99d845f4 &lt;unknown&gt;&#10;#4 0x560a99d846c3 &lt;unknown&gt;&#10;#5 0x560a99dd2bd0 &lt;unknown&gt;&#10;#6 0x560a99dd1f98 &lt;unknown&gt;&#10;#7 0x560a99e212c2 &lt;unknown&gt;&#10;#8 0x560a99e1820e &lt;unknown&gt;&#10;#9 0x560a99dbf232 &lt;unknown&gt;&#10;#10 0x560a99dbfee1 &lt;unknown&gt;&#10;#11 0x560a9a2c73f9 &lt;unknown&gt;&#10;#12 0x560a9a2ca34d &lt;unknown&gt;&#10;#13 0x560a9a2b0122 &lt;unknown&gt;&#10;#14 0x560a9a2caf2b &lt;unknown&gt;&#10;#15 0x560a9a296c30 &lt;unknown&gt;&#10;#16 0x560a9a2ebd78 &lt;unknown&gt;&#10;#17 0x560a9a2ebf4c &lt;unknown&gt;&#10;#18 0x560a9a2fd973 &lt;unknown&gt;&#10;#19 0x7f376829caa4 &lt;unknown&gt;&#10;#20 0x7f3768329c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Resourceplanning" tests="1" errors="0" failures="1" skipped="0" time="2.774" timestamp="2026-01-11T12:33:55.143595">
+<testsuite name="Open Resourceplanning App" tests="1" errors="0" failures="1" skipped="0" time="2.771" timestamp="2026-01-11T12:33:55.145660">
+<testcase classname="FinalistenTestCases.Resourceplanning.Open Resourceplanning App" name="Verify Resource Planning Board Opens Successfully" time="2.766">
+<failure message="ElementNotInteractableException: Message: element not interactable:  has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55a51ace661a &lt;unknown&gt;&#10;#1 0x55a51a76320b &lt;unknown&gt;&#10;#2 0x55a51a769f5f &lt;unknown&gt;&#10;#3 0x55a51a76c5f4 &lt;unknown&gt;&#10;#4 0x55a51a76c6c3 &lt;unknown&gt;&#10;#5 0x55a51a7babd0 &lt;unknown&gt;&#10;#6 0x55a51a7b9f98 &lt;unknown&gt;&#10;#7 0x55a51a8092c2 &lt;unknown&gt;&#10;#8 0x55a51a80020e &lt;unknown&gt;&#10;#9 0x55a51a7a7232 &lt;unknown&gt;&#10;#10 0x55a51a7a7ee1 &lt;unknown&gt;&#10;#11 0x55a51acaf3f9 &lt;unknown&gt;&#10;#12 0x55a51acb234d &lt;unknown&gt;&#10;#13 0x55a51ac98122 &lt;unknown&gt;&#10;#14 0x55a51acb2f2b &lt;unknown&gt;&#10;#15 0x55a51ac7ec30 &lt;unknown&gt;&#10;#16 0x55a51acd3d78 &lt;unknown&gt;&#10;#17 0x55a51acd3f4c &lt;unknown&gt;&#10;#18 0x55a51ace5973 &lt;unknown&gt;&#10;#19 0x7f8d9649caa4 &lt;unknown&gt;&#10;#20 0x7f8d96529c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Setting" tests="3" errors="0" failures="3" skipped="0" time="11.737" timestamp="2026-01-11T12:33:57.918333">
+<testsuite name="Dump Settings Page" tests="1" errors="0" failures="1" skipped="0" time="3.309" timestamp="2026-01-11T12:33:57.920285">
+<testcase classname="FinalistenTestCases.Setting.Dump Settings Page" name="Dump Settings Page Source" time="3.305">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x563de531161a &lt;unknown&gt;&#10;#1 0x563de4d8e20b &lt;unknown&gt;&#10;#2 0x563de4d94f5f &lt;unknown&gt;&#10;#3 0x563de4d975f4 &lt;unknown&gt;&#10;#4 0x563de4d976c3 &lt;unknown&gt;&#10;#5 0x563de4de5bd0 &lt;unknown&gt;&#10;#6 0x563de4de4f98 &lt;unknown&gt;&#10;#7 0x563de4e342c2 &lt;unknown&gt;&#10;#8 0x563de4e2b20e &lt;unknown&gt;&#10;#9 0x563de4dd2232 &lt;unknown&gt;&#10;#10 0x563de4dd2ee1 &lt;unknown&gt;&#10;#11 0x563de52da3f9 &lt;unknown&gt;&#10;#12 0x563de52dd34d &lt;unknown&gt;&#10;#13 0x563de52c3122 &lt;unknown&gt;&#10;#14 0x563de52ddf2b &lt;unknown&gt;&#10;#15 0x563de52a9c30 &lt;unknown&gt;&#10;#16 0x563de52fed78 &lt;unknown&gt;&#10;#17 0x563de52fef4c &lt;unknown&gt;&#10;#18 0x563de5310973 &lt;unknown&gt;&#10;#19 0x7f173029caa4 &lt;unknown&gt;&#10;#20 0x7f1730329c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Settings App" tests="1" errors="0" failures="1" skipped="0" time="2.610" timestamp="2026-01-11T12:34:01.230115">
+<testcase classname="FinalistenTestCases.Setting.Open Settings App" name="Verify Settings App Opens Successfully" time="2.606">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55da596c561a &lt;unknown&gt;&#10;#1 0x55da5914220b &lt;unknown&gt;&#10;#2 0x55da59148f5f &lt;unknown&gt;&#10;#3 0x55da5914b5f4 &lt;unknown&gt;&#10;#4 0x55da5914b6c3 &lt;unknown&gt;&#10;#5 0x55da59199bd0 &lt;unknown&gt;&#10;#6 0x55da59198f98 &lt;unknown&gt;&#10;#7 0x55da591e82c2 &lt;unknown&gt;&#10;#8 0x55da591df20e &lt;unknown&gt;&#10;#9 0x55da59186232 &lt;unknown&gt;&#10;#10 0x55da59186ee1 &lt;unknown&gt;&#10;#11 0x55da5968e3f9 &lt;unknown&gt;&#10;#12 0x55da5969134d &lt;unknown&gt;&#10;#13 0x55da59677122 &lt;unknown&gt;&#10;#14 0x55da59691f2b &lt;unknown&gt;&#10;#15 0x55da5965dc30 &lt;unknown&gt;&#10;#16 0x55da596b2d78 &lt;unknown&gt;&#10;#17 0x55da596b2f4c &lt;unknown&gt;&#10;#18 0x55da596c4973 &lt;unknown&gt;&#10;#19 0x7f055ca9caa4 &lt;unknown&gt;&#10;#20 0x7f055cb29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Update Fieldreport Date Range" tests="1" errors="0" failures="1" skipped="0" time="5.813" timestamp="2026-01-11T12:34:03.841266">
+<testcase classname="FinalistenTestCases.Setting.Update Fieldreport Date Range" name="Update Field Report Date Range" time="5.807">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x559b2abdf61a &lt;unknown&gt;&#10;#1 0x559b2a65c20b &lt;unknown&gt;&#10;#2 0x559b2a662f5f &lt;unknown&gt;&#10;#3 0x559b2a6655f4 &lt;unknown&gt;&#10;#4 0x559b2a6656c3 &lt;unknown&gt;&#10;#5 0x559b2a6b3bd0 &lt;unknown&gt;&#10;#6 0x559b2a6b2f98 &lt;unknown&gt;&#10;#7 0x559b2a7022c2 &lt;unknown&gt;&#10;#8 0x559b2a6f920e &lt;unknown&gt;&#10;#9 0x559b2a6a0232 &lt;unknown&gt;&#10;#10 0x559b2a6a0ee1 &lt;unknown&gt;&#10;#11 0x559b2aba83f9 &lt;unknown&gt;&#10;#12 0x559b2abab34d &lt;unknown&gt;&#10;#13 0x559b2ab91122 &lt;unknown&gt;&#10;#14 0x559b2ababf2b &lt;unknown&gt;&#10;#15 0x559b2ab77c30 &lt;unknown&gt;&#10;#16 0x559b2abccd78 &lt;unknown&gt;&#10;#17 0x559b2abccf4c &lt;unknown&gt;&#10;#18 0x559b2abde973 &lt;unknown&gt;&#10;#19 0x7fde56a9caa4 &lt;unknown&gt;&#10;#20 0x7fde56b29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Update the Field Report allowed date range in Settings."/>
+</properties>
+</testsuite>
+</testsuite>
+<testsuite name="Subcontractor" tests="3" errors="0" failures="3" skipped="0" time="8.384" timestamp="2026-01-11T12:34:09.655697">
+<testsuite name="Open Subcontractor Create" tests="1" errors="0" failures="1" skipped="0" time="2.582" timestamp="2026-01-11T12:34:09.657282">
+<testcase classname="FinalistenTestCases.Subcontractor.Open Subcontractor Create" name="Verify Subcontractor Create Page Opens Successfully" time="2.578">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55ff0196d61a &lt;unknown&gt;&#10;#1 0x55ff013ea20b &lt;unknown&gt;&#10;#2 0x55ff013f0f5f &lt;unknown&gt;&#10;#3 0x55ff013f35f4 &lt;unknown&gt;&#10;#4 0x55ff013f36c3 &lt;unknown&gt;&#10;#5 0x55ff01441bd0 &lt;unknown&gt;&#10;#6 0x55ff01440f98 &lt;unknown&gt;&#10;#7 0x55ff014902c2 &lt;unknown&gt;&#10;#8 0x55ff0148720e &lt;unknown&gt;&#10;#9 0x55ff0142e232 &lt;unknown&gt;&#10;#10 0x55ff0142eee1 &lt;unknown&gt;&#10;#11 0x55ff019363f9 &lt;unknown&gt;&#10;#12 0x55ff0193934d &lt;unknown&gt;&#10;#13 0x55ff0191f122 &lt;unknown&gt;&#10;#14 0x55ff01939f2b &lt;unknown&gt;&#10;#15 0x55ff01905c30 &lt;unknown&gt;&#10;#16 0x55ff0195ad78 &lt;unknown&gt;&#10;#17 0x55ff0195af4c &lt;unknown&gt;&#10;#18 0x55ff0196c973 &lt;unknown&gt;&#10;#19 0x7f849f09caa4 &lt;unknown&gt;&#10;#20 0x7f849f129c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Subcontractor Edit" tests="1" errors="0" failures="1" skipped="0" time="2.816" timestamp="2026-01-11T12:34:12.239970">
+<testcase classname="FinalistenTestCases.Subcontractor.Open Subcontractor Edit" name="Verify Subcontractor Edit Page Opens Successfully" time="2.811">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55d911b3461a &lt;unknown&gt;&#10;#1 0x55d9115b120b &lt;unknown&gt;&#10;#2 0x55d9115b7f5f &lt;unknown&gt;&#10;#3 0x55d9115ba5f4 &lt;unknown&gt;&#10;#4 0x55d9115ba6c3 &lt;unknown&gt;&#10;#5 0x55d911608bd0 &lt;unknown&gt;&#10;#6 0x55d911607f98 &lt;unknown&gt;&#10;#7 0x55d9116572c2 &lt;unknown&gt;&#10;#8 0x55d91164e20e &lt;unknown&gt;&#10;#9 0x55d9115f5232 &lt;unknown&gt;&#10;#10 0x55d9115f5ee1 &lt;unknown&gt;&#10;#11 0x55d911afd3f9 &lt;unknown&gt;&#10;#12 0x55d911b0034d &lt;unknown&gt;&#10;#13 0x55d911ae6122 &lt;unknown&gt;&#10;#14 0x55d911b00f2b &lt;unknown&gt;&#10;#15 0x55d911accc30 &lt;unknown&gt;&#10;#16 0x55d911b21d78 &lt;unknown&gt;&#10;#17 0x55d911b21f4c &lt;unknown&gt;&#10;#18 0x55d911b33973 &lt;unknown&gt;&#10;#19 0x7f521469caa4 &lt;unknown&gt;&#10;#20 0x7f5214729c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Subcontractor List" tests="1" errors="0" failures="1" skipped="0" time="2.982" timestamp="2026-01-11T12:34:15.056713">
+<testcase classname="FinalistenTestCases.Subcontractor.Open Subcontractor List" name="Verify Subcontractor List Opens Successfully" time="2.977">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x562f5a25361a &lt;unknown&gt;&#10;#1 0x562f59cd020b &lt;unknown&gt;&#10;#2 0x562f59cd6f5f &lt;unknown&gt;&#10;#3 0x562f59cd95f4 &lt;unknown&gt;&#10;#4 0x562f59cd96c3 &lt;unknown&gt;&#10;#5 0x562f59d27bd0 &lt;unknown&gt;&#10;#6 0x562f59d26f98 &lt;unknown&gt;&#10;#7 0x562f59d762c2 &lt;unknown&gt;&#10;#8 0x562f59d6d20e &lt;unknown&gt;&#10;#9 0x562f59d14232 &lt;unknown&gt;&#10;#10 0x562f59d14ee1 &lt;unknown&gt;&#10;#11 0x562f5a21c3f9 &lt;unknown&gt;&#10;#12 0x562f5a21f34d &lt;unknown&gt;&#10;#13 0x562f5a205122 &lt;unknown&gt;&#10;#14 0x562f5a21ff2b &lt;unknown&gt;&#10;#15 0x562f5a1ebc30 &lt;unknown&gt;&#10;#16 0x562f5a240d78 &lt;unknown&gt;&#10;#17 0x562f5a240f4c &lt;unknown&gt;&#10;#18 0x562f5a252973 &lt;unknown&gt;&#10;#19 0x7f157469caa4 &lt;unknown&gt;&#10;#20 0x7f1574729c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Supplier" tests="3" errors="0" failures="3" skipped="0" time="8.336" timestamp="2026-01-11T12:34:18.039777">
+<testsuite name="Open Supplier Create" tests="1" errors="0" failures="1" skipped="0" time="2.798" timestamp="2026-01-11T12:34:18.041564">
+<testcase classname="FinalistenTestCases.Supplier.Open Supplier Create" name="Verify Supplier Create Page Opens Successfully" time="2.794">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x555ee33f961a &lt;unknown&gt;&#10;#1 0x555ee2e7620b &lt;unknown&gt;&#10;#2 0x555ee2e7cf5f &lt;unknown&gt;&#10;#3 0x555ee2e7f5f4 &lt;unknown&gt;&#10;#4 0x555ee2e7f6c3 &lt;unknown&gt;&#10;#5 0x555ee2ecdbd0 &lt;unknown&gt;&#10;#6 0x555ee2eccf98 &lt;unknown&gt;&#10;#7 0x555ee2f1c2c2 &lt;unknown&gt;&#10;#8 0x555ee2f1320e &lt;unknown&gt;&#10;#9 0x555ee2eba232 &lt;unknown&gt;&#10;#10 0x555ee2ebaee1 &lt;unknown&gt;&#10;#11 0x555ee33c23f9 &lt;unknown&gt;&#10;#12 0x555ee33c534d &lt;unknown&gt;&#10;#13 0x555ee33ab122 &lt;unknown&gt;&#10;#14 0x555ee33c5f2b &lt;unknown&gt;&#10;#15 0x555ee3391c30 &lt;unknown&gt;&#10;#16 0x555ee33e6d78 &lt;unknown&gt;&#10;#17 0x555ee33e6f4c &lt;unknown&gt;&#10;#18 0x555ee33f8973 &lt;unknown&gt;&#10;#19 0x7fd8baa9caa4 &lt;unknown&gt;&#10;#20 0x7fd8bab29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Supplier Edit" tests="1" errors="0" failures="1" skipped="0" time="2.649" timestamp="2026-01-11T12:34:20.840567">
+<testcase classname="FinalistenTestCases.Supplier.Open Supplier Edit" name="Verify Supplier Edit Page Opens Successfully" time="2.645">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x55bf227be61a &lt;unknown&gt;&#10;#1 0x55bf2223b20b &lt;unknown&gt;&#10;#2 0x55bf22241f5f &lt;unknown&gt;&#10;#3 0x55bf222445f4 &lt;unknown&gt;&#10;#4 0x55bf222446c3 &lt;unknown&gt;&#10;#5 0x55bf22292bd0 &lt;unknown&gt;&#10;#6 0x55bf22291f98 &lt;unknown&gt;&#10;#7 0x55bf222e12c2 &lt;unknown&gt;&#10;#8 0x55bf222d820e &lt;unknown&gt;&#10;#9 0x55bf2227f232 &lt;unknown&gt;&#10;#10 0x55bf2227fee1 &lt;unknown&gt;&#10;#11 0x55bf227873f9 &lt;unknown&gt;&#10;#12 0x55bf2278a34d &lt;unknown&gt;&#10;#13 0x55bf22770122 &lt;unknown&gt;&#10;#14 0x55bf2278af2b &lt;unknown&gt;&#10;#15 0x55bf22756c30 &lt;unknown&gt;&#10;#16 0x55bf227abd78 &lt;unknown&gt;&#10;#17 0x55bf227abf4c &lt;unknown&gt;&#10;#18 0x55bf227bd973 &lt;unknown&gt;&#10;#19 0x7f8f8129caa4 &lt;unknown&gt;&#10;#20 0x7f8f81329c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Supplier List" tests="1" errors="0" failures="1" skipped="0" time="2.884" timestamp="2026-01-11T12:34:23.491083">
+<testcase classname="FinalistenTestCases.Supplier.Open Supplier List" name="Verify Supplier List Page Opens Successfully" time="2.878">
+<failure message="ElementNotInteractableException: Message: element not interactable: https://preproderp.finalisten.se/homepage/ has no size and location&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x56348572861a &lt;unknown&gt;&#10;#1 0x5634851a520b &lt;unknown&gt;&#10;#2 0x5634851abf5f &lt;unknown&gt;&#10;#3 0x5634851ae5f4 &lt;unknown&gt;&#10;#4 0x5634851ae6c3 &lt;unknown&gt;&#10;#5 0x5634851fcbd0 &lt;unknown&gt;&#10;#6 0x5634851fbf98 &lt;unknown&gt;&#10;#7 0x56348524b2c2 &lt;unknown&gt;&#10;#8 0x56348524220e &lt;unknown&gt;&#10;#9 0x5634851e9232 &lt;unknown&gt;&#10;#10 0x5634851e9ee1 &lt;unknown&gt;&#10;#11 0x5634856f13f9 &lt;unknown&gt;&#10;#12 0x5634856f434d &lt;unknown&gt;&#10;#13 0x5634856da122 &lt;unknown&gt;&#10;#14 0x5634856f4f2b &lt;unknown&gt;&#10;#15 0x5634856c0c30 &lt;unknown&gt;&#10;#16 0x563485715d78 &lt;unknown&gt;&#10;#17 0x563485715f4c &lt;unknown&gt;&#10;#18 0x563485727973 &lt;unknown&gt;&#10;#19 0x7fcc8949caa4 &lt;unknown&gt;&#10;#20 0x7fcc89529c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+</testsuite>
+</testsuite>

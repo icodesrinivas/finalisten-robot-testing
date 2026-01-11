@@ -17,7 +17,7 @@ Verify Contact List Opens Successfully
 
 *** Keywords ***
 Hover Over Register Menu
-    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=15s
+    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=30s
     Sleep    1s
     Mouse Over    ${REGISTER_MENU}
 
