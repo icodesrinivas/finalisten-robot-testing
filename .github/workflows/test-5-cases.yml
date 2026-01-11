@@ -1,0 +1,90 @@
+name: Test 5 Critical Cases
+
+# Manual trigger only
+on:
+  workflow_dispatch:
+
+jobs:
+  test-5-cases:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Install and setup Chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      
+      - name: Install ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+      
+      - name: Run 5 Critical Test Cases
+        run: |
+          echo "=== RUNNING 5 CRITICAL TEST CASES ==="
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results \
+                --name "5 Critical Tests" \
+                FinalistenTestCases/common/login/check_successful_login.robot \
+                FinalistenTestCases/common/login/verify_successful_login.robot \
+                FinalistenTestCases/contact/open_contact_list.robot \
+                FinalistenTestCases/employee/open_employee_list.robot \
+                FinalistenTestCases/customer/open_customer_list.robot || true
+      
+      - name: Generate Summary
+        if: always()
+        run: |
+          echo "# 5 Critical Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Tests Run:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Check Successful Login" >> $GITHUB_STEP_SUMMARY
+          echo "2. Verify Successful Login" >> $GITHUB_STEP_SUMMARY
+          echo "3. Open Contact List" >> $GITHUB_STEP_SUMMARY
+          echo "4. Open Employee List" >> $GITHUB_STEP_SUMMARY
+          echo "5. Open Customer List" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 5-cases-results
+          path: results/
+      
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        if: always()
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: '5 Critical Tests Validation - Run #${{ github.run_number }}'
+          to: srinivas8862@gmail.com
+          from: ${{ secrets.EMAIL_USERNAME }}
+          html_body: |
+            <h2>5 Critical Tests Execution Report</h2>
+            <p><strong>Build:</strong> #${{ github.run_number }}</p>
+            <p><strong>Status:</strong> Check GitHub Actions for details</p>
+            
+            <h3>Tests in this run:</h3>
+            <ol>
+                <li>Check Successful Login (Login + Production Menu)</li>
+                <li>Verify Successful Login (Basic Auth)</li>
+                <li>Open Contact List (Register -> Contacts)</li>
+                <li>Open Employee List (Register -> Employees)</li>
+                <li>Open Customer List (Register -> Customers)</li>
+            </ol>
+            
+            <p><strong>View Full Results:</strong> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">GitHub Actions Run</a></p>
+          attachments: results/log.html,results/report.html
