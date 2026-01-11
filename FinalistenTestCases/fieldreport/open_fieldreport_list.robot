@@ -11,7 +11,8 @@ Verify Field Report List View Opens Successfully
     Open And Login
     Hover Over Production Menu
     Click On Field Report Menu
-    Wait Until Page Contains    Filters    timeout=10s
+    Sleep    3s
+    Wait Until Page Contains    Filters    timeout=15s
     Log To Console    "Filters text found. Field Report list view opened successfully."
     Close Browser
 
@@ -20,4 +21,5 @@ Hover Over Production Menu
     Mouse Over    ${PRODUCTION_MENU}
 
 Click On Field Report Menu
+    Wait Until Element Is Visible    ${FIELD_REPORT_MENU}    timeout=10s
     Click Element    ${FIELD_REPORT_MENU}

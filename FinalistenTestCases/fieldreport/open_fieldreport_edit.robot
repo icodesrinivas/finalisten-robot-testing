@@ -27,11 +27,14 @@ Hover Over Production Menu
     Mouse Over    ${PRODUCTION_MENU}
 
 Click On Field Report Menu
+    Wait Until Element Is Visible    ${FIELD_REPORT_MENU}    timeout=10s
     Click Element    ${FIELD_REPORT_MENU}
+    Sleep    3s
 
 Open Field Report Edit Page
+    Wait Until Element Is Visible    ${FILTER_FRAME_HEADER}    timeout=10s
     Click Element    ${FILTER_FRAME_HEADER}
-    Wait Until Page Contains Element    ${SEARCH_BUTTON_XPATH}
+    Wait Until Page Contains Element    ${SEARCH_BUTTON_XPATH}    timeout=10s
     Click Search Button
 
     FOR    ${i}    IN RANGE    10

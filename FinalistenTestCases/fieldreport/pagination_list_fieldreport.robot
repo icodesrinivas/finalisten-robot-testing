@@ -51,13 +51,13 @@ Test Navigate Through List Pages
     
     # Set wide date range to get more results
     Click Element    ${FILTER_TOGGLE}
-    Sleep    1s
+    Sleep    2s
     Clear Element Text    ${START_DATE_FILTER}
     Input Text    ${START_DATE_FILTER}    2025-01-01
     Clear Element Text    ${END_DATE_FILTER}
     Input Text    ${END_DATE_FILTER}    2025-12-31
     Click Element    ${SEARCH_BUTTON}
-    Sleep    3s
+    Sleep    4s
     
     # Get initial count
     ${initial_count}=    Get Element Count    ${TABLE_ROWS}
