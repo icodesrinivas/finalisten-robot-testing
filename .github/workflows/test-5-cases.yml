@@ -59,7 +59,10 @@ jobs:
         if: always()
         with:
           name: 5-cases-results
-          path: results/
+          path: |
+            results/
+            **/*.png
+          retention-days: 7
       
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
