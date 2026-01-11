@@ -20,10 +20,14 @@ Verify Customer Create Page Opens Successfully
 
 *** Keywords ***
 Hover Over Register Menu
+    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=15s
+    Sleep    1s
     Mouse Over    ${REGISTER_MENU}
 
 Click On Customers Menu
+    Wait Until Element Is Visible    ${CUSTOMERS_MENU}    timeout=10s
     Click Element    ${CUSTOMERS_MENU}
+    Sleep    2s
 
 Click On Add Customer Button
     Click Element    ${ADD_CUSTOMER_BUTTON}

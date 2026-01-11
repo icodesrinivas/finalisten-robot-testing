@@ -20,10 +20,14 @@ Verify Employee Create Page Opens Successfully
 
 *** Keywords ***
 Hover Over Register Menu
+    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=15s
+    Sleep    1s
     Mouse Over    ${REGISTER_MENU}
 
 Click On Employees Menu
+    Wait Until Element Is Visible    ${EMPLOYEES_MENU}    timeout=10s
     Click Element    ${EMPLOYEES_MENU}
+    Sleep    2s
 
 Click On Add Employee Button
     Click Element    ${ADD_EMPLOYEE_BTN}
