@@ -5,7 +5,7 @@ Resource   ../keywords/LoginKeyword.robot
 *** Variables ***
 ${REGISTER_MENU}      xpath=//*[@id="register"]
 ${EMPLOYEES_MENU}     xpath=//*[@id="employee_app_menu"]
-${EDIT_EMPLOYEE_BTN}   xpath=//a[contains(@href, '/employees/employee/list/') and contains(@href, '/edit/')]
+${EMPLOYEE_ROW}       css=tr.employee_rows
 
 *** Test Cases ***
 Verify Employee Edit Page Opens Successfully
@@ -13,7 +13,8 @@ Verify Employee Edit Page Opens Successfully
     Hover Over Register Menu
     Click On Employees Menu
     Wait Until Page Contains    Filters    timeout=10s
-    Click On Edit Employee Button
+    Wait Until Element Is Visible    ${EMPLOYEE_ROW}    timeout=10s
+    Click Element    ${EMPLOYEE_ROW}
     Wait Until Page Contains    PERSONAL DATA    timeout=10s
     Log To Console    "PERSONAL DATA found. Employee edit page opened successfully."
     Close Browser
@@ -24,7 +25,3 @@ Hover Over Register Menu
 
 Click On Employees Menu
     Click Element    ${EMPLOYEES_MENU}
-
-Click On Edit Employee Button
-    # Click on any available employee edit button in the list (first available)
-    Click Element    ${EDIT_EMPLOYEE_BTN}

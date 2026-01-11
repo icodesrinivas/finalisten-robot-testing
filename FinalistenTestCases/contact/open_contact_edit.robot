@@ -5,7 +5,7 @@ Resource   ../keywords/LoginKeyword.robot
 *** Variables ***
 ${REGISTER_MENU}         xpath=//*[@id="register"]
 ${CONTACTS_MENU}         xpath=//*[@id="contacts_app_menu"]
-${EDIT_CONTACT_BUTTON}   xpath=//*[@id="DataTables_Table_0"]/tbody/tr/td[7]/a
+${CONTACT_ROW}           css=tr.contact_rows
 
 *** Test Cases ***
 Verify Edit Contact Page Opens Successfully
@@ -14,7 +14,8 @@ Verify Edit Contact Page Opens Successfully
     Click On Contacts Menu
     Wait Until Page Contains    Filters    timeout=10s
     Log To Console    "Filters text found. Contact list opened successfully."
-    Click Element    ${EDIT_CONTACT_BUTTON}
+    Wait Until Element Is Visible    ${CONTACT_ROW}    timeout=10s
+    Click Element    ${CONTACT_ROW}
     Wait Until Page Contains    CONTACT DATA    timeout=10s
     Log To Console    "CONTACT DATA text found. Edit Contact page opened successfully."
     Close Browser

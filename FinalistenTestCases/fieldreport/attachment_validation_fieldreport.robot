@@ -33,7 +33,8 @@ ${DELETE_BUTTON}                  id=remove_fieldreport
 ${ADD_PRODUCT_BUTTON}             xpath=//span[text()='ADD']
 ${PRODUCT_MODAL}                  id=myModal3
 ${MODAL_SAVE_BUTTON}              css=.prodinfr_save_button
-${PRODUCT_CHECKBOX}               css=#DataTables_Table_1 tbody tr:first-child .selected-checkbox
+${PRODUCT_CHECKBOX}               css=#prodInProjTable .selected-checkbox
+${COMMON_SAVE_BUTTON}             id=product_in_fieldreport_save
 
 # Attachment Selectors
 ${FILE_INPUT}                     css=input[type='file']
@@ -280,12 +281,13 @@ Create Field Report With Product
     Go To    ${FIELDREPORT_CREATE_URL}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
-    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
+    # Select specific customer and project known to have products
+    Select From List By Label    ${CUSTOMER_DROPDOWN}    Arcona Aktiebolag
     ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s
     
-    Select From List By Index    ${PROJECT_DROPDOWN}    1
+    Select From List By Label    ${PROJECT_DROPDOWN}    Systemkameran
     ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s
@@ -303,21 +305,44 @@ Create Field Report With Product
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}
     Log To Console    ✓ Created FR: ${fieldreport_id}
     
-    # Add product
+    # Add product with robust persistence
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    1s
     Click Element    ${ADD_PRODUCT_BUTTON}
     Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=10s
     Sleep    2s
+    
+    # Wait for products in modal
+    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=30s
     Click Element    ${PRODUCT_CHECKBOX}
     Sleep    1s
+    
     Execute Javascript    document.querySelector('#myModal3 .modal-content').scrollTo(0, 9999);
     Sleep    1s
     Click Element    ${MODAL_SAVE_BUTTON}
     Sleep    2s
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Sleep    2s
-    Log To Console    ✓ Added product
+    
+    # Wait for AJAX row and persistent save
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
+    Log To Console    Setting quantity to 1 via JavaScript...
+    ${qty_set}=    Execute Javascript
+    ...    var qtyInput = document.querySelector('#prodInFieldReportTable input[id^="id_quantity_"]');
+    ...    if (qtyInput) { qtyInput.value = '1'; qtyInput.dispatchEvent(new Event('change')); return true; }
+    ...    return false;
+    Log To Console    Quantity set via JS: ${qty_set}
+    Sleep    1s
+    
+    Wait Until Element Is Visible    ${COMMON_SAVE_BUTTON}    timeout=10s
+    Click Element    ${COMMON_SAVE_BUTTON}
+    Sleep    3s
+    Reload Page
+    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    Execute Javascript    window.scrollTo(0, 800);
+    Sleep    2s
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=15s
+    Log To Console    ✓ Added product and saved robustly
 
 Extract Fieldreport ID From URL
     [Arguments]    ${url}

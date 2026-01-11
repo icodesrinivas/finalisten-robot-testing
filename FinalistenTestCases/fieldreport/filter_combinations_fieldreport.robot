@@ -42,23 +42,16 @@ Test Customer And Project Filter Combined
     
     Log To Console    ======== TEST: Customer + Project Filter Combined ========
     Go To    ${FIELDREPORT_LIST_URL}
-    Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
+    Expand Filters
+    Set Wide Date Range
     
-    # Expand filters
-    Click Element    ${FILTER_TOGGLE}
-    Sleep    1s
-    
-    # Set wide date range first
-    Clear Element Text    ${START_DATE_FILTER}
-    Input Text    ${START_DATE_FILTER}    2025-01-01
-    Clear Element Text    ${END_DATE_FILTER}
-    Input Text    ${END_DATE_FILTER}    2025-12-31
-    
-    # Get initial count (no filter)
-    Click Element    ${SEARCH_BUTTON}
-    Sleep    3s
+    # Get initial count
+    Click Search
     ${initial_count}=    Get Element Count    ${TABLE_ROWS}
     Log To Console    Initial results (no filter): ${initial_count}
+    
+    # Expand filters again after search as it might collapse
+    Expand Filters
     
     # Apply Customer filter
     ${customer_options}=    Get List Items    ${CUSTOMER_FILTER}
@@ -69,21 +62,17 @@ Test Customer And Project Filter Combined
     END
     
     # Apply Project filter
-    ${project_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PROJECT_FILTER}    timeout=5s
-    IF    ${project_visible}
-        Input Text    ${PROJECT_FILTER}    test
-        Log To Console    Entered Project filter: test
-    END
+    Input Text    ${PROJECT_FILTER}    test
+    Log To Console    Entered Project filter: test
     
     # Search with both filters
-    Click Element    ${SEARCH_BUTTON}
-    Sleep    3s
+    Click Search
     
     ${filtered_count}=    Get Element Count    ${TABLE_ROWS}
     Log To Console    Results with Customer+Project filter: ${filtered_count}
     
-    # Filtered results should be <= initial (or possibly 0)
-    Should Be True    ${filtered_count} <= ${initial_count}    msg=Combined filter should narrow results
+    # Filtered results should be <= initial
+    Should Be True    ${filtered_count} <= ${initial_count}
     Log To Console    ✓ Customer + Project filter combination works
     
     [Teardown]    Close All Browsers
@@ -95,11 +84,7 @@ Test Date Range And Approval Status Filter Combined
     
     Log To Console    ======== TEST: Date Range + Approval Status Filter Combined ========
     Go To    ${FIELDREPORT_LIST_URL}
-    Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
-    
-    # Expand filters
-    Click Element    ${FILTER_TOGGLE}
-    Sleep    1s
+    Expand Filters
     
     # Set specific date range
     Clear Element Text    ${START_DATE_FILTER}
@@ -112,7 +97,6 @@ Test Date Range And Approval Status Filter Combined
     ${approval_options}=    Get List Items    ${APPROVAL_STATUS_FILTER}
     Log To Console    Approval options: ${approval_options}
     
-    # Select "Approve" option
     ${approve_exists}=    Run Keyword And Return Status    Select From List By Label    ${APPROVAL_STATUS_FILTER}    Approve
     IF    not ${approve_exists}
         Select From List By Index    ${APPROVAL_STATUS_FILTER}    1
@@ -120,13 +104,10 @@ Test Date Range And Approval Status Filter Combined
     ${selected_status}=    Get Selected List Label    ${APPROVAL_STATUS_FILTER}
     Log To Console    Selected Approval Status: ${selected_status}
     
-    # Search with combined filters
-    Click Element    ${SEARCH_BUTTON}
-    Sleep    3s
+    Click Search
     
     ${filtered_count}=    Get Element Count    ${TABLE_ROWS}
     Log To Console    Results with Date Range + Approval filter: ${filtered_count}
-    
     Log To Console    ✓ Date Range + Approval Status filter combination works
     
     [Teardown]    Close All Browsers
@@ -138,44 +119,29 @@ Test Installer And Product Description Filter Combined
     
     Log To Console    ======== TEST: Installer + Product Description Filter Combined ========
     Go To    ${FIELDREPORT_LIST_URL}
-    Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
-    
-    # Expand filters
-    Click Element    ${FILTER_TOGGLE}
-    Sleep    1s
-    
-    # Set wide date range
-    Clear Element Text    ${START_DATE_FILTER}
-    Input Text    ${START_DATE_FILTER}    2025-01-01
-    Clear Element Text    ${END_DATE_FILTER}
-    Input Text    ${END_DATE_FILTER}    2025-12-31
+    Expand Filters
+    Set Wide Date Range
     
     # Search for installers
-    ${installer_search_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${INSTALLER_SEARCH}    timeout=5s
-    IF    ${installer_search_visible}
-        Input Text    ${INSTALLER_SEARCH}    admin
-        Log To Console    Installer search: admin
-        Sleep    1s
-        
-        # Click first installer checkbox if visible
-        ${installer_checkbox}=    Run Keyword And Return Status    Click Element    css=input[name='installer_name_input']
+    Input Text    ${INSTALLER_SEARCH}    admin
+    Log To Console    Installer search: admin
+    Sleep    2s
+    
+    # Click first installer checkbox if visible
+    ${boxes}=    Get WebElements    xpath=//input[@name='installer_name_input']
+    IF    len($boxes) > 0
+        Click Element    ${boxes}[0]
         Sleep    1s
     END
     
     # Add Product Description filter
-    ${product_filter_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PRODUCT_DESCRIPTION_FILTER}    timeout=5s
-    IF    ${product_filter_visible}
-        Input Text    ${PRODUCT_DESCRIPTION_FILTER}    test
-        Log To Console    Product Description: test
-    END
+    Input Text    ${PRODUCT_DESCRIPTION_FILTER}    test
+    Log To Console    Product Description: test
     
-    # Search with combined filters
-    Click Element    ${SEARCH_BUTTON}
-    Sleep    3s
+    Click Search
     
     ${filtered_count}=    Get Element Count    ${TABLE_ROWS}
     Log To Console    Results with Installer + Product Description filter: ${filtered_count}
-    
     Log To Console    ✓ Installer + Product Description filter combination works
     
     [Teardown]    Close All Browsers
@@ -187,64 +153,36 @@ Test Clear All Filters Shows All Results
     
     Log To Console    ======== TEST: Clear All Filters ========
     Go To    ${FIELDREPORT_LIST_URL}
-    Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
+    Expand Filters
     
-    # Expand filters
-    Click Element    ${FILTER_TOGGLE}
-    Sleep    1s
-    
-    # First apply restrictive filters
+    # Apply restrictive filters
     Clear Element Text    ${START_DATE_FILTER}
     Input Text    ${START_DATE_FILTER}    2025-10-15
     Clear Element Text    ${END_DATE_FILTER}
     Input Text    ${END_DATE_FILTER}    2025-10-15
     
-    ${customer_options}=    Get List Items    ${CUSTOMER_FILTER}
-    IF    len($customer_options) > 1
-        Select From List By Index    ${CUSTOMER_FILTER}    1
-    END
-    
-    Click Element    ${SEARCH_BUTTON}
-    Sleep    3s
+    Select From List By Index    ${CUSTOMER_FILTER}    1
+    Click Search
     
     ${restricted_count}=    Get Element Count    ${TABLE_ROWS}
     Log To Console    Results with restrictive filters: ${restricted_count}
     
-    # Now clear all filters
+    # Expand filters again after search
+    Expand Filters
+    
+    # Now clear all
     Log To Console    Clearing all filters...
-    
-    # Reset date range to wide
-    Clear Element Text    ${START_DATE_FILTER}
-    Input Text    ${START_DATE_FILTER}    2025-01-01
-    Clear Element Text    ${END_DATE_FILTER}
-    Input Text    ${END_DATE_FILTER}    2025-12-31
-    
-    # Reset Customer to "All" (first option)
+    Set Wide Date Range
     Select From List By Index    ${CUSTOMER_FILTER}    0
-    
-    # Reset Approval Status to "All"
     Select From List By Index    ${APPROVAL_STATUS_FILTER}    0
+    Clear Element Text    ${PROJECT_FILTER}
+    Clear Element Text    ${PRODUCT_DESCRIPTION_FILTER}
     
-    # Clear text fields
-    ${project_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${PROJECT_FILTER}
-    IF    ${project_visible}
-        Clear Element Text    ${PROJECT_FILTER}
-    END
-    
-    ${product_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${PRODUCT_DESCRIPTION_FILTER}
-    IF    ${product_visible}
-        Clear Element Text    ${PRODUCT_DESCRIPTION_FILTER}
-    END
-    
-    # Search again
-    Click Element    ${SEARCH_BUTTON}
-    Sleep    3s
+    Click Search
     
     ${cleared_count}=    Get Element Count    ${TABLE_ROWS}
     Log To Console    Results after clearing filters: ${cleared_count}
-    
-    # Cleared results should be >= restricted
-    Should Be True    ${cleared_count} >= ${restricted_count}    msg=Clearing filters should show more results
+    Should Be True    ${cleared_count} >= ${restricted_count}
     Log To Console    ✓ Clear all filters restores full results
     
     [Teardown]    Close All Browsers
@@ -260,3 +198,26 @@ Login To Application
     Click Button    xpath=//button[@type='submit']
     Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
     Log To Console    Successfully logged in
+
+Expand Filters
+    [Documentation]    Ensure the filter section is expanded. 
+    ...               If already visible, it does nothing.
+    Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
+    ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_BUTTON}
+    IF    not ${is_visible}
+        Click Element    ${FILTER_TOGGLE}
+    END
+    Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=10s
+
+Set Wide Date Range
+    [Documentation]    Set a wide date range to ensure results
+    Clear Element Text    ${START_DATE_FILTER}
+    Input Text    ${START_DATE_FILTER}    2025-01-01
+    Clear Element Text    ${END_DATE_FILTER}
+    Input Text    ${END_DATE_FILTER}    2025-12-31
+
+Click Search
+    [Documentation]    Click search and wait for results
+    ${btn}=    Get WebElement    ${SEARCH_BUTTON}
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${btn}
+    Sleep    3s

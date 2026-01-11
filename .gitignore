@@ -1,16 +1,33 @@
 # Screenshots from test runs
 robot-results/*.png
+*.png
 
 # Virtual environment
 fintest/
+venv/
 
 # GEMINI documentation (local only)
 GEMINI.md
+CLAUDE.md
 
-# ChromeDriver downloads
+# ChromeDriver downloads and binaries
 chromedriver-mac-x64-new.zip
+chromedriver-mac-x64-*.zip
+chromedriver-mac-x64/chromedriver
+chromedriver-mac-x64/THIRD_PARTY_NOTICES.chromedriver
 
-# Test output files (optional - uncomment if you don't want to track)
-# robot-results/output.xml
-# robot-results/log.html
-# robot-results/report.html
+# Test output files - DO NOT COMMIT
+robot-results/output.xml
+robot-results/log.html
+robot-results/report.html
+robot-results/*.html
+robot-results/*.xml
+output.xml
+log.html
+report.html
+results/
+
+# Debug files
+debug_*.html
+debug_*.xml
+settings_page_source.html_fr.html

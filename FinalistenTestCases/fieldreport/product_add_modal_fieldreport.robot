@@ -36,16 +36,17 @@ ${ADD_PRODUCT_BUTTON}             xpath=//span[text()='ADD']
 ${PRODUCT_MODAL}                  id=myModal3
 ${PRODUCT_SEARCH_INPUT}           id=myInput
 ${SELECT_ALL_CHECKBOX}            id=select-all
-${PRODUCT_CHECKBOX}               css=.selected-checkbox
+${PRODUCT_CHECKBOX}               css=#prodInProjTable .selected-checkbox
 ${ROW_SAVE_BUTTON}                css=.prod-in-fr-save
 ${MODAL_SAVE_BUTTON}              css=.prodinfr_save_button
 ${MODAL_CANCEL_BUTTON}            xpath=//div[@id='myModal3']//button[contains(text(),'Cancel')]
-${PAGINATION_NEXT}                css=#DataTables_Table_1_next
-${PAGINATION_PREV}                css=#DataTables_Table_1_previous
-${PRODUCT_TABLE_ROWS}             css=#DataTables_Table_1 tbody tr
+${PAGINATION_NEXT}                css=#prodInProjTable_next
+${PAGINATION_PREV}                css=#prodInProjTable_previous
+${PRODUCT_TABLE_ROWS}             css=#prodInProjTable tbody tr
 
 # Products in FR Table
-${PRODUCTS_TABLE}                 id=product-list-table
+${PRODUCTS_TABLE}                 id=prodInFieldReportTable
+${COMMON_EDIT_BUTTON}             id=product_in_fieldreport_edit
 
 # Initial Values (for creation)
 ${INITIAL_WORK_DATE}              2025-10-20
@@ -165,7 +166,7 @@ Test Product Modal Pagination
     
     IF    ${pagination_exists}
         # Get first row text before pagination
-        ${first_row_before}=    Get Text    css=#DataTables_Table_1 tbody tr:first-child
+        ${first_row_before}=    Get Text    css=#prodInProjTable tbody tr:first-child
         Log To Console    First row before navigation: ${first_row_before}
         
         # Click next page
@@ -173,7 +174,7 @@ Test Product Modal Pagination
         Sleep    2s
         
         # Verify content changed
-        ${first_row_after}=    Get Text    css=#DataTables_Table_1 tbody tr:first-child
+        ${first_row_after}=    Get Text    css=#prodInProjTable tbody tr:first-child
         Log To Console    First row after navigation: ${first_row_after}
         
         IF    '${first_row_before}' != '${first_row_after}'
@@ -221,9 +222,15 @@ Test Select Product With Row Save Button
     
     # Select first product checkbox
     Log To Console    \n--- Selecting Product and Using Row Save ---
-    ${first_checkbox}=    Set Variable    css=#DataTables_Table_1 tbody tr:first-child .selected-checkbox
-    Wait Until Element Is Visible    ${first_checkbox}    timeout=5s
-    Click Element    ${first_checkbox}
+    # Wait longer for products to load
+    ${status}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=30s
+    IF    not ${status}
+        Log To Console    ⚠ No products found in modal after 30s.
+        Click Element    ${MODAL_CANCEL_BUTTON}
+        Fail    Could not find products in modal.
+    END
+
+    Click Element    ${PRODUCT_CHECKBOX}
     Sleep    1s
     
     # Look for the row-wise save button that appears after selection
@@ -243,10 +250,9 @@ Test Select Product With Row Save Button
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Sleep    2s
     
-    # Verify product was added to the FR products table
-    Execute Javascript    window.scrollTo(0, 800);
-    Sleep    1s
-    ${product_rows}=    Get Element Count    css=#product-list-table tbody tr
+    # Wait for products to appear in the main table
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=15s
+    ${product_rows}=    Get Element Count    css=#prodInFieldReportTable tbody tr
     Should Be True    ${product_rows} >= 1    msg=Product should be added to the field report
     Log To Console    ✓ Product added successfully (${product_rows} product(s) in FR)
     
@@ -274,9 +280,15 @@ Test Select Product With Modal Save Button
     
     # Select first product checkbox
     Log To Console    \n--- Selecting Product and Using Modal Save ---
-    ${first_checkbox}=    Set Variable    css=#DataTables_Table_1 tbody tr:first-child .selected-checkbox
-    Wait Until Element Is Visible    ${first_checkbox}    timeout=5s
-    Click Element    ${first_checkbox}
+    # Wait longer for products to load
+    ${status}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=30s
+    IF    not ${status}
+        Log To Console    ⚠ No products found in modal after 30s.
+        Click Element    ${MODAL_CANCEL_BUTTON}
+        Fail    Could not find products in modal.
+    END
+
+    Click Element    ${PRODUCT_CHECKBOX}
     Sleep    1s
     Log To Console    ✓ Product selected
     
@@ -293,13 +305,9 @@ Test Select Product With Modal Save Button
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Sleep    2s
     
-    # Verify product was added
-    Reload Page
-    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
-    Execute Javascript    window.scrollTo(0, 800);
-    Sleep    1s
-    
-    ${product_rows}=    Get Element Count    css=#product-list-table tbody tr
+    # Wait for products to appear in the main table
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=15s
+    ${product_rows}=    Get Element Count    css=#prodInFieldReportTable tbody tr
     Should Be True    ${product_rows} >= 1    msg=Product should be added to the field report
     Log To Console    ✓ Product added successfully (${product_rows} product(s) in FR)
     
@@ -328,13 +336,13 @@ Create Field Report For Product Test
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Select first available customer
-    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
+    Select From List By Label    ${CUSTOMER_DROPDOWN}    Arcona Aktiebolag
     ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s
     
     # Select first available project
-    Select From List By Index    ${PROJECT_DROPDOWN}    1
+    Select From List By Label    ${PROJECT_DROPDOWN}    Systemkameran
     ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s

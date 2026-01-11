@@ -5,11 +5,11 @@ Library    OperatingSystem
 
 *** Variables ***
 ${BROWSER}        chrome
-${URL}           https://erp.finalisten.se/login/
+${URL}           https://preproderp.finalisten.se/login/
 ${USERNAME}      erpadmin@finalisten.se
 ${PASSWORD}      Djangocrm123
 ${LOGIN_BUTTON}  xpath=//button[@type='submit' and contains(@class,'btn-primary') and contains(@class,'btn-block')]
-${HOMEPAGE_URL}  https://erp.finalisten.se/homepage/
+${HOMEPAGE_URL}  https://preproderp.finalisten.se/homepage/
 ${CHROME_OPTIONS}    add_argument("--ignore-certificate-errors");add_argument("--disable-web-security");add_argument("--allow-running-insecure-content")
 
 *** Keywords ***

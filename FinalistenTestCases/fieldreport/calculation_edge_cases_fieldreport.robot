@@ -39,9 +39,9 @@ ${TOTAL_EARNING_DISPLAY}          id=total_earning
 ${ADD_PRODUCT_BUTTON}             xpath=//span[text()='ADD']
 ${PRODUCT_MODAL}                  id=myModal3
 ${MODAL_SAVE_BUTTON}              css=.prodinfr_save_button
-${PRODUCT_CHECKBOX}               css=#DataTables_Table_1 tbody tr:first-child .selected-checkbox
+${PRODUCT_CHECKBOX}               css=#prodInProjTable .selected-checkbox
 ${COMMON_EDIT_BUTTON}             id=common_edit_product
-${COMMON_SAVE_BUTTON}             id=save_all_products
+${COMMON_SAVE_BUTTON}             id=product_in_fieldreport_save
 ${PRODUCT_QTY_INPUT}              css=input[name*='quantity']
 ${PRODUCT_PRICE_INPUT}            css=input[name*='price']
 
@@ -187,7 +187,8 @@ Test Negative Product Price Earnings Calculation
             Log To Console    Original price: ${original_price}
             
             Clear Element Text    ${PRODUCT_PRICE_INPUT}
-            Input Text    ${PRODUCT_PRICE_INPUT}    -100
+            ${element}=    Get WebElement    ${PRODUCT_PRICE_INPUT}
+            Execute Javascript    arguments[0].value = '-100'; arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
             Log To Console    Set price to: -100
             
             Click Element    ${COMMON_SAVE_BUTTON}
@@ -248,7 +249,8 @@ Test Modify Quantity Updates Earnings
             
             # Double the quantity
             Clear Element Text    ${PRODUCT_QTY_INPUT}
-            Input Text    ${PRODUCT_QTY_INPUT}    10
+            ${element}=    Get WebElement    ${PRODUCT_QTY_INPUT}
+            Execute Javascript    arguments[0].value = '10'; arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
             Log To Console    Set quantity to: 10
             
             Click Element    ${COMMON_SAVE_BUTTON}
@@ -299,12 +301,14 @@ Create Field Report With Product And Hours
     Go To    ${FIELDREPORT_CREATE_URL}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
-    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
+    # Select specific customer
+    Select From List By Label    ${CUSTOMER_DROPDOWN}    Arcona Aktiebolag
     ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s
     
-    Select From List By Index    ${PROJECT_DROPDOWN}    1
+    # Select specific project
+    Select From List By Label    ${PROJECT_DROPDOWN}    Systemkameran
     ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s
@@ -324,6 +328,7 @@ Create Field Report With Product And Hours
     Log To Console    ✓ Created FR: ${fieldreport_id}
     
     # Add product
+    # Add product
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    1s
     Click Element    ${ADD_PRODUCT_BUTTON}
@@ -337,7 +342,26 @@ Create Field Report With Product And Hours
     Sleep    2s
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Sleep    2s
-    Log To Console    ✓ Added product
+    
+    # Wait for AJAX row and Save with Qty
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
+    Log To Console    Setting quantity to 1 via JavaScript...
+    ${qty_set}=    Execute Javascript
+    ...    var qtyInput = document.querySelector('#prodInFieldReportTable input[id^="id_quantity_"]');
+    ...    if (qtyInput) { qtyInput.value = '1'; qtyInput.dispatchEvent(new Event('change')); return true; }
+    ...    return false;
+    Log To Console    Quantity set via JS: ${qty_set}
+    Sleep    1s
+    
+    Wait Until Element Is Visible    ${COMMON_SAVE_BUTTON}    timeout=10s
+    Click Element    ${COMMON_SAVE_BUTTON}
+    Sleep    3s
+    Reload Page
+    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    Execute Javascript    window.scrollTo(0, 800);
+    Sleep    2s
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=15s
+    Log To Console    ✓ Added product and saved
 
 Extract Fieldreport ID From URL
     [Arguments]    ${url}

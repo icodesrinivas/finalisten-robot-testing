@@ -39,7 +39,8 @@ ${DELETE_BUTTON}                  id=remove_fieldreport
 ${ADD_PRODUCT_BUTTON}             xpath=//span[text()='ADD']
 ${PRODUCT_MODAL}                  id=myModal3
 ${MODAL_SAVE_BUTTON}              css=.prodinfr_save_button
-${PRODUCT_CHECKBOX}               css=#DataTables_Table_1 tbody tr:first-child .selected-checkbox
+${PRODUCT_CHECKBOX}               css=#myTable .selected-checkbox
+${MODAL_CANCEL_BUTTON}            xpath=//div[@id='myModal3']//button[contains(text(),'Cancel')]
 ${COMMON_EDIT_BUTTON}             id=common_edit_product
 
 # Test Values
@@ -249,12 +250,12 @@ Create Field Report For Test
     Go To    ${FIELDREPORT_CREATE_URL}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
-    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
+    Select From List By Label    ${CUSTOMER_DROPDOWN}    Arcona Aktiebolag
     ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s
     
-    Select From List By Index    ${PROJECT_DROPDOWN}    1
+    Select From List By Label    ${PROJECT_DROPDOWN}    Systemkameran
     ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s
@@ -278,24 +279,40 @@ Create Field Report With Product
     
     # Add a product
     Execute Javascript    window.scrollTo(0, 800);
-    Sleep    1s
+    Sleep    2s
     
     Wait Until Element Is Visible    ${ADD_PRODUCT_BUTTON}    timeout=10s
     Click Element    ${ADD_PRODUCT_BUTTON}
     Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=10s
-    Sleep    2s
     
-    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=5s
-    Click Element    ${PRODUCT_CHECKBOX}
-    Sleep    1s
+    # Wait specifically for the checkbox to appear - this confirms products are loaded
+    Log To Console    Waiting for products to load in modal...
+    ${status}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=30s
     
-    Execute Javascript    document.querySelector('#myModal3 .modal-content').scrollTo(0, 9999);
-    Sleep    1s
-    Click Element    ${MODAL_SAVE_BUTTON}
-    Sleep    2s
-    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
-    Sleep    2s
-    Log To Console    ✓ Added product to Field Report
+    IF    not ${status}
+        Log To Console    ⚠ No products found in modal after 30s.
+        Click Element    ${MODAL_CANCEL_BUTTON}
+        Sleep    1s
+        Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
+        Fail    Could not add product: No products available in modal.
+    ELSE
+        Log To Console    ✓ Products loaded. Selecting the first one.
+        # Try regular click first
+        ${click_status}=    Run Keyword And Return Status    Click Element    ${PRODUCT_CHECKBOX}
+        IF    not ${click_status}
+            Log To Console    Regular click failed, trying JavaScript click...
+            Execute Javascript    document.querySelector('#myTable .selected-checkbox').click()
+        END
+        Sleep    1s
+        
+        Execute Javascript    document.querySelector('#myModal3 .modal-content').scrollTo(0, 9999);
+        Sleep    1s
+        Click Element    ${MODAL_SAVE_BUTTON}
+        Sleep    2s
+        Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
+        Sleep    2s
+        Log To Console    ✓ Added product to Field Report
+    END
 
 Extract Fieldreport ID From URL
     [Documentation]    Extract the fieldreport ID from the edit page URL

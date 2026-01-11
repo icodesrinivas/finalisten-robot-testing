@@ -33,13 +33,13 @@ ${DELETE_BUTTON}                  id=remove_fieldreport
 ${ADD_PRODUCT_BUTTON}             xpath=//span[text()='ADD']
 ${PRODUCT_MODAL}                  id=myModal3
 ${MODAL_SAVE_BUTTON}              css=.prodinfr_save_button
-${PRODUCT_CHECKBOX}               css=#DataTables_Table_1 tbody tr:first-child .selected-checkbox
+${PRODUCT_CHECKBOX}               css=#prodInProjTable tbody tr:first-child .selected-checkbox
 
 # Product Table Selectors
-${PRODUCTS_TABLE}                 id=product-list-table
-${COMMON_EDIT_BUTTON}             id=common_edit_product
-${COMMON_SAVE_BUTTON}             id=save_all_products
-${PRODUCT_QTY_INPUT}              css=input[name*='quantity']
+${PRODUCTS_TABLE}                 id=prodInFieldReportTable
+${COMMON_EDIT_BUTTON}             id=product_in_fieldreport_edit
+${COMMON_SAVE_BUTTON}             id=product_in_fieldreport_save
+${PRODUCT_QTY_INPUT}              css=input[id^='id_quantity_']
 
 # Test Values
 ${VALID_WORK_DATE}                2025-10-15
@@ -66,7 +66,7 @@ Test Fields Copied From Sales Product To FR Product
     Sleep    2s
     
     # Get product details from modal (sales product)
-    ${modal_product_text}=    Get Text    css=#DataTables_Table_1 tbody tr:first-child
+    ${modal_product_text}=    Get Text    css=#prodInProjTable tbody tr:first-child
     Log To Console    Sales Product (from modal): ${modal_product_text}
     
     # Select and save product
@@ -85,7 +85,7 @@ Test Fields Copied From Sales Product To FR Product
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
     
-    ${fr_product_text}=    Get Text    css=#product-list-table tbody tr:first-child
+    ${fr_product_text}=    Get Text    css=#prodInFieldReportTable tbody tr:first-child
     Log To Console    FR Product (after add): ${fr_product_text}
     
     # Product should have data (description, price, etc)
@@ -108,7 +108,7 @@ Test Modify FR Product Sales Product Unchanged
     Sleep    2s
     
     # Get original product text
-    ${original_product}=    Get Text    css=#product-list-table tbody tr:first-child
+    ${original_product}=    Get Text    css=#prodInFieldReportTable tbody tr:first-child
     Log To Console    Original FR Product: ${original_product}
     
     # Enable edit mode and modify quantity
@@ -125,7 +125,8 @@ Test Modify FR Product Sales Product Unchanged
             
             # Change quantity to 999
             Clear Element Text    ${PRODUCT_QTY_INPUT}
-            Input Text    ${PRODUCT_QTY_INPUT}    999
+            ${element}=    Get WebElement    ${PRODUCT_QTY_INPUT}
+            Execute Javascript    arguments[0].value = '999'; arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
             Log To Console    Modified quantity to: 999
             
             # Save
@@ -140,7 +141,7 @@ Test Modify FR Product Sales Product Unchanged
             Execute Javascript    window.scrollTo(0, 800);
             Sleep    2s
             
-            ${modified_product}=    Get Text    css=#product-list-table tbody tr:first-child
+            ${modified_product}=    Get Text    css=#prodInFieldReportTable tbody tr:first-child
             Log To Console    Modified FR Product: ${modified_product}
             
             # The original sales product should remain unchanged
@@ -167,7 +168,7 @@ Test Add Same Product Twice Duplicate Handling
     Sleep    2s
     
     # Count products before
-    ${count_before}=    Get Element Count    css=#product-list-table tbody tr
+    ${count_before}=    Get Element Count    css=#prodInFieldReportTable tbody tr
     Log To Console    Products before adding duplicate: ${count_before}
     
     # Try to add the same product again
@@ -196,7 +197,7 @@ Test Add Same Product Twice Duplicate Handling
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
     
-    ${count_after}=    Get Element Count    css=#product-list-table tbody tr
+    ${count_after}=    Get Element Count    css=#prodInFieldReportTable tbody tr
     Log To Console    Products after adding duplicate: ${count_after}
     
     ${difference}=    Evaluate    ${count_after} - ${count_before}
@@ -235,7 +236,8 @@ Test Add Product With Zero Quantity
         IF    ${qty_exists}
             # Set quantity to zero
             Clear Element Text    ${PRODUCT_QTY_INPUT}
-            Input Text    ${PRODUCT_QTY_INPUT}    0
+            ${element}=    Get WebElement    ${PRODUCT_QTY_INPUT}
+            Execute Javascript    arguments[0].value = '0'; arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
             Log To Console    Set quantity to: 0
             
             # Try to save
@@ -251,7 +253,7 @@ Test Add Product With Zero Quantity
             Execute Javascript    window.scrollTo(0, 800);
             Sleep    2s
             
-            ${product_rows}=    Get Element Count    css=#product-list-table tbody tr
+            ${product_rows}=    Get Element Count    css=#prodInFieldReportTable tbody tr
             
             IF    ${product_rows} > 0
                 ${product_text}=    Get Text    css=#product-list-table tbody tr:first-child
@@ -292,12 +294,13 @@ Create Field Report For Test
     Go To    ${FIELDREPORT_CREATE_URL}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
-    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
+    # Select specific customer and project known to have products
+    Select From List By Label    ${CUSTOMER_DROPDOWN}    Arcona Aktiebolag
     ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s
     
-    Select From List By Index    ${PROJECT_DROPDOWN}    1
+    Select From List By Label    ${PROJECT_DROPDOWN}    Systemkameran
     ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s
@@ -318,14 +321,19 @@ Create Field Report For Test
 Create Field Report With Product
     [Documentation]    Create a field report and add a product
     Create Field Report For Test
-    
+    Add Sample Product To FR
+
+Add Sample Product To FR
+    [Documentation]    Add a sample product to the field report with qty=1
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    1s
     
+    Wait Until Element Is Visible    ${ADD_PRODUCT_BUTTON}    timeout=10s
     Click Element    ${ADD_PRODUCT_BUTTON}
     Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=10s
     Sleep    2s
     
+    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=30s
     Click Element    ${PRODUCT_CHECKBOX}
     Sleep    1s
     
@@ -335,7 +343,35 @@ Create Field Report With Product
     Sleep    2s
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Sleep    2s
-    Log To Console    ✓ Added product
+    
+    # Wait for AJAX row to appear
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
+    Log To Console    ✓ Product row appeared via AJAX
+    
+    # SET QUANTITY TO 1 via JavaScript (before saving FR!)
+    Log To Console    Setting quantity to 1 via JavaScript...
+    Sleep    2s
+    ${qty_set}=    Execute Javascript
+    ...    var qtyInput = document.querySelector('#prodInFieldReportTable input[id^="id_quantity_"]');
+    ...    if (qtyInput) { qtyInput.value = '1'; qtyInput.dispatchEvent(new Event('change')); return true; }
+    ...    return false;
+    Log To Console    Quantity set via JS: ${qty_set}
+    Sleep    1s
+    
+    # SAVE Field Report to persist the product with qty
+    Log To Console    Saving field report...
+    Wait Until Element Is Visible    ${COMMON_SAVE_BUTTON}    timeout=10s
+    Click Element    ${COMMON_SAVE_BUTTON}
+    Sleep    5s
+    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    
+    # Reload and verify
+    Reload Page
+    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    Execute Javascript    window.scrollTo(0, 800);
+    Sleep    2s
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=15s
+    Log To Console    ✓ Product added with quantity 1
 
 Extract Fieldreport ID From URL
     [Documentation]    Extract the fieldreport ID from the edit page URL

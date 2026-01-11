@@ -33,10 +33,11 @@ ${DELETE_BUTTON}                  id=remove_fieldreport
 ${ADD_PRODUCT_BUTTON}             xpath=//span[text()='ADD']
 ${PRODUCT_MODAL}                  id=myModal3
 ${MODAL_SAVE_BUTTON}              css=.prodinfr_save_button
-${PRODUCT_CHECKBOX}               css=#DataTables_Table_1 tbody tr:first-child .selected-checkbox
+${PRODUCT_CHECKBOX}               css=#prodInProjTable tbody tr:first-child .selected-checkbox
 
 # Products in FR Table Selectors
-${PRODUCTS_TABLE}                 id=product-list-table
+${PRODUCTS_TABLE}                 id=prodInFieldReportTable
+${COMMON_SAVE_BUTTON}             id=product_in_fieldreport_save
 ${PRODUCT_DELETE_BUTTON}          css=.delete_product
 ${PRODUCT_ATTACHMENT_INPUT}       css=input[type='file']
 ${PRODUCT_ATTACHMENT_ICON}        css=.attachment-icon
@@ -62,13 +63,13 @@ Test Delete Product From Field Report
     Log To Console    ======== TESTING PRODUCT DELETE ========
     
     # Count products before delete
-    ${products_before}=    Get Element Count    css=#product-list-table tbody tr
+    ${products_before}=    Get Element Count    css=#prodInFieldReportTable tbody tr
     Log To Console    Products before delete: ${products_before}
     Should Be True    ${products_before} >= 1    msg=Need at least 1 product to test delete
     
     # Click delete button on first product
     Log To Console    \n--- Clicking Delete Button ---
-    ${delete_btn}=    Set Variable    css=#product-list-table tbody tr:first-child .delete_product
+    ${delete_btn}=    Set Variable    css=#prodInFieldReportTable tbody tr:first-child .delete_product
     ${delete_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${delete_btn}    timeout=10s
     
     IF    ${delete_exists}
@@ -83,7 +84,7 @@ Test Delete Product From Field Report
         Sleep    2s
         
         # Verify product was deleted
-        ${products_after}=    Get Element Count    css=#product-list-table tbody tr
+        ${products_after}=    Get Element Count    css=#prodInFieldReportTable tbody tr
         Log To Console    Products after delete: ${products_after}
         
         ${expected}=    Evaluate    ${products_before} - 1
@@ -262,7 +263,7 @@ Create Field Report With Product
     Add Sample Product To FR
 
 Add Sample Product To FR
-    [Documentation]    Add a sample product to the field report
+    [Documentation]    Add a sample product to the field report with qty=1
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    1s
     
@@ -272,18 +273,47 @@ Add Sample Product To FR
     Sleep    2s
     
     # Select first product
-    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=5s
+    Log To Console    \n--- Selecting Product in Modal ---
+    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=30s
     Click Element    ${PRODUCT_CHECKBOX}
     Sleep    1s
     
-    # Save
+    # Save in modal
     Execute Javascript    document.querySelector('#myModal3 .modal-content').scrollTo(0, 9999);
     Sleep    1s
     Click Element    ${MODAL_SAVE_BUTTON}
     Sleep    2s
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Sleep    2s
-    Log To Console    ✓ Product added to field report
+    
+    # Wait for AJAX row to appear
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
+    Log To Console    ✓ Product row appeared via AJAX
+    
+    # SET QUANTITY TO 1 IMMEDIATELY via JavaScript (before saving FR!)
+    Log To Console    Setting quantity to 1 via JavaScript...
+    Sleep    2s
+    ${qty_set}=    Execute Javascript
+    ...    var qtyInput = document.querySelector('#prodInFieldReportTable input[id^="id_quantity_"]');
+    ...    if (qtyInput) { qtyInput.value = '1'; qtyInput.dispatchEvent(new Event('change')); return true; }
+    ...    return false;
+    Log To Console    Quantity set via JS: ${qty_set}
+    Sleep    1s
+    
+    # SAVE Field Report to persist the product with qty
+    Log To Console    Saving field report...
+    Wait Until Element Is Visible    ${COMMON_SAVE_BUTTON}    timeout=10s
+    Click Element    ${COMMON_SAVE_BUTTON}
+    Sleep    5s
+    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    
+    # Reload and verify
+    Reload Page
+    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    Execute Javascript    window.scrollTo(0, 800);
+    Sleep    2s
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=15s
+    Log To Console    ✓ Product added with quantity 1 and report saved
 
 Extract Fieldreport ID From URL
     [Documentation]    Extract the fieldreport ID from the edit page URL
