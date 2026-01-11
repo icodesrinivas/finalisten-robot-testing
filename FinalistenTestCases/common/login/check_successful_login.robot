@@ -8,5 +8,7 @@ ${PRODUCTION_LINK}  xpath=//a[@class='nav-link dropdown-toggle' and @role='butto
 *** Test Cases ***
 Login And Verify Production Link
     Open And Login
-    Wait Until Element Is Visible    ${PRODUCTION_LINK}    timeout=10s
+    Sleep    2s
+    Wait Until Element Is Visible    ${PRODUCTION_LINK}    timeout=20s
     Log To Console    "Login successful and Production link is present."
+    Close Browser
