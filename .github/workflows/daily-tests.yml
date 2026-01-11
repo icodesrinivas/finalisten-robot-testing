@@ -47,19 +47,19 @@ jobs:
           echo "# Robot Framework Test Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f results/output.xml ]; then
-            python3 -c "
-import xml.etree.ElementTree as ET
-tree = ET.parse('results/output.xml')
-root = tree.getroot()
-stats = root.find('.//statistics/total/stat')
-if stats is not None:
-    total = stats.get('pass', '0') + stats.get('fail', '0')
-    passed = stats.get('pass', '0')
-    failed = stats.get('fail', '0')
-    print(f'- **Total Tests:** {total}')
-    print(f'- **Passed:** ✅ {passed}')
-    print(f'- **Failed:** ❌ {failed}')
-" >> $GITHUB_STEP_SUMMARY
+            python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          import xml.etree.ElementTree as ET
+          tree = ET.parse('results/output.xml')
+          root = tree.getroot()
+          stats = root.find('.//statistics/total/stat')
+          if stats is not None:
+              total = stats.get('pass', '0') + stats.get('fail', '0')
+              passed = stats.get('pass', '0')
+              failed = stats.get('fail', '0')
+              print(f'- **Total Tests:** {total}')
+              print(f'- **Passed:** ✅ {passed}')
+              print(f'- **Failed:** ❌ {failed}')
+          EOF
           else
             echo "⚠️ No test results found" >> $GITHUB_STEP_SUMMARY
           fi
