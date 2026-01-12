@@ -13,11 +13,15 @@ Verify Employee List Opens Successfully
     Open And Login
     # Wait for Presence (id=register) which is more robust in headless
     Wait Until Page Contains Element    ${REGISTER_MENU}    timeout=45s
+    Sleep    3s
+    # Scroll to ensure element is in viewport
+    Execute Javascript    var el = document.getElementById('register'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
     Sleep    2s
+    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=15s
     Click Element    ${REGISTER_MENU}
     # Wait for Presence (submenu)
     Wait Until Page Contains Element    ${EMPLOYEES_MENU}    timeout=20s
-    Sleep    1s
+    Sleep    2s
     Click Element    ${EMPLOYEES_MENU}
     Sleep    3s
     Wait Until Page Contains    Filters    timeout=15s
