@@ -251,15 +251,29 @@ Login To Application
     Log To Console    Successfully logged in
 
 Extract Fieldreport ID From URL
+    [Documentation]    Extract the fieldreport slug/ID from the edit page URL
+    ...                URLs now use alphanumeric slugs like: /fieldreport/list/{SLUG}/edit/
     [Arguments]    ${url}
     ${parts}=    Split String    ${url}    /
+    ${num_parts}=    Get Length    ${parts}
+    # Look for the slug which is the part before 'edit' in the URL
     FOR    ${i}    ${part}    IN ENUMERATE    @{parts}
-        ${is_numeric}=    Run Keyword And Return Status    Should Match Regexp    ${part}    ^\\d+$
-        IF    ${is_numeric}
+        ${next_idx}=    Evaluate    ${i} + 1
+        IF    ${next_idx} < ${num_parts}
+            ${next_part}=    Evaluate    $parts[${next_idx}]
+            IF    '${next_part}' == 'edit'
+                RETURN    ${part}
+            END
+        END
+    END
+    # Fallback: Try matching alphanumeric slug pattern
+    FOR    ${i}    ${part}    IN ENUMERATE    @{parts}
+        ${is_slug}=    Run Keyword And Return Status    Should Match Regexp    ${part}    ^[A-Za-z0-9]{5,8}$
+        IF    ${is_slug}
             RETURN    ${part}
         END
     END
-    Fail    Could not extract ID from URL
+    Fail    Could not extract fieldreport slug from URL: ${url}
 
 Cleanup If Exists
     ${has_id}=    Run Keyword And Return Status    Should Not Be Empty    ${CREATED_FIELDREPORT_ID}
