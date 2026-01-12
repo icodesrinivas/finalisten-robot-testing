@@ -31,3 +31,10 @@ results/
 debug_*.html
 debug_*.xml
 settings_page_source.html_fr.html
+
+# Test execution outputs in FinalistenTestCases
+FinalistenTestCases/*.xml
+FinalistenTestCases/*.html
+FinalistenTestCases/jenkins_*.xml
+FinalistenTestCases/jenkins_*.html
+FinalistenTestCases/test_*.xml
