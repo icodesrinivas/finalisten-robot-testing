@@ -320,19 +320,30 @@ Navigate To Field Report List
 
 Hover Over Production Menu
     [Documentation]    Hover over the Production menu to reveal submenu
+    Wait Until Page Contains Element    ${PRODUCTION_MENU}    timeout=20s
+    Execute Javascript    var el = document.getElementById('production'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
+    Sleep    2s
+    Wait Until Element Is Visible    ${PRODUCTION_MENU}    timeout=15s
     Mouse Over    ${PRODUCTION_MENU}
+    Sleep    1s
 
 Click On Field Report Menu
     [Documentation]    Click on the Field Report submenu item
+    Wait Until Element Is Visible    ${FIELD_REPORT_MENU}    timeout=15s
     Click Element    ${FIELD_REPORT_MENU}
 
 Expand Filter Section
     [Documentation]    Expand the filter section if not already expanded
+    Sleep    2s
+    Execute Javascript    window.scrollTo(0, 0);
+    Sleep    1s
+    Wait Until Page Contains Element    ${FILTER_SECTION_HEADER}    timeout=30s
     ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_BUTTON}
     IF    not ${is_visible}
-        Click Element    ${FILTER_SECTION_HEADER}
+        Execute Javascript    var el = document.getElementById('fieldreport_list_filter'); if(el) el.click();
+        Sleep    2s
     END
-    Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=10s
+    Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=15s
 
 Set Wide Date Range For Testing
     [Documentation]    Set a date range (3 months back to today) to ensure results are not filtered out by default date

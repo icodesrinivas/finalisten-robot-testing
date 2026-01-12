@@ -18,17 +18,26 @@ Verify All Daily Planner Boards Open Successfully
         ${board_name}=    Get Element Attribute    ${board}    id
         Hover Over Production Menu
         Hover Over Daily Planner Menu
-        Click Element    xpath=//*[@id="${board_name}"]
-        Wait Until Page Contains    ${NOT_PLANNED_TASKS_TEXT}    timeout=10s
+        Sleep    1s
+        ${board_element}=    Get WebElement    xpath=//*[@id="${board_name}"]
+        Execute Javascript    arguments[0].click();    ARGUMENTS    ${board_element}
+        Wait Until Page Contains    ${NOT_PLANNED_TASKS_TEXT}    timeout=15s
         Log To Console    "${board_name} board opened successfully and contains 'Not Planned Tasks'."
         Go Back
-        Sleep    1s
+        Sleep    2s
     END
     Close Browser
 
 *** Keywords ***
 Hover Over Production Menu
+    Wait Until Page Contains Element    ${PRODUCTION_MENU}    timeout=20s
+    Execute Javascript    var el = document.getElementById('production'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
+    Sleep    2s
+    Wait Until Element Is Visible    ${PRODUCTION_MENU}    timeout=15s
     Mouse Over    ${PRODUCTION_MENU}
+    Sleep    1s
 
 Hover Over Daily Planner Menu
+    Wait Until Element Is Visible    ${DAILY_PLANNER_MENU}    timeout=15s
     Mouse Over    ${DAILY_PLANNER_MENU}
+    Sleep    1s

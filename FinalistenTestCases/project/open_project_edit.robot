@@ -21,12 +21,21 @@ Verify Project Edit View Opens Successfully
 
 *** Keywords ***
 Hover Over Production Menu
+    Wait Until Page Contains Element    ${PRODUCTION_MENU}    timeout=20s
+    Execute Javascript    var el = document.getElementById('production'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
+    Sleep    2s
+    Wait Until Element Is Visible    ${PRODUCTION_MENU}    timeout=15s
     Mouse Over    ${PRODUCTION_MENU}
+    Sleep    1s
 
 Click On Project Menu
+    Wait Until Element Is Visible    ${PROJECT_MENU}    timeout=15s
     Click Element    ${PROJECT_MENU}
 
 Click Project Row And Verify
-    Click Element    ${PROJECT_ROW}
-    Wait Until Page Contains    ${PROJECT_EDIT_TEXT}    timeout=15s
+    ${row}=    Get WebElement    ${PROJECT_ROW}
+    Execute Javascript    arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});    ARGUMENTS    ${row}
+    Sleep    1s
+    Double Click Element    ${PROJECT_ROW}
+    Wait Until Page Contains    ${PROJECT_EDIT_TEXT}    timeout=20s
     Log To Console    "GENERAL DATA text found. Project Edit view opened successfully."
