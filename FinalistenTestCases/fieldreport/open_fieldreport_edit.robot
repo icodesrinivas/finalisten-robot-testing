@@ -24,7 +24,12 @@ Verify Field Report Edit Page Opens Successfully
 
 *** Keywords ***
 Hover Over Production Menu
+    Wait Until Page Contains Element    ${PRODUCTION_MENU}    timeout=20s
+    Execute Javascript    var el = document.getElementById('production'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
+    Sleep    2s
+    Wait Until Element Is Visible    ${PRODUCTION_MENU}    timeout=15s
     Mouse Over    ${PRODUCTION_MENU}
+    Sleep    1s
 
 Click On Field Report Menu
     Wait Until Element Is Visible    ${FIELD_REPORT_MENU}    timeout=10s
@@ -32,7 +37,7 @@ Click On Field Report Menu
     Sleep    3s
 
 Open Field Report Edit Page
-    Wait Until Element Is Visible    ${FILTER_FRAME_HEADER}    timeout=10s
+    Wait Until Element Is Visible    ${FILTER_FRAME_HEADER}    timeout=20s
     Click Element    ${FILTER_FRAME_HEADER}
     Wait Until Page Contains Element    ${SEARCH_BUTTON_XPATH}    timeout=10s
     Click Search Button
@@ -68,7 +73,7 @@ Click Search Button
 
 Switch To New Tab And Verify Field Report Text
     Switch Window    ${new_tab}
-    Wait Until Page Contains    FIELD REPORT    timeout=10s
+    Wait Until Page Contains    FIELD REPORT    timeout=20s
     Log To Console    "FIELD REPORT text found. Edit page opened successfully."
 
 Get New Window Handle

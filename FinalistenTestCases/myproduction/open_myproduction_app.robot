@@ -11,8 +11,12 @@ Verify MyProduction App Opens Successfully
     Open And Login
     Hover Over Production Menu
     Click On MyProduction Menu
-    Wait Until Page Contains    Installer Name    timeout=20s
-    Log To Console    "Installer Name text found. MyProduction app opened successfully."
+    # The MyProduction page shows a tree menu with installers - wait for that to load
+    # "Installer Name" text only appears after clicking the pencil icon next to an installer
+    Wait Until Page Contains Element    xpath=//a[contains(@href, 'fieldreport_approval_installer')]    timeout=20s
+    Sleep    3s
+    Page Should Contain Element    xpath=//*[contains(@class, 'tree') or contains(@id, 'tree')]
+    Log To Console    "MyProduction app page loaded successfully."
     Close Browser
 
 *** Keywords ***

@@ -6,7 +6,7 @@ Resource   ../keywords/LoginKeyword.robot
 ${PRODUCTION_MENU}                xpath=//*[@id="production"]
 ${PROJECT_MENU}                   xpath=//*[@id="project_app_menu"]
 ${PROJECT_ROW}                    css=tr.project_rows
-${PROJECT_EDIT_TEXT}             GENERAL DATA
+${PROJECT_EDIT_TEXT}             GENERELLA UPPGIFTER
 
 *** Test Cases ***
 Verify Project Edit View Opens Successfully

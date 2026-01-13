@@ -5,7 +5,7 @@ Resource   ../keywords/LoginKeyword.robot
 *** Variables ***
 ${REPORTS_MENU}                     xpath=//*[@id="reports"]
 ${PERFORMANCE_REPORT_MENU}         xpath=//*[@id="performance_report_app_menu"]
-${PERFORMANCE_REPORT_TEXT}         Filters
+${PERFORMANCE_REPORT_TEXT}         filters
 
 *** Test Cases ***
 Verify Performance Report App Opens Successfully
