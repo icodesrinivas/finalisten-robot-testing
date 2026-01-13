@@ -56,7 +56,7 @@ Debug Field Report Creation And Products
     Create File    ${OUTPUT DIR}/debug_modal.html    ${modal_src}
     
     # Select product
-    Click Element    css=#prodInProjTable tbody tr:first-child .selected-checkbox
+    Click Element    css=#myTable .selected-checkbox
     Click Element    css=.prodinfr_save_button
     Sleep    2s
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s

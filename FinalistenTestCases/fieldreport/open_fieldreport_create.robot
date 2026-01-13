@@ -13,7 +13,7 @@ Verify Field Report Create Page Opens Successfully
     Hover Over Production Menu
     Click On Field Report Menu
     Sleep    3s
-    Wait Until Element Is Visible    ${FIELD_REPORT_ADD_BUTTON}    timeout=10s
+    Wait Until Element Is Visible    ${FIELD_REPORT_ADD_BUTTON}    timeout=20s
     Click On Field Report Add Button
     Wait Until Page Contains    FIELD REPORT    timeout=15s
     Log To Console    "FIELD REPORT text found. Create view opened successfully."

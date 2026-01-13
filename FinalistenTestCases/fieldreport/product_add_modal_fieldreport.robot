@@ -166,7 +166,7 @@ Test Product Modal Pagination
     
     IF    ${pagination_exists}
         # Get first row text before pagination
-        ${first_row_before}=    Get Text    css=#prodInProjTable tbody tr:first-child
+        ${first_row_before}=    Get Text    css=#myTable tr:first-child
         Log To Console    First row before navigation: ${first_row_before}
         
         # Click next page
@@ -174,7 +174,7 @@ Test Product Modal Pagination
         Sleep    2s
         
         # Verify content changed
-        ${first_row_after}=    Get Text    css=#prodInProjTable tbody tr:first-child
+        ${first_row_after}=    Get Text    css=#myTable tr:first-child
         Log To Console    First row after navigation: ${first_row_after}
         
         IF    '${first_row_before}' != '${first_row_after}'

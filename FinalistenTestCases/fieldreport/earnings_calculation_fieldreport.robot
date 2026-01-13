@@ -35,7 +35,7 @@ ${SAVE_GENERAL_DATA_BUTTON}       id=fieldreport_general_data_save
 ${ADD_PRODUCT_BUTTON}             xpath=//span[text()='ADD']
 ${PRODUCT_MODAL}                  id=myModal3
 ${MODAL_SAVE_BUTTON}              css=.prodinfr_save_button
-${PRODUCT_CHECKBOX}               css=#prodInProjTable tbody tr:first-child .selected-checkbox
+${PRODUCT_CHECKBOX}               css=#myTable .selected-checkbox
 
 # Earnings Display Selectors
 ${TOTAL_EARNING_DISPLAY}          id=total_earning

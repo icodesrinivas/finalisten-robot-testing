@@ -5,7 +5,7 @@ Resource         ../keywords/LoginKeyword.robot
 
 *** Variables ***
 ${SETTINGS_URL}    https://preproderp.finalisten.se/setting/
-${OUTPUT_FILE}     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/settings_page_source.html
+${OUTPUT_FILE}     ${OUTPUT DIR}/settings_page_source.html
 
 *** Test Cases ***
 Dump Settings Page Source

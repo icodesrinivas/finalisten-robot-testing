@@ -131,18 +131,28 @@ Test Copy Field Report Creates Duplicate
         # If the URL is still the copy URL, we assume we need to manually redirect to the edit page 
         # based on the content.
         
-        # Attempt to read ID from text
-        # Only simple regex: \d{5}
-        ${matches}=    Get Regexp Matches    ${page_text}    \\d{5}
-        ${len_matches}=    Get Length    ${matches}
-        IF    ${len_matches} > 0
-             ${possible_id}=    Set Variable    ${matches}[0]
-             Log To Console    Found possible ID in response: ${possible_id}
-             # Go to Edit page of this ID
-             Go To    ${FIELDREPORT_LIST_URL}${possible_id}/edit/
+        # Attempt to read slug from text - look for alphanumeric slug pattern
+        # Try to find JSON response with slug like {"slug": "abc123"} or just alphanumeric patterns
+        ${slug_matches}=    Get Regexp Matches    ${page_text}    [A-Za-z0-9]{6,8}
+        ${len_slug}=    Get Length    ${slug_matches}
+        IF    ${len_slug} > 0
+             ${possible_slug}=    Set Variable    ${slug_matches}[0]
+             Log To Console    Found possible slug in response: ${possible_slug}
+             # Go to Edit page of this slug
+             Go To    ${FIELDREPORT_LIST_URL}${possible_slug}/edit/
              ${current_url}=    Get Location
         ELSE
-             Log To Console    Could not find ID in response.
+             # Fallback: try numeric ID pattern
+             ${matches}=    Get Regexp Matches    ${page_text}    \\d{5}
+             ${len_matches}=    Get Length    ${matches}
+             IF    ${len_matches} > 0
+                  ${possible_id}=    Set Variable    ${matches}[0]
+                  Log To Console    Found possible numeric ID in response: ${possible_id}
+                  Go To    ${FIELDREPORT_LIST_URL}${possible_id}/edit/
+                  ${current_url}=    Get Location
+             ELSE
+                  Log To Console    Could not find slug or ID in response.
+             END
         END
     END
     

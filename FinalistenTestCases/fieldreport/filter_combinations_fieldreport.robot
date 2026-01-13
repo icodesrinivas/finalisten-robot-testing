@@ -42,6 +42,8 @@ Test Customer And Project Filter Combined
     
     Log To Console    ======== TEST: Customer + Project Filter Combined ========
     Go To    ${FIELDREPORT_LIST_URL}
+    Sleep    5s
+    Execute Javascript    return document.readyState === 'complete'
     Expand Filters
     Set Wide Date Range
     
