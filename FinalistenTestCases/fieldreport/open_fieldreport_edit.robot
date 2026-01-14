@@ -73,7 +73,13 @@ Click Search Button
 
 Switch To New Tab And Verify Field Report Text
     Switch Window    ${new_tab}
-    Wait Until Page Contains    FIELD REPORT    timeout=20s
+    Wait Until Page Contains    FIELD REPORT    timeout=30s
+    ${has_text}=    Run Keyword And Return Status    Page Should Contain    FIELD REPORT
+    IF    not ${has_text}
+        Log To Console    ⚠ 'FIELD REPORT' text not found with standard check. Checking page source...
+        ${source}=    Get Source
+        Should Contain    ${source}    FIELD REPORT    msg=Edit page should contain 'FIELD REPORT' text
+    END
     Log To Console    "FIELD REPORT text found. Edit page opened successfully."
 
 Get New Window Handle

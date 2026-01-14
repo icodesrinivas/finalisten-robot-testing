@@ -65,12 +65,29 @@ Test Fields Copied From Sales Product To FR Product
     Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=10s
     Sleep    2s
     
+    # Wait for products to load in modal table
+    ${rows_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    css=#prodInProjTable tbody tr    timeout=15s
+    
+    IF    not ${rows_visible}
+        Log To Console    ⚠ No products in Systemkameran. Trying another project...
+        Click Element    ${MODAL_CANCEL_BUTTON}
+        Wait Until Element Is Not Visible    ${PRODUCT_MODAL}    timeout=10s
+        Select From List By Index    ${PROJECT_DROPDOWN}    1
+        ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
+        Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
+        Sleep    2s
+        Click Element    ${ADD_PRODUCT_BUTTON}
+        Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=15s
+        Wait Until Element Is Visible    css=#prodInProjTable tbody tr    timeout=15s
+    END
+    
     # Get product details from modal (sales product)
-    ${modal_product_text}=    Get Text    css=#myTable tr:first-child
+    ${modal_product_text}=    Get Text    css=#prodInProjTable tbody tr:first-child
     Log To Console    Sales Product (from modal): ${modal_product_text}
     
     # Select and save product
-    Click Element    ${PRODUCT_CHECKBOX}
+    ${checkbox}=    Get WebElement    css=#prodInProjTable .selected-checkbox
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${checkbox}
     Sleep    1s
     Execute Javascript    document.querySelector('#myModal3 .modal-content').scrollTo(0, 9999);
     Sleep    1s
@@ -256,7 +273,7 @@ Test Add Product With Zero Quantity
             ${product_rows}=    Get Element Count    css=#prodInFieldReportTable tbody tr
             
             IF    ${product_rows} > 0
-                ${product_text}=    Get Text    css=#product-list-table tbody tr:first-child
+                ${product_text}=    Get Text    css=#prodInFieldReportTable tbody tr:first-child
                 Log To Console    Product after zero qty: ${product_text}
                 
                 ${contains_zero}=    Run Keyword And Return Status    Should Contain    ${product_text}    0

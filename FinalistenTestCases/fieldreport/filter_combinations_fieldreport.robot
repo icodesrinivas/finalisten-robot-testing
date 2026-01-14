@@ -204,16 +204,21 @@ Login To Application
 Expand Filters
     [Documentation]    Ensure the filter section is expanded. 
     ...               If already visible, it does nothing.
-    Sleep    3s
+    Wait Until Keyword Succeeds    3x    5s    Wait Until Page Contains Element    ${FILTER_TOGGLE}
     Execute Javascript    window.scrollTo(0, 0);
-    Sleep    1s
-    Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=30s
+    Sleep    2s
+    
+    # Check if Search button is visible (indicator that filter is expanded)
     ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_BUTTON}
     IF    not ${is_visible}
-        Execute Javascript    var el = document.getElementById('fieldreport_list_filter'); if(el) el.click();
-        Sleep    2s
+        Log To Console    Expanding filter section...
+        Click Element    ${FILTER_TOGGLE}
+        Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=10s
     END
-    Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=15s
+    
+    # Extra check to ensure it's REALLY visible and interactable
+    Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=10s
+    Wait Until Element Is Visible    ${CUSTOMER_FILTER}    timeout=5s
 
 Set Wide Date Range
     [Documentation]    Set a wide date range to ensure results

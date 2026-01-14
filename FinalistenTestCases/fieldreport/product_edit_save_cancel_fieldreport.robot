@@ -202,6 +202,7 @@ Test Common Save Button Persists Changes
         Sleep    2s
         
         # Check if value persisted
+        Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr:first-child    timeout=10s
         ${saved_value}=    Get Text    css=#prodInFieldReportTable tbody tr:first-child
         Log To Console    Row content after save: ${saved_value}
         Log To Console    ✓ Changes saved successfully

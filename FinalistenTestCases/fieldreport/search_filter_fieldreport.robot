@@ -334,14 +334,15 @@ Click On Field Report Menu
 
 Expand Filter Section
     [Documentation]    Expand the filter section if not already expanded
-    Sleep    2s
+    Sleep    3s
     Execute Javascript    window.scrollTo(0, 0);
-    Sleep    1s
+    Sleep    2s
     Wait Until Page Contains Element    ${FILTER_SECTION_HEADER}    timeout=30s
     ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_BUTTON}
     IF    not ${is_visible}
+        Log To Console    Expanding filters...
         Execute Javascript    var el = document.getElementById('fieldreport_list_filter'); if(el) el.click();
-        Sleep    2s
+        Sleep    3s
     END
     Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=15s
 

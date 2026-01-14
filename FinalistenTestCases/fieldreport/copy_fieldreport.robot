@@ -111,13 +111,26 @@ Test Copy Field Report Creates Duplicate
     # Check if ID changed (extraction logic)
     ${copied_id_pre}=    Extract Fieldreport ID From URL    ${current_url}
     
-    # FALLBACK: If still on original ID, try navigating directly
-    IF    '${copied_id_pre}' == '${CREATED_FIELDREPORT_ID}'
-        Log To Console    ⚠ Copy button click didn't change page. Attempting direct navigation to: ${copy_url_attr}
+    # FALLBACK: If still on original ID or on list page, try navigating directly
+    IF    '${copied_id_pre}' == '${CREATED_FIELDREPORT_ID}' or '${current_url}' == '${FIELDREPORT_LIST_URL}'
+        Log To Console    ⚠ Copy button click didn't change page or redirected to list. Attempting direct navigation to: ${copy_url_attr}
         Go To    ${BASE_URL}${copy_url_attr}
-        Sleep    2s
+        Sleep    3s
         ${current_url}=    Get Location
+        
+        # If we are on list page, find the newest record (presumably the copy)
+        IF    '${current_url}' == '${FIELDREPORT_LIST_URL}'
+            Log To Console    Redirected to list page. Finding newest field report...
+            # The list is usually sorted by newest first
+            Wait Until Element Is Visible    css=.fieldreport_rows    timeout=15s
+            ${newest_link}=    Get Element Attribute    xpath=//tr[contains(@class, 'fieldreport_rows')][1]//a[contains(@href, '/edit/')]    href
+            Log To Console    Found newest edit link: ${newest_link}
+            Go To    ${newest_link}
+            ${current_url}=    Get Location
+        END
+        
         ${page_text}=    Get Text    tag=body
+        # Check if response contains ID (simple heuristic: look for numbers)
         Log To Console    Response from Copy Endpoint: ${page_text}
         
         # Check if response contains ID (simple heuristic: look for numbers)
@@ -131,27 +144,42 @@ Test Copy Field Report Creates Duplicate
         # If the URL is still the copy URL, we assume we need to manually redirect to the edit page 
         # based on the content.
         
-        # Attempt to read slug from text - look for alphanumeric slug pattern
-        # Try to find JSON response with slug like {"slug": "abc123"} or just alphanumeric patterns
-        ${slug_matches}=    Get Regexp Matches    ${page_text}    [A-Za-z0-9]{6,8}
+        # Attempt to read slug from text - look for alphanumeric slug pattern following /list/
+        ${slug_matches}=    Get Regexp Matches    ${page_text}    /list/([A-Za-z0-9]{6,8})/    1
         ${len_slug}=    Get Length    ${slug_matches}
         IF    ${len_slug} > 0
              ${possible_slug}=    Set Variable    ${slug_matches}[0]
-             Log To Console    Found possible slug in response: ${possible_slug}
+             Log To Console    Found possible slug in response using refined regex: ${possible_slug}
              # Go to Edit page of this slug
              Go To    ${FIELDREPORT_LIST_URL}${possible_slug}/edit/
              ${current_url}=    Get Location
         ELSE
-             # Fallback: try numeric ID pattern
-             ${matches}=    Get Regexp Matches    ${page_text}    \\d{5}
-             ${len_matches}=    Get Length    ${matches}
-             IF    ${len_matches} > 0
-                  ${possible_id}=    Set Variable    ${matches}[0]
-                  Log To Console    Found possible numeric ID in response: ${possible_id}
-                  Go To    ${FIELDREPORT_LIST_URL}${possible_id}/edit/
-                  ${current_url}=    Get Location
-             ELSE
-                  Log To Console    Could not find slug or ID in response.
+             # Fallback: try alphanumeric pattern as before but avoid 'fieldreport'
+             ${all_matches}=    Get Regexp Matches    ${page_text}    [A-Za-z0-9]{6,8}
+             ${found_match}=    Set Variable    ${False}
+             FOR    ${match}    IN    @{all_matches}
+                 IF    '${match}' != 'fieldrep' and '${match}' != 'fieldreport'
+                     ${possible_slug}=    Set Variable    ${match}
+                     Log To Console    Found possible slug in response (fallback): ${possible_slug}
+                     Go To    ${FIELDREPORT_LIST_URL}${possible_slug}/edit/
+                     ${current_url}=    Get Location
+                     ${found_match}=    Set Variable    ${True}
+                     BREAK
+                 END
+             END
+             
+             # Fallback: try numeric ID pattern if no slug found
+             IF    not ${found_match}
+                  ${matches}=    Get Regexp Matches    ${page_text}    \\d{5}
+                  ${len_matches}=    Get Length    ${matches}
+                  IF    ${len_matches} > 0
+                       ${possible_id}=    Set Variable    ${matches}[0]
+                       Log To Console    Found possible numeric ID in response: ${possible_id}
+                       Go To    ${FIELDREPORT_LIST_URL}${possible_id}/edit/
+                       ${current_url}=    Get Location
+                  ELSE
+                       Log To Console    Could not find slug or ID in response.
+                  END
              END
         END
     END

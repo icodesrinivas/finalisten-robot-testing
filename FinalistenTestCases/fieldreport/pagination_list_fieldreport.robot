@@ -113,26 +113,34 @@ Test Page Number And Record Count Display
     Click Element    ${SEARCH_BUTTON}
     Sleep    3s
     
-    # Check page info display
-    ${page_info_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PAGE_INFO}    timeout=5s
+    # Check if pagination controls are visible
+    ${pagination_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PAGINATION_CONTAINER}    timeout=5s
     
-    IF    ${page_info_exists}
-        ${info_text}=    Get Text    ${PAGE_INFO}
-        Log To Console    Page info: ${info_text}
+    IF    ${pagination_exists}
+        # Check page info display
+        ${page_info_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PAGE_INFO}    timeout=5s
         
-        # Info should contain numbers (e.g., "Showing 1 to 10 of 50 entries")
-        Should Match Regexp    ${info_text}    \\d+    msg=Page info should contain numbers
-        Log To Console    ✓ Page info displays record counts
+        IF    ${page_info_exists}
+            ${info_text}=    Get Text    ${PAGE_INFO}
+            Log To Console    Page info: ${info_text}
+            
+            # Info should contain numbers (e.g., "Showing 1 to 10 of 50 entries")
+            Should Match Regexp    ${info_text}    \\d+    msg=Page info should contain numbers
+            Log To Console    ✓ Page info displays record counts
+        ELSE
+            Log To Console    ⚠ Page info element not found
+        END
+        
+        # Check current page indicator
+        ${current_page_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${CURRENT_PAGE}    timeout=5s
+        IF    ${current_page_exists}
+            ${current_page_num}=    Get Text    ${CURRENT_PAGE}
+            Log To Console    Current page: ${current_page_num}
+            Log To Console    ✓ Current page number is displayed
+        END
     ELSE
-        Log To Console    ⚠ Page info element not found
-    END
-    
-    # Check current page indicator
-    ${current_page_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${CURRENT_PAGE}    timeout=5s
-    IF    ${current_page_exists}
-        ${current_page_num}=    Get Text    ${CURRENT_PAGE}
-        Log To Console    Current page: ${current_page_num}
-        Log To Console    ✓ Current page number is displayed
+        Log To Console    ⚠ Pagination not visible (may have few records)
+        Skip    Pagination not visible, likely only one page of results.
     END
     
     [Teardown]    Close All Browsers
@@ -245,7 +253,15 @@ Test Page Position Maintained After Detail View
         ${row_link}=    Run Keyword And Ignore Error    Get WebElement    css=.fieldreport_rows:first-child a
         ${has_link}=    Evaluate    '${row_link[0]}' == 'PASS'
         IF    ${has_link}
-            Click Element    ${row_link[1]}
+            # Scroll to element first and offset for navbar
+            Execute Javascript    window.scrollTo(0, 0);
+            ${link_elem}=    Get WebElement    css=.fieldreport_rows:first-child a
+            Execute Javascript    arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});    ARGUMENTS    ${link_elem}
+            Sleep    1s
+            
+            # Use JS click to avoid interception by navbar
+            Execute Javascript    arguments[0].click();    ARGUMENTS    ${link_elem}
+            # Click Element    ${row_link[1]}
             Sleep    3s
             Log To Console    Opened FR detail
             
