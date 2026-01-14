@@ -33,7 +33,8 @@ ${DELETE_BUTTON}                  id=remove_fieldreport
 ${ADD_PRODUCT_BUTTON}             xpath=//span[text()='ADD']
 ${PRODUCT_MODAL}                  id=myModal3
 ${MODAL_SAVE_BUTTON}              css=.prodinfr_save_button
-${PRODUCT_CHECKBOX}               css=#myTable .selected-checkbox
+${PRODUCT_CHECKBOX}               css=#prodInProjTable .selected-checkbox
+${MODAL_CANCEL_BUTTON}            xpath=//div[@id='myModal3']//button[text()='Close']
 
 # Product Table Selectors
 ${PRODUCTS_TABLE}                 id=prodInFieldReportTable

@@ -198,8 +198,9 @@ Test Submit Without Installer Shows Error
     Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     
-    # Do NOT select Installer (explicitly set to index 0/empty if needed)
-    Select From List By Index    ${INSTALLER_DROPDOWN}    0
+    # Do NOT select Installer (explicitly set to empty via JS to trigger validation)
+    ${element}=    Get WebElement    ${INSTALLER_DROPDOWN}
+    Execute Javascript    arguments[0].value = ''; arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     
     # Try to save without Installer
     Log To Console    Attempting to save without Installer...

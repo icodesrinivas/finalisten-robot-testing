@@ -16,18 +16,30 @@ Verify Invoice Edit View Opens Successfully
     Click On Invoice List Menu
     Click Filter Frame
     ${invoice_element}=    Search For Invoice Records And Click First Edit Link
-    Run Keyword If    ${invoice_element}    Click Element    ${invoice_element}
-    ...    ELSE    Fail    No invoice records found for the last 1 year.
+    IF    $invoice_element
+        Execute Javascript    arguments[0].scrollIntoView({block: "center"});    ARGUMENTS    ${invoice_element}
+        Sleep    1s
+        Execute Javascript    arguments[0].click();    ARGUMENTS    ${invoice_element}
+    ELSE
+        Fail    No invoice records found.
+    END
     Wait Until Page Contains    ${INVOICE_EDIT_TEXT}    timeout=10s
     Log To Console    "Invoice Report text found. Invoice Edit View opened successfully."
     Close Browser
 
 *** Keywords ***
 Hover Over Admin Menu
+    Wait Until Page Contains Element    ${ADMIN_MENU}    timeout=20s
+    Execute Javascript    var el = document.getElementById('admin'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
+    Sleep    2s
+    Wait Until Element Is Visible    ${ADMIN_MENU}    timeout=15s
     Mouse Over    ${ADMIN_MENU}
+    Sleep    1s
 
 Click On Invoice List Menu
+    Wait Until Element Is Visible    ${INVOICE_LIST_MENU}    timeout=10s
     Click Element    ${INVOICE_LIST_MENU}
+    Sleep    3s
 
 Click Completed Invoice Checkbox
     Click Element    xpath=//*[@id="id_invoice_status_input" and @value="completed"]

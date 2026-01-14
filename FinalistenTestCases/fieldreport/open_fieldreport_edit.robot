@@ -83,8 +83,17 @@ Switch To New Tab And Verify Field Report Text
     Log To Console    "FIELD REPORT text found. Edit page opened successfully."
 
 Get New Window Handle
-    [Arguments]    ${before}    ${after}
-    FOR    ${handle}    IN    @{after}
-        Run Keyword If    '${handle}' not in ${before}    Return From Keyword    ${handle}
+    ${handles}=    Get Window Handles
+    ${handle_count}=    Get Length    ${handles}
+    IF    ${handle_count} > 1
+        FOR    ${handle}    IN    @{handles}
+            IF    '${handle}' not in ${before}
+                RETURN    ${handle}
+            END
+        END
     END
-    Fail    No new tab opened after clicking field report link.
+    # Fallback: Just return the last handle if it's new
+    IF    '${after}[-1]' not in ${before}
+        RETURN    ${after}[-1]
+    END
+    Fail    No new tab opened after clicking field report link. Current handles: ${handle_count}
