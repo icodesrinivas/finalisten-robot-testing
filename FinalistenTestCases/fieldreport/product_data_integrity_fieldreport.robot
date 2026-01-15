@@ -527,28 +527,52 @@ Get Modal Product Text
     RETURN    ${text}
 
 Click Modal Product Checkbox
-    [Documentation]    Click the first available checkbox in the modal product table using multiple strategies
-    ${clicked}=    Execute Javascript    
-    ...    var modal = document.querySelector('#myModal3') || document.querySelector('.modal.show');
-    ...    if (!modal) { console.log('No modal found'); return 'no_modal'; }
-    ...    
-    ...    // Try .selected-checkbox first (the actual class used in the app)
-    ...    var checkboxes = modal.querySelectorAll('.selected-checkbox');
-    ...    console.log('Found ' + checkboxes.length + ' .selected-checkbox elements');
-    ...    if (checkboxes.length > 0) { checkboxes[0].click(); return 'clicked_selected_checkbox_' + checkboxes.length; }
-    ...    
-    ...    // Try input checkboxes
-    ...    checkboxes = modal.querySelectorAll('input[type="checkbox"]');
-    ...    console.log('Found ' + checkboxes.length + ' input checkboxes');
-    ...    if (checkboxes.length > 0) { checkboxes[0].click(); return 'clicked_input_checkbox_' + checkboxes.length; }
-    ...    
-    ...    // Try any clickable checkbox-like element
-    ...    checkboxes = modal.querySelectorAll('[class*="checkbox"], [class*="check"]');
-    ...    console.log('Found ' + checkboxes.length + ' checkbox-like elements');
-    ...    if (checkboxes.length > 0) { checkboxes[0].click(); return 'clicked_checkbox_like_' + checkboxes.length; }
-    ...    
-    ...    return 'no_checkboxes_found';
-    Log To Console    Checkbox click result: ${clicked}
+    [Documentation]    Click the first available checkbox in the modal product table
+    # First try SeleniumLibrary approach with explicit waits
+    ${checkbox_clicked}=    Set Variable    ${False}
+    
+    # Try clicking .selected-checkbox via Selenium
+    ${count}=    Get Element Count    css=#myModal3 .selected-checkbox
+    Log To Console    Found ${count} .selected-checkbox elements in modal
+    IF    ${count} > 0
+        ${checkboxes}=    Get WebElements    css=#myModal3 .selected-checkbox
+        TRY
+            Click Element    ${checkboxes[0]}
+            ${checkbox_clicked}=    Set Variable    ${True}
+            Log To Console    ✓ Clicked .selected-checkbox via Selenium
+        EXCEPT
+            Log To Console    ⚠ Selenium click failed on .selected-checkbox
+        END
+    END
+    
+    # Fallback: try input[type="checkbox"] in modal
+    IF    not ${checkbox_clicked}
+        ${count}=    Get Element Count    css=#myModal3 input[type="checkbox"]
+        Log To Console    Found ${count} input checkboxes in modal
+        IF    ${count} > 0
+            ${checkboxes}=    Get WebElements    css=#myModal3 input[type="checkbox"]
+            TRY
+                Click Element    ${checkboxes[0]}
+                ${checkbox_clicked}=    Set Variable    ${True}
+                Log To Console    ✓ Clicked input checkbox via Selenium
+            EXCEPT
+                Log To Console    ⚠ Selenium click failed on input checkbox
+            END
+        END
+    END
+    
+    # Final fallback: JavaScript click
+    IF    not ${checkbox_clicked}
+        Log To Console    Trying JavaScript click as final fallback...
+        ${result}=    Execute Javascript    
+        ...    var modal = document.querySelector('#myModal3');
+        ...    if (!modal) return 'no_modal';
+        ...    var cb = modal.querySelector('.selected-checkbox') || modal.querySelector('input[type="checkbox"]');
+        ...    if (cb) { cb.click(); return 'js_clicked'; }
+        ...    return 'no_checkbox';
+        Log To Console    JS click result: ${result}
+    END
+    
     Sleep    2s
 
 Get FR Product Text
