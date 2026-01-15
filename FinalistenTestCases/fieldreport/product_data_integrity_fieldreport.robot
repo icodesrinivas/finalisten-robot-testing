@@ -95,10 +95,33 @@ Test Fields Copied From Sales Product To FR Product
     # Select product using flexible checkbox helper
     Click Modal Product Checkbox
     Sleep    1s
+    
+    # Scroll and click modal save
     Execute Javascript    document.querySelector('#myModal3 .modal-content').scrollTo(0, 9999);
     Sleep    1s
-    Click Element    ${MODAL_SAVE_BUTTON}
+    Log To Console    Clicking modal save button...
+    ${save_clicked}=    Run Keyword And Return Status    Click Element    ${MODAL_SAVE_BUTTON}
+    IF    not ${save_clicked}
+        Log To Console    Modal save button click failed, trying JS...
+        Execute Javascript    var btn = document.querySelector('#myModal3 .save') || document.querySelector('#myModal3 button.btn-success'); if(btn) btn.click();
+    END
+    Sleep    3s
+    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Sleep    2s
+    
+    # SET QUANTITY immediately after modal adds product row (critical step from working tests)
+    Log To Console    Setting product quantity to prevent deletion...
+    ${qty_set}=    Execute Javascript
+    ...    var qtyInput = document.querySelector('#prodInFieldReportTable input[id^="id_quantity_"]');
+    ...    if (qtyInput) { qtyInput.value = '1'; qtyInput.dispatchEvent(new Event('change')); return true; }
+    ...    return false;
+    Log To Console    Quantity set: ${qty_set}
+    
+    # Save the field report to persist the product
+    Log To Console    Saving field report...
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
+    Click Element    ${SAVE_BUTTON}
+    Sleep    3s
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Sleep    2s
     
