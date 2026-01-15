@@ -167,7 +167,7 @@ Test Modify FR Product Sales Product Unchanged
             Execute Javascript    window.scrollTo(0, 800);
             Sleep    2s
             
-            ${modified_product}=    Get Text    css=#prodInFieldReportTable tbody tr:first-child
+            ${modified_product}=    Get FR Product Text
             Log To Console    Modified FR Product: ${modified_product}
             
             # The original sales product should remain unchanged
@@ -279,10 +279,10 @@ Test Add Product With Zero Quantity
             Execute Javascript    window.scrollTo(0, 800);
             Sleep    2s
             
-            ${product_rows}=    Get Element Count    css=#prodInFieldReportTable tbody tr
+            ${product_rows}=    Execute Javascript    var t = document.querySelector('#prodInFieldReportTable'); return t ? t.querySelectorAll('tbody tr, tr').length : 0;
             
             IF    ${product_rows} > 0
-                ${product_text}=    Get Text    css=#prodInFieldReportTable tbody tr:first-child
+                ${product_text}=    Get FR Product Text
                 Log To Console    Product after zero qty: ${product_text}
                 
                 ${contains_zero}=    Run Keyword And Return Status    Should Contain    ${product_text}    0
@@ -527,14 +527,29 @@ Get Modal Product Text
     RETURN    ${text}
 
 Click Modal Product Checkbox
-    [Documentation]    Click the first available checkbox in the modal product table
-    Execute Javascript    
+    [Documentation]    Click the first available checkbox in the modal product table using multiple strategies
+    ${clicked}=    Execute Javascript    
     ...    var modal = document.querySelector('#myModal3') || document.querySelector('.modal.show');
-    ...    if (!modal) return false;
-    ...    var checkboxes = modal.querySelectorAll('input[type="checkbox"]');
-    ...    if (checkboxes.length > 0) { checkboxes[0].click(); return true; }
-    ...    return false;
-    Sleep    1s
+    ...    if (!modal) { console.log('No modal found'); return 'no_modal'; }
+    ...    
+    ...    // Try .selected-checkbox first (the actual class used in the app)
+    ...    var checkboxes = modal.querySelectorAll('.selected-checkbox');
+    ...    console.log('Found ' + checkboxes.length + ' .selected-checkbox elements');
+    ...    if (checkboxes.length > 0) { checkboxes[0].click(); return 'clicked_selected_checkbox_' + checkboxes.length; }
+    ...    
+    ...    // Try input checkboxes
+    ...    checkboxes = modal.querySelectorAll('input[type="checkbox"]');
+    ...    console.log('Found ' + checkboxes.length + ' input checkboxes');
+    ...    if (checkboxes.length > 0) { checkboxes[0].click(); return 'clicked_input_checkbox_' + checkboxes.length; }
+    ...    
+    ...    // Try any clickable checkbox-like element
+    ...    checkboxes = modal.querySelectorAll('[class*="checkbox"], [class*="check"]');
+    ...    console.log('Found ' + checkboxes.length + ' checkbox-like elements');
+    ...    if (checkboxes.length > 0) { checkboxes[0].click(); return 'clicked_checkbox_like_' + checkboxes.length; }
+    ...    
+    ...    return 'no_checkboxes_found';
+    Log To Console    Checkbox click result: ${clicked}
+    Sleep    2s
 
 Get FR Product Text
     [Documentation]    Get text from first product row in field report table
