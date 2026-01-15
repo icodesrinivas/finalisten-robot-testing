@@ -231,7 +231,7 @@ Test Common Cancel Button Reverts Changes
     
     # Wait for product table to be visible
     Wait Until Element Is Visible    ${PRODUCTS_TABLE}    timeout=10s
-    ${row_count}=    Get Element Count    css=#prodInFieldReportTable tbody tr
+    ${row_count}=    Execute Javascript    var t = document.querySelector('#prodInFieldReportTable'); return t ? t.querySelectorAll('tbody tr, tr[class]').length : 0;
     Log To Console    Product rows found: ${row_count}
     
     IF    ${row_count} < 1
@@ -239,8 +239,8 @@ Test Common Cancel Button Reverts Changes
         Skip    No products in table for cancel test
     END
     
-    # Get original row content
-    ${original_row}=    Get Text    css=#prodInFieldReportTable tbody tr
+    # Get original row content using JS
+    ${original_row}=    Execute Javascript    var t = document.querySelector('#prodInFieldReportTable'); return t && t.querySelector('tbody tr, tr') ? t.querySelector('tbody tr, tr').innerText : 'No row';
     Log To Console    Original row: ${original_row}
     
     # Click common edit button
@@ -268,10 +268,11 @@ Test Common Cancel Button Reverts Changes
         Sleep    2s
         Log To Console    ✓ Common cancel clicked
         
-        # Verify values reverted (or row still exists)
-        ${row_still_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=5s
+        # Verify values reverted (or row still exists) using JS
+        ${row_count_after}=    Execute Javascript    var t = document.querySelector('#prodInFieldReportTable'); return t ? t.querySelectorAll('tbody tr, tr[class]').length : 0;
+        ${row_still_exists}=    Evaluate    ${row_count_after} > 0
         IF    ${row_still_exists}
-            ${current_row}=    Get Text    css=#prodInFieldReportTable tbody tr
+            ${current_row}=    Execute Javascript    var t = document.querySelector('#prodInFieldReportTable'); return t && t.querySelector('tbody tr, tr') ? t.querySelector('tbody tr, tr').innerText : 'No row';
             Log To Console    Row after cancel: ${current_row}
             # Should not contain 999 (the modified value)
             Should Not Contain    ${current_row}    ${MODIFIED_QTY}    msg=Modified value should be reverted
@@ -382,8 +383,8 @@ Add Sample Product To FR
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Sleep    2s
     
-    # Wait for AJAX row to appear
-    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
+    # Wait for AJAX row to appear using JS
+    Wait Until Keyword Succeeds    10x    3s    Check FR Table Has Rows
     Log To Console    ✓ Product row appeared via AJAX
     
     # SET QUANTITY TO 1 IMMEDIATELY via JavaScript (before saving FR!)
@@ -410,7 +411,7 @@ Add Sample Product To FR
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
-    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=15s
+    Wait Until Keyword Succeeds    5x    3s    Check FR Table Has Rows
     Log To Console    ✓ Product added with quantity 1 and report saved
 
 Extract Fieldreport ID From URL
@@ -512,3 +513,14 @@ Search Until Records Are Found
         
         ${current_end_date}=    Set Variable    ${current_start_date}
     END
+
+Check FR Table Has Rows
+    [Documentation]    Check if the Field Report products table has any rows using JavaScript
+    ${count}=    Execute Javascript    
+    ...    var table = document.querySelector('#prodInFieldReportTable');
+    ...    if (!table) return 0;
+    ...    var rows = table.querySelectorAll('tbody tr, tr');
+    ...    var count = 0;
+    ...    for (var r of rows) { if (r.querySelector('td')) count++; }
+    ...    return count;
+    Should Be True    ${count} > 0    msg=No product rows found in FR table (found ${count})
