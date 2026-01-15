@@ -207,16 +207,16 @@ Test Submit Without Installer Shows Error
     
     # Try to save without Installer
     Log To Console    Attempting to save without Installer...
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
     
-    # Try clicking normally first
+    # Try clicking save button
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
     Click Element    ${SAVE_BUTTON}
-    Sleep    1s
+    Sleep    2s
     
-    # If still on page, try JS click as fallback
+    # If still on page, try JS click as fallback (get fresh element to avoid stale reference)
     ${still_on_create}=    Run Keyword And Return Status    Location Should Contain    /create/
     IF    ${still_on_create}
-        Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
+        Execute Javascript    var btn = document.querySelector('.save') || document.querySelector('button[type="submit"]'); if(btn) btn.click();
         Sleep    2s
     END
     
