@@ -10,6 +10,7 @@ Resource         ../keywords/LoginKeyword.robot
 
 *** Variables ***
 # Navigation Elements
+${FIELDREPORT_LIST_URL}           https://preproderp.finalisten.se/fieldreport/list/
 ${PRODUCTION_MENU}                xpath=//*[@id="production"]
 ${FIELD_REPORT_MENU}              xpath=//*[@id="field_reports_app_menu"]
 ${FILTER_SECTION_HEADER}          id=fieldreport_list_filter
