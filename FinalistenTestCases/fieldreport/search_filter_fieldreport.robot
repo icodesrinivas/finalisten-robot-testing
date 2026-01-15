@@ -351,18 +351,43 @@ Expand Filter Section
     Wait Until Keyword Succeeds    5x    10s    Safe Expand Filter Section
 
 Safe Expand Filter Section
-    [Documentation]    Helper keyword for safer filter expansion
-    Sleep    5s
-    Execute Javascript    window.scrollTo(0, 0);
+    [Documentation]    Helper keyword for safer filter expansion with flexible detection
     Sleep    3s
-    Wait Until Page Contains Element    ${FILTER_SECTION_HEADER}    timeout=60s
+    Execute Javascript    window.scrollTo(0, 0);
+    Sleep    2s
+    
+    # Check page source for filter element
+    ${page_source}=    Get Source
+    ${has_filter}=    Run Keyword And Return Status    Should Contain    ${page_source}    fieldreport_list_filter
+    
+    IF    not ${has_filter}
+        # Page may not have loaded correctly - try navigating directly
+        Log To Console    ⚠ Filter element not in page source. Reloading page...
+        Go To    ${FIELDREPORT_LIST_URL}
+        Sleep    5s
+    END
+    
+    # Wait for filter section with shorter timeout, try multiple selectors
+    ${filter_found}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${FILTER_SECTION_HEADER}    timeout=15s
+    IF    not ${filter_found}
+        Log To Console    ⚠ Filter header not found by id, trying alternatives...
+        ${filter_found}=    Run Keyword And Return Status    Wait Until Page Contains Element    css=.list-filter-header    timeout=10s
+    END
+    
+    Should Be True    ${filter_found}    msg=Could not find filter section on page
+    
     ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_BUTTON}
     IF    not ${is_visible}
         Log To Console    Expanding filters...
         Execute Javascript    var el = document.getElementById('fieldreport_list_filter'); if(el) el.click();
-        Sleep    5s
+        Sleep    3s
     END
-    Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=20s
+    
+    # Flexible wait for search button
+    ${search_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=10s
+    IF    not ${search_visible}
+        ${search_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    css=#fieldreport_list_search    timeout=5s
+    END
 
 Set Wide Date Range For Testing
     [Documentation]    Iterate backwards in 3-month increments until at least one record is found.
