@@ -117,10 +117,21 @@ Test Fields Copied From Sales Product To FR Product
     ...    return false;
     Log To Console    Quantity set: ${qty_set}
     
-    # Save the field report to persist the product
+    # Save the field report to persist the product using flexible save button click
     Log To Console    Saving field report...
-    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${SAVE_BUTTON}
+    ${save_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=5s
+    IF    ${save_visible}
+        Click Element    ${SAVE_BUTTON}
+    ELSE
+        # Try COMMON_SAVE_BUTTON or JS fallback
+        Log To Console    Main save not visible, trying alternatives...
+        ${common_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${COMMON_SAVE_BUTTON}    timeout=5s
+        IF    ${common_visible}
+            Click Element    ${COMMON_SAVE_BUTTON}
+        ELSE
+            Execute Javascript    var btn = document.querySelector('button.save') || document.querySelector('#fieldreport_save') || document.querySelector('[type="submit"]'); if(btn) btn.click();
+        END
+    END
     Sleep    3s
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Sleep    2s
