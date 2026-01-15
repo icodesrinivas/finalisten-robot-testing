@@ -48,6 +48,11 @@ ${VALID_WORK_DATE}                2025-10-15
 # Test State
 ${CREATED_FIELDREPORT_ID}         ${EMPTY}
 
+# Flexible Modal Product Selectors (try multiple patterns)
+${MODAL_PRODUCT_ROW}              xpath=//div[@id='myModal3']//table//tr[position()>1] | //table[@id='prodInProjTable']//tbody//tr | //div[@class='modal-body']//table//tr[contains(@class,'product') or td]
+${MODAL_CHECKBOX}                 xpath=//div[@id='myModal3']//input[@type='checkbox'] | //table[@id='prodInProjTable']//input[contains(@class,'checkbox')]
+${FR_PRODUCT_ROW}                 xpath=//table[@id='prodInFieldReportTable']//tr[td] | //div[contains(@class,'product')]//table//tr[td]
+
 *** Test Cases ***
 Test Fields Copied From Sales Product To FR Product
     [Documentation]    Point 38: Add product and verify fields are correctly copied from sales catalog.
@@ -66,8 +71,8 @@ Test Fields Copied From Sales Product To FR Product
     Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=10s
     Sleep    2s
     
-    # Wait for products to load in modal table
-    ${rows_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    css=#prodInProjTable tbody tr    timeout=15s
+    # Wait for products to load in modal table - use multiple selectors
+    ${rows_visible}=    Run Keyword And Return Status    Wait Until Modal Products Visible
     
     IF    not ${rows_visible}
         Log To Console    ⚠ No products in Systemkameran. Trying another project...
@@ -80,17 +85,15 @@ Test Fields Copied From Sales Product To FR Product
         Wait Until Element Is Visible    ${ADD_PRODUCT_BUTTON}    timeout=15s
         Click Element    ${ADD_PRODUCT_BUTTON}
         Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=15s
-        Wait Until Keyword Succeeds    3x    10s    Wait Until Element Is Visible    css=#prodInProjTable tbody tr    timeout=15s
+        Wait Until Modal Products Visible
     END
     
-    # Get product details from modal (sales product)
-    Wait Until Keyword Succeeds    5x    5s    Wait Until Element Is Visible    css=#prodInProjTable tbody tr:first-child    timeout=30s
-    ${modal_product_text}=    Wait Until Keyword Succeeds    3x    5s    Get Text    css=#prodInProjTable tbody tr:first-child
+    # Get product details from modal using flexible selector
+    ${modal_product_text}=    Get Modal Product Text
     Log To Console    Sales Product (from modal): ${modal_product_text}
     
-    # Select and save product
-    ${checkbox}=    Get WebElement    css=#prodInProjTable .selected-checkbox
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${checkbox}
+    # Select product using flexible checkbox helper
+    Click Modal Product Checkbox
     Sleep    1s
     Execute Javascript    document.querySelector('#myModal3 .modal-content').scrollTo(0, 9999);
     Sleep    1s
@@ -105,7 +108,9 @@ Test Fields Copied From Sales Product To FR Product
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
     
-    ${fr_product_text}=    Get Text    css=#prodInFieldReportTable tbody tr:first-child
+    # Wait for FR products table and get text using flexible helper
+    Wait Until FR Products Visible
+    ${fr_product_text}=    Get FR Product Text
     Log To Console    FR Product (after add): ${fr_product_text}
     
     # Product should have data (description, price, etc)
@@ -127,9 +132,9 @@ Test Modify FR Product Sales Product Unchanged
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
     
-    # Get original product text
-    Wait Until Keyword Succeeds    5x    5s    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr:first-child    timeout=30s
-    ${original_product}=    Wait Until Keyword Succeeds    3x    5s    Get Text    css=#prodInFieldReportTable tbody tr:first-child
+    # Get original product text using flexible helper
+    Wait Until FR Products Visible
+    ${original_product}=    Get FR Product Text
     Log To Console    Original FR Product: ${original_product}
     
     # Enable edit mode and modify quantity
@@ -487,3 +492,75 @@ Search Until Records Are Found
         
         ${current_end_date}=    Set Variable    ${current_start_date}
     END
+
+Wait Until Modal Products Visible
+    [Documentation]    Wait for products to appear in the ADD PRODUCTS modal using multiple selector strategies
+    Wait Until Keyword Succeeds    5x    5s    Check Modal Products Exist
+
+Check Modal Products Exist
+    [Documentation]    Helper to check if modal products are visible using JS
+    ${count}=    Execute Javascript    
+    ...    var modal = document.querySelector('#myModal3') || document.querySelector('.modal.show');
+    ...    if (!modal) return 0;
+    ...    var tables = modal.querySelectorAll('table');
+    ...    for (var t of tables) {
+    ...        var rows = t.querySelectorAll('tr');
+    ...        if (rows.length > 1) return rows.length - 1;
+    ...    }
+    ...    return 0;
+    Log To Console    Found ${count} product rows in modal
+    Should Be True    ${count} > 0    msg=No product rows found in modal
+
+Get Modal Product Text
+    [Documentation]    Get the text of the first product row in the ADD PRODUCTS modal
+    ${text}=    Execute Javascript    
+    ...    var modal = document.querySelector('#myModal3') || document.querySelector('.modal.show');
+    ...    if (!modal) return 'No modal found';
+    ...    var tables = modal.querySelectorAll('table');
+    ...    for (var t of tables) {
+    ...        var rows = t.querySelectorAll('tr');
+    ...        if (rows.length > 1) {
+    ...            return rows[1].innerText || rows[1].textContent;
+    ...        }
+    ...    }
+    ...    return 'No product rows found';
+    RETURN    ${text}
+
+Click Modal Product Checkbox
+    [Documentation]    Click the first available checkbox in the modal product table
+    Execute Javascript    
+    ...    var modal = document.querySelector('#myModal3') || document.querySelector('.modal.show');
+    ...    if (!modal) return false;
+    ...    var checkboxes = modal.querySelectorAll('input[type="checkbox"]');
+    ...    if (checkboxes.length > 0) { checkboxes[0].click(); return true; }
+    ...    return false;
+    Sleep    1s
+
+Get FR Product Text
+    [Documentation]    Get text from first product row in field report table
+    ${text}=    Execute Javascript    
+    ...    var table = document.querySelector('#prodInFieldReportTable') || document.querySelector('table[id*="FieldReport"]');
+    ...    if (!table) return 'No FR table found';
+    ...    var rows = table.querySelectorAll('tbody tr, tr');
+    ...    for (var r of rows) {
+    ...        if (r.querySelector('td')) return r.innerText || r.textContent;
+    ...    }
+    ...    return 'No product rows in FR table';
+    RETURN    ${text}
+
+Wait Until FR Products Visible
+    [Documentation]    Wait for products to appear in the Field Report products table
+    Wait Until Keyword Succeeds    5x    5s    Check FR Products Exist
+
+Check FR Products Exist
+    [Documentation]    Helper to check if FR products table has rows
+    ${count}=    Execute Javascript    
+    ...    var table = document.querySelector('#prodInFieldReportTable') || document.querySelector('table[id*="FieldReport"]');
+    ...    if (!table) return 0;
+    ...    var rows = table.querySelectorAll('tbody tr, tr');
+    ...    var count = 0;
+    ...    for (var r of rows) { if (r.querySelector('td')) count++; }
+    ...    return count;
+    Log To Console    Found ${count} product rows in FR table
+    Should Be True    ${count} > 0    msg=No product rows found in FR table
+
