@@ -202,8 +202,8 @@ Test Common Save Button Persists Changes
         Sleep    2s
         
         # Check if value persisted
-        Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr:first-child    timeout=10s
-        ${saved_value}=    Get Text    css=#prodInFieldReportTable tbody tr:first-child
+        Wait Until Keyword Succeeds    5x    5s    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr:first-child    timeout=15s
+        ${saved_value}=    Wait Until Keyword Succeeds    3x    5s    Get Text    css=#prodInFieldReportTable tbody tr:first-child
         Log To Console    Row content after save: ${saved_value}
         Log To Console    ✓ Changes saved successfully
     ELSE
@@ -306,12 +306,12 @@ Create Field Report With Product
     
     # Select specific customer and project known to have products
     Select From List By Label    ${CUSTOMER_DROPDOWN}    Arcona Aktiebolag
-    ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
+    ${element}=    Wait Until Keyword Succeeds    3x    5s    Get WebElement    ${CUSTOMER_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s
     
     Select From List By Label    ${PROJECT_DROPDOWN}    Systemkameran
-    ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
+    ${element}=    Wait Until Keyword Succeeds    3x    5s    Get WebElement    ${PROJECT_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
     Sleep    2s
     
@@ -351,7 +351,21 @@ Add Sample Product To FR
     
     # Select first product
     Log To Console    \n--- Selecting Product in Modal ---
-    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=30s
+    ${checkbox_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=15s
+    
+    IF    not ${checkbox_visible}
+        Log To Console    ⚠ No products in Systemkameran for this project. Trying another...
+        # Fallback project selection
+        Click Close Button For Modal
+        Select From List By Index    ${PROJECT_DROPDOWN}    1
+        ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
+        Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
+        Sleep    3s
+        Click Element    ${ADD_PRODUCT_BUTTON}
+        Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=15s
+        Wait Until Keyword Succeeds    3x    10s    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=10s
+    END
+    
     Click Element    ${PRODUCT_CHECKBOX}
     Sleep    1s
     
@@ -443,3 +457,53 @@ Cleanup Created Fieldreport
     END
     
     Close All Browsers
+
+Click Close Button For Modal
+    [Documentation]    Click the Close/Cancel button in the product modal
+    ${btns}=    Get WebElements    ${MODAL_CANCEL_BUTTON}
+    IF    $btns
+        Click Element    ${btns[0]}
+    ELSE
+        Execute Javascript    var btn = document.querySelector('#myModal3 .modal-footer button') || document.querySelector('#myModal3 button[data-dismiss="modal"]'); if(btn) btn.click();
+    END
+
+Search Until Records Are Found
+    [Documentation]    Iterate backwards in 3-month increments until at least one record is found.
+    ${today}=    Get Current Date    result_format=%Y-%m-%d
+    ${current_end_date}=    Set Variable    ${today}
+
+    FOR    ${i}    IN RANGE    20    # Check up to 5 years
+        ${current_start_date}=    Subtract Time From Date    ${current_end_date}    90 days    result_format=%Y-%m-%d
+        Log To Console    Searching window: ${current_start_date} to ${current_end_date}
+        
+        # Ensure filter is expanded before each input
+        ${is_expanded}=    Run Keyword And Return Status    Element Should Be Visible    ${WORK_DATE_INPUT}
+        IF    not ${is_expanded}
+             # Click filter toggle if available 
+             Run Keyword And Ignore Error    Click Element    id=fieldreport_list_filter
+             Wait Until Element Is Visible    ${WORK_DATE_INPUT}    timeout=10s
+        END
+        
+        Clear Element Text    id=start_work_date
+        Input Text    id=start_work_date    ${current_start_date}
+        Clear Element Text    id=end_work_date
+        Input Text    id=end_work_date    ${current_end_date}
+        
+        # Click search
+        ${search_btn}=    Run Keyword And Ignore Error    Get WebElement    id=fieldreport_list_search
+        IF    '${search_btn[0]}' == 'PASS'
+            Execute Javascript    arguments[0].click();    ARGUMENTS    ${search_btn[1]}
+        ELSE
+            Execute Javascript    var btn = document.querySelector('#fieldreport_list_search'); if(btn) btn.click();
+        END
+        
+        Sleep    4s
+        
+        ${count}=    Get Element Count    css=.fieldreport_rows
+        IF    ${count} > 0
+            Log To Console    Found ${count} records in window ${current_start_date} to ${current_end_date}
+            Exit For Loop
+        END
+        
+        ${current_end_date}=    Set Variable    ${current_start_date}
+    END

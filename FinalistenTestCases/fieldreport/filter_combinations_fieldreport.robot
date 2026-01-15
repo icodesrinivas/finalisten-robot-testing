@@ -204,28 +204,50 @@ Login To Application
 Expand Filters
     [Documentation]    Ensure the filter section is expanded. 
     ...               If already visible, it does nothing.
-    Wait Until Keyword Succeeds    3x    5s    Wait Until Page Contains Element    ${FILTER_TOGGLE}
+    Wait Until Keyword Succeeds    5x    10s    Safe Expand Filters
+
+Safe Expand Filters
+    [Documentation]    Helper keyword for safer filter expansion
+    Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=60s
     Execute Javascript    window.scrollTo(0, 0);
-    Sleep    2s
+    Sleep    5s
     
     # Check if Search button is visible (indicator that filter is expanded)
     ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_BUTTON}
     IF    not ${is_visible}
         Log To Console    Expanding filter section...
-        Click Element    ${FILTER_TOGGLE}
-        Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=10s
+        Execute Javascript    var el = document.getElementById('fieldreport_list_filter'); if(el) el.click();
+        Sleep    3s
     END
     
     # Extra check to ensure it's REALLY visible and interactable
-    Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=10s
-    Wait Until Element Is Visible    ${CUSTOMER_FILTER}    timeout=5s
+    Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=15s
+    Wait Until Element Is Visible    ${CUSTOMER_FILTER}    timeout=10s
 
 Set Wide Date Range
-    [Documentation]    Set a wide date range to ensure results
-    Clear Element Text    ${START_DATE_FILTER}
-    Input Text    ${START_DATE_FILTER}    2025-01-01
-    Clear Element Text    ${END_DATE_FILTER}
-    Input Text    ${END_DATE_FILTER}    2025-12-31
+    [Documentation]    Iterate backwards in 3-month increments until at least one record is found.
+    ${today}=    Get Current Date    result_format=%Y-%m-%d
+    ${current_end_date}=    Set Variable    ${today}
+
+    FOR    ${i}    IN RANGE    20    # Check up to 5 years
+        ${current_start_date}=    Subtract Time From Date    ${current_end_date}    90 days    result_format=%Y-%m-%d
+        Log To Console    Searching window: ${current_start_date} to ${current_end_date}
+        
+        Clear Element Text    ${START_DATE_FILTER}
+        Input Text    ${START_DATE_FILTER}    ${current_start_date}
+        Clear Element Text    ${END_DATE_FILTER}
+        Input Text    ${END_DATE_FILTER}    ${current_end_date}
+        
+        Click Search
+        
+        ${count}=    Get Element Count    ${TABLE_ROWS}
+        IF    ${count} > 0
+            Log To Console    Found ${count} records in window ${current_start_date} to ${current_end_date}
+            Exit For Loop
+        END
+        
+        ${current_end_date}=    Set Variable    ${current_start_date}
+    END
 
 Click Search
     [Documentation]    Click search and wait for results

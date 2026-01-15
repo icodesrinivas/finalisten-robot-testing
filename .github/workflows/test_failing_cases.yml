@@ -1,0 +1,264 @@
+name: Fix Verification - Individual Test Cases
+
+# Manual trigger to run specific failing tests
+on:
+  workflow_dispatch:
+    inputs:
+      test_number:
+        description: 'Test number to run (1-10) or "all"'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - 'all'
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - '7'
+          - '8'
+          - '9'
+          - '10'
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      run_test_1: ${{ github.event.inputs.test_number == '1' || github.event.inputs.test_number == 'all' }}
+      run_test_2: ${{ github.event.inputs.test_number == '2' || github.event.inputs.test_number == 'all' }}
+      run_test_3: ${{ github.event.inputs.test_number == '3' || github.event.inputs.test_number == 'all' }}
+      run_test_4: ${{ github.event.inputs.test_number == '4' || github.event.inputs.test_number == 'all' }}
+      run_test_5: ${{ github.event.inputs.test_number == '5' || github.event.inputs.test_number == 'all' }}
+      run_test_6: ${{ github.event.inputs.test_number == '6' || github.event.inputs.test_number == 'all' }}
+      run_test_7: ${{ github.event.inputs.test_number == '7' || github.event.inputs.test_number == 'all' }}
+      run_test_8: ${{ github.event.inputs.test_number == '8' || github.event.inputs.test_number == 'all' }}
+      run_test_9: ${{ github.event.inputs.test_number == '9' || github.event.inputs.test_number == 'all' }}
+      run_test_10: ${{ github.event.inputs.test_number == '10' || github.event.inputs.test_number == 'all' }}
+    steps:
+      - run: echo "Setup complete"
+
+  test-1-filter-combinations:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_1 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 1 - Test Customer And Project Filter Combined
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-1 \
+                --test "Test Customer And Project Filter Combined" \
+                FinalistenTestCases/fieldreport/filter_combinations_fieldreport.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-1-results
+          path: results-1/
+
+  test-2-create-page:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_2 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 2 - Verify Field Report Create Page Opens Successfully
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-2 \
+                FinalistenTestCases/fieldreport/open_fieldreport_create.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-2-results
+          path: results-2/
+
+  test-3-edit-page:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_3 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 3 - Verify Field Report Edit Page Opens Successfully
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-3 \
+                FinalistenTestCases/fieldreport/open_fieldreport_edit.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-3-results
+          path: results-3/
+
+  test-4-5-6-product-integrity:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_4 == 'true' || needs.setup.outputs.run_test_5 == 'true' || needs.setup.outputs.run_test_6 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Tests 4-6 - Product Data Integrity Tests
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-4-6 \
+                FinalistenTestCases/fieldreport/product_data_integrity_fieldreport.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-4-6-results
+          path: results-4-6/
+
+  test-7-product-save:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_7 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 7 - Test Common Save Button Persists Changes
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-7 \
+                --test "Test Common Save Button Persists Changes" \
+                FinalistenTestCases/fieldreport/product_edit_save_cancel_fieldreport.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-7-results
+          path: results-7/
+
+  test-8-attachment-filter:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_8 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 8 - Test With Attachment Filter - All Reports
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-8 \
+                --test "Test With Attachment Filter - All Reports" \
+                FinalistenTestCases/fieldreport/search_filter_fieldreport.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-8-results
+          path: results-8/
+
+  test-9-installer-validation:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_9 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 9 - Test Submit Without Installer Shows Error
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-9 \
+                --test "Test Submit Without Installer Shows Error" \
+                FinalistenTestCases/fieldreport/validation_required_fields_fieldreport.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-9-results
+          path: results-9/
+
+  test-10-invoice-edit:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_10 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 10 - Verify Invoice Edit View Opens Successfully
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-10 \
+                FinalistenTestCases/invoicing/open_invoice_edit.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-10-results
+          path: results-10/
+
+  summary:
+    needs: [test-1-filter-combinations, test-2-create-page, test-3-edit-page, test-4-5-6-product-integrity, test-7-product-save, test-8-attachment-filter, test-9-installer-validation, test-10-invoice-edit]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Summary
+        run: |
+          echo "# Individual Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Test | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Test 1 - Filter Combinations | ${{ needs.test-1-filter-combinations.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Test 2 - Create Page | ${{ needs.test-2-create-page.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Test 3 - Edit Page | ${{ needs.test-3-edit-page.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Tests 4-6 - Product Integrity | ${{ needs.test-4-5-6-product-integrity.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Test 7 - Product Save | ${{ needs.test-7-product-save.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Test 8 - Attachment Filter | ${{ needs.test-8-attachment-filter.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Test 9 - Installer Validation | ${{ needs.test-9-installer-validation.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Test 10 - Invoice Edit | ${{ needs.test-10-invoice-edit.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY

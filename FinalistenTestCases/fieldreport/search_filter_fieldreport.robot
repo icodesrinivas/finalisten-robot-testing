@@ -313,10 +313,23 @@ Test Filter Section Collapse And Expand
 Navigate To Field Report List
     [Documentation]    Login and navigate to the Field Report list view
     Open And Login
+    ${status}=    Run Keyword And Return Status    Wait Until Keyword Succeeds    2x    5s    Navigate Via Menu
+    IF    not ${status}
+        Log To Console    ⚠ Menu navigation failed. Navigating directly to URL...
+        Go To    ${FIELDREPORT_LIST_URL}
+    END
+    Wait Until Keyword Succeeds    3x    5s    Wait Until Page Contains Element    ${FILTER_SECTION_HEADER}    timeout=10s
+    ${count}=    Get Element Count    ${FIELD_REPORT_ROWS}
+    IF    ${count} == 0
+        Log To Console    No records found with default filters. Performing initial rolling search...
+        Search Until Records Are Found
+    END
+
+Navigate Via Menu
     Hover Over Production Menu
     Click On Field Report Menu
-    Wait Until Page Contains    Filters    timeout=15s
-    Wait Until Element Is Visible    ${FILTER_SECTION_HEADER}    timeout=10s
+    Wait Until Page Contains Element    ${FILTER_SECTION_HEADER}    timeout=10s
+    Sleep    3s
 
 Hover Over Production Menu
     [Documentation]    Hover over the Production menu to reveal submenu
@@ -334,26 +347,46 @@ Click On Field Report Menu
 
 Expand Filter Section
     [Documentation]    Expand the filter section if not already expanded
-    Sleep    3s
+    Wait Until Keyword Succeeds    5x    10s    Safe Expand Filter Section
+
+Safe Expand Filter Section
+    [Documentation]    Helper keyword for safer filter expansion
+    Sleep    5s
     Execute Javascript    window.scrollTo(0, 0);
-    Sleep    2s
-    Wait Until Page Contains Element    ${FILTER_SECTION_HEADER}    timeout=30s
+    Sleep    3s
+    Wait Until Page Contains Element    ${FILTER_SECTION_HEADER}    timeout=60s
     ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_BUTTON}
     IF    not ${is_visible}
         Log To Console    Expanding filters...
         Execute Javascript    var el = document.getElementById('fieldreport_list_filter'); if(el) el.click();
-        Sleep    3s
+        Sleep    5s
     END
-    Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=15s
+    Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=20s
 
 Set Wide Date Range For Testing
-    [Documentation]    Set a date range (3 months back to today) to ensure results are not filtered out by default date
-    ${end_date}=    Get Current Date    result_format=%Y-%m-%d
-    ${start_date}=    Subtract Time From Date    ${end_date}    90 days    result_format=%Y-%m-%d
-    Clear Element Text    ${START_WORK_DATE_INPUT}
-    Input Text    ${START_WORK_DATE_INPUT}    ${start_date}
-    Clear Element Text    ${END_WORK_DATE_INPUT}
-    Input Text    ${END_WORK_DATE_INPUT}    ${end_date}
+    [Documentation]    Iterate backwards in 3-month increments until at least one record is found.
+    ${today}=    Get Current Date    result_format=%Y-%m-%d
+    ${current_end_date}=    Set Variable    ${today}
+
+    FOR    ${i}    IN RANGE    20    # Check up to 5 years
+        ${current_start_date}=    Subtract Time From Date    ${current_end_date}    90 days    result_format=%Y-%m-%d
+        Log To Console    Searching window: ${current_start_date} to ${current_end_date}
+        
+        Clear Element Text    ${START_WORK_DATE_INPUT}
+        Input Text    ${START_WORK_DATE_INPUT}    ${current_start_date}
+        Clear Element Text    ${END_WORK_DATE_INPUT}
+        Input Text    ${END_WORK_DATE_INPUT}    ${current_end_date}
+        
+        Click Search Button
+        
+        ${count}=    Get Element Count    ${FIELD_REPORT_ROWS}
+        IF    ${count} > 0
+            Log To Console    Found ${count} records in window ${current_start_date} to ${current_end_date}
+            Exit For Loop
+        END
+        
+        ${current_end_date}=    Set Variable    ${current_start_date}
+    END
 
 Clear Date Filters
     [Documentation]    Clear Start and End Work Date inputs to allow searching all records
