@@ -106,7 +106,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 'Robot Framework Test Results - ${{ steps.test-results.outputs.status }} - Run #${{ github.run_number }}'
-          to: srinivas8862@gmail.com
+          to: srinivas8862@gmail.com,otso.nieminen@finalisten.se
           from: ${{ secrets.EMAIL_USERNAME }}
           html_body: |
             <h2>Robot Framework Test Execution Report</h2>
