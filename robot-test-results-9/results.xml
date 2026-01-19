@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="FinalistenTestCases" tests="138" errors="0" failures="10" skipped="4" time="7951.685" timestamp="2026-01-14T18:56:34.903837">
+<testsuite name="Common" tests="2" errors="0" failures="0" skipped="0" time="186.846" timestamp="2026-01-14T18:56:35.105740">
+<testsuite name="Login" tests="2" errors="0" failures="0" skipped="0" time="186.844" timestamp="2026-01-14T18:56:35.107076">
+<testsuite name="Check Successful Login" tests="1" errors="0" failures="0" skipped="0" time="63.661" timestamp="2026-01-14T18:57:39.979440">
+<testcase classname="FinalistenTestCases.Common.Login.Check Successful Login" name="Login And Verify Production Link" time="63.657">
+</testcase>
+</testsuite>
+<testsuite name="Verify Successful Login" tests="1" errors="0" failures="0" skipped="0" time="58.308" timestamp="2026-01-14T18:58:43.641541">
+<testcase classname="FinalistenTestCases.Common.Login.Verify Successful Login" name="Verify Successful Login" time="58.304">
+</testcase>
+</testsuite>
+</testsuite>
+</testsuite>
+<testsuite name="Contact" tests="3" errors="0" failures="0" skipped="0" time="195.886" timestamp="2026-01-14T18:59:41.951783">
+<testsuite name="Open Contact Create" tests="1" errors="0" failures="0" skipped="0" time="63.304" timestamp="2026-01-14T18:59:41.953358">
+<testcase classname="FinalistenTestCases.Contact.Open Contact Create" name="Verify Contact Create Page Opens Successfully" time="63.300">
+</testcase>
+</testsuite>
+<testsuite name="Open Contact Edit" tests="1" errors="0" failures="0" skipped="0" time="63.383" timestamp="2026-01-14T19:00:45.257828">
+<testcase classname="FinalistenTestCases.Contact.Open Contact Edit" name="Verify Edit Contact Page Opens Successfully" time="63.379">
+</testcase>
+</testsuite>
+<testsuite name="Open Contact List" tests="1" errors="0" failures="0" skipped="0" time="69.195" timestamp="2026-01-14T19:01:48.641884">
+<testcase classname="FinalistenTestCases.Contact.Open Contact List" name="Verify Contact List Opens Successfully" time="69.191">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Customer" tests="3" errors="0" failures="0" skipped="0" time="200.581" timestamp="2026-01-14T19:02:57.838854">
+<testsuite name="Open Customer Create" tests="1" errors="0" failures="0" skipped="0" time="63.835" timestamp="2026-01-14T19:02:57.840396">
+<testcase classname="FinalistenTestCases.Customer.Open Customer Create" name="Verify Customer Create Page Opens Successfully" time="63.832">
+</testcase>
+</testsuite>
+<testsuite name="Open Customer Edit" tests="1" errors="0" failures="0" skipped="0" time="63.913" timestamp="2026-01-14T19:04:01.676603">
+<testcase classname="FinalistenTestCases.Customer.Open Customer Edit" name="Verify Customer Edit Page Opens Successfully" time="63.908">
+</testcase>
+</testsuite>
+<testsuite name="Open Customer List" tests="1" errors="0" failures="0" skipped="0" time="72.829" timestamp="2026-01-14T19:05:05.590116">
+<testcase classname="FinalistenTestCases.Customer.Open Customer List" name="Verify Customer List Opens Successfully" time="72.825">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Dailyplanner" tests="2" errors="0" failures="0" skipped="0" time="149.214" timestamp="2026-01-14T19:06:18.420730">
+<testsuite name="Open Dailyplanner Boards" tests="1" errors="0" failures="0" skipped="0" time="89.524" timestamp="2026-01-14T19:06:18.422269">
+<testcase classname="FinalistenTestCases.Dailyplanner.Open Dailyplanner Boards" name="Verify All Daily Planner Boards Open Successfully" time="89.520">
+</testcase>
+</testsuite>
+<testsuite name="Open Dailyplanner Home" tests="1" errors="0" failures="0" skipped="0" time="59.687" timestamp="2026-01-14T19:07:47.947305">
+<testcase classname="FinalistenTestCases.Dailyplanner.Open Dailyplanner Home" name="Verify Daily Planner Board Opens Successfully" time="59.683">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Doorplanning" tests="1" errors="0" failures="0" skipped="0" time="88.129" timestamp="2026-01-14T19:08:47.635639">
+<testsuite name="Open Doorplanning App" tests="1" errors="0" failures="0" skipped="0" time="88.126" timestamp="2026-01-14T19:08:47.637230">
+<testcase classname="FinalistenTestCases.Doorplanning.Open Doorplanning App" name="Verify Door Planning Board Opens Successfully" time="88.122">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Employee" tests="3" errors="0" failures="0" skipped="0" time="199.777" timestamp="2026-01-14T19:10:15.764679">
+<testsuite name="Open Employee Create" tests="1" errors="0" failures="0" skipped="0" time="64.607" timestamp="2026-01-14T19:10:15.766387">
+<testcase classname="FinalistenTestCases.Employee.Open Employee Create" name="Verify Employee Create Page Opens Successfully" time="64.604">
+</testcase>
+</testsuite>
+<testsuite name="Open Employee Edit" tests="1" errors="0" failures="0" skipped="0" time="65.471" timestamp="2026-01-14T19:11:20.374384">
+<testcase classname="FinalistenTestCases.Employee.Open Employee Edit" name="Verify Employee Edit Page Opens Successfully" time="65.467">
+</testcase>
+</testsuite>
+<testsuite name="Open Employee List" tests="1" errors="0" failures="0" skipped="0" time="69.694" timestamp="2026-01-14T19:12:25.846543">
+<testcase classname="FinalistenTestCases.Employee.Open Employee List" name="Verify Employee List Opens Successfully" time="69.690">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Fieldreport" tests="91" errors="0" failures="9" skipped="3" time="4740.984" timestamp="2026-01-14T19:13:35.542283">
+<testsuite name="Approval Workflow Extended Fieldreport" tests="4" errors="0" failures="0" skipped="0" time="185.743" timestamp="2026-01-14T19:13:35.543847">
+<testcase classname="FinalistenTestCases.Fieldreport.Approval Workflow Extended Fieldreport" name="Test Approved FR Products Are Read Only" time="77.191">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Approval Workflow Extended Fieldreport" name="Test Approved FR General Data Is Read Only" time="31.315">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Approval Workflow Extended Fieldreport" name="Test Unapproved FR Fields Become Editable" time="33.779">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Approval Workflow Extended Fieldreport" name="Test Approve Empty FR Behavior" time="43.437">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for extended approval workflow testing in Field Report.&#10;&#10;Tests include:&#10;34. Approve FR with products - verify product fields become read-only&#10;35. Approve FR - verify general data fields become read-only&#10;36. Unapprove FR - verify fields become editable again&#10;37. Approve empty FR (no products) - verify behavior"/>
+</properties>
+</testsuite>
+<testsuite name="Approve Unapprove Fieldreport" tests="1" errors="0" failures="0" skipped="0" time="48.374" timestamp="2026-01-14T19:16:41.288011">
+<testcase classname="FinalistenTestCases.Fieldreport.Approve Unapprove Fieldreport" name="Test Approve And Unapprove Field Report" time="48.367">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Approve/Unapprove functionality on Field Report.&#10;&#10;Test Flow:&#10;1. Create a new field report (setup)&#10;2. Verify initial status is Unapproved&#10;3. Click Approve button and verify status changes&#10;4. Click Unapprove button and verify status reverts&#10;5. Delete the field report (teardown)"/>
+</properties>
+</testsuite>
+<testsuite name="Attachment Validation Fieldreport" tests="4" errors="0" failures="0" skipped="0" time="226.638" timestamp="2026-01-14T19:17:29.663172">
+<testcase classname="FinalistenTestCases.Fieldreport.Attachment Validation Fieldreport" name="Test Upload Large File Size Limit" time="56.791">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Attachment Validation Fieldreport" name="Test Upload Unsupported File Type" time="57.202">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Attachment Validation Fieldreport" name="Test Upload Multiple Attachments" time="57.759">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Attachment Validation Fieldreport" name="Test Download Attachment Integrity" time="54.878">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for attachment validation in Field Report products.&#10;&#10;Tests include:&#10;54. Upload file exceeding size limit - verify error&#10;55. Upload unsupported file type - verify rejection&#10;56. Upload multiple attachments to single product - verify saved&#10;57. Download attachment - verify file integrity"/>
+</properties>
+</testsuite>
+<testsuite name="Calculation Edge Cases Fieldreport" tests="4" errors="0" failures="0" skipped="0" time="210.823" timestamp="2026-01-14T19:21:16.302148">
+<testcase classname="FinalistenTestCases.Fieldreport.Calculation Edge Cases Fieldreport" name="Test Zero Total Hours Per Hour Calculation" time="49.909">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Calculation Edge Cases Fieldreport" name="Test Very Large Total Hours Calculation" time="48.978">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Calculation Edge Cases Fieldreport" name="Test Negative Product Price Earnings Calculation" time="55.650">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Calculation Edge Cases Fieldreport" name="Test Modify Quantity Updates Earnings" time="56.278">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for calculation edge cases in Field Report.&#10;&#10;Tests include:&#10;46. Total Hours = 0 - verify Per Hour calculation (division by zero)&#10;47. Very large Total Hours - verify calculation accuracy&#10;48. Product with negative price - verify Earnings calculation&#10;49. Modify product quantity - verify Earnings recalculates"/>
+</properties>
+</testsuite>
+<testsuite name="Cancel Edit Fieldreport" tests="1" errors="0" failures="0" skipped="0" time="28.451" timestamp="2026-01-14T19:24:47.126604">
+<testcase classname="FinalistenTestCases.Fieldreport.Cancel Edit Fieldreport" name="Test Cancel Reverts All Field Changes" time="28.441">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Cancel functionality on Field Report edit page.&#10;&#10;Test Flow:&#10;1. Create a new field report (setup)&#10;2. Record the original values&#10;3. Modify each editable field with new values&#10;4. Click Cancel instead of Save&#10;5. Accept confirmation dialog&#10;6. Verify all fields are reverted to original values&#10;7. Delete the field report (teardown)"/>
+</properties>
+</testsuite>
+<testsuite name="Cascade Dropdown Fieldreport" tests="4" errors="0" failures="0" skipped="0" time="44.779" timestamp="2026-01-14T19:25:15.578455">
+<testcase classname="FinalistenTestCases.Fieldreport.Cascade Dropdown Fieldreport" name="Test Customer Change Clears And Reloads Project Dropdown" time="7.706">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Cascade Dropdown Fieldreport" name="Test Project Change Clears And Reloads SubProject Dropdown" time="7.452">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Cascade Dropdown Fieldreport" name="Test Projects Belong To Selected Customer" time="7.598">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Cascade Dropdown Fieldreport" name="Test SubProjects Belong To Selected Project" time="22.015">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for validating cascade dropdown behavior in Field Report.&#10;&#10;Tests include:&#10;30. Change Customer - verify Project dropdown clears and reloads&#10;31. Change Project - verify SubProject dropdown clears and reloads&#10;32. Verify Projects belong only to selected Customer&#10;33. Verify SubProjects belong only to selected Project"/>
+</properties>
+</testsuite>
+<testsuite name="Close Reopen Fieldreport" tests="1" errors="0" failures="0" skipped="0" time="24.846" timestamp="2026-01-14T19:26:00.358620">
+<testcase classname="FinalistenTestCases.Fieldreport.Close Reopen Fieldreport" name="Test Close Button And Reopen Field Report" time="24.836">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Close button and reopening Field Report.&#10;&#10;Test Flow:&#10;1. Create a new field report (setup)&#10;2. Record the field report values&#10;3. Click Close button and verify we return to list&#10;4. Reopen the same field report from list&#10;5. Verify all values are still intact&#10;6. Delete the field report (teardown)"/>
+</properties>
+</testsuite>
+<testsuite name="Copy Fieldreport" tests="1" errors="0" failures="0" skipped="0" time="38.287" timestamp="2026-01-14T19:26:25.205085">
+<testcase classname="FinalistenTestCases.Fieldreport.Copy Fieldreport" name="Test Copy Field Report Creates Duplicate" time="38.279">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Copy functionality on Field Report.&#10;&#10;Test Flow:&#10;1. Create a new field report with specific values (setup)&#10;2. Click Copy button to create a duplicate&#10;3. Verify new field report is created with copied values&#10;4. Verify original field report still exists&#10;5. Delete both field reports (teardown)"/>
+</properties>
+</testsuite>
+<testsuite name="Create Fieldreport Preprod" tests="1" errors="0" failures="0" skipped="0" time="20.343" timestamp="2026-01-14T19:27:03.492834">
+<testcase classname="FinalistenTestCases.Fieldreport.Create Fieldreport Preprod" name="Test Create Field Report And Verify Stored Values" time="20.335">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for creating a Field Report, verifying stored values, and cleanup.&#10;Tests are run on PRE-PRODUCTION environment: https://preproderp.finalisten.se/&#10;IMPORTANT: Created fieldreports are deleted in teardown to maintain data cleanliness."/>
+</properties>
+</testsuite>
+<testsuite name="Date Validation Extended Fieldreport" tests="4" errors="0" failures="0" skipped="0" time="81.708" timestamp="2026-01-14T19:27:23.836526">
+<testcase classname="FinalistenTestCases.Fieldreport.Date Validation Extended Fieldreport" name="Test Work Date Today Accepted" time="22.113">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Date Validation Extended Fieldreport" name="Test Work Date Tomorrow Future Validation" time="22.697">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Date Validation Extended Fieldreport" name="Test Work Date Weekend Handling" time="20.307">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Date Validation Extended Fieldreport" name="Test Leap Year Date Handling" time="16.583">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for extended date validation in Field Report.&#10;&#10;Tests include:&#10;50. Work Date = Today - verify accepted&#10;51. Work Date = Tomorrow (future beyond range) - verify validation&#10;52. Work Date on weekend - verify behavior&#10;53. Leap year date (Feb 29) - verify handling"/>
+</properties>
+</testsuite>
+<testsuite name="Debug Earnings" tests="1" errors="0" failures="0" skipped="0" time="21.384" timestamp="2026-01-14T19:28:45.545268">
+<testcase classname="FinalistenTestCases.Fieldreport.Debug Earnings" name="Debug Field Report Creation And Products" time="21.380">
+</testcase>
+<properties>
+<property name="Documentation" value="Debug test to dump sources."/>
+</properties>
+</testsuite>
+<testsuite name="Delete Fieldreport" tests="1" errors="0" failures="0" skipped="0" time="20.429" timestamp="2026-01-14T19:29:06.929997">
+<testcase classname="FinalistenTestCases.Fieldreport.Delete Fieldreport" name="Test Delete Field Report" time="20.422">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Delete button functionality on Field Report.&#10;&#10;Test Flow:&#10;1. Create a new field report (setup)&#10;2. Navigate to edit page&#10;3. Click Delete button&#10;4. Accept confirmation dialog&#10;5. Verify field report no longer exists"/>
+</properties>
+</testsuite>
+<testsuite name="Earnings Calculation Fieldreport" tests="3" errors="0" failures="0" skipped="0" time="162.584" timestamp="2026-01-14T19:29:27.359287">
+<testcase classname="FinalistenTestCases.Fieldreport.Earnings Calculation Fieldreport" name="Test Earnings And Per Hour Display" time="44.102">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Earnings Calculation Fieldreport" name="Test Earnings Change When Total Hours Modified" time="57.666">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Earnings Calculation Fieldreport" name="Test Earnings Change When Product Values Modified" time="60.806">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Earnings and Per Hour calculations in Field Report.&#10;&#10;Tests include:&#10;- Validating initial Earnings and Per Hour values&#10;- Modifying product values and verifying calculation changes&#10;- Verifying calculation formula accuracy"/>
+</properties>
+</testsuite>
+<testsuite name="Edit Fieldreport Preprod" tests="1" errors="0" failures="0" skipped="0" time="32.804" timestamp="2026-01-14T19:32:09.944023">
+<testcase classname="FinalistenTestCases.Fieldreport.Edit Fieldreport Preprod" name="Test Edit Field Report And Verify Modified Values" time="32.795">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for editing a Field Report, modifying all fields, saving, and validating.&#10;Tests are run on PRE-PRODUCTION environment: https://preproderp.finalisten.se/&#10;IMPORTANT: Created fieldreports are deleted in teardown to maintain data cleanliness.&#10;&#10;Test Flow:&#10;1. Create a new field report (setup)&#10;2. Modify each editable field with new values&#10;3. Save the changes&#10;4. Refresh the page&#10;5. Validate all fields contain the modified values&#10;6. Delete the field report (teardown)"/>
+</properties>
+</testsuite>
+<testsuite name="Filter Combinations Fieldreport" tests="4" errors="0" failures="1" skipped="0" time="388.448" timestamp="2026-01-14T19:32:42.748907">
+<testcase classname="FinalistenTestCases.Fieldreport.Filter Combinations Fieldreport" name="Test Customer And Project Filter Combined" time="252.110">
+<failure message="Keyword 'Wait Until Page Contains Element' failed after retrying 3 times. The last error was: Element 'id=fieldreport_list_filter' did not appear in 1 minute." type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Filter Combinations Fieldreport" name="Test Date Range And Approval Status Filter Combined" time="15.993">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Filter Combinations Fieldreport" name="Test Installer And Product Description Filter Combined" time="43.216">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Filter Combinations Fieldreport" name="Test Clear All Filters Shows All Results" time="77.122">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for filter combination testing in Field Report list.&#10;&#10;Tests include:&#10;42. Apply Customer + Project filter together&#10;43. Apply Date Range + Approval Status filter together&#10;44. Apply Installer + Product Description filter together&#10;45. Clear all filters - verify all FR displayed"/>
+</properties>
+</testsuite>
+<testsuite name="Open Fieldreport Create" tests="1" errors="0" failures="1" skipped="0" time="86.304" timestamp="2026-01-14T19:39:11.197994">
+<testcase classname="FinalistenTestCases.Fieldreport.Open Fieldreport Create" name="Verify Field Report Create Page Opens Successfully" time="86.299">
+<failure message="Element 'xpath=//a[@href=&quot;/fieldreport/create/&quot; and @title=&quot;Add New Fieldreport&quot;]' not visible after 20 seconds." type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Fieldreport Edit" tests="1" errors="0" failures="1" skipped="0" time="69.424" timestamp="2026-01-14T19:40:37.502734">
+<testcase classname="FinalistenTestCases.Fieldreport.Open Fieldreport Edit" name="Verify Field Report Edit Page Opens Successfully" time="69.419">
+<failure message="Keyword 'Get New Window Handle' expected 0 arguments, got 2." type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Fieldreport List" tests="1" errors="0" failures="0" skipped="0" time="67.575" timestamp="2026-01-14T19:41:46.927452">
+<testcase classname="FinalistenTestCases.Fieldreport.Open Fieldreport List" name="Verify Field Report List View Opens Successfully" time="67.571">
+</testcase>
+</testsuite>
+<testsuite name="Pagination List Fieldreport" tests="4" errors="0" failures="0" skipped="1" time="232.110" timestamp="2026-01-14T19:42:54.504534">
+<testcase classname="FinalistenTestCases.Fieldreport.Pagination List Fieldreport" name="Test Navigate Through List Pages" time="67.046">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Pagination List Fieldreport" name="Test Page Number And Record Count Display" time="51.131">
+<skipped message="Pagination not visible, likely only one page of results." type="SkipExecution"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Pagination List Fieldreport" name="Test Navigate To Last Page" time="65.896">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Pagination List Fieldreport" name="Test Page Position Maintained After Detail View" time="48.030">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for pagination in Field Report list view.&#10;&#10;Tests include:&#10;58. Navigate through list pages - verify correct records&#10;59. Verify page number display and total record count&#10;60. Navigate to last page - verify correct FR&#10;61. View FR detail, return to list - verify page position"/>
+</properties>
+</testsuite>
+<testsuite name="Product Add Modal Fieldreport" tests="5" errors="0" failures="0" skipped="0" time="154.540" timestamp="2026-01-14T19:46:46.615365">
+<testcase classname="FinalistenTestCases.Fieldreport.Product Add Modal Fieldreport" name="Test Open ADD Product Modal" time="22.945">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Add Modal Fieldreport" name="Test Product Modal Search Functionality" time="27.916">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Add Modal Fieldreport" name="Test Product Modal Pagination" time="38.685">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Add Modal Fieldreport" name="Test Select Product With Row Save Button" time="32.422">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Add Modal Fieldreport" name="Test Select Product With Modal Save Button" time="32.562">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Product ADD table functionality in Field Report.&#10;&#10;Tests include:&#10;- Opening the ADD product modal&#10;- Search functionality within the modal&#10;- Pagination of products in the modal&#10;- Selecting products and saving from checkbox (row-wise)&#10;- Selecting products and saving from bottom Save button&#10;- Verifying fields are correctly copied from sales product to FR product"/>
+</properties>
+</testsuite>
+<testsuite name="Product Data Integrity Fieldreport" tests="4" errors="0" failures="3" skipped="0" time="230.022" timestamp="2026-01-14T19:49:21.156578">
+<testcase classname="FinalistenTestCases.Fieldreport.Product Data Integrity Fieldreport" name="Test Fields Copied From Sales Product To FR Product" time="35.654">
+<failure message="Element with locator 'css=#prodInProjTable tbody tr:first-child' not found." type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Data Integrity Fieldreport" name="Test Modify FR Product Sales Product Unchanged" time="59.414">
+<failure message="Element with locator 'css=#prodInFieldReportTable tbody tr:first-child' not found." type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Data Integrity Fieldreport" name="Test Add Same Product Twice Duplicate Handling" time="61.494">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Data Integrity Fieldreport" name="Test Add Product With Zero Quantity" time="73.451">
+<failure message="Element with locator 'css=#prodInFieldReportTable tbody tr:first-child' not found." type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for product data integrity in Field Report.&#10;&#10;Tests include:&#10;38. Verify fields copied correctly from sales product to FR product&#10;39. Modify FR product - verify sales product unchanged&#10;40. Add same product twice - verify duplicate handling&#10;41. Add product with zero quantity - verify behavior"/>
+</properties>
+</testsuite>
+<testsuite name="Product Delete Attachment Fieldreport" tests="3" errors="0" failures="0" skipped="0" time="199.805" timestamp="2026-01-14T19:53:11.179492">
+<testcase classname="FinalistenTestCases.Fieldreport.Product Delete Attachment Fieldreport" name="Test Delete Product From Field Report" time="61.460">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Delete Attachment Fieldreport" name="Test Upload Attachment To Product" time="76.893">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Delete Attachment Fieldreport" name="Test Delete Attachment From Product" time="61.443">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Product Delete and Attachment functionality in Field Report.&#10;&#10;Tests include:&#10;- Deleting a product from the FR products table&#10;- Uploading attachment to a product&#10;- Deleting attachment from a product"/>
+</properties>
+</testsuite>
+<testsuite name="Product Edit Save Cancel Fieldreport" tests="4" errors="0" failures="1" skipped="0" time="240.117" timestamp="2026-01-14T19:56:30.985343">
+<testcase classname="FinalistenTestCases.Fieldreport.Product Edit Save Cancel Fieldreport" name="Test Common Edit Button Enables All Fields" time="49.687">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Edit Save Cancel Fieldreport" name="Test Row Wise Edit Button" time="64.432">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Edit Save Cancel Fieldreport" name="Test Common Save Button Persists Changes" time="74.413">
+<failure message="Element 'css=#prodInFieldReportTable tbody tr:first-child' not visible after 10 seconds." type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Product Edit Save Cancel Fieldreport" name="Test Common Cancel Button Reverts Changes" time="51.577">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Product Edit/Save/Cancel functionality in Field Report.&#10;&#10;Tests include:&#10;- Common (bulk) edit button for all products&#10;- Row-wise edit button for individual products&#10;- Common save button with modification validation&#10;- Row-wise save button with modification validation&#10;- Common cancel button reverting values&#10;- Row-wise cancel button reverting values"/>
+</properties>
+</testsuite>
+<testsuite name="Search Filter Fieldreport" tests="17" errors="0" failures="1" skipped="0" time="1565.908" timestamp="2026-01-14T20:00:31.103300">
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Related Customer Filter" time="76.176">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Related Project Filter" time="76.417">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Start Work Date Filter" time="76.143">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test End Work Date Filter" time="74.884">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Date Range Filter" time="75.818">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Installer Names Search Filter" time="72.342">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Installer Names Checkbox Filter" time="81.395">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Approval Status Filter - All" time="76.577">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Approval Status Filter - Approve" time="75.616">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Approval Status Filter - Unapprove" time="76.434">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Product Description Filter" time="80.187">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test With Attachment Filter - With Attachment" time="89.093">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test With Attachment Filter - All Reports" time="155.729">
+<failure message="Element 'id=fieldreport_list_filter' did not appear in 30 seconds." type="AssertionError"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Clear Filter Functionality" time="95.261">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Combined Filters - Customer And Date Range" time="242.953">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Combined Filters - Approval Status And Attachment" time="75.412">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Search Filter Fieldreport" name="Test Filter Section Collapse And Expand" time="65.458">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying all search filter fields in the Field Report list view.&#10;Each filter field is tested individually to ensure proper functionality.&#10;NOTE: The fieldreport list has a default start date filter, so we extend the date range&#10;for non-date-specific tests to ensure meaningful results."/>
+</properties>
+</testsuite>
+<testsuite name="User Permission Fieldreport" tests="3" errors="0" failures="0" skipped="2" time="100.283" timestamp="2026-01-14T20:26:37.012669">
+<testcase classname="FinalistenTestCases.Fieldreport.User Permission Fieldreport" name="Test Admin User Can View All Field Reports" time="67.804">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.User Permission Fieldreport" name="Test Regular User View Own Field Reports" time="16.324">
+<skipped message="Regular user credentials not configured" type="SkipExecution"/>
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.User Permission Fieldreport" name="Test Guest User Read Only Access" time="16.148">
+<skipped message="Guest user credentials not configured" type="SkipExecution"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for user permission testing in Field Report.&#10;&#10;Tests include:&#10;62. Regular user can only view/edit their own FRs&#10;63. Manager/Admin can view and approve all FRs&#10;64. Guest user has read-only access&#10;&#10;Note: These tests require different user accounts with different roles.&#10;The test structure is provided; actual execution depends on available test users."/>
+</properties>
+</testsuite>
+<testsuite name="Validation Datatype Fieldreport" tests="4" errors="0" failures="0" skipped="0" time="97.900" timestamp="2026-01-14T20:28:17.296862">
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Datatype Fieldreport" name="Test Alphabetic Characters In Total Hours Rejected" time="12.601">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Datatype Fieldreport" name="Test Negative Value In Total Hours Rejected" time="43.445">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Datatype Fieldreport" name="Test Decimal Value In Total Hours Accepted" time="20.848">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Datatype Fieldreport" name="Test Long Text In Message Field Handled" time="20.999">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for validating data types in Field Report fields.&#10;&#10;Tests include:&#10;26. Enter alphabetic characters in Total Hours - verify rejection&#10;27. Enter negative value in Total Hours - verify rejection&#10;28. Enter decimal value in Total Hours - verify acceptance&#10;29. Enter extremely long text in Message - verify handling"/>
+</properties>
+</testsuite>
+<testsuite name="Validation Required Fields Fieldreport" tests="5" errors="0" failures="1" skipped="0" time="57.279" timestamp="2026-01-14T20:29:55.197952">
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Required Fields Fieldreport" name="Test Submit Without Customer Shows Error" time="8.870">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Required Fields Fieldreport" name="Test Submit Without Project Shows Error" time="9.920">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Required Fields Fieldreport" name="Test Submit Without SubProject Shows Error" time="12.787">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Required Fields Fieldreport" name="Test Submit Without Work Date Shows Error" time="12.254">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Validation Required Fields Fieldreport" name="Test Submit Without Installer Shows Error" time="13.440">
+<failure message="System should prevent submission without Installer" type="AssertionError"/>
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for validating required fields in Field Report creation.&#10;&#10;Tests include:&#10;21. Submit without Customer - verify error&#10;22. Submit without Project - verify error&#10;23. Submit without SubProject - verify error&#10;24. Submit without Work Date - verify error&#10;25. Submit without Installer - verify error"/>
+</properties>
+</testsuite>
+<testsuite name="Work Date Validation Fieldreport" tests="4" errors="0" failures="0" skipped="0" time="104.047" timestamp="2026-01-14T20:30:52.477435">
+<testcase classname="FinalistenTestCases.Fieldreport.Work Date Validation Fieldreport" name="Test Create Field Report With Valid Work Date" time="21.429">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Work Date Validation Fieldreport" name="Test Reject Field Report With Closed Period Date" time="36.451">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Work Date Validation Fieldreport" name="Test Reject Field Report With Future Date" time="23.105">
+</testcase>
+<testcase classname="FinalistenTestCases.Fieldreport.Work Date Validation Fieldreport" name="Test Boundary Work Date Within Range" time="23.055">
+</testcase>
+<properties>
+<property name="Documentation" value="Test suite for verifying Work Date Range validation in Field Report.&#10;&#10;Tests include:&#10;- Creating field report with valid work date (within allowed range)&#10;- Attempting to create field report with work date outside allowed range&#10;- Verifying error message when work date is outside range&#10;&#10;Note: The allowed work date range is configured in the Settings app.&#10;Pre-production has October 2025 as the last open period."/>
+</properties>
+</testsuite>
+</testsuite>
+<testsuite name="Fieldreportapproval" tests="1" errors="0" failures="0" skipped="0" time="59.657" timestamp="2026-01-14T20:32:36.527262">
+<testsuite name="Open Fieldreportapproval App" tests="1" errors="0" failures="0" skipped="0" time="59.654" timestamp="2026-01-14T20:32:36.529078">
+<testcase classname="FinalistenTestCases.Fieldreportapproval.Open Fieldreportapproval App" name="Verify Field Report Approval App Opens Successfully" time="59.651">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Guestuser" tests="3" errors="0" failures="0" skipped="0" time="238.701" timestamp="2026-01-14T20:33:36.184675">
+<testsuite name="Guestuser" tests="1" errors="0" failures="0" skipped="0" time="61.750" timestamp="2026-01-14T20:34:34.399108">
+<testcase classname="FinalistenTestCases.Guestuser.Guestuser" name="Verify Subcontractor Edit Page Opens Successfully" time="61.745">
+</testcase>
+</testsuite>
+<testsuite name="Open Guestuser Create" tests="1" errors="0" failures="0" skipped="0" time="59.403" timestamp="2026-01-14T20:35:36.149517">
+<testcase classname="FinalistenTestCases.Guestuser.Open Guestuser Create" name="Verify Guest User Create Page Opens Successfully" time="59.399">
+</testcase>
+</testsuite>
+<testsuite name="Open Guestuser List" tests="1" errors="0" failures="0" skipped="0" time="59.332" timestamp="2026-01-14T20:36:35.553051">
+<testcase classname="FinalistenTestCases.Guestuser.Open Guestuser List" name="Verify Guest User List Opens Successfully" time="59.327">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Invoicereport" tests="1" errors="0" failures="0" skipped="0" time="59.885" timestamp="2026-01-14T20:37:34.886081">
+<testsuite name="Open Invoicereport App" tests="1" errors="0" failures="0" skipped="0" time="59.883" timestamp="2026-01-14T20:37:34.887619">
+<testcase classname="FinalistenTestCases.Invoicereport.Open Invoicereport App" name="Verify Project Report App Opens Successfully" time="59.878">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Invoicing" tests="3" errors="0" failures="1" skipped="0" time="223.835" timestamp="2026-01-14T20:38:34.771433">
+<testsuite name="Open Invoice Edit" tests="1" errors="0" failures="1" skipped="0" time="104.787" timestamp="2026-01-14T20:38:34.773713">
+<testcase classname="FinalistenTestCases.Invoicing.Open Invoice Edit" name="Verify Invoice Edit View Opens Successfully" time="104.783">
+<failure message="ElementNotInteractableException: Message: element not interactable&#10;  (Session info: chrome=143.0.7499.169)&#10;Stacktrace:&#10;#0 0x564401b2561a &lt;unknown&gt;&#10;#1 0x5644015a2038 &lt;unknown&gt;&#10;#2 0x5644015ea39b &lt;unknown&gt;&#10;#3 0x5644015e7a67 &lt;unknown&gt;&#10;#4 0x56440163f20e &lt;unknown&gt;&#10;#5 0x5644015e6232 &lt;unknown&gt;&#10;#6 0x5644015e6ee1 &lt;unknown&gt;&#10;#7 0x564401aee3f9 &lt;unknown&gt;&#10;#8 0x564401af134d &lt;unknown&gt;&#10;#9 0x564401ad7122 &lt;unknown&gt;&#10;#10 0x564401af1f2b &lt;unknown&gt;&#10;#11 0x564401abdc30 &lt;unknown&gt;&#10;#12 0x564401b12d78 &lt;unknown&gt;&#10;#13 0x564401b12f4c &lt;unknown&gt;&#10;#14 0x564401b24973 &lt;unknown&gt;&#10;#15 0x7ff24fe9caa4 &lt;unknown&gt;&#10;#16 0x7ff24ff29c6c &lt;unknown&gt;&#10;" type="AssertionError"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Invoice List" tests="1" errors="0" failures="0" skipped="0" time="59.469" timestamp="2026-01-14T20:40:19.561703">
+<testcase classname="FinalistenTestCases.Invoicing.Open Invoice List" name="Verify Invoice List View Opens Successfully" time="59.465">
+</testcase>
+</testsuite>
+<testsuite name="Open Invoicing Tree" tests="1" errors="0" failures="0" skipped="0" time="59.574" timestamp="2026-01-14T20:41:19.031587">
+<testcase classname="FinalistenTestCases.Invoicing.Open Invoicing Tree" name="Verify Invoicing App Opens Successfully" time="59.569">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Myproduction" tests="1" errors="0" failures="0" skipped="0" time="65.243" timestamp="2026-01-14T20:42:18.606818">
+<testsuite name="Open Myproduction App" tests="1" errors="0" failures="0" skipped="0" time="65.240" timestamp="2026-01-14T20:42:18.608375">
+<testcase classname="FinalistenTestCases.Myproduction.Open Myproduction App" name="Verify MyProduction App Opens Successfully" time="65.237">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Performancereport" tests="1" errors="0" failures="0" skipped="0" time="62.717" timestamp="2026-01-14T20:43:23.849983">
+<testsuite name="Open Performancereport App" tests="1" errors="0" failures="0" skipped="0" time="62.714" timestamp="2026-01-14T20:43:23.851617">
+<testcase classname="FinalistenTestCases.Performancereport.Open Performancereport App" name="Verify Performance Report App Opens Successfully" time="62.710">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Productregister" tests="3" errors="0" failures="0" skipped="0" time="203.515" timestamp="2026-01-14T20:44:26.567474">
+<testsuite name="Open Productregister Create" tests="1" errors="0" failures="0" skipped="0" time="62.331" timestamp="2026-01-14T20:44:26.569026">
+<testcase classname="FinalistenTestCases.Productregister.Open Productregister Create" name="Verify Product Register Create Page Opens Successfully" time="62.328">
+</testcase>
+</testsuite>
+<testsuite name="Open Productregister Edit" tests="1" errors="0" failures="0" skipped="0" time="79.308" timestamp="2026-01-14T20:45:28.901067">
+<testcase classname="FinalistenTestCases.Productregister.Open Productregister Edit" name="Verify Product Register Edit Page Opens Successfully" time="79.303">
+</testcase>
+</testsuite>
+<testsuite name="Open Productregister List" tests="1" errors="0" failures="0" skipped="0" time="61.872" timestamp="2026-01-14T20:46:48.209558">
+<testcase classname="FinalistenTestCases.Productregister.Open Productregister List" name="Verify Product Register List Page Opens Successfully" time="61.867">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Project" tests="3" errors="0" failures="0" skipped="0" time="196.658" timestamp="2026-01-14T20:47:50.083022">
+<testsuite name="Open Project Create" tests="1" errors="0" failures="0" skipped="0" time="62.542" timestamp="2026-01-14T20:47:50.084605">
+<testcase classname="FinalistenTestCases.Project.Open Project Create" name="Verify Project Create View Opens Successfully" time="62.539">
+</testcase>
+</testsuite>
+<testsuite name="Open Project Edit" tests="1" errors="0" failures="0" skipped="0" time="71.396" timestamp="2026-01-14T20:48:52.627738">
+<testcase classname="FinalistenTestCases.Project.Open Project Edit" name="Verify Project Edit View Opens Successfully" time="71.391">
+</testcase>
+</testsuite>
+<testsuite name="Open Project List" tests="1" errors="0" failures="0" skipped="0" time="62.716" timestamp="2026-01-14T20:50:04.024119">
+<testcase classname="FinalistenTestCases.Project.Open Project List" name="Verify Project List View Opens Successfully" time="62.712">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Projectreport" tests="1" errors="0" failures="0" skipped="0" time="59.271" timestamp="2026-01-14T20:51:06.741689">
+<testsuite name="Open Projectreport App" tests="1" errors="0" failures="0" skipped="0" time="59.268" timestamp="2026-01-14T20:51:06.743404">
+<testcase classname="FinalistenTestCases.Projectreport.Open Projectreport App" name="Verify Project Report App Opens Successfully" time="59.264">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Purchaseproductregister" tests="3" errors="0" failures="0" skipped="1" time="213.769" timestamp="2026-01-14T20:52:06.012767">
+<testsuite name="Open Purchaseproductregister Create" tests="1" errors="0" failures="0" skipped="0" time="60.782" timestamp="2026-01-14T20:52:06.014450">
+<testcase classname="FinalistenTestCases.Purchaseproductregister.Open Purchaseproductregister Create" name="Verify Purchase Product Register Create Page Opens Successfully" time="60.778">
+</testcase>
+</testsuite>
+<testsuite name="Open Purchaseproductregister Edit" tests="1" errors="0" failures="0" skipped="1" time="93.292" timestamp="2026-01-14T20:53:06.797410">
+<testcase classname="FinalistenTestCases.Purchaseproductregister.Open Purchaseproductregister Edit" name="Verify Purchase Product Register Edit Page Opens Successfully" time="93.287">
+<skipped message="No purchase product records found in register." type="SkipExecution"/>
+</testcase>
+</testsuite>
+<testsuite name="Open Purchaseproductregister List" tests="1" errors="0" failures="0" skipped="0" time="59.691" timestamp="2026-01-14T20:54:40.089968">
+<testcase classname="FinalistenTestCases.Purchaseproductregister.Open Purchaseproductregister List" name="Verify Purchase Product Register List View Opens Successfully" time="59.686">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Quotation" tests="3" errors="0" failures="0" skipped="0" time="179.353" timestamp="2026-01-14T20:55:39.781950">
+<testsuite name="Open Quotation Create" tests="1" errors="0" failures="0" skipped="0" time="59.634" timestamp="2026-01-14T20:55:39.783524">
+<testcase classname="FinalistenTestCases.Quotation.Open Quotation Create" name="Verify Quotation Create Page Opens Successfully" time="59.630">
+</testcase>
+</testsuite>
+<testsuite name="Open Quotation Edit" tests="1" errors="0" failures="0" skipped="0" time="60.066" timestamp="2026-01-14T20:56:39.417932">
+<testcase classname="FinalistenTestCases.Quotation.Open Quotation Edit" name="Verify Quotation Edit Page Opens Successfully" time="60.062">
+</testcase>
+</testsuite>
+<testsuite name="Open Quotation List" tests="1" errors="0" failures="0" skipped="0" time="59.650" timestamp="2026-01-14T20:57:39.484503">
+<testcase classname="FinalistenTestCases.Quotation.Open Quotation List" name="Verify Quotation List View Opens Successfully" time="59.645">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Resourceplanning" tests="1" errors="0" failures="0" skipped="0" time="68.896" timestamp="2026-01-14T20:58:39.135878">
+<testsuite name="Open Resourceplanning App" tests="1" errors="0" failures="0" skipped="0" time="68.893" timestamp="2026-01-14T20:58:39.137510">
+<testcase classname="FinalistenTestCases.Resourceplanning.Open Resourceplanning App" name="Verify Resource Planning Board Opens Successfully" time="68.890">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Setting" tests="3" errors="0" failures="0" skipped="0" time="193.428" timestamp="2026-01-14T20:59:48.032282">
+<testsuite name="Dump Settings Page" tests="1" errors="0" failures="0" skipped="0" time="67.442" timestamp="2026-01-14T20:59:48.033837">
+<testcase classname="FinalistenTestCases.Setting.Dump Settings Page" name="Dump Settings Page Source" time="67.438">
+</testcase>
+</testsuite>
+<testsuite name="Open Settings App" tests="1" errors="0" failures="0" skipped="0" time="59.655" timestamp="2026-01-14T21:00:55.476420">
+<testcase classname="FinalistenTestCases.Setting.Open Settings App" name="Verify Settings App Opens Successfully" time="59.650">
+</testcase>
+</testsuite>
+<testsuite name="Update Fieldreport Date Range" tests="1" errors="0" failures="0" skipped="0" time="66.328" timestamp="2026-01-14T21:01:55.131701">
+<testcase classname="FinalistenTestCases.Setting.Update Fieldreport Date Range" name="Update Field Report Date Range" time="66.324">
+</testcase>
+<properties>
+<property name="Documentation" value="Update the Field Report allowed date range in Settings."/>
+</properties>
+</testsuite>
+</testsuite>
+<testsuite name="Subcontractor" tests="3" errors="0" failures="0" skipped="0" time="181.136" timestamp="2026-01-14T21:03:01.461261">
+<testsuite name="Open Subcontractor Create" tests="1" errors="0" failures="0" skipped="0" time="60.718" timestamp="2026-01-14T21:03:01.462803">
+<testcase classname="FinalistenTestCases.Subcontractor.Open Subcontractor Create" name="Verify Subcontractor Create Page Opens Successfully" time="60.715">
+</testcase>
+</testsuite>
+<testsuite name="Open Subcontractor Edit" tests="1" errors="0" failures="0" skipped="0" time="60.583" timestamp="2026-01-14T21:04:02.181737">
+<testcase classname="FinalistenTestCases.Subcontractor.Open Subcontractor Edit" name="Verify Subcontractor Edit Page Opens Successfully" time="60.579">
+</testcase>
+</testsuite>
+<testsuite name="Open Subcontractor List" tests="1" errors="0" failures="0" skipped="0" time="59.831" timestamp="2026-01-14T21:05:02.765777">
+<testcase classname="FinalistenTestCases.Subcontractor.Open Subcontractor List" name="Verify Subcontractor List Opens Successfully" time="59.826">
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite name="Supplier" tests="3" errors="0" failures="0" skipped="0" time="183.989" timestamp="2026-01-14T21:06:02.597988">
+<testsuite name="Open Supplier Create" tests="1" errors="0" failures="0" skipped="0" time="61.078" timestamp="2026-01-14T21:06:02.599620">
+<testcase classname="FinalistenTestCases.Supplier.Open Supplier Create" name="Verify Supplier Create Page Opens Successfully" time="61.075">
+</testcase>
+</testsuite>
+<testsuite name="Open Supplier Edit" tests="1" errors="0" failures="0" skipped="0" time="62.299" timestamp="2026-01-14T21:07:03.678655">
+<testcase classname="FinalistenTestCases.Supplier.Open Supplier Edit" name="Verify Supplier Edit Page Opens Successfully" time="62.295">
+</testcase>
+</testsuite>
+<testsuite name="Open Supplier List" tests="1" errors="0" failures="0" skipped="0" time="60.608" timestamp="2026-01-14T21:08:05.978722">
+<testcase classname="FinalistenTestCases.Supplier.Open Supplier List" name="Verify Supplier List Page Opens Successfully" time="60.603">
+</testcase>
+</testsuite>
+</testsuite>
+</testsuite>

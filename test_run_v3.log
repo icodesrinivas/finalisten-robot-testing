@@ -1,0 +1,364 @@
+==========================================
+RUNNING: Test Copy Field Report Creates Duplicate
+FILE: FinalistenTestCases/fieldreport/copy_fieldreport.robot
+==============================================================================
+Copy Fieldreport :: Test suite for verifying Copy functionality on Field Re...
+==============================================================================
+Test Copy Field Report Creates Duplicate :: Test the Copy button c... Successfully logged in
+======== CREATING FIELD REPORT FOR COPY TEST ========
+Selected Customer: Arcona Aktiebolag
+Selected Project: Systemkameran
+Selected SubProject: Trapphus 1
+✓ Created Field Report ID: NoQ0gQ
+======== TESTING COPY FUNCTIONALITY FOR FIELD REPORT NoQ0gQ ========
+
+--- Recording Original Values ---
+Original Customer: Arcona Aktiebolag
+Original Project: Systemkameran
+Original SubProject: Trapphus 1
+Original Installer: Admin Finalisten
+
+--- Clicking COPY Button ---
+Copy URL from attribute: /fieldreport/fieldreport/copy_fieldreport/27186/False/
+✓ Alert handled (Accepted).
+Current URL after Copy attempt: https://preproderp.finalisten.se/fieldreport/list/NoQ0gQ/edit/
+⚠ Copy button click didn't change page or redirected to list. Attempting direct navigation to: /fieldreport/fieldreport/copy_fieldreport/27186/False/
+Response from Copy Endpoint: /fieldreport/list/cnFxhi/edit/
+Found possible slug in response using refined regex: cnFxhi
+⚠ Error keyword found in source (post-copy check).
+✓ Created COPY with new ID: cnFxhi
+
+--- Verifying Copied Values Match Original ---
+✓ Customer matches: Arcona Aktiebolag
+✓ Project matches: Systemkameran
+✓ SubProject matches: Trapphus 1
+
+--- Verifying Original Field Report Still Exists ---
+✓ Original Field Report NoQ0gQ still exists
+
+======== COPY TEST COMPLETED SUCCESSFULLY! ========
+Original ID: NoQ0gQ
+Copied ID: cnFxhi
+======== CLEANUP: Deleting Field Reports ========
+Deleting Field Report ID: cnFxhi
+✓ Field Report cnFxhi deleted successfully!
+Deleting Field Report ID: NoQ0gQ
+✓ Field Report NoQ0gQ deleted successfully!
+| PASS |
+------------------------------------------------------------------------------
+Copy Fieldreport :: Test suite for verifying Copy functionality on... | PASS |
+1 test, 1 passed, 0 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Copy_Field_Report_Creates_Duplicate/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Copy_Field_Report_Creates_Duplicate/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Copy_Field_Report_Creates_Duplicate/report.html
+==========================================
+RUNNING: Test Earnings And Per Hour Display
+FILE: FinalistenTestCases/fieldreport/earnings_calculation_fieldreport.robot
+==============================================================================
+Earnings Calculation Fieldreport :: Test suite for verifying Earnings and P...
+==============================================================================
+Test Earnings And Per Hour Display :: Test that Earnings and Per H... Successfully logged in
+======== CREATING FIELD REPORT WITH PRODUCT AND HOURS ========
+Set Total Hours: 8
+✓ Created Field Report ID: gotuNZ
+
+--- Waiting for Products in Modal ---
+Select first product checkbox...
+Clicking row-level save button...
+✓ Product added to main table
+✓ Product added to main table
+Setting Quantity via JS...
+✓ Quantity set for first product via JS
+Clicking Header Save Button...
+✓ Product Quantity Verified as 1
+======== TESTING EARNINGS AND PER HOUR DISPLAY ========
+
+--- Looking for Earnings Display ---
+Earnings display found: 
+⚠ 'Earnings' label not found in display. Text is: ''
+⚠ No numbers found in earnings display
+
+======== EARNINGS DISPLAY TEST PASSED! ========
+======== CLEANUP: Deleting Field Report ========
+Deleting Field Report ID: gotuNZ
+✓ Field Report gotuNZ deleted successfully!
+| PASS |
+------------------------------------------------------------------------------
+Earnings Calculation Fieldreport :: Test suite for verifying Earni... | PASS |
+1 test, 1 passed, 0 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Earnings_And_Per_Hour_Display/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Earnings_And_Per_Hour_Display/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Earnings_And_Per_Hour_Display/report.html
+==========================================
+RUNNING: Test Customer And Project Filter Combined
+FILE: FinalistenTestCases/fieldreport/filter_combinations_fieldreport.robot
+==============================================================================
+Filter Combinations Fieldreport :: Test suite for filter combination testin...
+==============================================================================
+Test Customer And Project Filter Combined :: Point 42: Apply Custo... Successfully logged in
+======== TEST: Customer + Project Filter Combined ========
+Expanding filter section...
+Searching window: 2025-10-16 to 2026-01-14
+Found 100 records in window 2025-10-16 to 2026-01-14
+Initial results (no filter): 100
+Expanding filter section...
+Selected Customer: 2A Entreprenad AB
+Entered Project filter: test
+Results with Customer+Project filter: 0
+✓ Customer + Project filter combination works
+| PASS |
+------------------------------------------------------------------------------
+Filter Combinations Fieldreport :: Test suite for filter combinati... | PASS |
+1 test, 1 passed, 0 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Customer_And_Project_Filter_Combined/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Customer_And_Project_Filter_Combined/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Customer_And_Project_Filter_Combined/report.html
+==========================================
+RUNNING: Verify Field Report Create Page Opens Successfully
+FILE: FinalistenTestCases/fieldreport/open_fieldreport_create.robot
+==============================================================================
+Open Fieldreport Create                                                       
+==============================================================================
+Verify Field Report Create Page Opens Successfully                    "FIELD REPORT text found. Create view opened successfully."
+| PASS |
+------------------------------------------------------------------------------
+Open Fieldreport Create                                               | PASS |
+1 test, 1 passed, 0 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Field_Report_Create_Page_Opens_Successfully/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Field_Report_Create_Page_Opens_Successfully/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Field_Report_Create_Page_Opens_Successfully/report.html
+==========================================
+RUNNING: Verify Field Report Edit Page Opens Successfully
+FILE: FinalistenTestCases/fieldreport/open_fieldreport_edit.robot
+==============================================================================
+Open Fieldreport Edit                                                         
+==============================================================================
+Verify Field Report Edit Page Opens Successfully                      | FAIL |
+Keyword 'Wait Until Page Contains' failed after retrying 3 times. The last error was: Text 'FIELD REPORT' did not appear in 10 seconds.
+------------------------------------------------------------------------------
+Open Fieldreport Edit                                                 | FAIL |
+1 test, 0 passed, 1 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Field_Report_Edit_Page_Opens_Successfully/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Field_Report_Edit_Page_Opens_Successfully/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Field_Report_Edit_Page_Opens_Successfully/report.html
+==========================================
+RUNNING: Test Page Position Maintained After Detail View
+FILE: FinalistenTestCases/fieldreport/pagination_list_fieldreport.robot
+==============================================================================
+Pagination List Fieldreport :: Test suite for pagination in Field Report li...
+==============================================================================
+Test Page Position Maintained After Detail View :: Point 61: View ... Successfully logged in
+======== TEST: Page Position After Detail View ========
+Searching window: 2025-10-16 to 2026-01-14
+Found 100 records in window 2025-10-16 to 2026-01-14
+Navigated to page 2
+Current page before viewing detail: ('PASS', '2')
+Opened FR detail
+Returned to list view
+Current page after return: ('PASS', '1')
+✓ Page position test completed
+| PASS |
+------------------------------------------------------------------------------
+Pagination List Fieldreport :: Test suite for pagination in Field ... | PASS |
+1 test, 1 passed, 0 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Page_Position_Maintained_After_Detail_View/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Page_Position_Maintained_After_Detail_View/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Page_Position_Maintained_After_Detail_View/report.html
+==========================================
+RUNNING: Test Fields Copied From Sales Product To FR Product
+FILE: FinalistenTestCases/fieldreport/product_data_integrity_fieldreport.robot
+==============================================================================
+Product Data Integrity Fieldreport :: Test suite for product data integrity...
+==============================================================================
+Test Fields Copied From Sales Product To FR Product :: Point 38: A... Successfully logged in
+✓ Created FR ID: 8zMrBa
+======== TEST: Fields Copied From Sales Product ========
+✓ Deleted FR
+| FAIL |
+Element with locator 'css=#prodInProjTable tbody tr:first-child' not found.
+------------------------------------------------------------------------------
+Product Data Integrity Fieldreport :: Test suite for product data ... | FAIL |
+1 test, 0 passed, 1 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Fields_Copied_From_Sales_Product_To_FR_Product/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Fields_Copied_From_Sales_Product_To_FR_Product/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Fields_Copied_From_Sales_Product_To_FR_Product/report.html
+==========================================
+RUNNING: Test Modify FR Product Sales Product Unchanged
+FILE: FinalistenTestCases/fieldreport/product_data_integrity_fieldreport.robot
+==============================================================================
+Product Data Integrity Fieldreport :: Test suite for product data integrity...
+==============================================================================
+Test Modify FR Product Sales Product Unchanged :: Point 39: Modify... Successfully logged in
+✓ Created FR ID: 6mn92a
+✓ Product row appeared via AJAX
+Setting quantity to 1 via JavaScript...
+Quantity set via JS: True
+Saving field report...
+✓ Product added with quantity 1
+======== TEST: FR Product Modification Isolated ========
+✓ Deleted FR
+| FAIL |
+Element with locator 'css=#prodInFieldReportTable tbody tr:first-child' not found.
+------------------------------------------------------------------------------
+Product Data Integrity Fieldreport :: Test suite for product data ... | FAIL |
+1 test, 0 passed, 1 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Modify_FR_Product_Sales_Product_Unchanged/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Modify_FR_Product_Sales_Product_Unchanged/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Modify_FR_Product_Sales_Product_Unchanged/report.html
+==========================================
+RUNNING: Test Add Product With Zero Quantity
+FILE: FinalistenTestCases/fieldreport/product_data_integrity_fieldreport.robot
+==============================================================================
+Product Data Integrity Fieldreport :: Test suite for product data integrity...
+==============================================================================
+Test Add Product With Zero Quantity :: Point 41: Add product with ... Successfully logged in
+✓ Created FR ID: edwZPk
+✓ Product row appeared via AJAX
+Setting quantity to 1 via JavaScript...
+Quantity set via JS: True
+Saving field report...
+✓ Product added with quantity 1
+======== TEST: Product With Zero Quantity ========
+Set quantity to: 0
+✓ Deleted FR
+| FAIL |
+Element with locator 'css=#prodInFieldReportTable tbody tr:first-child' not found.
+------------------------------------------------------------------------------
+Product Data Integrity Fieldreport :: Test suite for product data ... | FAIL |
+1 test, 0 passed, 1 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Add_Product_With_Zero_Quantity/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Add_Product_With_Zero_Quantity/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Add_Product_With_Zero_Quantity/report.html
+==========================================
+RUNNING: Test Common Save Button Persists Changes
+FILE: FinalistenTestCases/fieldreport/product_edit_save_cancel_fieldreport.robot
+==============================================================================
+Product Edit Save Cancel Fieldreport :: Test suite for verifying Product Ed...
+==============================================================================
+Test Common Save Button Persists Changes :: Test that modifying pr... Successfully logged in
+======== CREATING FIELD REPORT WITH PRODUCT ========
+✓ Created Field Report ID: KraDSM
+
+--- Selecting Product in Modal ---
+✓ Product row appeared via AJAX
+Setting quantity to 1 via JavaScript...
+Quantity set via JS: True
+Saving field report...
+✓ Product added with quantity 1 and report saved
+======== TESTING COMMON SAVE BUTTON ========
+
+--- Enabling Edit Mode ---
+Original quantity: 1
+Modifying quantity to: 999
+
+--- Clicking Common Save Button ---
+✓ Common save clicked
+======== CLEANUP: Deleting Field Report ========
+Deleting Field Report ID: KraDSM
+✓ Field Report KraDSM deleted successfully!
+| FAIL |
+Element 'css=#prodInFieldReportTable tbody tr:first-child' not visible after 10 seconds.
+------------------------------------------------------------------------------
+Product Edit Save Cancel Fieldreport :: Test suite for verifying P... | FAIL |
+1 test, 0 passed, 1 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Common_Save_Button_Persists_Changes/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Common_Save_Button_Persists_Changes/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Common_Save_Button_Persists_Changes/report.html
+==========================================
+RUNNING: Test With Attachment Filter - All Reports
+FILE: FinalistenTestCases/fieldreport/search_filter_fieldreport.robot
+==============================================================================
+Search Filter Fieldreport :: Test suite for verifying all search filter fie...
+==============================================================================
+Test With Attachment Filter - All Reports :: Verify the With Attac... Expanding filters...
+No results found in current range. Extending search range backwards by 90 days...
+| FAIL |
+Element 'id=fieldreport_list_filter' did not appear in 30 seconds.
+------------------------------------------------------------------------------
+Search Filter Fieldreport :: Test suite for verifying all search f... | FAIL |
+1 test, 0 passed, 1 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_With_Attachment_Filter_-_All_Reports/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_With_Attachment_Filter_-_All_Reports/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_With_Attachment_Filter_-_All_Reports/report.html
+==========================================
+RUNNING: Test Submit Without Installer Shows Error
+FILE: FinalistenTestCases/fieldreport/validation_required_fields_fieldreport.robot
+==============================================================================
+Validation Required Fields Fieldreport :: Test suite for validating require...
+==============================================================================
+Test Submit Without Installer Shows Error :: Point 25: Submit Fiel... Successfully logged in
+======== TEST: Submit Without Installer ========
+Attempting to save without Installer...
+| FAIL |
+System should prevent submission without Installer
+------------------------------------------------------------------------------
+Validation Required Fields Fieldreport :: Test suite for validatin... | FAIL |
+1 test, 0 passed, 1 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Submit_Without_Installer_Shows_Error/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Submit_Without_Installer_Shows_Error/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Test_Submit_Without_Installer_Shows_Error/report.html
+==========================================
+RUNNING: Verify Invoice Edit View Opens Successfully
+FILE: FinalistenTestCases/invoicing/open_invoice_edit.robot
+==============================================================================
+Open Invoice Edit                                                             
+==============================================================================
+Verify Invoice Edit View Opens Successfully                           Searching window: 2025-10-16 to 2026-01-14
+Searching window: 2025-07-18 to 2025-10-16
+| FAIL |
+ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=143.0.7499.193)
+Stacktrace:
+0   chromedriver                        0x00000001006fd068 chromedriver + 6631528
+1   chromedriver                        0x00000001006f3d1a chromedriver + 6593818
+2   chromedriver                        0x0000000100114ae8 chromedriver + 436968
+3   chromedriver                        0x000000010015d0cb chromedriver + 733387
+4   chromedriver                        0x000000010015a7e8 chromedriver + 722920
+5   chromedriver                        0x00000001001b433a chromedriver + 1090362
+6   chromedriver                        0x0000000100158fb7 chromedriver + 716727
+7   chromedriver                        0x0000000100159c81 chromedriver + 720001
+8   chromedriver                        0x00000001006ba011 chromedriver + 6357009
+9   chromedriver                        0x00000001006be460 chromedriver + 6374496
+10  chromedriver                        0x0000000100695023 chromedriver + 6205475
+11  chromedriver                        0x00000001006beed5 chromedriver + 6377173
+12  chromedriver                        0x0000000100683f01 chromedriver + 6135553
+13  chromedriver                        0x00000001006e0a98 chromedriver + 6515352
+14  chromedriver                        0x00000001006e0c53 chromedriver + 6515795
+15  chromedriver                        0x00000001006f391c chromedriver + 6592796
+16  libsystem_pthread.dylib             0x00007ff816415259 _pthread_start + 125
+17  libsystem_pthread.dylib             0x00007ff816410c7b thread_start + 15
+------------------------------------------------------------------------------
+Open Invoice Edit                                                     | FAIL |
+1 test, 0 passed, 1 failed
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Invoice_Edit_View_Opens_Successfully/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Invoice_Edit_View_Opens_Successfully/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Invoice_Edit_View_Opens_Successfully/report.html
+==========================================
+RUNNING: Verify Purchase Product Register Edit Page Opens Successfully
+FILE: FinalistenTestCases/purchaseproductregister/open_purchaseproductregister_edit.robot
+==============================================================================
+Open Purchaseproductregister Edit                                             
+==============================================================================
+Verify Purchase Product Register Edit Page Opens Successfully         ⚠ No purchase product records found. Skipping test.
+| SKIP |
+No purchase product records found in register.
+------------------------------------------------------------------------------
+Open Purchaseproductregister Edit                                     | SKIP |
+1 test, 0 passed, 0 failed, 1 skipped
+==============================================================================
+Output:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Purchase_Product_Register_Edit_Page_Opens_Successfully/output.xml
+Log:     /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Purchase_Product_Register_Edit_Page_Opens_Successfully/log.html
+Report:  /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/local_verification/Verify_Purchase_Product_Register_Edit_Page_Opens_Successfully/report.html

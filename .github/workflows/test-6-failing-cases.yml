@@ -1,0 +1,209 @@
+name: Fix Verification - 6 Failing Filter Tests
+
+# Manual trigger to run specific failing tests
+on:
+  workflow_dispatch:
+    inputs:
+      test_number:
+        description: 'Test number to run (1-6) or "all"'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - 'all'
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      run_test_1: ${{ github.event.inputs.test_number == '1' || github.event.inputs.test_number == 'all' }}
+      run_test_2: ${{ github.event.inputs.test_number == '2' || github.event.inputs.test_number == 'all' }}
+      run_test_3: ${{ github.event.inputs.test_number == '3' || github.event.inputs.test_number == 'all' }}
+      run_test_4: ${{ github.event.inputs.test_number == '4' || github.event.inputs.test_number == 'all' }}
+      run_test_5: ${{ github.event.inputs.test_number == '5' || github.event.inputs.test_number == 'all' }}
+      run_test_6: ${{ github.event.inputs.test_number == '6' || github.event.inputs.test_number == 'all' }}
+    steps:
+      - run: echo "Setup complete"
+
+  test-1-approval-status-approve:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_1 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 1 - Test Approval Status Filter - Approve
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-1 \
+                --test "Test Approval Status Filter - Approve" \
+                FinalistenTestCases/fieldreport/search_filter_fieldreport.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-1-approval-approve-results
+          path: results-1/
+
+  test-2-approval-status-unapprove:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_2 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 2 - Test Approval Status Filter - Unapprove
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-2 \
+                --test "Test Approval Status Filter - Unapprove" \
+                FinalistenTestCases/fieldreport/search_filter_fieldreport.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-2-approval-unapprove-results
+          path: results-2/
+
+  test-3-product-description-filter:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_3 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 3 - Test Product Description Filter
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-3 \
+                --test "Test Product Description Filter" \
+                FinalistenTestCases/fieldreport/search_filter_fieldreport.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-3-product-description-results
+          path: results-3/
+
+  test-4-combined-approval-attachment:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_4 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 4 - Test Combined Filters - Approval Status And Attachment
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-4 \
+                --test "Test Combined Filters - Approval Status And Attachment" \
+                FinalistenTestCases/fieldreport/search_filter_fieldreport.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-4-combined-approval-attachment-results
+          path: results-4/
+
+  test-5-installer-product-description:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_5 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 5 - Test Installer And Product Description Filter Combined
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-5 \
+                --test "Test Installer And Product Description Filter Combined" \
+                FinalistenTestCases/fieldreport/filter_combinations_fieldreport.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-5-installer-product-results
+          path: results-5/
+
+  test-6-clear-all-filters:
+    needs: setup
+    if: ${{ needs.setup.outputs.run_test_6 == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      - uses: nanasess/setup-chromedriver@v2
+      - name: Test 6 - Test Clear All Filters Shows All Results
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results-6 \
+                --test "Test Clear All Filters Shows All Results" \
+                FinalistenTestCases/fieldreport/filter_combinations_fieldreport.robot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-6-clear-filters-results
+          path: results-6/
+
+  summary:
+    needs: [test-1-approval-status-approve, test-2-approval-status-unapprove, test-3-product-description-filter, test-4-combined-approval-attachment, test-5-installer-product-description, test-6-clear-all-filters]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Summary
+        run: |
+          echo "# 6 Failing Filter Tests - Verification Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Test | Description | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|-------------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 1 | Test Approval Status Filter - Approve | ${{ needs.test-1-approval-status-approve.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 2 | Test Approval Status Filter - Unapprove | ${{ needs.test-2-approval-status-unapprove.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 3 | Test Product Description Filter | ${{ needs.test-3-product-description-filter.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 4 | Test Combined Filters - Approval Status And Attachment | ${{ needs.test-4-combined-approval-attachment.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 5 | Test Installer And Product Description Filter Combined | ${{ needs.test-5-installer-product-description.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 6 | Test Clear All Filters Shows All Results | ${{ needs.test-6-clear-all-filters.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "Workflow run: ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY

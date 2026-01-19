@@ -398,6 +398,9 @@ Set Wide Date Range For Testing
         ${current_start_date}=    Subtract Time From Date    ${current_end_date}    90 days    result_format=%Y-%m-%d
         Log To Console    Searching window: ${current_start_date} to ${current_end_date}
         
+        # Ensure filter inputs are visible before interacting
+        Ensure Filter Inputs Visible
+        
         Clear Element Text    ${START_WORK_DATE_INPUT}
         Input Text    ${START_WORK_DATE_INPUT}    ${current_start_date}
         Clear Element Text    ${END_WORK_DATE_INPUT}
@@ -421,10 +424,27 @@ Clear Date Filters
     # Ensure they are really empty by keys if needed, but clear should work.
     
 Click Search Button
-    [Documentation]    Click the Search button to apply filters
+    [Documentation]    Click the Search button to apply filters and re-expand filter section
     ${element}=    Get WebElement    ${SEARCH_BUTTON}
     Execute Javascript    arguments[0].click();    ARGUMENTS    ${element}
     Sleep    3s    # Wait for results to load
+    # Re-expand filter section as it collapses after search in headless Chrome
+    Expand Filter Section
+
+Ensure Filter Inputs Visible
+    [Documentation]    Ensure filter input fields are visible and interactable
+    Execute Javascript    window.scrollTo(0, 0);
+    Sleep    1s
+    ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${START_WORK_DATE_INPUT}
+    IF    not ${is_visible}
+        # Filter section collapsed, expand it
+        ${filter_toggle}=    Run Keyword And Return Status    Get WebElement    ${FILTER_SECTION_HEADER}
+        IF    ${filter_toggle}
+            Execute Javascript    var el = document.getElementById('fieldreport_list_filter'); if(el) el.click();
+            Sleep    2s
+        END
+    END
+    Wait Until Element Is Visible    ${START_WORK_DATE_INPUT}    timeout=15s
 
 Select First Available Option From Dropdown
     [Documentation]    Select the first non-empty option from a dropdown

@@ -233,6 +233,9 @@ Set Wide Date Range
         ${current_start_date}=    Subtract Time From Date    ${current_end_date}    90 days    result_format=%Y-%m-%d
         Log To Console    Searching window: ${current_start_date} to ${current_end_date}
         
+        # Ensure filter inputs are visible before interacting
+        Ensure Filter Inputs Visible
+        
         Clear Element Text    ${START_DATE_FILTER}
         Input Text    ${START_DATE_FILTER}    ${current_start_date}
         Clear Element Text    ${END_DATE_FILTER}
@@ -250,7 +253,24 @@ Set Wide Date Range
     END
 
 Click Search
-    [Documentation]    Click search and wait for results
+    [Documentation]    Click search, wait for results, and re-expand filter section
     ${btn}=    Get WebElement    ${SEARCH_BUTTON}
     Execute Javascript    arguments[0].click();    ARGUMENTS    ${btn}
     Sleep    3s
+    # Re-expand filter section as it collapses after search in headless Chrome
+    Expand Filters
+
+Ensure Filter Inputs Visible
+    [Documentation]    Ensure filter input fields are visible and interactable
+    Execute Javascript    window.scrollTo(0, 0);
+    Sleep    1s
+    ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${START_DATE_FILTER}
+    IF    not ${is_visible}
+        # Filter section collapsed, expand it
+        ${filter_toggle}=    Run Keyword And Return Status    Get WebElement    ${FILTER_TOGGLE}
+        IF    ${filter_toggle}
+            Execute Javascript    var el = document.getElementById('fieldreport_list_filter'); if(el) el.click();
+            Sleep    2s
+        END
+    END
+    Wait Until Element Is Visible    ${START_DATE_FILTER}    timeout=15s

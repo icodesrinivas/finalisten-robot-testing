@@ -1,0 +1,67 @@
+FAILED: Test With Attachment Filter - All Reports
+ERROR: Element 'id=fieldreport_list_filter' did not appear in 30 seconds.
+----------------------------------------
+FAILED: Test Common Save Button Persists Changes
+ERROR: Element 'css=#prodInFieldReportTable tbody tr:first-child' not visible after 10 seconds.
+----------------------------------------
+FAILED: Test Add Product With Zero Quantity
+ERROR: Element with locator 'css=#prodInFieldReportTable tbody tr:first-child' not found.
+----------------------------------------
+FAILED: Verify Field Report Edit Page Opens Successfully
+ERROR: Text 'FIELD REPORT' did not appear in 30 seconds.
+----------------------------------------
+FAILED: Verify Invoice Edit View Opens Successfully
+ERROR: ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=143.0.7499.193)
+Stacktrace:
+0   chromedriver                        0x0000000105a2e068 chromedriver + 6631528
+1   chromedriver                        0x0000000105a24d1a chromedriver + 6593818
+2   chromedriver                        0x0000000105445ae8 chromedriver + 436968
+3   chromedriver                        0x000000010548e0cb chromedriver + 733387
+4   chromedriver                        0x000000010548b7e8 chromedriver + 722920
+5   chromedriver                        0x00000001054e533a chromedriver + 1090362
+6   chromedriver                        0x0000000105489fb7 chromedriver + 716727
+7   chromedriver                        0x000000010548ac81 chromedriver + 720001
+8   chromedriver                        0x00000001059eb011 chromedriver + 6357009
+9   chromedriver                        0x00000001059ef460 chromedriver + 6374496
+10  chromedriver                        0x00000001059c6023 chromedriver + 6205475
+11  chromedriver                        0x00000001059efed5 chromedriver + 6377173
+12  chromedriver                        0x00000001059b4f01 chromedriver + 6135553
+13  chromedriver                        0x0000000105a11a98 chromedriver + 6515352
+14  chromedriver                        0x0000000105a11c53 chromedriver + 6515795
+15  chromedriver                        0x0000000105a2491c chromedriver + 6592796
+16  libsystem_pthread.dylib             0x00007ff816415259 _pthread_start + 125
+17  libsystem_pthread.dylib             0x00007ff816410c7b thread_start + 15
+
+----------------------------------------
+FAILED: Test Modify FR Product Sales Product Unchanged
+ERROR: Element with locator 'css=#prodInFieldReportTable tbody tr:first-child' not found.
+----------------------------------------
+FAILED: Test Fields Copied From Sales Product To FR Product
+ERROR: Setup failed:
+StaleElementReferenceException: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=143.0.7499.193); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x000000010f3d0068 chromedriver + 6631528
+1   chromedriver                        0x000000010f3c6d1a chromedriver + 6593818
+2   chromedriver                        0x000000010ede7ccb chromedriver + 437451
+3   chromedriver                        0x000000010edeea95 chromedriver + 465557
+4   chromedriver                        0x000000010edf1364 chromedriver + 476004
+5   chromedriver                        0x000000010edf1433 chromedriver + 476211
+6   chromedriver                        0x000000010ee34304 chromedriver + 750340
+    [ Message content over the limit has been removed. ]
+...hromedriver                        0x000000010ee2cc81 chromedriver + 720001
+11  chromedriver                        0x000000010f38d011 chromedriver + 6357009
+12  chromedriver                        0x000000010f391460 chromedriver + 6374496
+13  chromedriver                        0x000000010f368023 chromedriver + 6205475
+14  chromedriver                        0x000000010f391ed5 chromedriver + 6377173
+15  chromedriver                        0x000000010f356f01 chromedriver + 6135553
+16  chromedriver                        0x000000010f3b3a98 chromedriver + 6515352
+17  chromedriver                        0x000000010f3b3c53 chromedriver + 6515795
+18  chromedriver                        0x000000010f3c691c chromedriver + 6592796
+19  libsystem_pthread.dylib             0x00007ff816415259 _pthread_start + 125
+20  libsystem_pthread.dylib             0x00007ff816410c7b thread_start + 15
+----------------------------------------
+FAILED: Test Submit Without Installer Shows Error
+ERROR: System should prevent submission without Installer
+----------------------------------------

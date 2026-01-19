@@ -55,15 +55,7 @@ Test Admin User Can View All Field Reports
     Go To    ${FIELDREPORT_LIST_URL}
     Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
     
-    # Set wide date range
-    Click Element    ${FILTER_TOGGLE}
-    Sleep    1s
-    Clear Element Text    ${START_DATE_FILTER}
-    Input Text    ${START_DATE_FILTER}    2025-01-01
-    Clear Element Text    ${END_DATE_FILTER}
-    Input Text    ${END_DATE_FILTER}    2025-12-31
-    Click Element    ${SEARCH_BUTTON}
-    Sleep    3s
+    Search Until Records Are Found
     
     # Count visible FRs
     ${fr_count}=    Get Element Count    ${TABLE_ROWS}
@@ -108,15 +100,7 @@ Test Regular User View Own Field Reports
     IF    ${has_access}
         Log To Console    Regular user has access to FR list
         
-        # Set date range and search
-        Click Element    ${FILTER_TOGGLE}
-        Sleep    1s
-        Clear Element Text    ${START_DATE_FILTER}
-        Input Text    ${START_DATE_FILTER}    2025-01-01
-        Clear Element Text    ${END_DATE_FILTER}
-        Input Text    ${END_DATE_FILTER}    2025-12-31
-        Click Element    ${SEARCH_BUTTON}
-        Sleep    3s
+        Search Until Records Are Found
         
         ${fr_count}=    Get Element Count    ${TABLE_ROWS}
         Log To Console    Regular user can see ${fr_count} Field Reports
@@ -152,15 +136,7 @@ Test Guest User Read Only Access
     IF    ${has_access}
         Log To Console    Guest user has access to FR list
         
-        # Search for FRs
-        Click Element    ${FILTER_TOGGLE}
-        Sleep    1s
-        Clear Element Text    ${START_DATE_FILTER}
-        Input Text    ${START_DATE_FILTER}    2025-01-01
-        Clear Element Text    ${END_DATE_FILTER}
-        Input Text    ${END_DATE_FILTER}    2025-12-31
-        Click Element    ${SEARCH_BUTTON}
-        Sleep    3s
+        Search Until Records Are Found
         
         ${fr_count}=    Get Element Count    ${TABLE_ROWS}
         Log To Console    Guest can see ${fr_count} Field Reports
@@ -249,4 +225,38 @@ Login As Guest User
     ELSE
         Log To Console    ⚠ Could not login as Guest - check credentials
         Skip    Guest user credentials not configured
+    END
+
+Search Until Records Are Found
+    [Documentation]    Iterate backwards in 3-month increments until at least one record is found.
+    ${today}=    Get Current Date    result_format=%Y-%m-%d
+    ${current_end_date}=    Set Variable    ${today}
+
+    FOR    ${i}    IN RANGE    20    # Check up to 5 years
+        ${current_start_date}=    Subtract Time From Date    ${current_end_date}    90 days    result_format=%Y-%m-%d
+        Log To Console    Searching window: ${current_start_date} to ${current_end_date}
+        
+        # Ensure filter is expanded before each input
+        ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_BUTTON}
+        IF    not ${is_visible}
+             Click Element    ${FILTER_TOGGLE}
+             Sleep    1s
+             Wait Until Element Is Visible    ${SEARCH_BUTTON}    timeout=10s
+        END
+        
+        Clear Element Text    ${START_DATE_FILTER}
+        Input Text    ${START_DATE_FILTER}    ${current_start_date}
+        Clear Element Text    ${END_DATE_FILTER}
+        Input Text    ${END_DATE_FILTER}    ${current_end_date}
+        
+        Click Element    ${SEARCH_BUTTON}
+        Sleep    4s
+        
+        ${count}=    Get Element Count    ${TABLE_ROWS}
+        IF    ${count} > 0
+            Log To Console    Found ${count} records in window ${current_start_date} to ${current_end_date}
+            Exit For Loop
+        END
+        
+        ${current_end_date}=    Set Variable    ${current_start_date}
     END
