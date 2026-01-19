@@ -90,11 +90,51 @@ jobs:
             else
               echo "status=SUCCESS" >> $GITHUB_OUTPUT
             fi
+            
+            # Extract failing test details as HTML table
+            cat > extract_failures.py << 'PYEOF'
+          import xml.etree.ElementTree as ET
+          import html
+          
+          tree = ET.parse('results/output.xml')
+          root = tree.getroot()
+          
+          failed_tests = []
+          for test in root.iter('test'):
+              status = test.find('status')
+              if status is not None and status.get('status') == 'FAIL':
+                  test_name = test.get('name', 'Unknown Test')
+                  doc_elem = test.find('doc')
+                  doc = doc_elem.text if doc_elem is not None and doc_elem.text else 'No description available'
+                  error_msg = status.text if status.text else 'Test failed'
+                  if len(error_msg) > 150:
+                      error_msg = error_msg[:150] + '...'
+                  if len(doc) > 200:
+                      doc = doc[:200] + '...'
+                  failed_tests.append((html.escape(test_name), html.escape(doc), html.escape(error_msg)))
+          
+          if failed_tests:
+              print('<h3 style="color: red;">❌ Failed Test Cases:</h3>')
+              print('<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">')
+              print('<tr style="background-color: #f2f2f2;"><th style="text-align: left;">Test Name</th><th style="text-align: left;">Description</th><th style="text-align: left;">Error</th></tr>')
+              for name, doc, error in failed_tests:
+                  print(f'<tr><td style="font-weight: bold;">{name}</td><td>{doc}</td><td style="color: red;">{error}</td></tr>')
+              print('</table>')
+          PYEOF
+            python3 extract_failures.py > failed_tests.html
+            
+            # Read and set output
+            {
+              echo "failed_tests_html<<ENDHTML"
+              cat failed_tests.html
+              echo "ENDHTML"
+            } >> $GITHUB_OUTPUT
           else
             echo "total=0" >> $GITHUB_OUTPUT
             echo "passed=0" >> $GITHUB_OUTPUT
             echo "failed=0" >> $GITHUB_OUTPUT
             echo "status=ERROR" >> $GITHUB_OUTPUT
+            echo "failed_tests_html=" >> $GITHUB_OUTPUT
           fi
       
       - name: Send email notification
@@ -121,6 +161,8 @@ jobs:
                 <li><strong>Passed:</strong> <span style="color: green;">✅ ${{ steps.test-results.outputs.passed }}</span></li>
                 <li><strong>Failed:</strong> <span style="color: red;">❌ ${{ steps.test-results.outputs.failed }}</span></li>
             </ul>
+            
+            ${{ steps.test-results.outputs.failed_tests_html }}
             
             <p><strong>GitHub Actions Run:</strong> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}</a></p>
             <p><strong>Repository:</strong> <a href="${{ github.server_url }}/${{ github.repository }}">${{ github.repository }}</a></p>
