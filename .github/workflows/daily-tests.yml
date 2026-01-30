@@ -34,6 +34,8 @@ jobs:
         uses: nanasess/setup-chromedriver@v2
       
       - name: Run Robot Framework tests
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
                 --outputdir results \

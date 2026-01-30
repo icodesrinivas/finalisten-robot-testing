@@ -23,6 +23,9 @@ pipeline {
         }
 
         stage('Run Robot Tests Sequentially') {
+            environment {
+                DATABASE_URL = credentials('DATABASE_URL')
+            }
             steps {
                 script {
                     // Use a shell command to find the test files, excluding __init__.robot
