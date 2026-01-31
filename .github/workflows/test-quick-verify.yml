@@ -1,0 +1,111 @@
+name: Test Failing Cases Quick Verify
+
+# Manual trigger only - for quick verification of specific failing tests
+on:
+  workflow_dispatch:
+
+jobs:
+  test-failing-cases:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Install and setup Chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      
+      - name: Install ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+      
+      - name: Run 4 Previously Failing Test Cases
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          echo "=== RUNNING 4 PREVIOUSLY FAILING TEST CASES ==="
+          echo ""
+          echo "Tests being run:"
+          echo "1. Door Planning Board - Sales Week timeout test"
+          echo "2. Inactive Installer Edit - DATABASE_URL test"
+          echo "3. Product Data Integrity - Login timeout test"
+          echo "4. Product Delete - Login timeout test"
+          echo ""
+          
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results \
+                --name "Quick Verify Failing Tests" \
+                FinalistenTestCases/doorplanning/open_doorplanning_app.robot \
+                FinalistenTestCases/fieldreport/inactive_installer_edit_fieldreport.robot \
+                FinalistenTestCases/fieldreport/product_data_integrity_fieldreport.robot \
+                FinalistenTestCases/fieldreport/product_delete_attachment_fieldreport.robot || true
+      
+      - name: Generate Summary
+        if: always()
+        run: |
+          echo "# Quick Verify - 4 Failing Tests" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f results/output.xml ]; then
+            python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          import xml.etree.ElementTree as ET
+          tree = ET.parse('results/output.xml')
+          root = tree.getroot()
+          stats = root.find('.//statistics/total/stat')
+          if stats is not None:
+              passed = stats.get('pass', '0')
+              failed = stats.get('fail', '0')
+              print(f'- **Passed:** ✅ {passed}')
+              print(f'- **Failed:** ❌ {failed}')
+          EOF
+          else
+            echo "⚠️ No test results found" >> $GITHUB_STEP_SUMMARY
+          fi
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quick-verify-results-${{ github.run_number }}
+          path: |
+            results/*.html
+            results/*.xml
+          retention-days: 7
+      
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        if: always()
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: 'Quick Verify - 4 Failing Tests - Run #${{ github.run_number }}'
+          to: srinivas8862@gmail.com
+          from: ${{ secrets.EMAIL_USERNAME }}
+          html_body: |
+            <h2>Quick Verify - 4 Previously Failing Tests</h2>
+            <p><strong>Build:</strong> #${{ github.run_number }}</p>
+            <p><strong>Triggered by:</strong> ${{ github.actor }}</p>
+            
+            <h3>Tests in this run:</h3>
+            <ol>
+                <li><strong>Door Planning Board</strong> - Sales Week timeout (was 10s, now 30s)</li>
+                <li><strong>Inactive Installer Edit</strong> - DATABASE_URL test</li>
+                <li><strong>Product Data Integrity</strong> - Login timeout (was 15s, now 45s)</li>
+                <li><strong>Product Delete</strong> - Login timeout (was 15s, now 45s)</li>
+            </ol>
+            
+            <p><strong>View Full Results:</strong> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">GitHub Actions Run</a></p>
+          attachments: results/log.html,results/report.html
+          ignore_cert: true
