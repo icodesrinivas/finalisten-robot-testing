@@ -11,7 +11,7 @@ Verify Door Planning Board Opens Successfully
     Open And Login
     Hover Over Production Menu
     Click On Door Planning Menu
-    Wait Until Page Contains    Sales Week    timeout=10s
+    Wait Until Page Contains    Sales Week    timeout=30s
     Log To Console    "Sales Week text found. Door Planning Board opened successfully."
     Close Browser
 

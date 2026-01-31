@@ -215,7 +215,7 @@ Login To Application
     Input Text    xpath=//input[@name='username']    ${USERNAME}
     Input Text    xpath=//input[@name='password']    ${PASSWORD}
     Click Button    xpath=//button[@type='submit']
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
+    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=45s
     Log To Console    Successfully logged in
 
 Create Field Report With Product

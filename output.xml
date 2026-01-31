@@ -1,186 +1,187 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.2.2 (Python 3.10.9 on darwin)" generated="2026-01-14T21:59:08.367817" rpa="false" schemaversion="5">
-<suite id="s1" name="Open Fieldreport Edit" source="/Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/FinalistenTestCases/fieldreport/open_fieldreport_edit.robot">
-<test id="s1-t1" name="Verify Field Report Edit Page Opens Successfully" line="17">
-<kw name="Open And Login" owner="LoginKeyword">
+<robot generator="Robot 7.2.2 (Python 3.10.9 on darwin)" generated="2026-01-29T09:45:59.601314" rpa="false" schemaversion="5">
+<suite id="s1" name="Inactive Installer Edit Fieldreport" source="/Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/FinalistenTestCases/fieldreport/inactive_installer_edit_fieldreport.robot">
+<test id="s1-t1" name="Verify Fieldreport With Inactive Installer Can Be Edited And Saved" line="52">
+<kw name="Open And Login" owner="LoginKeyword" type="SETUP">
 <kw name="Register Keyword To Run On Failure" owner="SeleniumLibrary">
-<msg time="2026-01-14T21:59:08.958586" level="INFO">Capture Page Screenshot will be run on failure.</msg>
+<msg time="2026-01-29T09:46:00.348979" level="INFO">Capture Page Screenshot will be run on failure.</msg>
 <arg>Capture Page Screenshot</arg>
 <doc>Sets the keyword to execute, when a SeleniumLibrary keyword fails.</doc>
-<status status="PASS" start="2026-01-14T21:59:08.958325" elapsed="0.000369"/>
+<status status="PASS" start="2026-01-29T09:46:00.347619" elapsed="0.003358"/>
 </kw>
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2026-01-14T21:59:08.960816" level="INFO">Opening browser 'chrome' to base url 'https://preproderp.finalisten.se/login/'.</msg>
+<msg time="2026-01-29T09:46:00.355102" level="INFO">Opening browser 'chrome' to base url 'https://preproderp.finalisten.se/login/'.</msg>
+<msg time="2026-01-29T09:46:07.010122" level="WARN">The chromedriver version (143.0.7499.192) detected in PATH at /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/chromedriver-mac-x64/chromedriver might not be compatible with the detected chrome version (144.0.7559.98); currently, chromedriver 144.0.7559.109 is recommended for chrome 144.*, so it is advised to delete the driver in PATH and retry</msg>
 <arg>${URL}</arg>
 <arg>${BROWSER}</arg>
 <arg>options=${CHROME_OPTIONS}</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2026-01-14T21:59:08.958953" elapsed="7.541926"/>
+<status status="PASS" start="2026-01-29T09:46:00.354063" elapsed="15.424432"/>
 </kw>
 <kw name="Set Window Size" owner="SeleniumLibrary">
 <arg>1920</arg>
 <arg>1080</arg>
 <doc>Sets current windows size to given ``width`` and ``height``.</doc>
-<status status="PASS" start="2026-01-14T21:59:16.501892" elapsed="0.744818"/>
+<status status="PASS" start="2026-01-29T09:46:15.781404" elapsed="0.779294"/>
 </kw>
 <kw name="Maximize Browser Window" owner="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" start="2026-01-14T21:59:17.247262" elapsed="0.394577"/>
+<status status="PASS" start="2026-01-29T09:46:16.561146" elapsed="0.005919"/>
 </kw>
 <kw name="Set Selenium Implicit Wait" owner="SeleniumLibrary">
 <arg>15s</arg>
 <doc>Sets the implicit wait value used by Selenium.</doc>
-<status status="PASS" start="2026-01-14T21:59:17.642595" elapsed="0.002935"/>
+<status status="PASS" start="2026-01-29T09:46:16.567567" elapsed="0.002257"/>
 </kw>
 <kw name="Set Selenium Timeout" owner="SeleniumLibrary">
 <arg>60s</arg>
 <doc>Sets the timeout that is used by various keywords.</doc>
-<status status="PASS" start="2026-01-14T21:59:17.645922" elapsed="0.002913"/>
+<status status="PASS" start="2026-01-29T09:46:16.570221" elapsed="0.002903"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2026-01-14T21:59:22.650162" level="INFO">Slept 5 seconds.</msg>
+<msg time="2026-01-29T09:46:21.574221" level="INFO">Slept 5 seconds.</msg>
 <arg>5s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2026-01-14T21:59:17.649248" elapsed="5.001090"/>
+<status status="PASS" start="2026-01-29T09:46:16.573549" elapsed="5.000917"/>
 </kw>
 <kw name="Handle SSL Warning" owner="LoginKeyword">
 <kw name="Get WebElements" owner="SeleniumLibrary">
-<msg time="2026-01-14T21:59:37.688331" level="INFO">${advanced_button} = []</msg>
+<msg time="2026-01-29T09:46:36.606762" level="INFO">${advanced_button} = []</msg>
 <var>${advanced_button}</var>
 <arg>xpath=//button[contains(text(),'Advanced')]</arg>
 <doc>Returns a list of WebElement objects matching the ``locator``.</doc>
-<status status="PASS" start="2026-01-14T21:59:22.651477" elapsed="15.036949"/>
+<status status="PASS" start="2026-01-29T09:46:21.576084" elapsed="15.030754"/>
 </kw>
 <kw name="Run Keyword If" owner="BuiltIn">
 <arg>${advanced_button}</arg>
 <arg>Click Button</arg>
 <arg>xpath=//button[contains(text(),'Advanced')]</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" start="2026-01-14T21:59:37.688776" elapsed="0.000383"/>
+<status status="PASS" start="2026-01-29T09:46:36.607185" elapsed="0.000291"/>
 </kw>
 <kw name="Get WebElements" owner="SeleniumLibrary">
-<msg time="2026-01-14T21:59:52.736736" level="INFO">${proceed_link} = []</msg>
+<msg time="2026-01-29T09:46:51.613780" level="INFO">${proceed_link} = []</msg>
 <var>${proceed_link}</var>
 <arg>xpath=//a[contains(text(),'Proceed')]</arg>
 <doc>Returns a list of WebElement objects matching the ``locator``.</doc>
-<status status="PASS" start="2026-01-14T21:59:37.689401" elapsed="15.047442"/>
+<status status="PASS" start="2026-01-29T09:46:36.607690" elapsed="15.006162"/>
 </kw>
 <kw name="Run Keyword If" owner="BuiltIn">
 <arg>${proceed_link}</arg>
 <arg>Click Element</arg>
 <arg>xpath=//a[contains(text(),'Proceed')]</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" start="2026-01-14T21:59:52.737193" elapsed="0.000280"/>
+<status status="PASS" start="2026-01-29T09:46:51.614146" elapsed="0.000252"/>
 </kw>
-<status status="PASS" start="2026-01-14T21:59:22.650859" elapsed="30.086768"/>
+<status status="PASS" start="2026-01-29T09:46:21.575182" elapsed="30.039347"/>
 </kw>
 <kw name="Execute Javascript" owner="SeleniumLibrary">
-<msg time="2026-01-14T21:59:52.738504" level="INFO">Executing JavaScript:
+<msg time="2026-01-29T09:46:51.615321" level="INFO">Executing JavaScript:
 return document.readyState === 'complete'
 Without any arguments.</msg>
 <arg>return document.readyState === 'complete'</arg>
 <doc>Executes the given JavaScript code with possible arguments.</doc>
-<status status="PASS" start="2026-01-14T21:59:52.737913" elapsed="0.014987"/>
+<status status="PASS" start="2026-01-29T09:46:51.614746" elapsed="0.009776"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2026-01-14T21:59:55.754154" level="INFO">Slept 3 seconds.</msg>
+<msg time="2026-01-29T09:46:54.625700" level="INFO">Slept 3 seconds.</msg>
 <arg>3s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2026-01-14T21:59:52.753192" elapsed="3.001160"/>
+<status status="PASS" start="2026-01-29T09:46:51.624775" elapsed="3.001356"/>
 </kw>
 <kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
 <arg>xpath=//input[@name='username']</arg>
 <arg>timeout=30s</arg>
 <doc>Waits until the element ``locator`` appears on the current page.</doc>
-<status status="PASS" start="2026-01-14T21:59:55.754746" elapsed="0.016684"/>
+<status status="PASS" start="2026-01-29T09:46:54.626850" elapsed="0.021400"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2026-01-14T21:59:55.772709" level="INFO">Typing text 'erpadmin@finalisten.se' into text field 'xpath=//input[@name='username']'.</msg>
+<msg time="2026-01-29T09:46:54.649102" level="INFO">Typing text 'erpadmin@finalisten.se' into text field 'xpath=//input[@name='username']'.</msg>
 <arg>xpath=//input[@name='username']</arg>
 <arg>${USERNAME}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2026-01-14T21:59:55.771966" elapsed="0.475683"/>
+<status status="PASS" start="2026-01-29T09:46:54.648537" elapsed="0.559166"/>
 </kw>
 <kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
 <arg>xpath=//input[@name='password']</arg>
 <arg>timeout=20s</arg>
 <doc>Waits until the element ``locator`` appears on the current page.</doc>
-<status status="PASS" start="2026-01-14T21:59:56.249199" elapsed="0.014057"/>
+<status status="PASS" start="2026-01-29T09:46:55.208008" elapsed="0.057922"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2026-01-14T21:59:56.264382" level="INFO">Typing text 'Djangocrm123' into text field 'xpath=//input[@name='password']'.</msg>
+<msg time="2026-01-29T09:46:55.268140" level="INFO">Typing text 'Djangocrm123' into text field 'xpath=//input[@name='password']'.</msg>
 <arg>xpath=//input[@name='password']</arg>
 <arg>${PASSWORD}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2026-01-14T21:59:56.263957" elapsed="0.270395"/>
+<status status="PASS" start="2026-01-29T09:46:55.266830" elapsed="0.151788"/>
 </kw>
 <kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2026-01-14T21:59:56.537090" level="INFO">Clicking button 'xpath=//button[@type='submit' and contains(@class,'btn-primary') and contains(@class,'btn-block')]'.</msg>
+<msg time="2026-01-29T09:46:55.419686" level="INFO">Clicking button 'xpath=//button[@type='submit' and contains(@class,'btn-primary') and contains(@class,'btn-block')]'.</msg>
 <arg>${LOGIN_BUTTON}</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2026-01-14T21:59:56.534784" elapsed="3.183827"/>
+<status status="PASS" start="2026-01-29T09:46:55.419085" elapsed="4.096614"/>
 </kw>
 <kw name="Wait Until Location Contains" owner="SeleniumLibrary">
 <arg>${HOMEPAGE_URL}</arg>
 <arg>timeout=30s</arg>
 <doc>Waits until the current URL contains ``expected``.</doc>
-<status status="PASS" start="2026-01-14T21:59:59.718971" elapsed="0.014361"/>
+<status status="PASS" start="2026-01-29T09:46:59.516018" elapsed="0.006848"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2026-01-14T22:00:07.735004" level="INFO">Slept 8 seconds.</msg>
+<msg time="2026-01-29T09:47:07.525132" level="INFO">Slept 8 seconds.</msg>
 <arg>8s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2026-01-14T21:59:59.733925" elapsed="8.001462"/>
+<status status="PASS" start="2026-01-29T09:46:59.523201" elapsed="8.002450"/>
 </kw>
 <kw name="Execute Javascript" owner="SeleniumLibrary">
-<msg time="2026-01-14T22:00:07.736457" level="INFO">Executing JavaScript:
+<msg time="2026-01-29T09:47:07.526964" level="INFO">Executing JavaScript:
 return document.readyState === 'complete'
 Without any arguments.</msg>
 <arg>return document.readyState === 'complete'</arg>
 <doc>Executes the given JavaScript code with possible arguments.</doc>
-<status status="PASS" start="2026-01-14T22:00:07.735863" elapsed="0.005714"/>
+<status status="PASS" start="2026-01-29T09:47:07.526184" elapsed="0.008549"/>
 </kw>
 <kw name="Execute Javascript" owner="SeleniumLibrary">
-<msg time="2026-01-14T22:00:07.742536" level="INFO">Executing JavaScript:
+<msg time="2026-01-29T09:47:07.535488" level="INFO">Executing JavaScript:
 window.scrollTo(0, 0);
 Without any arguments.</msg>
 <arg>window.scrollTo(0, 0);</arg>
 <doc>Executes the given JavaScript code with possible arguments.</doc>
-<status status="PASS" start="2026-01-14T22:00:07.741868" elapsed="0.007271"/>
+<status status="PASS" start="2026-01-29T09:47:07.535005" elapsed="0.005614"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2026-01-14T22:00:09.749878" level="INFO">Slept 2 seconds.</msg>
+<msg time="2026-01-29T09:47:09.541602" level="INFO">Slept 2 seconds.</msg>
 <arg>2s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2026-01-14T22:00:07.749417" elapsed="2.000665"/>
+<status status="PASS" start="2026-01-29T09:47:07.541060" elapsed="2.000853"/>
 </kw>
 <kw name="Run Keyword And Return Status" owner="BuiltIn">
 <kw name="Element Should Be Visible" owner="SeleniumLibrary">
-<msg time="2026-01-14T22:00:09.782517" level="INFO">Element 'id=register' is displayed.</msg>
+<msg time="2026-01-29T09:47:09.571292" level="INFO">Element 'id=register' is displayed.</msg>
 <arg>id=register</arg>
 <doc>Verifies that the element identified by ``locator`` is visible.</doc>
-<status status="PASS" start="2026-01-14T22:00:09.751391" elapsed="0.031499"/>
+<status status="PASS" start="2026-01-29T09:47:09.542944" elapsed="0.028484"/>
 </kw>
-<msg time="2026-01-14T22:00:09.783121" level="INFO">${is_visible} = True</msg>
+<msg time="2026-01-29T09:47:09.571638" level="INFO">${is_visible} = True</msg>
 <var>${is_visible}</var>
 <arg>Element Should Be Visible</arg>
 <arg>id=register</arg>
 <doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
-<status status="PASS" start="2026-01-14T22:00:09.750843" elapsed="0.032328"/>
+<status status="PASS" start="2026-01-29T09:47:09.542439" elapsed="0.029247"/>
 </kw>
 <if>
 <branch type="IF" condition="not ${is_visible}">
 <kw name="Log To Console" owner="BuiltIn">
 <arg>Register menu not visible, trying fallback approaches...</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="NOT RUN" start="2026-01-14T22:00:09.783817" elapsed="0.000060"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.572402" elapsed="0.000055"/>
 </kw>
 <kw name="Run Keyword And Return Status" owner="BuiltIn">
 <var>${toggler_exists}</var>
 <arg>Page Should Contain Element</arg>
 <arg>css=.navbar-toggler</arg>
 <doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
-<status status="NOT RUN" start="2026-01-14T22:00:09.784085" elapsed="0.000051"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.572659" elapsed="0.000050"/>
 </kw>
 <if>
 <branch type="IF" condition="${toggler_exists}">
@@ -189,141 +190,792 @@ Without any arguments.</msg>
 <arg>Element Should Be Visible</arg>
 <arg>css=.navbar-toggler</arg>
 <doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
-<status status="NOT RUN" start="2026-01-14T22:00:09.784449" elapsed="0.000049"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.573043" elapsed="0.000048"/>
 </kw>
 <if>
 <branch type="IF" condition="${toggler_visible}">
 <kw name="Click Element" owner="SeleniumLibrary">
 <arg>css=.navbar-toggler</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<status status="NOT RUN" start="2026-01-14T22:00:09.784812" elapsed="0.000074"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.573417" elapsed="0.000051"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
 <arg>3s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="NOT RUN" start="2026-01-14T22:00:09.785167" elapsed="0.000059"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.573629" elapsed="0.000046"/>
 </kw>
-<status status="NOT RUN" start="2026-01-14T22:00:09.784628" elapsed="0.000679"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.573224" elapsed="0.000516"/>
 </branch>
-<status status="NOT RUN" start="2026-01-14T22:00:09.784596" elapsed="0.000910"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.573192" elapsed="0.000611"/>
 </if>
-<status status="NOT RUN" start="2026-01-14T22:00:09.784278" elapsed="0.001292"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.572864" elapsed="0.000983"/>
 </branch>
-<status status="NOT RUN" start="2026-01-14T22:00:09.784249" elapsed="0.001384"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.572816" elapsed="0.001082"/>
 </if>
 <kw name="Execute Javascript" owner="SeleniumLibrary">
 <arg>var el = document.getElementById('register'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});</arg>
 <doc>Executes the given JavaScript code with possible arguments.</doc>
-<status status="NOT RUN" start="2026-01-14T22:00:09.785811" elapsed="0.000054"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.574041" elapsed="0.000047"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
 <arg>2s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="NOT RUN" start="2026-01-14T22:00:09.786029" elapsed="0.000046"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.574245" elapsed="0.000045"/>
 </kw>
-<status status="NOT RUN" start="2026-01-14T22:00:09.783421" elapsed="0.002718"/>
+<status status="NOT RUN" start="2026-01-29T09:47:09.571969" elapsed="0.002387"/>
 </branch>
-<status status="PASS" start="2026-01-14T22:00:09.783353" elapsed="0.002842"/>
+<status status="PASS" start="2026-01-29T09:47:09.571878" elapsed="0.002532"/>
 </if>
 <kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
 <arg>id=register</arg>
 <arg>timeout=30s</arg>
 <doc>Waits until the element ``locator`` appears on the current page.</doc>
-<status status="PASS" start="2026-01-14T22:00:09.786338" elapsed="0.010244"/>
+<status status="PASS" start="2026-01-29T09:47:09.574582" elapsed="0.008007"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2026-01-14T22:00:12.797631" level="INFO">Slept 3 seconds.</msg>
+<msg time="2026-01-29T09:47:12.584043" level="INFO">Slept 3 seconds.</msg>
 <arg>3s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2026-01-14T22:00:09.796903" elapsed="3.001164"/>
+<status status="PASS" start="2026-01-29T09:47:09.582850" elapsed="3.001483"/>
 </kw>
-<status status="PASS" start="2026-01-14T21:59:08.956961" elapsed="63.841557"/>
+<status status="PASS" start="2026-01-29T09:46:00.343292" elapsed="72.241401"/>
 </kw>
-<kw name="Hover Over Production Menu">
+<kw name="Log To Console" owner="BuiltIn">
+<arg>======== TEST: Inactive Installer Edit Regression ========</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:47:12.585345" elapsed="0.000413"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:12.586464" level="INFO">Opening url 'https://preproderp.finalisten.se/fieldreport/list/'</msg>
+<arg>${FIELDREPORT_LIST_URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2026-01-29T09:47:12.586106" elapsed="1.161088"/>
+</kw>
 <kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
-<arg>${PRODUCTION_MENU}</arg>
+<arg>${FILTER_TOGGLE}</arg>
+<arg>timeout=15s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2026-01-29T09:47:13.747746" elapsed="1.262777"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>✓ Fieldreport list loaded</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:47:15.011214" elapsed="0.000748"/>
+</kw>
+<kw name="Find Fieldreport With Installer">
+<kw name="Get Inactive Installers From Database">
+<kw name="Get Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-29T09:47:15.015762" level="INFO">${db_url} = postgres://ualveudip52hl3:p3eb131daafa5c0e391137bb36fcc17e67c5d5d07c1df58186db060e2281a40d3@c5qmk1l8miin9d.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com:5432/d20ee513ag9a9p</msg>
+<var>${db_url}</var>
+<arg>DATABASE_URL</arg>
+<arg>default=${EMPTY}</arg>
+<doc>Returns the value of an environment variable with the given name.</doc>
+<status status="PASS" start="2026-01-29T09:47:15.014090" elapsed="0.001768"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2026-01-29T09:47:15.016885" level="INFO">Length is 175.</msg>
+<arg>${db_url}</arg>
+<arg>msg=DATABASE_URL environment variable must be set. Run: export DATABASE_URL=$(heroku config:get DATABASE_URL --app finalistenerppreprod-eu)</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2026-01-29T09:47:15.016368" elapsed="0.000721"/>
+</kw>
+<kw name="Run Process" owner="Process">
+<msg time="2026-01-29T09:47:15.030768" level="INFO">Starting process:
+python /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/FinalistenTestCases/fieldreport/../../scripts/get_inactive_installers.py</msg>
+<msg time="2026-01-29T09:47:15.045958" level="INFO">Waiting for process to complete.</msg>
+<msg time="2026-01-29T09:47:19.212687" level="INFO">Process completed.</msg>
+<msg time="2026-01-29T09:47:19.213545" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<var>${result}</var>
+<arg>python</arg>
+<arg>${DB_SCRIPT_PATH}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2026-01-29T09:47:15.023562" elapsed="4.190122"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Database query completed with exit code: ${result.rc}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.214828" elapsed="0.002812"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-29T09:47:19.219844" level="INFO">${json_output} = {
+  "success": true,
+  "fieldreport_count": 1,
+  "fieldreport_slugs": [
+    "zdJ3xC"
+  ],
+  "fieldreport_installer_map": {
+    "zdJ3xC": {
+      "id": 21,
+      "name": "Adam \u00d6stergren-J\u00f6rge...</msg>
+<var>${json_output}</var>
+<arg>${result.stdout}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.218091" elapsed="0.001860"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>DB Response: ${json_output}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.220324" elapsed="0.000560"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-01-29T09:47:19.230339" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<arg>msg=Database script failed: ${result.stderr}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.221836" elapsed="0.008782"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-29T09:47:19.232049" level="INFO">${parsed} = {'success': True, 'fieldreport_count': 1, 'fieldreport_slugs': ['zdJ3xC'], 'fieldreport_installer_map': {'zdJ3xC': {'id': 21, 'name': 'Adam Östergren-Jörgensen'}}, 'installer_count': 10, 'installer_id...</msg>
+<var>${parsed}</var>
+<arg>json.loads('''${json_output}''')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.231069" elapsed="0.001080"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${parsed}[success]</arg>
+<arg>msg=Database query failed: ${parsed.get('error', 'Unknown error')}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.232670" elapsed="0.001669"/>
+</kw>
+<return>
+<value>${parsed}</value>
+<status status="PASS" start="2026-01-29T09:47:19.234785" elapsed="0.000399"/>
+</return>
+<msg time="2026-01-29T09:47:19.235718" level="INFO">${db_result} = {'success': True, 'fieldreport_count': 1, 'fieldreport_slugs': ['zdJ3xC'], 'fieldreport_installer_map': {'zdJ3xC': {'id': 21, 'name': 'Adam Östergren-Jörgensen'}}, 'installer_count': 10, 'installer_id...</msg>
+<var>${db_result}</var>
+<doc>Execute Python script to query database for inactive installers with fieldreports
+Returns a dictionary with installer_ids and installer_names lists
+Requires DATABASE_URL environment variable to be set</doc>
+<status status="PASS" start="2026-01-29T09:47:15.013438" elapsed="4.222638"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-29T09:47:19.237168" level="INFO">@{fieldreport_slugs} = [ zdJ3xC ]</msg>
+<var>@{fieldreport_slugs}</var>
+<arg>${db_result}[fieldreport_slugs]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.236481" elapsed="0.000781"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-29T09:47:19.238024" level="INFO">Length is 1.</msg>
+<msg time="2026-01-29T09:47:19.238242" level="INFO">${slug_count} = 1</msg>
+<var>${slug_count}</var>
+<arg>${fieldreport_slugs}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.237626" elapsed="0.000694"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Found ${slug_count} unapproved fieldreports with inactive installers</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.238648" elapsed="0.000507"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${slug_count} &gt; 0</arg>
+<arg>msg=No unapproved fieldreports with inactive installers found in database</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.239500" elapsed="0.000701"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-29T09:47:19.241351" level="INFO">${slug} = zdJ3xC</msg>
+<var>${slug}</var>
+<arg>${fieldreport_slugs}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.240661" elapsed="0.000778"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-29T09:47:19.242350" level="INFO">${installer_map} = {'zdJ3xC': {'id': 21, 'name': 'Adam Östergren-Jörgensen'}}</msg>
+<var>${installer_map}</var>
+<arg>${db_result}[fieldreport_installer_map]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.241794" elapsed="0.000692"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-29T09:47:19.243486" level="INFO">${installer_info} = {'id': 21, 'name': 'Adam Östergren-Jörgensen'}</msg>
+<var>${installer_info}</var>
+<arg>${installer_map}[${slug}]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.242920" elapsed="0.000651"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-29T09:47:19.244405" level="INFO">${installer_name} = Adam Östergren-Jörgensen</msg>
+<var>${installer_name}</var>
+<arg>${installer_info}[name]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.243916" elapsed="0.000574"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Opening fieldreport ${slug} with inactive installer: ${installer_name}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.244817" elapsed="0.000773"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-29T09:47:19.246874" level="INFO">${edit_url} = https://preproderp.finalisten.se/fieldreport/list/zdJ3xC/edit/</msg>
+<var>${edit_url}</var>
+<arg>${BASE_URL}/fieldreport/list/${slug}/edit/</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.246273" elapsed="0.000689"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:19.248156" level="INFO">Opening url 'https://preproderp.finalisten.se/fieldreport/list/zdJ3xC/edit/'</msg>
+<arg>${edit_url}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2026-01-29T09:47:19.247361" elapsed="8.434841"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-29T09:47:32.684519" level="INFO">Slept 5 seconds.</msg>
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-29T09:47:27.682654" elapsed="5.002089"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${INSTALLER_DROPDOWN}</arg>
 <arg>timeout=20s</arg>
 <doc>Waits until the element ``locator`` appears on the current page.</doc>
-<status status="PASS" start="2026-01-14T22:00:12.800886" elapsed="0.022483"/>
+<status status="PASS" start="2026-01-29T09:47:32.685674" elapsed="0.013785"/>
 </kw>
-<kw name="Execute Javascript" owner="SeleniumLibrary">
-<msg time="2026-01-14T22:00:12.824250" level="INFO">Executing JavaScript:
-var el = document.getElementById('production'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
-Without any arguments.</msg>
-<arg>var el = document.getElementById('production'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});</arg>
-<doc>Executes the given JavaScript code with possible arguments.</doc>
-<status status="PASS" start="2026-01-14T22:00:12.823684" elapsed="0.010889"/>
+<msg time="2026-01-29T09:47:32.699683" level="INFO">${page_loaded} = True</msg>
+<var>${page_loaded}</var>
+<arg>Wait Until Page Contains Element</arg>
+<arg>${INSTALLER_DROPDOWN}</arg>
+<arg>timeout=20s</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.685163" elapsed="0.014570"/>
 </kw>
-<kw name="Sleep" owner="BuiltIn">
-<msg time="2026-01-14T22:00:14.837183" level="INFO">Slept 2 seconds.</msg>
-<arg>2s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2026-01-14T22:00:12.834963" elapsed="2.002450"/>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${page_loaded}</arg>
+<arg>msg=Edit page did not load for fieldreport ${slug}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.699971" elapsed="0.000385"/>
 </kw>
-<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
-<arg>${PRODUCTION_MENU}</arg>
+<kw name="Get Selected List Label" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:32.790431" level="INFO">${current_installer} = Adam Östergren-Jörgensen</msg>
+<var>${current_installer}</var>
+<arg>${INSTALLER_DROPDOWN}</arg>
+<doc>Returns the label of selected option from selection list ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.700683" elapsed="0.089822"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>✓ Fieldreport has installer: ${current_installer}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.790834" elapsed="0.000608"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-29T09:47:32.792214" level="INFO">${TEST_FIELDREPORT_URL} = https://preproderp.finalisten.se/fieldreport/list/zdJ3xC/edit/</msg>
+<arg>${TEST_FIELDREPORT_URL}</arg>
+<arg>${edit_url}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.791779" elapsed="0.000519"/>
+</kw>
+<doc>Find a fieldreport with an INACTIVE installer and open its edit page
+Dynamically fetches UNAPPROVED fieldreport slugs from the database
+Navigates directly to the edit page using the slug</doc>
+<status status="PASS" start="2026-01-29T09:47:15.012712" elapsed="17.780700"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${INSTALLER_DROPDOWN}</arg>
 <arg>timeout=15s</arg>
-<doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2026-01-14T22:00:14.837824" elapsed="0.018007"/>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.794627" elapsed="0.018338"/>
 </kw>
-<kw name="Mouse Over" owner="SeleniumLibrary">
-<msg time="2026-01-14T22:00:14.856906" level="INFO">Simulating Mouse Over on element 'xpath=//*[@id="production"]'.</msg>
-<arg>${PRODUCTION_MENU}</arg>
-<doc>Simulates hovering the mouse over the element ``locator``.</doc>
-<status status="PASS" start="2026-01-14T22:00:14.856330" elapsed="0.283530"/>
+<kw name="Get Selected List Label" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:32.897538" level="INFO">${installer_value} = Adam Östergren-Jörgensen</msg>
+<var>${installer_value}</var>
+<arg>${INSTALLER_DROPDOWN}</arg>
+<doc>Returns the label of selected option from selection list ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.813534" elapsed="0.084088"/>
 </kw>
-<kw name="Sleep" owner="BuiltIn">
-<msg time="2026-01-14T22:00:16.144373" level="INFO">Slept 1 second.</msg>
-<arg>1s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2026-01-14T22:00:15.140296" elapsed="1.004301"/>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-29T09:47:32.898579" level="INFO">${ORIGINAL_INSTALLER} = Adam Östergren-Jörgensen</msg>
+<arg>${ORIGINAL_INSTALLER}</arg>
+<arg>${installer_value}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.898067" elapsed="0.000683"/>
 </kw>
-<status status="PASS" start="2026-01-14T22:00:12.800085" elapsed="3.344757"/>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Original Installer: ${ORIGINAL_INSTALLER}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.899566" elapsed="0.000467"/>
 </kw>
-<kw name="Click On Field Report Menu">
+<kw name="Enable Edit Mode">
 <kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
-<msg time="2026-01-14T22:00:26.422392" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
-<msg time="2026-01-14T22:00:26.422702" level="FAIL">Element 'xpath=//*[@id="field_reports_app_menu"]' not visible after 10 seconds.</msg>
-<arg>${FIELD_REPORT_MENU}</arg>
+<arg>${EDIT_GENERAL_DATA_BUTTON}</arg>
 <arg>timeout=10s</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="FAIL" start="2026-01-14T22:00:16.146752" elapsed="10.290973">Element 'xpath=//*[@id="field_reports_app_menu"]' not visible after 10 seconds.</status>
+<status status="PASS" start="2026-01-29T09:47:32.901892" elapsed="0.025090"/>
 </kw>
-<kw name="Click Element" owner="SeleniumLibrary">
-<arg>${FIELD_REPORT_MENU}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<status status="NOT RUN" start="2026-01-14T22:00:26.438119" elapsed="0.000082"/>
+<kw name="Get WebElement" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:32.936132" level="INFO">${edit_btn} = &lt;selenium.webdriver.remote.webelement.WebElement (session="2da4b30486b8bf9604c9fd62bbf29761", element="f.917A6426D986478DF210D8FBA6F5BB53.d.E507292AF475EDF41170B9AAC002DD33.e.525")&gt;</msg>
+<var>${edit_btn}</var>
+<arg>${EDIT_GENERAL_DATA_BUTTON}</arg>
+<doc>Returns the first WebElement matching the given ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.927412" elapsed="0.008816"/>
+</kw>
+<kw name="Execute Javascript" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:32.937212" level="INFO">Executing JavaScript:
+arguments[0].click();
+By using argument:
+'&lt;selenium.webdriver.remote.webelement.WebElement (session="2da4b30486b8bf9604c9fd62bbf29761", element="f.917A6426D986478DF210D8FBA6F5BB53.d.E507292AF475EDF41170B9AAC002DD33.e.525")&gt;'</msg>
+<arg>arguments[0].click();</arg>
+<arg>ARGUMENTS</arg>
+<arg>${edit_btn}</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.936552" elapsed="0.048822"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-29T09:47:34.986813" level="INFO">Slept 2 seconds.</msg>
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-29T09:47:32.985668" elapsed="2.001462"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Element Should Be Enabled" owner="SeleniumLibrary">
+<arg>${TOTAL_HOURS_INPUT}</arg>
+<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<status status="PASS" start="2026-01-29T09:47:34.988581" elapsed="0.028013"/>
+</kw>
+<msg time="2026-01-29T09:47:35.016812" level="INFO">${hours_enabled} = True</msg>
+<var>${hours_enabled}</var>
+<arg>Element Should Be Enabled</arg>
+<arg>${TOTAL_HOURS_INPUT}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-29T09:47:34.987913" elapsed="0.028951"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${hours_enabled}</arg>
+<arg>msg=Total hours input should be enabled after clicking Edit</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.017091" elapsed="0.000325"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>✓ Edit mode enabled</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.017611" elapsed="0.000271"/>
+</kw>
+<doc>Click the Edit button to enable form editing</doc>
+<status status="PASS" start="2026-01-29T09:47:32.900595" elapsed="2.117541"/>
+</kw>
+<kw name="Get Value" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:35.038499" level="INFO">${current_hours} = 1,00</msg>
+<var>${current_hours}</var>
+<arg>${TOTAL_HOURS_INPUT}</arg>
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.018574" elapsed="0.020088"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-29T09:47:35.041405" level="INFO">${ORIGINAL_HOURS} = 1,00</msg>
+<arg>${ORIGINAL_HOURS}</arg>
+<arg>${current_hours}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.040584" elapsed="0.000964"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Original Hours: ${ORIGINAL_HOURS}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.042148" elapsed="0.000644"/>
+</kw>
+<kw name="Calculate Modified Hours">
+<kw name="Replace String" owner="String">
+<msg time="2026-01-29T09:47:35.046275" level="INFO">${clean_hours} = 1.00</msg>
+<var>${clean_hours}</var>
+<arg>${current_hours}</arg>
+<arg>,</arg>
+<arg>.</arg>
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.045661" elapsed="0.000697"/>
+</kw>
+<kw name="Replace String" owner="String">
+<msg time="2026-01-29T09:47:35.048248" level="INFO">${clean_hours} = 1.00</msg>
+<var>${clean_hours}</var>
+<arg>${clean_hours}</arg>
+<arg>${SPACE}</arg>
+<arg>${EMPTY}</arg>
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.046697" elapsed="0.001641"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Be Empty" owner="BuiltIn">
+<msg time="2026-01-29T09:47:35.049572" level="INFO">Length is 4.</msg>
+<msg time="2026-01-29T09:47:35.050196" level="FAIL">'1.00' should be empty.</msg>
+<arg>${clean_hours}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="FAIL" start="2026-01-29T09:47:35.049140" elapsed="0.001348">'1.00' should be empty.</status>
+</kw>
+<msg time="2026-01-29T09:47:35.050708" level="INFO">${is_empty} = False</msg>
+<var>${is_empty}</var>
+<arg>Should Be Empty</arg>
+<arg>${clean_hours}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.048705" elapsed="0.002083"/>
+</kw>
+<if>
+<branch type="IF" condition="${is_empty}">
+<return>
+<value>1</value>
+<status status="NOT RUN" start="2026-01-29T09:47:35.052087" elapsed="0.000272"/>
+</return>
+<status status="NOT RUN" start="2026-01-29T09:47:35.051017" elapsed="0.001464"/>
+</branch>
+<status status="PASS" start="2026-01-29T09:47:35.050969" elapsed="0.001602"/>
+</if>
+<kw name="Convert To Number" owner="BuiltIn">
+<msg time="2026-01-29T09:47:35.053539" level="INFO">${num_hours} = 1.0</msg>
+<var>${num_hours}</var>
+<arg>${clean_hours}</arg>
+<doc>Converts the given item to a floating point number.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.052881" elapsed="0.000741"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-29T09:47:35.054488" level="INFO">${new_hours} = 2.0</msg>
+<var>${new_hours}</var>
+<arg>${num_hours} + 1</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.053957" elapsed="0.000606"/>
+</kw>
+<return>
+<value>${new_hours}</value>
+<status status="PASS" start="2026-01-29T09:47:35.054917" elapsed="0.000106"/>
+</return>
+<msg time="2026-01-29T09:47:35.055362" level="INFO">${modified_hours} = 2.0</msg>
+<var>${modified_hours}</var>
+<arg>${current_hours}</arg>
+<doc>Calculate a modified hours value (add 1 or subtract 1)</doc>
+<status status="PASS" start="2026-01-29T09:47:35.043918" elapsed="0.011515"/>
+</kw>
+<kw name="Clear Element Text" owner="SeleniumLibrary">
+<arg>${TOTAL_HOURS_INPUT}</arg>
+<doc>Clears the value of the text-input-element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.055959" elapsed="0.071325"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:35.128976" level="INFO">Typing text '2.0' into text field 'id=id_total_work_hours'.</msg>
+<arg>${TOTAL_HOURS_INPUT}</arg>
+<arg>${modified_hours}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.127962" elapsed="0.114061"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Modified Hours to: ${modified_hours}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.243524" elapsed="0.000603"/>
+</kw>
+<kw name="Save And Verify No Errors">
+<kw name="Execute Javascript" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:35.246449" level="INFO">Executing JavaScript:
+window.scrollTo(0, 0);
+Without any arguments.</msg>
+<arg>window.scrollTo(0, 0);</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.245700" elapsed="0.010317"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-29T09:47:36.261993" level="INFO">Slept 1 second.</msg>
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-29T09:47:35.260858" elapsed="1.001340"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${SAVE_GENERAL_DATA_BUTTON}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-29T09:47:36.262520" elapsed="0.023582"/>
+</kw>
+<kw name="Get WebElement" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:36.297587" level="INFO">${save_btn} = &lt;selenium.webdriver.remote.webelement.WebElement (session="2da4b30486b8bf9604c9fd62bbf29761", element="f.917A6426D986478DF210D8FBA6F5BB53.d.E507292AF475EDF41170B9AAC002DD33.e.537")&gt;</msg>
+<var>${save_btn}</var>
+<arg>${SAVE_GENERAL_DATA_BUTTON}</arg>
+<doc>Returns the first WebElement matching the given ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:47:36.286404" elapsed="0.011254"/>
+</kw>
+<kw name="Execute Javascript" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:36.298717" level="INFO">Executing JavaScript:
+arguments[0].click();
+By using argument:
+'&lt;selenium.webdriver.remote.webelement.WebElement (session="2da4b30486b8bf9604c9fd62bbf29761", element="f.917A6426D986478DF210D8FBA6F5BB53.d.E507292AF475EDF41170B9AAC002DD33.e.537")&gt;'</msg>
+<arg>arguments[0].click();</arg>
+<arg>ARGUMENTS</arg>
+<arg>${save_btn}</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<status status="PASS" start="2026-01-29T09:47:36.297912" elapsed="0.029862"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-29T09:47:39.329649" level="INFO">Slept 3 seconds.</msg>
 <arg>3s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="NOT RUN" start="2026-01-14T22:00:26.438394" elapsed="0.000057"/>
+<status status="PASS" start="2026-01-29T09:47:36.328069" elapsed="3.001805"/>
 </kw>
-<status status="FAIL" start="2026-01-14T22:00:16.145876" elapsed="10.292810">Element 'xpath=//*[@id="field_reports_app_menu"]' not visible after 10 seconds.</status>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Page Should Contain Element" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:47:54.894290" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-2.png"&gt;&lt;img src="selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2026-01-29T09:47:54.894586" level="FAIL">Page should have contained element 'css=.alert-danger' but did not.</msg>
+<arg>css=.alert-danger</arg>
+<doc>Verifies that element ``locator`` is found on the current page.</doc>
+<status status="FAIL" start="2026-01-29T09:47:39.331150" elapsed="15.568794">Page should have contained element 'css=.alert-danger' but did not.</status>
 </kw>
-<kw name="Open Field Report Edit Page">
-<status status="NOT RUN" start="2026-01-14T22:00:26.439301" elapsed="0.000120"/>
+<msg time="2026-01-29T09:47:54.900242" level="INFO">${has_error_alert} = False</msg>
+<var>${has_error_alert}</var>
+<arg>Page Should Contain Element</arg>
+<arg>css=.alert-danger</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-29T09:47:39.330307" elapsed="15.569992"/>
 </kw>
-<kw name="Switch To New Tab And Verify Field Report Text">
-<status status="NOT RUN" start="2026-01-14T22:00:26.439970" elapsed="0.000073"/>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:48:25.229269" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-3.png"&gt;&lt;img src="selenium-screenshot-3.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2026-01-29T09:48:25.229504" level="FAIL">Page should have contained text 'Select a valid choice' but did not.</msg>
+<arg>Select a valid choice</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="FAIL" start="2026-01-29T09:47:54.900932" elapsed="30.328844">Page should have contained text 'Select a valid choice' but did not.</status>
 </kw>
-<kw name="Close Browser" owner="LoginKeyword">
-<status status="NOT RUN" start="2026-01-14T22:00:26.440744" elapsed="0.000137"/>
+<msg time="2026-01-29T09:48:25.230184" level="INFO">${has_validation_error} = False</msg>
+<var>${has_validation_error}</var>
+<arg>Page Should Contain</arg>
+<arg>Select a valid choice</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-29T09:47:54.900571" elapsed="30.329694"/>
 </kw>
-<status status="FAIL" start="2026-01-14T21:59:08.954427" elapsed="77.487085">Element 'xpath=//*[@id="field_reports_app_menu"]' not visible after 10 seconds.</status>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:48:55.514954" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-4.png"&gt;&lt;img src="selenium-screenshot-4.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2026-01-29T09:48:55.515198" level="FAIL">Page should have contained text '400 Bad Request' but did not.</msg>
+<arg>400 Bad Request</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="FAIL" start="2026-01-29T09:48:25.231750" elapsed="30.283705">Page should have contained text '400 Bad Request' but did not.</status>
+</kw>
+<msg time="2026-01-29T09:48:55.515677" level="INFO">${has_400_error} = False</msg>
+<var>${has_400_error}</var>
+<arg>Page Should Contain</arg>
+<arg>400 Bad Request</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-29T09:48:25.231031" elapsed="30.284705"/>
+</kw>
+<if>
+<branch type="IF" condition="${has_error_alert}">
+<kw name="Get Text" owner="SeleniumLibrary">
+<var>${error_text}</var>
+<arg>css=.alert-danger</arg>
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<status status="NOT RUN" start="2026-01-29T09:48:55.516232" elapsed="0.000057"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>⚠ Error alert found: ${error_text}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" start="2026-01-29T09:48:55.516486" elapsed="0.000050"/>
+</kw>
+<kw name="Fail" owner="BuiltIn">
+<arg>Save failed with error: ${error_text}</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-01-29T09:48:55.516794" elapsed="0.000079"/>
+</kw>
+<status status="NOT RUN" start="2026-01-29T09:48:55.515912" elapsed="0.001315"/>
+</branch>
+<status status="PASS" start="2026-01-29T09:48:55.515858" elapsed="0.001529"/>
+</if>
+<if>
+<branch type="IF" condition="${has_validation_error}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Validation error: Select a valid choice - This indicates the inactive installer bug!</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-01-29T09:48:55.518009" elapsed="0.000201"/>
+</kw>
+<status status="NOT RUN" start="2026-01-29T09:48:55.517508" elapsed="0.001368"/>
+</branch>
+<status status="PASS" start="2026-01-29T09:48:55.517474" elapsed="0.001495"/>
+</if>
+<if>
+<branch type="IF" condition="${has_400_error}">
+<kw name="Fail" owner="BuiltIn">
+<arg>400 Bad Request error occurred during save</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-01-29T09:48:55.519365" elapsed="0.000055"/>
+</kw>
+<status status="NOT RUN" start="2026-01-29T09:48:55.519086" elapsed="0.000409"/>
+</branch>
+<status status="PASS" start="2026-01-29T09:48:55.519051" elapsed="0.000501"/>
+</if>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>${INSTALLER_DROPDOWN}</arg>
+<arg>timeout=10s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2026-01-29T09:48:55.519716" elapsed="0.015645"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>✓ Save completed without errors</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:48:55.535663" elapsed="0.000275"/>
+</kw>
+<doc>Click Save and verify the form saves without errors</doc>
+<status status="PASS" start="2026-01-29T09:47:35.245228" elapsed="80.290857"/>
+</kw>
+<kw name="Verify Installer Preserved">
+<kw name="Get Selected List Label" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:48:55.693417" level="INFO">${current_installer} = Adam Östergren-Jörgensen</msg>
+<var>${current_installer}</var>
+<arg>${INSTALLER_DROPDOWN}</arg>
+<doc>Returns the label of selected option from selection list ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:48:55.536908" elapsed="0.156590"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${current_installer}</arg>
+<arg>${ORIGINAL_INSTALLER}</arg>
+<arg>msg=Installer value was not preserved after save!</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-01-29T09:48:55.694014" elapsed="0.001195"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>✓ Installer preserved: ${current_installer}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:48:55.695514" elapsed="0.000501"/>
+</kw>
+<doc>Verify the installer field still has the original value after save</doc>
+<status status="PASS" start="2026-01-29T09:48:55.536407" elapsed="0.159893"/>
+</kw>
+<kw name="Restore Original Hours">
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Element Should Be Visible" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:48:55.746398" level="INFO">Element 'id=EditGeneralDataButton' is displayed.</msg>
+<arg>${EDIT_GENERAL_DATA_BUTTON}</arg>
+<doc>Verifies that the element identified by ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-29T09:48:55.697577" elapsed="0.049039"/>
+</kw>
+<msg time="2026-01-29T09:48:55.746959" level="INFO">${edit_visible} = True</msg>
+<var>${edit_visible}</var>
+<arg>Element Should Be Visible</arg>
+<arg>${EDIT_GENERAL_DATA_BUTTON}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-29T09:48:55.697263" elapsed="0.049782"/>
+</kw>
+<if>
+<branch type="IF" condition="${edit_visible}">
+<kw name="Get WebElement" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:48:55.762923" level="INFO">${edit_btn} = &lt;selenium.webdriver.remote.webelement.WebElement (session="2da4b30486b8bf9604c9fd62bbf29761", element="f.917A6426D986478DF210D8FBA6F5BB53.d.E507292AF475EDF41170B9AAC002DD33.e.525")&gt;</msg>
+<var>${edit_btn}</var>
+<arg>${EDIT_GENERAL_DATA_BUTTON}</arg>
+<doc>Returns the first WebElement matching the given ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:48:55.747891" elapsed="0.015117"/>
+</kw>
+<kw name="Execute Javascript" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:48:55.764061" level="INFO">Executing JavaScript:
+arguments[0].click();
+By using argument:
+'&lt;selenium.webdriver.remote.webelement.WebElement (session="2da4b30486b8bf9604c9fd62bbf29761", element="f.917A6426D986478DF210D8FBA6F5BB53.d.E507292AF475EDF41170B9AAC002DD33.e.525")&gt;'</msg>
+<arg>arguments[0].click();</arg>
+<arg>ARGUMENTS</arg>
+<arg>${edit_btn}</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<status status="PASS" start="2026-01-29T09:48:55.763313" elapsed="0.029825"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-29T09:48:57.795698" level="INFO">Slept 2 seconds.</msg>
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-29T09:48:55.794125" elapsed="2.001800"/>
+</kw>
+<status status="PASS" start="2026-01-29T09:48:55.747328" elapsed="2.048770"/>
+</branch>
+<status status="PASS" start="2026-01-29T09:48:55.747264" elapsed="2.048977"/>
+</if>
+<kw name="Clear Element Text" owner="SeleniumLibrary">
+<arg>${TOTAL_HOURS_INPUT}</arg>
+<doc>Clears the value of the text-input-element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:48:57.796538" elapsed="0.057498"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:48:57.855049" level="INFO">Typing text '1,00' into text field 'id=id_total_work_hours'.</msg>
+<arg>${TOTAL_HOURS_INPUT}</arg>
+<arg>${ORIGINAL_HOURS}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:48:57.854534" elapsed="0.119063"/>
+</kw>
+<kw name="Get WebElement" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:48:57.987456" level="INFO">${save_btn} = &lt;selenium.webdriver.remote.webelement.WebElement (session="2da4b30486b8bf9604c9fd62bbf29761", element="f.917A6426D986478DF210D8FBA6F5BB53.d.E507292AF475EDF41170B9AAC002DD33.e.537")&gt;</msg>
+<var>${save_btn}</var>
+<arg>${SAVE_GENERAL_DATA_BUTTON}</arg>
+<doc>Returns the first WebElement matching the given ``locator``.</doc>
+<status status="PASS" start="2026-01-29T09:48:57.974064" elapsed="0.013464"/>
+</kw>
+<kw name="Execute Javascript" owner="SeleniumLibrary">
+<msg time="2026-01-29T09:48:57.988385" level="INFO">Executing JavaScript:
+arguments[0].click();
+By using argument:
+'&lt;selenium.webdriver.remote.webelement.WebElement (session="2da4b30486b8bf9604c9fd62bbf29761", element="f.917A6426D986478DF210D8FBA6F5BB53.d.E507292AF475EDF41170B9AAC002DD33.e.537")&gt;'</msg>
+<arg>arguments[0].click();</arg>
+<arg>ARGUMENTS</arg>
+<arg>${save_btn}</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<status status="PASS" start="2026-01-29T09:48:57.987780" elapsed="0.017162"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-29T09:49:00.006960" level="INFO">Slept 2 seconds.</msg>
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-29T09:48:58.005300" elapsed="2.001974"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>✓ Original hours restored</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:49:00.007584" elapsed="0.000715"/>
+</kw>
+<doc>Restore the original hours value to clean up test changes</doc>
+<status status="PASS" start="2026-01-29T09:48:55.696808" elapsed="4.311790"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>======== TEST PASSED: Fieldreport with installer edited successfully ========</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-29T09:49:00.009072" elapsed="0.000679"/>
+</kw>
+<kw name="Close All Browsers" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2026-01-29T09:49:00.011320" elapsed="0.735869"/>
+</kw>
+<doc>Regression test: Verify fieldreport with INACTIVE installer can be edited and saved
+without validation errors. This tests the fix for the inactive installer bug
+where saving would fail with "Select a valid choice" if the assigned installer
+was marked inactive in the employee record.
+Uses real inactive installers: Adam, Ahmad Almoussa, Ahmad Hanoush, Aklilu</doc>
+<tag>critical</tag>
+<tag>edit</tag>
+<tag>fieldreport</tag>
+<tag>inactive_installer</tag>
+<tag>regression</tag>
+<tag>save</tag>
+<status status="PASS" start="2026-01-29T09:46:00.338328" elapsed="180.409114"/>
 </test>
-<status status="FAIL" start="2026-01-14T21:59:08.372033" elapsed="78.070413"/>
+<doc>Test case for editing fieldreports that have inactive installers.
+
+This is a regression test to verify that:
+- A fieldreport with an installer can be edited without validation errors
+- The installer field (even if inactive) is preserved during save
+- No "Select a valid choice" error occurs
+
+Bug scenario: When a fieldreport was created with Installer A, and
+that installer was later made inactive, editing the fieldreport
+would fail with a 400 Bad Request validation error.</doc>
+<status status="PASS" start="2026-01-29T09:45:59.604037" elapsed="181.146380"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
+<stat pass="1" fail="0" skip="0">critical</stat>
+<stat pass="1" fail="0" skip="0">edit</stat>
+<stat pass="1" fail="0" skip="0">fieldreport</stat>
+<stat pass="1" fail="0" skip="0">inactive_installer</stat>
+<stat pass="1" fail="0" skip="0">regression</stat>
+<stat pass="1" fail="0" skip="0">save</stat>
 </tag>
 <suite>
-<stat name="Open Fieldreport Edit" id="s1" pass="0" fail="1" skip="0">Open Fieldreport Edit</stat>
+<stat name="Inactive Installer Edit Fieldreport" id="s1" pass="1" fail="0" skip="0">Inactive Installer Edit Fieldreport</stat>
 </suite>
 </statistics>
 <errors>
+<msg time="2026-01-29T09:45:59.572685" level="WARN">Error in file '/Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/FinalistenTestCases/fieldreport/inactive_installer_edit_fieldreport.robot' on line 265: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2026-01-29T09:46:07.010122" level="WARN">The chromedriver version (143.0.7499.192) detected in PATH at /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/chromedriver-mac-x64/chromedriver might not be compatible with the detected chrome version (144.0.7559.98); currently, chromedriver 144.0.7559.109 is recommended for chrome 144.*, so it is advised to delete the driver in PATH and retry</msg>
 </errors>
 </robot>
