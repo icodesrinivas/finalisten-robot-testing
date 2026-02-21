@@ -150,7 +150,10 @@ Test Navigate To Last Page
             ${first_page_info}=    Run Keyword And Ignore Error    Get Text    ${PAGE_INFO}
             Log To Console    Initial: ${first_page_info}
             
-            Click Element    ${PAGE_LAST}
+            ${last_elem}=    Get WebElement    ${PAGE_LAST}
+            Execute Javascript    arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});    ARGUMENTS    ${last_elem}
+            Sleep    1s
+            Execute Javascript    arguments[0].click();    ARGUMENTS    ${last_elem}
             Sleep    2s
             
             ${last_page_info}=    Run Keyword And Ignore Error    Get Text    ${PAGE_INFO}
@@ -175,7 +178,9 @@ Test Navigate To Last Page
         ${num_pages}=    Get Length    ${page_buttons}
         IF    ${num_pages} > 1
             ${last_page_btn}=    Get From List    ${page_buttons}    -1
-            Click Element    ${last_page_btn}
+            Execute Javascript    arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});    ARGUMENTS    ${last_page_btn}
+            Sleep    1s
+            Execute Javascript    arguments[0].click();    ARGUMENTS    ${last_page_btn}
             Sleep    2s
             Log To Console    ✓ Navigated to last numbered page
         ELSE

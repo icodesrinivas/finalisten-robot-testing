@@ -30,26 +30,22 @@ jobs:
       - name: Install ChromeDriver
         uses: nanasess/setup-chromedriver@v2
       
-      - name: Run 4 Previously Failing Test Cases
+      - name: Run 2 Fixed Test Cases
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          echo "=== RUNNING 4 PREVIOUSLY FAILING TEST CASES ==="
+          echo "=== RUNNING 2 RECENTLY FIXED TEST CASES ==="
           echo ""
           echo "Tests being run:"
-          echo "1. Door Planning Board - Sales Week timeout test"
-          echo "2. Inactive Installer Edit - DATABASE_URL test"
-          echo "3. Product Data Integrity - Login timeout test"
-          echo "4. Product Delete - Login timeout test"
+          echo "1. Pagination List Fieldreport"
+          echo "2. Open Performancereport App"
           echo ""
           
           robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
                 --outputdir results \
-                --name "Quick Verify Failing Tests" \
-                FinalistenTestCases/doorplanning/open_doorplanning_app.robot \
-                FinalistenTestCases/fieldreport/inactive_installer_edit_fieldreport.robot \
-                FinalistenTestCases/fieldreport/product_data_integrity_fieldreport.robot \
-                FinalistenTestCases/fieldreport/product_delete_attachment_fieldreport.robot || true
+                --name "Quick Verify Fixed Tests" \
+                FinalistenTestCases/fieldreport/pagination_list_fieldreport.robot \
+                FinalistenTestCases/performancereport/open_performancereport_app.robot || true
       
       - name: Generate Summary
         if: always()
@@ -94,16 +90,14 @@ jobs:
           to: srinivas8862@gmail.com
           from: ${{ secrets.EMAIL_USERNAME }}
           html_body: |
-            <h2>Quick Verify - 4 Previously Failing Tests</h2>
+            <h2>Quick Verify - 2 Recently Fixed Tests</h2>
             <p><strong>Build:</strong> #${{ github.run_number }}</p>
             <p><strong>Triggered by:</strong> ${{ github.actor }}</p>
             
             <h3>Tests in this run:</h3>
             <ol>
-                <li><strong>Door Planning Board</strong> - Sales Week timeout (was 10s, now 30s)</li>
-                <li><strong>Inactive Installer Edit</strong> - DATABASE_URL test</li>
-                <li><strong>Product Data Integrity</strong> - Login timeout (was 15s, now 45s)</li>
-                <li><strong>Product Delete</strong> - Login timeout (was 15s, now 45s)</li>
+                <li><strong>Pagination List Fieldreport</strong> - Replaced JS click to fix elements overlapping</li>
+                <li><strong>Open Performancereport App</strong> - Fixed case-sensitivity issue for Filters</li>
             </ol>
             
             <p><strong>View Full Results:</strong> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">GitHub Actions Run</a></p>
