@@ -12,7 +12,7 @@ Verify Customer Edit Page Opens Successfully
     Open And Login
     Hover Over Register Menu
     Click On Customers Menu
-    Wait Until Page Contains    Filters    timeout=10s
+    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=10s
     Wait Until Element Is Visible    ${CUSTOMER_ROW}    timeout=10s
     Click Element    ${CUSTOMER_ROW}
     Wait Until Page Contains    CUSTOMER DATA    timeout=10s

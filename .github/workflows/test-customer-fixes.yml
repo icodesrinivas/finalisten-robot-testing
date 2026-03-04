@@ -1,0 +1,108 @@
+name: Test Customer Fixed Cases
+
+# Manual trigger only - for quick verification of specific failing tests
+on:
+  workflow_dispatch:
+
+jobs:
+  test-failing-cases:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Install and setup Chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      
+      - name: Install ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+      
+      - name: Run 3 Fixed Customer Test Cases
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          echo "=== RUNNING 3 RECENTLY FIXED CUSTOMER TEST CASES ==="
+          echo ""
+          echo "Tests being run:"
+          echo "1. Verify Customer Create Page Opens Successfully"
+          echo "2. Verify Customer Edit Page Opens Successfully"
+          echo "3. Verify Customer List Opens Successfully"
+          echo ""
+          
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results \
+                --name "Customer Fixes Tests Verify" \
+                FinalistenTestCases/customer/open_customer_create.robot \
+                FinalistenTestCases/customer/open_customer_edit.robot \
+                FinalistenTestCases/customer/open_customer_list.robot || true
+      
+      - name: Generate Summary
+        if: always()
+        run: |
+          echo "# Customer Fixed Tests" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f results/output.xml ]; then
+            python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          import xml.etree.ElementTree as ET
+          tree = ET.parse('results/output.xml')
+          root = tree.getroot()
+          stats = root.find('.//statistics/total/stat')
+          if stats is not None:
+              passed = stats.get('pass', '0')
+              failed = stats.get('fail', '0')
+              print(f'- **Passed:** ✅ {passed}')
+              print(f'- **Failed:** ❌ {failed}')
+          EOF
+          else
+            echo "⚠️ No test results found" >> $GITHUB_STEP_SUMMARY
+          fi
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: customer-fixes-results-${{ github.run_number }}
+          path: |
+            results/*.html
+            results/*.xml
+          retention-days: 7
+      
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        if: always()
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: 'Customer Fixed Tests - Run #${{ github.run_number }}'
+          to: srinivas8862@gmail.com
+          from: ${{ secrets.EMAIL_USERNAME }}
+          html_body: |
+            <h2>Customer Fixed Tests Run</h2>
+            <p><strong>Build:</strong> #${{ github.run_number }}</p>
+            <p><strong>Triggered by:</strong> ${{ github.actor }}</p>
+            
+            <h3>Tests in this run:</h3>
+            <ol>
+                <li><strong>Verify Customer Create Page Opens Successfully</strong> - Locators updated</li>
+                <li><strong>Verify Customer Edit Page Opens Successfully</strong> - Locators updated</li>
+                <li><strong>Verify Customer List Opens Successfully</strong> - Locators updated</li>
+            </ol>
+            
+            <p><strong>View Full Results:</strong> <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">GitHub Actions Run</a></p>
+          attachments: results/log.html,results/report.html
+          ignore_cert: true

@@ -23,8 +23,8 @@ Verify Customer List Opens Successfully
     Sleep    2s
     Click On Customers Menu
     Sleep    3s
-    Wait Until Page Contains    Filters    timeout=15s
-    Log To Console    "Filters text found. Customer list opened successfully."
+    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=15s
+    Log To Console    "Advanced search toggle found. Customer list opened successfully."
     Close Browser
 
 *** Keywords ***

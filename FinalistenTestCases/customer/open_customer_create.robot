@@ -12,7 +12,7 @@ Verify Customer Create Page Opens Successfully
     Open And Login
     Hover Over Register Menu
     Click On Customers Menu
-    Wait Until Page Contains    Filters    timeout=10s
+    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=10s
     Click On Add Customer Button
     Wait Until Page Contains    CUSTOMER DATA    timeout=10s
     Log To Console    "CUSTOMER DATA found. Customer create page opened successfully."
