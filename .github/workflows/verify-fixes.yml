@@ -1,0 +1,80 @@
+name: Verify Robot Test Fixes
+
+on:
+  workflow_dispatch:
+
+jobs:
+  robot-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Install and setup Chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      
+      - name: Install ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+      
+      - name: Run Robot Framework tests
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results \
+                --xunit results.xml \
+                FinalistenTestCases/customer/open_customer_create.robot \
+                FinalistenTestCases/customer/open_customer_edit.robot \
+                FinalistenTestCases/project/open_project_edit.robot \
+                FinalistenTestCases/fieldreport/search_filter_fieldreport.robot \
+                FinalistenTestCases/fieldreport/attachment_validation_fieldreport.robot \
+                FinalistenTestCases/fieldreport/calculation_edge_cases_fieldreport.robot \
+                FinalistenTestCases/fieldreport/product_data_integrity_fieldreport.robot \
+                FinalistenTestCases/fieldreport/product_edit_save_cancel_fieldreport.robot
+        continue-on-error: true
+      
+      - name: Generate test summary
+        if: always()
+        run: |
+          echo "# Robot Framework Test Verification Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f results/output.xml ]; then
+            python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          import xml.etree.ElementTree as ET
+          tree = ET.parse('results/output.xml')
+          root = tree.getroot()
+          stats = root.find('.//statistics/total/stat')
+          if stats is not None:
+              total = stats.get('pass', '0') + stats.get('fail', '0')
+              passed = stats.get('pass', '0')
+              failed = stats.get('fail', '0')
+              print(f'- **Total Tests:** {total}')
+              print(f'- **Passed:** ✅ {passed}')
+              print(f'- **Failed:** ❌ {failed}')
+          EOF
+          else
+            echo "⚠️ No test results found" >> $GITHUB_STEP_SUMMARY
+          fi
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-results-${{ github.run_number }}
+          path: |
+            results/*.html
+            results/*.xml
+          retention-days: 30
