@@ -12,6 +12,7 @@ ${PASSWORD}      Djangocrm123
 ${LOGIN_BUTTON}  xpath=//button[@type='submit' and contains(@class,'btn-primary') and contains(@class,'btn-block')]
 ${HOMEPAGE_URL}  https://preproderp.finalisten.se/homepage/
 ${CHROME_OPTIONS}    add_argument("--ignore-certificate-errors");add_argument("--disable-web-security");add_argument("--allow-running-insecure-content");add_argument("--window-size=1920,1080");add_argument("--no-sandbox");add_argument("--disable-dev-shm-usage")
+${EXECUTABLE_PATH}    /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/chromedriver-mac-x64/chromedriver
 
 # Global Field Report Variables for cleanup
 ${FIELDREPORT_LIST_URL}           https://preproderp.finalisten.se/fieldreport/list/
@@ -21,7 +22,7 @@ ${CREATED_FIELDREPORT_ID}         ${EMPTY}
 *** Keywords ***
 Open And Login
     Register Keyword To Run On Failure    Capture Page Screenshot
-    Open Browser    ${URL}    ${BROWSER}    options=${CHROME_OPTIONS}
+    Open Browser    ${URL}    ${BROWSER}    options=${CHROME_OPTIONS}    executable_path=${EXECUTABLE_PATH}
     Set Window Size    1920    1080
     Maximize Browser Window
     Set Selenium Implicit Wait    15s
@@ -188,42 +189,56 @@ Cleanup Created Fieldreport
     ...                Ensures cleanup even if the test fails.
     Log To Console    \n======== CLEANUP: Deleting Field Report ========
     
+    # Check if we have an active browser session
+    ${browser_ids}=    Get Browser Ids
+    IF    not ${browser_ids}
+        Log To Console    No active browser session found. Skipping cleanup navigation.
+        RETURN
+    END
+
     # Check if we have an ID to delete
     ${has_id}=    Run Keyword And Return Status    Should Not Be Empty    ${CREATED_FIELDREPORT_ID}
     
     IF    ${has_id}
         Log To Console    ID to delete: ${CREATED_FIELDREPORT_ID}
-        # Navigate directly to the edit page's delete functionality
-        ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
-        Sleep    2s
-        
-        # Check if delete button exists (to avoid failure if already deleted or page error)
-        ${delete_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${DELETE_BUTTON}    timeout=10s
-        
-        IF    ${delete_exists}
-            Log To Console    Clicking delete button...
-            # Use Javascript click for reliability
-            ${del_btn}=    Get WebElement    ${DELETE_BUTTON}
-            Execute Javascript    arguments[0].click();    ARGUMENTS    ${del_btn}
-            Sleep    1s
-            
-            # Handle the confirmation alert
-            ${alert_present}=    Run Keyword And Return Status    Handle Alert    action=ACCEPT    timeout=5s
-            IF    ${alert_present}
-                Log To Console    ✓ Alert accepted.
-            ELSE
-                Log To Console    ⚠ No alert appeared or could not be handled.
-            END
-            
-            Sleep    2s
-            Log To Console    ✓ Field Report ${CREATED_FIELDREPORT_ID} cleaned up.
-        ELSE
-            Log To Console    ⚠ Delete button not found for ID ${CREATED_FIELDREPORT_ID}. Already deleted?
-        END
+        # Use Run Keyword And Ignore Error for the entire navigation and delete process
+        Run Keyword And Ignore Error    Perform Deletion For ID    ${CREATED_FIELDREPORT_ID}
     ELSE
         Log To Console    No field report ID found for cleanup.
     END
 
     # Always close all browsers in teardown
+    Run Keyword And Ignore Error    SeleniumLibrary.Close All Browsers
+
+Perform Deletion For ID
+    [Arguments]    ${id}
+    # Navigate directly to the edit page's delete functionality
+    ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${id}/edit/
+    Go To    ${edit_url}
+    Sleep    2s
+    
+    # Check if delete button exists (to avoid failure if already deleted or page error)
+    ${delete_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${DELETE_BUTTON}    timeout=10s
+    
+    IF    ${delete_exists}
+        Log To Console    Clicking delete button...
+        # Use Javascript click for reliability
+        ${del_btn}=    Get WebElement    ${DELETE_BUTTON}
+        Execute Javascript    arguments[0].click();    ARGUMENTS    ${del_btn}
+        Sleep    1s
+        
+        # Handle the confirmation alert
+        ${alert_present}=    Run Keyword And Return Status    Handle Alert    action=ACCEPT    timeout=5s
+        IF    ${alert_present}
+            Log To Console    ✓ Alert accepted.
+        ELSE
+            Log To Console    ⚠ No alert appeared or could not be handled.
+        END
+        
+        Sleep    2s
+        Log To Console    ✓ Field Report ${id} cleaned up.
+    ELSE
+        Log To Console    ⚠ Delete button not found for ID ${id}. Already deleted?
+    END
+
     Close Browser
