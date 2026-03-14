@@ -166,10 +166,10 @@ Extract And Verify Fieldreport ID
     ...    ELSE    Set Variable    ${EMPTY}
     
     IF    '${id}' == '${EMPTY}'
-        Fatal Error    Failed to extract Field Report ID from URL: ${current_url}. Field Report was likely not created or saved successfully.
+        Fail    Failed to extract Field Report ID from URL: ${current_url}. Field Report was likely not created or saved successfully.
     END
     
-    [Return]    ${id}
+    RETURN    ${id}
 
 Handle SSL Warning
     ${advanced_button}=    Get WebElements    xpath=//button[contains(text(),'Advanced')]

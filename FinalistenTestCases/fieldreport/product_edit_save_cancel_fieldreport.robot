@@ -307,9 +307,13 @@ Create Field Report With Product
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
-    Sleep    3s
+    # Use explicit click and wait for location change
+    Scroll Element Into View    ${SAVE_BUTTON}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
+    Click Element    ${SAVE_BUTTON}
+    
+    # Wait for the redirect to the edit page (URL contains /edit/)
+    Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/
     
     ${fieldreport_id}=    Extract And Verify Fieldreport ID
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}

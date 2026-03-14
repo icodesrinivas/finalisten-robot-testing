@@ -126,13 +126,17 @@ Create Test Field Report
     # Use dynamic data and fallback if specific one fails
     Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
-    Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
+    Input Text    ${WORK_DATE_INPUT}    ${INITIAL_WORK_DATE}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
-    Sleep    3s
+    # Use explicit click and wait for location change
+    Scroll Element Into View    ${SAVE_BUTTON}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
+    Click Element    ${SAVE_BUTTON}
+    
+    # Wait for the redirect to the edit page (URL contains /edit/)
+    Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/
     
     ${id}=    Extract And Verify Fieldreport ID
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}

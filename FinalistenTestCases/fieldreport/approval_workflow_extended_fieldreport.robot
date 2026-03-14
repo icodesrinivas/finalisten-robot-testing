@@ -192,7 +192,7 @@ Test Unapproved FR Fields Become Editable
 Test Approve Empty FR Behavior
     [Documentation]    Point 37: Attempt to approve empty FR (no products) and verify behavior.
     [Tags]    fieldreport    approval    workflow    empty
-    [Setup]    Create Field Report For Test
+    [Setup]    Create Field Report For High Value Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
     Go To    ${edit_url}
@@ -242,9 +242,14 @@ Create Field Report For High Value Test
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
-    Sleep    3s
+    # Save the field report
+    # Use explicit click and wait for location change
+    Scroll Element Into View    ${SAVE_BUTTON}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
+    Click Element    ${SAVE_BUTTON}
+    
+    # Wait for the redirect to the edit page (URL contains /edit/)
+    Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/
     
     ${id}=    Extract And Verify Fieldreport ID
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}
