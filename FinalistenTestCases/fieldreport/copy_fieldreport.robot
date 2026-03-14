@@ -237,20 +237,10 @@ Test Copy Field Report Creates Duplicate
     [Teardown]    Cleanup All Fieldreports
 
 *** Keywords ***
-Login To Application
-    [Documentation]    Open browser and login to the application
-    Open Browser    ${LOGIN_URL}    ${BROWSER}    options=${CHROME_OPTIONS}
-    Maximize Browser Window
-    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=10s
-    Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Input Text    xpath=//input[@name='password']    ${PASSWORD}
-    Click Button    xpath=//button[@type='submit']
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
-    Log To Console    Successfully logged in
 
 Create Field Report For Copy Test
     [Documentation]    Create a new field report for copy testing
-    Login To Application
+    Open And Login
     
     Log To Console    ======== CREATING FIELD REPORT FOR COPY TEST ========
     Go To    ${FIELDREPORT_CREATE_URL}

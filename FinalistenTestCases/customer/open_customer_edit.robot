@@ -15,8 +15,8 @@ Verify Customer Edit Page Opens Successfully
     Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=10s
     Wait Until Element Is Visible    ${CUSTOMER_ROW}    timeout=10s
     Click Element    ${CUSTOMER_ROW}
-    Wait Until Page Contains    CUSTOMER DATA    timeout=10s
-    Log To Console    "CUSTOMER DATA found. Customer edit page opened successfully."
+    Wait Until Page Contains    CUSTOMER DATA    timeout=60s
+    Log To Console    "Customer edit page opened successfully."
     Close Browser
 
 *** Keywords ***

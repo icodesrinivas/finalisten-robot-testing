@@ -336,36 +336,14 @@ Test Add Product With Zero Quantity
     [Teardown]    Cleanup Created Fieldreport
 
 *** Keywords ***
-Login To Application
-    [Documentation]    Open browser and login to the application
-    Open Browser    ${LOGIN_URL}    ${BROWSER}    options=${CHROME_OPTIONS}
-    Maximize Browser Window
-    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=10s
-    Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Input Text    xpath=//input[@name='password']    ${PASSWORD}
-    Click Button    xpath=//button[@type='submit']
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=45s
-    Log To Console    Successfully logged in
-
 Create Field Report For Test
     [Documentation]    Create a basic field report
-    Login To Application
+    Open And Login
+    Setup Dynamic Test Data
     
     Go To    ${FIELDREPORT_CREATE_URL}
-    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
-    # Select specific customer and project known to have products
-    Select From List By Label    ${CUSTOMER_DROPDOWN}    Arcona Aktiebolag
-    ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Label    ${PROJECT_DROPDOWN}    Systemkameran
-    ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
@@ -373,8 +351,7 @@ Create Field Report For Test
     Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
     Sleep    3s
     
-    ${current_url}=    Get Location
-    ${fieldreport_id}=    Extract Fieldreport ID From URL    ${current_url}
+    ${fieldreport_id}=    Extract And Verify Fieldreport ID
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}
     Log To Console    ✓ Created FR ID: ${fieldreport_id}
 

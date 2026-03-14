@@ -283,37 +283,14 @@ Test Modify Quantity Updates Earnings
     [Teardown]    Cleanup Created Fieldreport
 
 *** Keywords ***
-Login To Application
-    [Documentation]    Open browser and login to the application
-    Open Browser    ${LOGIN_URL}    ${BROWSER}    options=${CHROME_OPTIONS}
-    Maximize Browser Window
-    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=10s
-    Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Input Text    xpath=//input[@name='password']    ${PASSWORD}
-    Click Button    xpath=//button[@type='submit']
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
-    Log To Console    Successfully logged in
-
 Create Field Report With Product And Hours
     [Documentation]    Create FR with product and set hours
-    Login To Application
+    Open And Login
+    Setup Dynamic Test Data
     
     Go To    ${FIELDREPORT_CREATE_URL}
-    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
-    # Select specific customer
-    Select From List By Label    ${CUSTOMER_DROPDOWN}    Arcona Aktiebolag
-    ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    # Select specific project
-    Select From List By Label    ${PROJECT_DROPDOWN}    Systemkameran
-    ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     Input Text    ${TOTAL_HOURS_INPUT}    8
     Select From List By Index    ${INSTALLER_DROPDOWN}    1

@@ -316,39 +316,13 @@ Test Select Product With Modal Save Button
     [Teardown]    Cleanup Created Fieldreport
 
 *** Keywords ***
-Login To Application
-    [Documentation]    Open browser and login to the application
-    Open Browser    ${LOGIN_URL}    ${BROWSER}    options=${CHROME_OPTIONS}
-    Maximize Browser Window
-    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=10s
-    Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Input Text    xpath=//input[@name='password']    ${PASSWORD}
-    Click Button    xpath=//button[@type='submit']
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
-    Log To Console    Successfully logged in
-
 Create Field Report For Product Test
     [Documentation]    Create a new field report for product testing
-    Login To Application
+    Open And Login
+    Setup Dynamic Test Data
     
-    Log To Console    ======== CREATING FIELD REPORT FOR PRODUCT TEST ========
     Go To    ${FIELDREPORT_CREATE_URL}
-    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
-    
-    # Select first available customer
-    Select From List By Label    ${CUSTOMER_DROPDOWN}    Arcona Aktiebolag
-    ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    # Select first available project
-    Select From List By Label    ${PROJECT_DROPDOWN}    Systemkameran
-    ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    # Select first available subproject
-    Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
+    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
     # Set work date
     Input Text    ${WORK_DATE_INPUT}    ${INITIAL_WORK_DATE}
@@ -361,12 +335,9 @@ Create Field Report For Product Test
     Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
     Sleep    3s
     
-    # Extract field report ID from URL
-    ${current_url}=    Get Location
-    Should Contain    ${current_url}    /edit/    msg=Failed to create field report
-    ${fieldreport_id}=    Extract Fieldreport ID From URL    ${current_url}
+    ${fieldreport_id}=    Extract And Verify Fieldreport ID
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}
-    Log To Console    ✓ Created Field Report ID: ${fieldreport_id}
+    Log To Console    ✓ Created Field Report: ${fieldreport_id}
 
 Extract Fieldreport ID From URL
     [Documentation]    Extract the fieldreport slug/ID from the edit page URL

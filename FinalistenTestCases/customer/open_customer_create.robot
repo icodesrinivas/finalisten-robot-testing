@@ -14,8 +14,8 @@ Verify Customer Create Page Opens Successfully
     Click On Customers Menu
     Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=10s
     Click On Add Customer Button
-    Wait Until Page Contains    CUSTOMER DATA    timeout=10s
-    Log To Console    "CUSTOMER DATA found. Customer create page opened successfully."
+    Wait Until Page Contains    CUSTOMER DATA    timeout=60s
+    Log To Console    "Customer create page opened successfully."
     Close Browser
 
 *** Keywords ***

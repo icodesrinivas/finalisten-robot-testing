@@ -1,7 +1,8 @@
 *** Settings ***
 Library    SeleniumLibrary
 Library    OperatingSystem
-Library    OperatingSystem
+Library    DatabaseKeywords.py
+
 
 *** Variables ***
 ${BROWSER}        chrome
@@ -21,9 +22,14 @@ Open And Login
     Set Selenium Implicit Wait    15s
     Set Selenium Timeout    60s
     Sleep    5s
+    
+    # Force Language to English via direct DB query as early as possible
+    Force User Language To English    ${USERNAME}
+    
     Handle SSL Warning
     
     # Wait for page to fully load
+
     Execute Javascript    return document.readyState === 'complete'
     Sleep    3s
     
@@ -62,6 +68,102 @@ Open And Login
     # Final wait for navigation element with longer timeout
     Wait Until Page Contains Element    id=register    timeout=30s
     Sleep    3s
+
+Select Customer And Project
+    [Documentation]    Robustly select customer and project. 
+    ...                If arguments are provided, it tries them first.
+    ...                If not provided or if they fail, it fetches valid data from the DB.
+    [Arguments]    ${customer}=${EMPTY}    ${project}=${EMPTY}
+    
+    # Initialize dynamic data if not already set or if we need fresh data
+    IF    '${customer}' == '${EMPTY}' or '${project}' == '${EMPTY}'
+        ${db_data}=    Get Valid Customer And Project
+        ${customer}=    Set Variable If    '${customer}' == '${EMPTY}'    ${db_data['customer']}    ${customer}
+        ${project}=    Set Variable If    '${project}' == '${EMPTY}'    ${db_data['project']}    ${project}
+    END
+
+    Log To Console    ======== DATA SELECTION: ${customer} / ${project} ========
+    
+    # 1. SELECT CUSTOMER
+    Wait Until Element Is Visible    id=id_related_customer    timeout=20s
+    
+    # Try specified/fetched customer
+    ${status}=    Run Keyword And Return Status    Select From List By Label    id=id_related_customer    ${customer}
+    
+    # Fallback: Dynamic Fetch (if provided one failed)
+    IF    not ${status}
+        Log To Console    ⚠ Specified customer '${customer}' not found, fetching valid one from DB...
+        ${db_data_retry}=    Get Valid Customer And Project
+        Log To Console    Fetched from DB: ${db_data_retry['customer']}
+        ${status}=    Run Keyword And Return Status    Select From List By Label    id=id_related_customer    ${db_data_retry['customer']}
+        ${project}=    Set Variable    ${db_data_retry['project']}
+    END
+    
+    # Final fallback to index 1
+    IF    not ${status}
+        Log To Console    ⚠ DB fetching failed or selection failed, selecting customer at index 1...
+        Wait Until Keyword Succeeds    5x    1s    List Should Have Options    id=id_related_customer
+        Select From List By Index    id=id_related_customer    1
+    END
+    
+    # Trigger AJAX for projects
+    ${el}=    Get WebElement    id=id_related_customer
+    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${el}
+    Sleep    5s
+    
+    # 2. SELECT PROJECT
+    Wait Until Element Is Visible    id=id_related_project    timeout=20s
+    
+    # Try specified/fetched project
+    ${p_status}=    Run Keyword And Return Status    Select From List By Label    id=id_related_project    ${project}
+    
+    # Fallback: Index 1
+    IF    not ${p_status}
+        Log To Console    ⚠ Project '${project}' not found, selecting project at index 1...
+        Wait Until Keyword Succeeds    5x    2s    List Should Have Options    id=id_related_project
+        Select From List By Index    id=id_related_project    1
+    END
+    
+    # Trigger AJAX for subprojects
+    ${el2}=    Get WebElement    id=id_related_project
+    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${el2}
+    Sleep    3s
+    
+    # 3. SELECT SUBPROJECT
+    Wait Until Element Is Visible    id=id_related_subproject    timeout=15s
+    Wait Until Keyword Succeeds    5x    2s    List Should Have Options    id=id_related_subproject
+    Select From List By Index    id=id_related_subproject    1
+    
+    Log To Console    ✓ Selection completed successfully.
+
+Setup Dynamic Test Data
+    [Documentation]    Fetches valid test data from DB and sets as suite variables.
+    ${db_data}=    Get Valid Customer And Project
+    ${installer}=    Get Valid Installer Name
+    Set Suite Variable    ${DB_CUSTOMER}    ${db_data['customer']}
+    Set Suite Variable    ${DB_PROJECT}     ${db_data['project']}
+    Set Suite Variable    ${DB_INSTALLER}   ${installer}
+    Log To Console    ✓ Setup Dynamic Data: ${DB_CUSTOMER} / ${DB_PROJECT} / ${DB_INSTALLER}
+
+List Should Have Options
+    [Arguments]    ${locator}
+    ${options}=    Get List Items    ${locator}
+    ${count}=    Get Length    ${options}
+    # Count > 1 because typically there is a "Select..." or empty option at index 0
+    Should Be True    ${count} > 1    msg=Dropdown ${locator} has no options to select.
+
+Extract And Verify Fieldreport ID
+    [Documentation]    Extract ID from current URL and verify it is not empty.
+    ${current_url}=    Get Location
+    ${id}=    Run Keyword If    '/edit/' in '${current_url}'    Evaluate    $current_url.split('/')[-3]
+    ...    ELSE IF    '/list/' in '${current_url}' and '${current_url}'.endswith('/') == False    Evaluate    $current_url.split('/')[-2]
+    ...    ELSE    Set Variable    ${EMPTY}
+    
+    IF    '${id}' == '${EMPTY}'
+        Fatal Error    Failed to extract Field Report ID from URL: ${current_url}. Field Report was likely not created or saved successfully.
+    END
+    
+    [Return]    ${id}
 
 Handle SSL Warning
     ${advanced_button}=    Get WebElements    xpath=//button[contains(text(),'Advanced')]

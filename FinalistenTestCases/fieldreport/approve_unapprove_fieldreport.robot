@@ -117,45 +117,16 @@ Test Approve And Unapprove Field Report
     [Teardown]    Cleanup Created Fieldreport
 
 *** Keywords ***
-Login To Application
-    [Documentation]    Open browser and login to the application
-    Open Browser    ${LOGIN_URL}    ${BROWSER}    options=${CHROME_OPTIONS}
-    Maximize Browser Window
-    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=10s
-    Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Input Text    xpath=//input[@name='password']    ${PASSWORD}
-    Click Button    xpath=//button[@type='submit']
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
-    Log To Console    Successfully logged in
-
-Create Field Report For Approval Test
-    [Documentation]    Create a new field report for approval testing
-    Login To Application
+Create Test Field Report
+    [Documentation]    Create a fresh field report for testing.
+    Open And Login
+    Setup Dynamic Test Data
     
-    Log To Console    ======== CREATING FIELD REPORT FOR APPROVAL TEST ========
     Go To    ${FIELDREPORT_CREATE_URL}
-    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    # Use dynamic data and fallback if specific one fails
+    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
-    # Select first available customer
-    ${options}=    Get List Items    ${CUSTOMER_DROPDOWN}
-    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
-    ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    # Select first available project
-    Select From List By Index    ${PROJECT_DROPDOWN}    1
-    ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    # Select first available subproject
-    Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
-    
-    # Set work date
-    Input Text    ${WORK_DATE_INPUT}    ${INITIAL_WORK_DATE}
-    
-    # Select installer
+    Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
@@ -163,12 +134,18 @@ Create Field Report For Approval Test
     Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
     Sleep    3s
     
-    # Extract field report ID from URL
+    ${id}=    Extract And Verify Fieldreport ID
+    Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}
+    Log To Console    ✓ Created FR: ${id}
+
+Extract And Verify Fieldreport ID
+    [Documentation]    Extracts the field report ID from the current URL and verifies it's valid.
     ${current_url}=    Get Location
-    Should Contain    ${current_url}    /edit/    msg=Failed to create field report
+    Should Contain    ${current_url}    /edit/    msg=Failed to create field report, URL does not contain /edit/
     ${fieldreport_id}=    Extract Fieldreport ID From URL    ${current_url}
-    Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}
-    Log To Console    ✓ Created Field Report ID: ${fieldreport_id}
+    Should Not Be Empty    ${fieldreport_id}    msg=Extracted field report ID is empty.
+    Log To Console    Extracted Field Report ID: ${fieldreport_id}
+    RETURN    ${fieldreport_id}
 
 Extract Fieldreport ID From URL
     [Documentation]    Extract the fieldreport slug/ID from the edit page URL

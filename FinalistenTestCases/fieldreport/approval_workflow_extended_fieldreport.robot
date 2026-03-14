@@ -231,36 +231,14 @@ Test Approve Empty FR Behavior
     [Teardown]    Cleanup Created Fieldreport
 
 *** Keywords ***
-Login To Application
-    [Documentation]    Open browser and login to the application
-    Open Browser    ${LOGIN_URL}    ${BROWSER}    options=${CHROME_OPTIONS}
-    Maximize Browser Window
-    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=10s
-    Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Input Text    xpath=//input[@name='password']    ${PASSWORD}
-    Click Button    xpath=//button[@type='submit']
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
-    Log To Console    Successfully logged in
-
-Create Field Report For Test
-    [Documentation]    Create a basic field report
-    Login To Application
+Create Field Report For High Value Test
+    [Documentation]    Create a field report with one high-value product (> 50,000)
+    Open And Login
+    Setup Dynamic Test Data
     
-    Log To Console    Creating Field Report...
     Go To    ${FIELDREPORT_CREATE_URL}
-    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
-    Select From List By Label    ${CUSTOMER_DROPDOWN}    Arcona Aktiebolag
-    ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Label    ${PROJECT_DROPDOWN}    Systemkameran
-    ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
@@ -268,10 +246,9 @@ Create Field Report For Test
     Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
     Sleep    3s
     
-    ${current_url}=    Get Location
-    ${fieldreport_id}=    Extract Fieldreport ID From URL    ${current_url}
-    Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}
-    Log To Console    ✓ Created Field Report ID: ${fieldreport_id}
+    ${id}=    Extract And Verify Fieldreport ID
+    Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}
+    Log To Console    ✓ Created High-Value FR: ${id}
 
 Create Field Report With Product
     [Documentation]    Create a field report and add a product
