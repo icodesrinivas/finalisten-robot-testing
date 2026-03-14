@@ -101,7 +101,7 @@ Test Approved FR Products Are Read Only
 Test Approved FR General Data Is Read Only
     [Documentation]    Point 35: Approve FR and verify general data fields become read-only.
     [Tags]    fieldreport    approval    workflow    readonly
-    [Setup]    Create Field Report For Test
+    [Setup]    Create Field Report For High Value Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
     Go To    ${edit_url}
@@ -145,7 +145,7 @@ Test Approved FR General Data Is Read Only
 Test Unapproved FR Fields Become Editable
     [Documentation]    Point 36: Unapprove previously approved FR and verify fields become editable.
     [Tags]    fieldreport    approval    workflow    editable
-    [Setup]    Create Field Report For Test
+    [Setup]    Create Field Report For High Value Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
     Go To    ${edit_url}
@@ -252,7 +252,7 @@ Create Field Report For High Value Test
 
 Create Field Report With Product
     [Documentation]    Create a field report and add a product
-    Create Field Report For Test
+    Create Field Report For High Value Test
     
     # Add a product
     Execute Javascript    window.scrollTo(0, 800);

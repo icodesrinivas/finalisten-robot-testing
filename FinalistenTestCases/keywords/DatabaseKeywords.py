@@ -55,8 +55,8 @@ class DatabaseKeywords:
             # This handles the AJAX dependency where project depends on customer
             query = """
                 SELECT c.name, p.project_name 
-                FROM customer_customer c
-                JOIN project_project p ON c.id = p.related_customer_id
+                FROM account_customer c
+                JOIN projects_project p ON c.id = p.related_customer_id
                 WHERE p.is_active = True AND c.is_active = True
                 LIMIT 1
             """
@@ -65,9 +65,9 @@ class DatabaseKeywords:
             
             if not result:
                 # Fallback to any customer and project if no perfect match (unlikely in real DB)
-                cur.execute("SELECT name FROM customer_customer WHERE is_active = True LIMIT 1")
+                cur.execute("SELECT name FROM account_customer WHERE is_active = True LIMIT 1")
                 cust = cur.fetchone()
-                cur.execute("SELECT project_name FROM project_project WHERE is_active = True LIMIT 1")
+                cur.execute("SELECT project_name FROM projects_project WHERE is_active = True LIMIT 1")
                 proj = cur.fetchone()
                 return {"customer": cust[0] if cust else "Arcona Aktiebolag", 
                         "project": proj[0] if proj else "Systemkameran"}
@@ -75,10 +75,8 @@ class DatabaseKeywords:
             return {"customer": result[0], "project": result[1]}
         except Exception as e:
             print(f"Error fetching data from DB: {str(e)}")
+            self._debug_list_tables_and_columns()
             return {"customer": "Arcona Aktiebolag", "project": "Systemkameran"}
-        finally:
-            if conn:
-                conn.close()
 
     def get_valid_installer_name(self):
         """
@@ -88,7 +86,17 @@ class DatabaseKeywords:
         try:
             conn = psycopg2.connect(self.db_url, sslmode='require')
             cur = conn.cursor()
-            query = "SELECT display_name FROM employee_employment WHERE is_active = True LIMIT 1"
+            
+            # Try to find correct name column
+            cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'employee_employment'")
+            cols = [c[0] for c in cur.fetchall()]
+            name_col = 'display_name'
+            if 'display_name' not in cols:
+                if 'employee_name' in cols: name_col = 'employee_name'
+                elif 'name' in cols: name_col = 'name'
+                elif 'first_name' in cols: name_col = 'first_name'
+            
+            query = f"SELECT {name_col} FROM employee_employment WHERE is_active = True LIMIT 1"
             cur.execute(query)
             result = cur.fetchone()
             return result[0] if result else "Admin Finalisten"
@@ -98,3 +106,16 @@ class DatabaseKeywords:
         finally:
             if conn:
                 conn.close()
+
+    def _debug_list_tables_and_columns(self):
+        """Internal helper to log schema info to help debug relation errors."""
+        try:
+            conn = psycopg2.connect(self.db_url, sslmode='require')
+            cur = conn.cursor()
+            cur.execute("SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = 'public'")
+            tables = [t[0] for t in cur.fetchall()]
+            print(f"SCHEMA DEBUG: Tables available: {tables}")
+            cur.close()
+            conn.close()
+        except:
+            pass

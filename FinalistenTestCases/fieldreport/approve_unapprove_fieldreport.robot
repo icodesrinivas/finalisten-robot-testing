@@ -45,7 +45,7 @@ Test Approve And Unapprove Field Report
     [Documentation]    Test the Approve and Unapprove button functionality.
     ...                Verify that status changes correctly between Approved and Unapproved states.
     [Tags]    fieldreport    approve    unapprove    validation
-    [Setup]    Create Field Report For Approval Test
+    [Setup]    Create Test Field Report
     
     # Navigate to edit page
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/

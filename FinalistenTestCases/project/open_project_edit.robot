@@ -25,7 +25,7 @@ Hover Over Production Menu
     Execute Javascript    var el = document.getElementById('production'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
     Sleep    2s
     Wait Until Element Is Visible    ${PRODUCTION_MENU}    timeout=15s
-    Mouse Over    ${PRODUCTION_MENU}
+    Click Element    ${PRODUCTION_MENU}
     Sleep    1s
 
 Click On Project Menu
