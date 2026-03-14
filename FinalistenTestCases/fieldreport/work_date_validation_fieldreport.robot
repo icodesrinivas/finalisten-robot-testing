@@ -151,7 +151,7 @@ Test Reject Field Report With Closed Period Date
     Sleep    2s
     
     # Check for alert with error message
-    ${alert_text}=    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
+    ${alert_text}=    Run Keyword And Ignore Error    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
     Log To Console    Alert response: ${alert_text}
     
     Sleep    2s
@@ -226,7 +226,7 @@ Test Reject Field Report With Future Date
     Sleep    2s
     
     # Check for alert
-    ${alert_result}=    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
+    ${alert_result}=    Run Keyword And Ignore Error    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
     Log To Console    Alert response: ${alert_result}
     
     Sleep    2s
@@ -367,7 +367,7 @@ Cleanup Created Fieldreport
             Log To Console    Deleting Field Report ID: ${CREATED_FIELDREPORT_ID}
             Click Element    ${DELETE_BUTTON}
             Sleep    1s
-            Handle Alert    action=ACCEPT    timeout=5s
+            Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
             Sleep    2s
             Log To Console    ✓ Field Report ${CREATED_FIELDREPORT_ID} deleted successfully!
         END

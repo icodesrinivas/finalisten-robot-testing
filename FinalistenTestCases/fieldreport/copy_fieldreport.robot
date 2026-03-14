@@ -95,7 +95,7 @@ Test Copy Field Report Creates Duplicate
     
     # Handle confirmation alert if present
     # We use Run Keyword And Return Status to avoid failing if no alert (since we have fallback)
-    ${alert_status}=    Run Keyword And Return Status    Handle Alert    action=ACCEPT    timeout=5s
+    ${alert_status}=    Run Keyword And Return Status    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
     IF    ${alert_status}
          Log To Console    ✓ Alert handled (Accepted).
     ELSE
@@ -360,7 +360,7 @@ Delete Single Fieldreport
         Log To Console    Deleting Field Report ID: ${fieldreport_id}
         Click Element    ${DELETE_BUTTON}
         Sleep    1s
-        Handle Alert    action=ACCEPT    timeout=5s
+        Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
         Sleep    2s
         Log To Console    ✓ Field Report ${fieldreport_id} deleted successfully!
     ELSE

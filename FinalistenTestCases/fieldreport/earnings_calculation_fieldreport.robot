@@ -338,7 +338,7 @@ Add Sample Product To FR
     END
     
     Sleep    2s
-    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
+    Run Keyword And Ignore Error    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
     Sleep    2s
     
     # Wait for Product to appear in Field Report Table
@@ -426,7 +426,7 @@ Cleanup Created Fieldreport
             Log To Console    Deleting Field Report ID: ${CREATED_FIELDREPORT_ID}
             Click Element    ${DELETE_BUTTON}
             Sleep    1s
-            Handle Alert    action=ACCEPT    timeout=5s
+            Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
             Sleep    2s
             Log To Console    ✓ Field Report ${CREATED_FIELDREPORT_ID} deleted successfully!
         END

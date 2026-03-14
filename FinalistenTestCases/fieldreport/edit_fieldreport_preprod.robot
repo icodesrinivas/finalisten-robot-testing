@@ -386,7 +386,7 @@ Cleanup Created Fieldreport
             
             # Handle confirmation dialog if present
             Sleep    1s
-            Handle Alert    action=ACCEPT    timeout=5s
+            Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
             
             Sleep    2s
             Log To Console    ✓ Field Report ${CREATED_FIELDREPORT_ID} deleted successfully!

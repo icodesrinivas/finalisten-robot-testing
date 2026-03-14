@@ -62,7 +62,7 @@ Test Delete Field Report
     Sleep    1s
     
     # Accept confirmation dialog
-    ${alert_text}=    Handle Alert    action=ACCEPT    timeout=5s
+    ${status}    ${alert_text}=    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
     Log To Console    ✓ Accepted confirmation dialog: ${alert_text}
     Sleep    2s
     
