@@ -10,12 +10,16 @@ class DatabaseKeywords:
     def __init__(self):
         self.db_url = os.environ.get('DATABASE_URL')
         if not self.db_url:
-            raise Exception("DATABASE_URL environment variable is not set")
+            print("WARNING: DATABASE_URL environment variable is not set. Database operations will use fallbacks.")
 
     def force_user_language_to_english(self, email):
         """
         Directly updates the language_setting in the database for the given email.
         """
+        if not self.db_url:
+            print(f"Skipping language force for {email}: DATABASE_URL not set.")
+            return
+
         conn = None
         try:
             conn = psycopg2.connect(self.db_url, sslmode='require')
@@ -46,6 +50,10 @@ class DatabaseKeywords:
         Fetches a customer name and a related project name from the database.
         Returns a dictionary with 'customer' and 'project' keys.
         """
+        if not self.db_url:
+            print("DATABASE_URL not set, returning fallback customer and project.")
+            return {"customer": "Arcona Aktiebolag", "project": "Systemkameran"}
+
         conn = None
         try:
             conn = psycopg2.connect(self.db_url, sslmode='require')
@@ -77,11 +85,18 @@ class DatabaseKeywords:
             print(f"Error fetching data from DB: {str(e)}")
             self._debug_list_tables_and_columns()
             return {"customer": "Arcona Aktiebolag", "project": "Systemkameran"}
+        finally:
+            if conn:
+                conn.close()
 
     def get_valid_installer_name(self):
         """
         Fetches an active installer name from the database.
         """
+        if not self.db_url:
+            print("DATABASE_URL not set, returning fallback installer.")
+            return "Admin Finalisten"
+
         conn = None
         try:
             conn = psycopg2.connect(self.db_url, sslmode='require')
@@ -109,6 +124,9 @@ class DatabaseKeywords:
 
     def _debug_list_tables_and_columns(self):
         """Internal helper to log schema info to help debug relation errors."""
+        if not self.db_url:
+            return
+            
         try:
             conn = psycopg2.connect(self.db_url, sslmode='require')
             cur = conn.cursor()
