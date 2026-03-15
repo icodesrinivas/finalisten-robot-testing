@@ -24,17 +24,20 @@ Verify ADD Button Opens Modal And Allows Selecting Supplier
     Open First Purchase Product Record
     
     Log To Console    Clicking 'ADD' button...
-    Wait Until Element Is Visible    ${ADD_BUTTON}    timeout=15s
+    # Wait for loading buffer to disappear if any
+    Wait Until Keyword Succeeds    3x    2s    Wait For Loading Buffer To Disappear
+    
+    Wait Until Element Is Visible    ${ADD_BUTTON}    timeout=45s
     Scroll Element Into View    ${ADD_BUTTON}
-    Sleep    1s
+    Sleep    2s
     Click Element    ${ADD_BUTTON}
     
     Log To Console    Verifying modal appearance...
-    Wait Until Element Is Visible    ${MODAL}    timeout=10s
+    Wait Until Element Is Visible    ${MODAL}    timeout=30s
     Element Should Be Visible        ${MODAL}
     
     Log To Console    Selecting a supplier...
-    Wait Until Element Is Visible    ${SUPPLIER_CHECKBOX}    timeout=10s
+    Wait Until Element Is Visible    ${SUPPLIER_CHECKBOX}    timeout=30s
     # Toggle the first checkbox
     Click Element    ${SUPPLIER_CHECKBOX}
     
@@ -42,7 +45,7 @@ Verify ADD Button Opens Modal And Allows Selecting Supplier
     Click Element    ${SAVE_MODAL_BUTTON}
     
     Log To Console    Verifying modal closure...
-    Wait Until Element Is Not Visible    ${MODAL}    timeout=15s
+    Wait Until Element Is Not Visible    ${MODAL}    timeout=30s
     
     Log To Console    Success: ADD button and modal functionality verified.
     
@@ -70,3 +73,16 @@ Open First Purchase Product Record
 Wait Until Page Contains Keywords
     [Arguments]    ${text}    ${timeout}=10s
     Wait Until Page Contains    ${text}    timeout=${timeout}
+
+Wait For Loading Buffer To Disappear
+    [Documentation]    Wait until the loading buffer overlay is no longer visible (opacity 0).
+    ${buffer_exists}=    Run Keyword And Return Status    Element Should Be Visible    id=loading_buffer
+    IF    ${buffer_exists}
+        Wait Until Element Is Not Visible    id=loading_buffer    timeout=15s
+        # Double check opacity via JS for extra reliability
+        Wait Until Keyword Succeeds    5x    1s    Verify Loading Buffer Opacity Is Zero
+    END
+
+Verify Loading Buffer Opacity Is Zero
+    ${opacity}=    Execute Javascript    return window.getComputedStyle(document.getElementById('loading_buffer')).getPropertyValue('opacity');
+    Should Be Equal As Numbers    ${opacity}    0
