@@ -12,7 +12,7 @@ ${PASSWORD}      Djangocrm123
 ${LOGIN_BUTTON}  xpath=//button[@type='submit' and contains(@class,'btn-primary') and contains(@class,'btn-block')]
 ${HOMEPAGE_URL}  https://preproderp.finalisten.se/homepage/
 ${CHROME_OPTIONS}    add_argument("--ignore-certificate-errors");add_argument("--disable-web-security");add_argument("--allow-running-insecure-content");add_argument("--window-size=1920,1080");add_argument("--no-sandbox");add_argument("--disable-dev-shm-usage")
-${EXECUTABLE_PATH}    /Users/sreesrini/Desktop/Python_Work/FinalistenTesting/finalisten-robot-testing/chromedriver-mac-x64/chromedriver
+${EXECUTABLE_PATH}    ${EMPTY}
 
 # Global Field Report Variables for cleanup
 ${FIELDREPORT_LIST_URL}           https://preproderp.finalisten.se/fieldreport/list/
@@ -22,7 +22,8 @@ ${CREATED_FIELDREPORT_ID}         ${EMPTY}
 *** Keywords ***
 Open And Login
     Register Keyword To Run On Failure    Capture Page Screenshot
-    Open Browser    ${URL}    ${BROWSER}    options=${CHROME_OPTIONS}    executable_path=${EXECUTABLE_PATH}
+    ${path}=    Setup ChromeDriver Path
+    Open Browser    ${URL}    ${BROWSER}    options=${CHROME_OPTIONS}    executable_path=${path}
     Set Window Size    1920    1080
     Maximize Browser Window
     Set Selenium Implicit Wait    15s
@@ -242,3 +243,32 @@ Perform Deletion For ID
     END
 
     Close Browser
+
+Setup ChromeDriver Path
+    [Documentation]    Dynamically determines the correct ChromeDriver path.
+    ...                Returns the path to the bundled Mac driver if running locally,
+    ...                otherwise returns None to rely on the system PATH (CI).
+    
+    # Check if running in GitHub Actions
+    ${is_github_actions}=    Get Environment Variable    GITHUB_ACTIONS    default=false
+    
+    IF    '${is_github_actions}' == 'true'
+        Log To Console    \n--- CI DETECTED (GitHub Actions) ---
+        Log To Console    Bypassing local driver, relying on system PATH.
+        RETURN    ${None}
+    END
+    
+    # Default: Use bundled Mac driver
+    ${local_driver}=    Normalize Path    ${CURDIR}/../../chromedriver-mac-x64/chromedriver
+    
+    ${exists}=    Run Keyword And Return Status    File Should Exist    ${local_driver}
+    
+    IF    ${exists}
+        Log To Console    \n--- LOCAL MAC DETECTED ---
+        Log To Console    Using bundled driver: ${local_driver}
+        RETURN    ${local_driver}
+    ELSE
+        Log To Console    \n--- LOCAL ENVIRONMENT DETECTED (Driver Not Found) ---
+        Log To Console    ⚠ Bundled driver not found at ${local_driver}. Falling back to system PATH.
+        RETURN    ${None}
+    END
