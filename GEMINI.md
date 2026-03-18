@@ -460,6 +460,7 @@ Wait Until Keyword Succeeds    15x    1s    Verify Form Content Refresh    ${old
 
 ## Version History
 
+- **2026-03-18**: Created `verify_fixed_agreement_delete.robot` to validate Fixed Agreement deletion. Implemented `create_fixed_agreement` DB helper in `DatabaseKeywords.py` with boolean status handling. 
 - **2026-03-15**: Fixed `verify_add_supplier_to_product.robot` by increasing timeouts to 45s, adding `loading_buffer` handling, and improving scrolling logic. Identified that the 'ADD' button is below the fold and can be delayed by AJAX overlays.
 - **2026-03-11**: Created `verify_add_supplier_to_product.robot` to validate the 'ADD' button functionality in Purchase Product Register. Identified `#supplier_add_button` and corrected row selector to `tr.purchase_product_rows`.
 - **2026-03-11**: Created `verify_all_settings_forms.robot` in `FinalistenTestCases/settings/` to validate all 23 settings options in a single pass. Implemented advanced AJAX detection logic using DOM opacity and content-refresh polling. Updated ChromeDriver to version 145.
@@ -487,6 +488,24 @@ Wait Until Keyword Succeeds    15x    1s    Verify Form Content Refresh    ${old
 - **ADD SUPPLIER Modal**: `id=myModal3`
 - **Supplier Checkboxes**: `css=input.supplier_in_product_checkbox`
 - **Save Button (Modal)**: `id=supplier_in_product_save_button`
+
+- **Delete Fixed Agreement Button**: `button[contains(@id, 'fixed_agreement_remove')]` or `title="Delete Fixed Agreement"`
+- **Fixed Agreement Row Locator**: `tr[td[contains(., 'Name')]]`
+
+## Project Module Details
+
+### Edit Page - Fixed Agreements
+- **Tab Header ID**: `id_fixed_agreement_frame_header`
+- **Table Container ID**: `fixed_agreement_table_div`
+- **Table ID**: `fixed_agreement_table`
+- **Database Table**: `project_fixedagreement`
+- **Key Columns**:
+  - `agreement_name`: character varying (NO)
+  - `agreement_amount`: character varying (YES)
+  - `related_project_id`: integer (YES)
+  - `agreement_status`: boolean (NO) - `true` is Active
+  - `agreement_is_retainage`: boolean (NO)
+  - `agreement_total_cost`: character varying (YES)
 
 ## Project Rules
 

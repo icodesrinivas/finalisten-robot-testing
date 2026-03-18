@@ -137,3 +137,35 @@ class DatabaseKeywords:
             conn.close()
         except:
             pass
+
+    def create_fixed_agreement(self, project_id, name="Auto Test Agreement", amount=5000.00):
+        """
+        Creates a fixed agreement for a given project directly in the DB.
+        """
+        if not self.db_url:
+            print("DATABASE_URL not set, cannot create fixed agreement.")
+            return False
+
+        conn = None
+        try:
+            conn = psycopg2.connect(self.db_url, sslmode='require')
+            cur = conn.cursor()
+            
+            query = """
+                INSERT INTO project_fixedagreement 
+                (agreement_name, agreement_amount, related_project_id, agreement_status, agreement_is_retainage, agreement_total_cost)
+                VALUES (%s, %s, %s, true, false, %s)
+                RETURNING id;
+            """
+            cur.execute(query, (name, str(amount), project_id, str(amount)))
+            new_id = cur.fetchone()[0]
+            conn.commit()
+            print(f"Successfully created fixed agreement {new_id} for project {project_id}")
+            return new_id
+        except Exception as e:
+            print(f"Error creating fixed agreement: {str(e)}")
+            return False
+        finally:
+            if conn:
+                conn.close()
+
