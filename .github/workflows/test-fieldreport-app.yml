@@ -1,0 +1,79 @@
+name: Field Report App Testing
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fieldreport-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Install and setup Chrome
+        uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: stable
+      
+      - name: Install ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+      
+      - name: Run Field Report App tests
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          robot --variable CHROME_OPTIONS:"add_argument('--headless');add_argument('--no-sandbox');add_argument('--disable-gpu');add_argument('--disable-dev-shm-usage');add_argument('--window-size=1920,1080')" \
+                --outputdir results \
+                --xunit results.xml \
+                FinalistenTestCases/fieldreport/ \
+                FinalistenTestCases/fieldreportapproval/
+        continue-on-error: true
+      
+      - name: Generate test summary
+        if: always()
+        run: |
+          echo "# Field Report App Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f results/output.xml ]; then
+            python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          import xml.etree.ElementTree as ET
+          import os
+
+          if os.path.exists('results/output.xml'):
+              tree = ET.parse('results/output.xml')
+              root = tree.getroot()
+              stats = root.find('.//statistics/total/stat')
+              if stats is not None:
+                  passed = int(stats.get('pass', '0'))
+                  failed = int(stats.get('fail', '0'))
+                  total = passed + failed
+                  print(f'- **Total Tests:** {total}')
+                  print(f'- **Passed:** ✅ {passed}')
+                  print(f'- **Failed:** ❌ {failed}')
+          else:
+              print("No output.xml found.")
+          EOF
+          else
+            echo "⚠️ No test results found" >> $GITHUB_STEP_SUMMARY
+          fi
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fieldreport-app-results-${{ github.run_number }}
+          path: |
+            results/*.html
+            results/*.xml
+          retention-days: 30

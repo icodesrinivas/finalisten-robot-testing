@@ -7,6 +7,10 @@
 - **Testing**:
     - Use Robot Framework for automated testing.
     - For this project, local test executions must be performed within the `fintest` venv.
+    - **GitHub Actions**: 
+        - `Field Report App Testing` (`test-fieldreport-app.yml`): Runs all tests for the field report and field report approval modules. Manual trigger.
+        - `Daily Robot Framework Tests` (`daily-tests.yml`): Runs all tests daily.
+        - `Verify Robot Test Fixes` (`verify-fixes.yml`): Runs a subset of tests to verify specific fixes.
 - **Diagnostics**:
     - When tests fail in CI, check the `results/` artifact for screenshots.
 - **Design**:
@@ -27,8 +31,8 @@
 - **ChromeDriver**: WebDriver path is managed automatically. Locally on Mac, it uses the bundled driver in `chromedriver-mac-x64/`. In GitHub Actions, it relies on the system PATH.
 - **Purchase Product Register**:
     - Row selector: `css=tr.purchase_product_rows`.
-    - ADD button ID: `#supplier_add_button`.
-    - Note: The ADD button requires scrolling (approx Y=990px) and a wait for `#loading_buffer` (opacity 0) to be interactable.
+    - ADD button ID: `id=supplier_add_button`.
+    - **Note**: The ADD button requires a robust sequence for CI stability: Wait for `#loading_buffer` (opacity 0) -> Wait for Presence -> Scroll (approx Y=990px) -> Wait for Visibility Polling (60s) -> JS Click.
     - Modal ID: `myModal3`.
 - **Test Stability Guidelines**:
     - **Forced English Environment**: All tests MUST use the shared `Open And Login` keyword from `LoginKeyword.robot`. This keyword automatically forces the user's language to English via a direct database update (`DatabaseKeywords.py`), ensuring consistent assertions for strings like "CUSTOMER DATA".

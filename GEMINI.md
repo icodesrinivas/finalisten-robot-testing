@@ -14,6 +14,9 @@ This project contains automated test cases for the **Finalisten ERP System** usi
 ## Project Structure
 ```
 finalisten-robot-testing/
+├── .github/workflows/             # GitHub Actions workflows
+│   ├── test-fieldreport-app.yml   # Separate job for Field Report app tests
+│   └── ... (other workflows)
 ├── FinalistenTestCases/           # Main test cases directory
 │   ├── __init__.robot             # Suite initialization
 │   ├── keywords/                  # Shared keywords
@@ -367,6 +370,11 @@ Example:
 **Cause**: Page content loads asynchronously
 **Solution**: Add appropriate `Sleep` or `Wait Until` keywords after clicking search.
 
+### GitHub Actions Workflows
+- **Field Report App Testing** (`test-fieldreport-app.yml`): Specifically runs all test cases in the `fieldreport/` and `fieldreportapproval/` directories. This can be manually triggered via the GitHub Actions tab.
+- **Daily Robot Framework Tests** (`daily-tests.yml`): Runs the full test suite daily.
+- **Verify Robot Test Fixes** (`verify-fixes.yml`): Runs a targeted set of tests to verify recent fixes.
+
 ### GitHub Actions / CI Timeout Standards
 Tests run slower in headless GitHub Actions runners than locally. Use these standard timeouts:
 
@@ -460,8 +468,8 @@ Wait Until Keyword Succeeds    15x    1s    Verify Form Content Refresh    ${old
 
 ## Version History
 
+- **2026-03-18**: Enhanced `verify_add_supplier_to_product.robot` with a more robust waiting strategy (Presence -> Scroll -> Visibility Poll -> JS Click) and increased timeouts to 60s to resolve intermittent CI failures in GitHub Actions.
 - **2026-03-18**: Created `verify_fixed_agreement_delete.robot` to validate Fixed Agreement deletion. Implemented `create_fixed_agreement` DB helper in `DatabaseKeywords.py` with boolean status handling. 
-- **2026-03-15**: Fixed `verify_add_supplier_to_product.robot` by increasing timeouts to 45s, adding `loading_buffer` handling, and improving scrolling logic. Identified that the 'ADD' button is below the fold and can be delayed by AJAX overlays.
 - **2026-03-11**: Created `verify_add_supplier_to_product.robot` to validate the 'ADD' button functionality in Purchase Product Register. Identified `#supplier_add_button` and corrected row selector to `tr.purchase_product_rows`.
 - **2026-03-11**: Created `verify_all_settings_forms.robot` in `FinalistenTestCases/settings/` to validate all 23 settings options in a single pass. Implemented advanced AJAX detection logic using DOM opacity and content-refresh polling. Updated ChromeDriver to version 145.
 - **2026-03-04**: Updated customer list locators from "Filters" text to "Advanced search" element (`id_advanced_search_toggle`) due to UI changes.
@@ -483,7 +491,7 @@ Wait Until Keyword Succeeds    15x    1s    Verify Form Content Refresh    ${old
 
 ### Edit Page
 - **ADD Button (Suppliers)**: `id=supplier_add_button`
-- **Button Visibility**: Requires scrolling (located below initial viewport, approx Y=990px). 
+- **Button Visibility**: Requires a robust sequence for CI stability: Wait for `#loading_buffer` (opacity 0) -> Wait for Presence -> Scroll (approx Y=990px) -> Wait for Visibility Polling (60s) -> JS Click.
 - **Loading Behavior**: Uses `id="loading_buffer"` during AJAX loads. Always wait for this buffer to have opacity 0 before interacting with the button.
 - **ADD SUPPLIER Modal**: `id=myModal3`
 - **Supplier Checkboxes**: `css=input.supplier_in_product_checkbox`
