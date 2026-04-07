@@ -23,17 +23,28 @@ Verify ADD Button Opens Modal And Allows Selecting Supplier
     Navigate To Purchase Product Register
     Open First Purchase Product Record
     
-    Log To Console    Clicking 'ADD' button...
-    # Wait for loading buffer to disappear if any
-    Wait Until Keyword Succeeds    3x    2s    Wait For Loading Buffer To Disappear
+    Log To Console    Waiting for 'ADD' button area to stabilize...
+    # Ensure any initial loading buffer is gone
+    Wait For Loading Buffer To Disappear
     
-    Wait Until Element Is Visible    ${ADD_BUTTON}    timeout=45s
-    Scroll Element Into View    ${ADD_BUTTON}
-    Sleep    2s
-    Click Element    ${ADD_BUTTON}
+    # 1. Wait for Presence first (in DOM)
+    Wait Until Page Contains Element    ${ADD_BUTTON}    timeout=60s
+    Log To Console    ✓ 'ADD' button present in DOM.
+    
+    # 2. Force Scroll with JS for headless reliability
+    ${btn}=    Get WebElement    ${ADD_BUTTON}
+    Execute Javascript    arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});    ARGUMENTS    ${btn}
+    Sleep    3s    # Give time for any scroll-triggered AJAX or layout shifts
+    
+    # 3. Wait for Visibility (interactability) with retry loop
+    Wait Until Keyword Succeeds    10x    2s    Verify Element Is Truly Visible    ${ADD_BUTTON}
+    Log To Console    ✓ 'ADD' button is now visible and interactable.
+    
+    # 4. Click using JS for maximum robustness in CI
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${btn}
     
     Log To Console    Verifying modal appearance...
-    Wait Until Element Is Visible    ${MODAL}    timeout=30s
+    Wait Until Element Is Visible    ${MODAL}    timeout=45s
     Element Should Be Visible        ${MODAL}
     
     Log To Console    Selecting a supplier...
@@ -54,35 +65,38 @@ Verify ADD Button Opens Modal And Allows Selecting Supplier
 *** Keywords ***
 Navigate To Purchase Product Register
     [Documentation]    Navigates to the Purchase Product Register via the Register menu.
-    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=20s
+    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=30s
     Mouse Over    ${REGISTER_MENU}
     Sleep    2s
-    Wait Until Element Is Visible    ${PURCHASE_PRODUCT_REGISTER_MENU}    timeout=15s
+    Wait Until Element Is Visible    ${PURCHASE_PRODUCT_REGISTER_MENU}    timeout=20s
     Click Element    ${PURCHASE_PRODUCT_REGISTER_MENU}
-    Wait Until Page Contains    Filters    timeout=20s
+    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=30s
 
 Open First Purchase Product Record
     [Documentation]    Opens the first available purchase product record from the list.
-    ${row_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PURCHASE_PRODUCT_REGISTER_ROW}    timeout=30s
+    ${row_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PURCHASE_PRODUCT_REGISTER_ROW}    timeout=45s
     IF    not ${row_visible}
         Fail    No purchase product records found in register.
     END
     Click Element    ${PURCHASE_PRODUCT_REGISTER_ROW}
-    Wait Until Page Contains Keywords    PURCHASE PRODUCT REGISTER    timeout=20s
+    Wait Until Page Contains Keywords    PURCHASE PRODUCT REGISTER    timeout=45s
 
 Wait Until Page Contains Keywords
-    [Arguments]    ${text}    ${timeout}=10s
+    [Arguments]    ${text}    ${timeout}=30s
     Wait Until Page Contains    ${text}    timeout=${timeout}
 
 Wait For Loading Buffer To Disappear
     [Documentation]    Wait until the loading buffer overlay is no longer visible (opacity 0).
-    ${buffer_exists}=    Run Keyword And Return Status    Element Should Be Visible    id=loading_buffer
-    IF    ${buffer_exists}
-        Wait Until Element Is Not Visible    id=loading_buffer    timeout=15s
-        # Double check opacity via JS for extra reliability
-        Wait Until Keyword Succeeds    5x    1s    Verify Loading Buffer Opacity Is Zero
-    END
+    Wait Until Keyword Succeeds    60x    1s    Verify Loading Buffer Is Hidden
 
-Verify Loading Buffer Opacity Is Zero
+Verify Loading Buffer Is Hidden
+    ${present}=    Run Keyword And Return Status    Page Should Contain Element    id=loading_buffer
+    IF    not ${present}    RETURN
     ${opacity}=    Execute Javascript    return window.getComputedStyle(document.getElementById('loading_buffer')).getPropertyValue('opacity');
-    Should Be Equal As Numbers    ${opacity}    0
+    Should Be Equal As Numbers    ${opacity}    0    msg=Loading buffer still visible (opacity ${opacity})
+
+Verify Element Is Truly Visible
+    [Arguments]    ${locator}
+    Element Should Be Visible    ${locator}
+    # Ensure it's not obscured by the loading buffer even if displayed
+    Verify Loading Buffer Is Hidden

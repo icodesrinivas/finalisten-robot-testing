@@ -23,6 +23,6 @@ Verify Contact List Opens Successfully
     Sleep    2s
     Click Element    ${CONTACTS_MENU}
     Sleep    3s
-    Wait Until Page Contains    Filters    timeout=15s
-    Log To Console    "Filters text found. Contact list opened successfully."
+    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=15s
+    Log To Console    "Advanced search toggle found. Contact list opened successfully."
     Close Browser

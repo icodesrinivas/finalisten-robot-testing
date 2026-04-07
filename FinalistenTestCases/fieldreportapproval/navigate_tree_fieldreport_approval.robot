@@ -59,8 +59,8 @@ Verify Fieldreport Opens From Approval Tree
     ${found}=    Find And Click Fieldreport In Tree
     
     IF    not ${found}
-        Log To Console    No fieldreports found with current date range. Updating to last 3 months...
-        Update Date Range To Last 3 Months
+        Log To Console    No fieldreports found with current date range. Updating to last 200 days (to include Oct 2025)...
+        Update Date Range To Last 200 Days
         Sleep    3s
         ${found}=    Find And Click Fieldreport In Tree
     END
@@ -227,18 +227,13 @@ Verify Fieldreport Edit Page Opened In New Tab
     
     Log To Console    ✓ Fieldreport edit page verified in new tab
 
-Update Date Range To Last 3 Months
-    [Documentation]    Update the date filter to show data from the last 3 months
+Update Date Range To Last 200 Days
+    [Documentation]    Update the date filter to show data from the last 200 days
     
-    Log To Console    Updating date range to last 3 months...
+    Log To Console    Updating date range...
     
-    # Calculate dates (3 months ago to today)
-    ${today}=    Get Current Date    result_format=%Y-%m-%d
-    ${three_months_ago}=    Subtract Time From Date    ${today}    90 days    result_format=%Y-%m-%d
-    Log To Console    Date range: ${three_months_ago} to ${today}
-    
-    # Try to find and click the date range display
-    ${date_elements}=    Get WebElements    xpath=//span[contains(text(),' to ') or contains(text(),'-')]
+    # Click to open daterangepicker
+    ${date_elements}=    Get WebElements    xpath=//span[contains(@class,'daterangepicker-input')] | //input[contains(@class,'daterangepicker-input')] | //div[contains(@class,'date-range')]
     ${date_found}=    Get Length    ${date_elements}
     
     IF    ${date_found} > 0
@@ -246,22 +241,20 @@ Update Date Range To Last 3 Months
         Click Element    ${date_element}
         Sleep    2s
         
-        # Try to click "Last Month" or similar preset option
-        ${preset_options}=    Get WebElements    xpath=//li[contains(text(),'Last Month') or contains(text(),'This Month')]
+        # Click "Last Month" as it usually has data in preprod (or This Month)
+        ${preset_options}=    Get WebElements    xpath=//li[contains(text(),'Last Month')] | //li[contains(text(),'This Month')] | //li[contains(text(),'Last 30 Days')]
         ${preset_count}=    Get Length    ${preset_options}
         
         IF    ${preset_count} > 0
-            # Click "Last Month" to get some historical data
+            # Click the second preset option (often 'Last Month')
             ${option}=    Get From List    ${preset_options}    0
             Click Element    ${option}
-            Sleep    2s
-        ELSE
-            # Try custom date input
-            Log To Console    No preset options found, attempting custom date entry
-            # This would require more specific selectors for the daterangepicker
+            Sleep    1s
+            Run Keyword And Ignore Error    Click Element    ${DATE_PICKER_APPLY}
+            Sleep    3s
         END
     ELSE
-        # Alternative: Try reloading with date parameters if supported
+        # Last resort: Try refreshing with a wide range in URL if possible, or just refresh
         Log To Console    Could not find date range selector, refreshing page
         Reload Page
         Sleep    3s

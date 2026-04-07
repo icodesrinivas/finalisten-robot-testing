@@ -244,6 +244,19 @@ Perform Deletion For ID
 
     Close Browser
 
+Wait Until Page Loaded
+    [Documentation]    Wait for the page to be fully loaded and steady.
+    Wait Until Keyword Succeeds    5x    2s    Execute Javascript    return document.readyState === 'complete'
+    Sleep    2s
+
+Wait For Loading Buffer
+    [Documentation]    Wait for the AJAX loading buffer to disappear (opacity 0).
+    Wait Until Keyword Succeeds    15x    1s    Check Loading Buffer Invisible
+
+Check Loading Buffer Invisible
+    ${opacity}=    Execute Javascript    var el = document.getElementById('loading_buffer'); return el ? window.getComputedStyle(el).getPropertyValue('opacity') : '0';
+    Should Be Equal As Strings    ${opacity}    0    msg=Loading buffer is still visible (opacity: ${opacity})
+
 Setup ChromeDriver Path
     [Documentation]    Dynamically determines the correct ChromeDriver path.
     ...                Returns the path to the bundled Mac driver if running locally,

@@ -12,8 +12,8 @@ Verify Contact Create Page Opens Successfully
     Open And Login
     Hover Over Register Menu
     Click On Contacts Menu
-    Wait Until Page Contains    Filters    timeout=10s
-    Log To Console    "Filters text found. Contact list opened successfully."
+    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=10s
+    Log To Console    "Advanced search toggle found."
     Click Element    ${ADD_CONTACT_BTN}
     Wait Until Page Contains    CONTACT DATA    timeout=10s
     Log To Console    "CONTACT DATA found. Contact Create page opened successfully."

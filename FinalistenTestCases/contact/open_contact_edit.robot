@@ -12,8 +12,8 @@ Verify Edit Contact Page Opens Successfully
     Open And Login
     Hover Over Register Menu
     Click On Contacts Menu
-    Wait Until Page Contains    Filters    timeout=10s
-    Log To Console    "Filters text found. Contact list opened successfully."
+    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=10s
+    Log To Console    "Advanced search toggle found."
     Wait Until Element Is Visible    ${CONTACT_ROW}    timeout=10s
     Click Element    ${CONTACT_ROW}
     Wait Until Page Contains    CONTACT DATA    timeout=10s

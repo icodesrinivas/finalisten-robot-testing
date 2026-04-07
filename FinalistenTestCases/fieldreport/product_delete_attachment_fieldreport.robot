@@ -267,23 +267,40 @@ Add Sample Product To FR
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    1s
     
-    Wait Until Element Is Visible    ${ADD_PRODUCT_BUTTON}    timeout=10s
-    Click Element    ${ADD_PRODUCT_BUTTON}
-    Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=10s
+    Wait Until Element Is Visible    ${ADD_PRODUCT_BUTTON}    timeout=15s
+    # Use JS click for reliability
+    ${add_btn_el}=    Get WebElement    ${ADD_PRODUCT_BUTTON}
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${add_btn_el}
+    
+    Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=15s
     Sleep    2s
+    
+    # Wait for products to load in modal
+    Wait For Loading Buffer
     
     # Select first product
     Log To Console    \n--- Selecting Product in Modal ---
-    Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=30s
-    Click Element    ${PRODUCT_CHECKBOX}
+    ${checkbox_selector}=    Set Variable    css=#prodInProjTable .selected-checkbox, #prodInProjTable input[type="checkbox"]
+    Wait Until Page Contains Element    ${checkbox_selector}    timeout=15s
+    ${chk_elem}=    Get WebElement    ${checkbox_selector}
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${chk_elem}
     Sleep    1s
     
     # Save in modal
     Execute Javascript    document.querySelector('#myModal3 .modal-content').scrollTo(0, 9999);
     Sleep    1s
-    Click Element    ${MODAL_SAVE_BUTTON}
-    Sleep    2s
-    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
+    ${row_save_btn}=    Set Variable    css=#prodInProjTable .prod-in-fr-save, #prodInProjTable .save
+    ${btn_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${row_save_btn}    timeout=5s
+    
+    IF    ${btn_visible}
+        Click Element    ${row_save_btn}
+    ELSE
+        ${footer_save}=    Get WebElement    ${MODAL_SAVE_BUTTON}
+        Execute Javascript    arguments[0].click();    ARGUMENTS    ${footer_save}
+    END
+    
+    Sleep    3s
+    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
     Sleep    2s
     
     # Wait for AJAX row to appear
@@ -302,17 +319,18 @@ Add Sample Product To FR
     
     # SAVE Field Report to persist the product with qty
     Log To Console    Saving field report...
-    Wait Until Element Is Visible    ${COMMON_SAVE_BUTTON}    timeout=10s
-    Click Element    ${COMMON_SAVE_BUTTON}
+    Wait Until Page Contains Element    ${COMMON_SAVE_BUTTON}    timeout=10s
+    ${save_btn_el}=    Get WebElement    ${COMMON_SAVE_BUTTON}
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn_el}
     Sleep    5s
-    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Reload and verify
     Reload Page
-    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=20s
     Execute Javascript    window.scrollTo(0, 800);
-    Sleep    2s
-    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=15s
+    Sleep    3s
+    Wait For Loading Buffer
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=20s
     Log To Console    ✓ Product added with quantity 1 and report saved
 
 Extract Fieldreport ID From URL

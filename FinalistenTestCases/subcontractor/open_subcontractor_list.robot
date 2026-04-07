@@ -11,7 +11,7 @@ Verify Subcontractor List Opens Successfully
     Open And Login
     Hover Over Register Menu
     Click On Subcontractor Menu
-    Wait Until Page Contains    Filters    timeout=10s
+    Wait Until Page Contains    SUBCONTRACTOR    timeout=10s
     Log To Console    "Filters text found. Subcontractor list opened successfully."
     Close Browser
 

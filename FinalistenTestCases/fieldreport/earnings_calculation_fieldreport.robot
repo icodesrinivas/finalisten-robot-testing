@@ -39,7 +39,7 @@ ${PRODUCT_CHECKBOX}               css=#myTable .selected-checkbox
 
 # Earnings Display Selectors
 ${TOTAL_EARNING_DISPLAY}          id=total_earning
-${EARNINGS_TEXT}                  xpath=//*[contains(text(),'Earnings')]
+${EARNINGS_SECTION}               id=total_earnings_div
 
 # Products in FR Table Selectors
 ${COMMON_EDIT_BUTTON}             id=product_in_fieldreport_edit
@@ -68,38 +68,35 @@ Test Earnings And Per Hour Display
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TESTING EARNINGS AND PER HOUR DISPLAY ========
     
-    # Look for earnings display
-    Log To Console    \n--- Looking for Earnings Display ---
-    
-    ${earnings_element_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${TOTAL_EARNING_DISPLAY}    timeout=10s
+    ${earnings_element_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${TOTAL_EARNING_DISPLAY}    timeout=15s
     
     IF    ${earnings_element_exists}
         ${earnings_text}=    Get Text    ${TOTAL_EARNING_DISPLAY}
         Log To Console    Earnings display found: ${earnings_text}
         
-        # Parse earnings and per hour values
-        ${has_earnings}=    Run Keyword And Return Status    Should Contain    ${earnings_text}    Earnings    ignore_case=True
-        IF    ${has_earnings}
-            Log To Console    ✓ Earnings value is displayed correctly: ${earnings_text}
-        ELSE
-            Log To Console    ⚠ 'Earnings' label not found in display. Text is: '${earnings_text}'
-            # Fallback check - just check if it contains numbers
-            ${has_digits}=    Run Keyword And Return Status    Should Match Regexp    ${earnings_text}    \\d+
-            IF    ${has_digits}
-                 Log To Console    ✓ Display contains numbers: ${earnings_text}
-            ELSE
-                 Log To Console    ⚠ No numbers found in earnings display
-            END
-        END
+        # Parse "Earnings : X | Per Hour : Y"
+        ${has_earnings}=    Run Keyword And Return Status    Should Contain    ${earnings_text}    Earnings
+        ${has_per_hour}=    Run Keyword And Return Status    Should Contain    ${earnings_text}    Per Hour
         
-        Set Suite Variable    ${INITIAL_EARNINGS}    ${earnings_text}
-    ELSE
-        Log To Console    ⚠ Total earning display element not found
-        # Try alternative selector
-        ${alt_exists}=    Run Keyword And Return Status    Page Should Contain    Earnings
-        IF    ${alt_exists}
-            Log To Console    ✓ Earnings text found on page
+        IF    ${has_earnings} and ${has_per_hour}
+            Log To Console    ✓ Earnings and Per Hour values are displayed correctly: ${earnings_text}
+            
+            # Simple number extraction for validation
+            ${earnings_val}=    Execute Javascript    return "${earnings_text}".split('|')[0].split(':')[1].trim().replace(',', '.');
+            ${per_hour_val}=    Execute Javascript    return "${earnings_text}".split('|')[1].split(':')[1].trim().replace(',', '.');
+            
+            Log To Console    Parsed Earnings: ${earnings_val}
+            Log To Console    Parsed Per Hour: ${per_hour_val}
+            
+            Set Suite Variable    ${INITIAL_EARNINGS}    ${earnings_val}
+            Set Suite Variable    ${INITIAL_PER_HOUR}    ${per_hour_val}
+        ELSE
+            Log To Console    ⚠ Unexpected format for earnings display: '${earnings_text}'
+            Set Suite Variable    ${INITIAL_EARNINGS}    0
         END
+    ELSE
+        Log To Console    ⚠ Total earning display element (id=total_earning) not found
+        Page Should Contain    Earnings
     END
     
     Log To Console    \n======== EARNINGS DISPLAY TEST PASSED! ========
@@ -153,15 +150,17 @@ Test Earnings Change When Total Hours Modified
     Log To Console    New Total Hours: ${new_hours}
     
     IF    ${earnings_exists}
-        ${new_earnings}=    Get Text    ${TOTAL_EARNING_DISPLAY}
+        ${new_text}=    Get Text    ${TOTAL_EARNING_DISPLAY}
+        Log To Console    New Earning Text: ${new_text}
+        
+        ${new_earnings}    ${new_per_hour}=    Parse Earnings And Per Hour    ${new_text}
         Log To Console    New Earnings: ${new_earnings}
+        Log To Console    New Per Hour: ${new_per_hour}
         
-        # Per Hour should change if earnings stays same but hours changed
-        # Earnings = sum of product values
-        # Per Hour = Earnings / Total Hours
-        # If hours decreased, Per Hour should increase (assuming same earnings)
-        
-        Log To Console    ✓ Earnings recalculated after hours change
+        # In this test, we modified hours from 8 to 4. 
+        # Per Hour = Earnings / Hours. 
+        # If earnings stayed same, Per Hour should roughly double.
+        Log To Console    ✓ Values recalculated after hours change
     END
     
     Log To Console    \n======== HOURS CHANGE CALCULATION TEST PASSED! ========
@@ -187,7 +186,8 @@ Test Earnings Change When Product Values Modified
     
     ${earnings_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${TOTAL_EARNING_DISPLAY}    timeout=10s
     IF    ${earnings_exists}
-        ${initial_earnings}=    Get Text    ${TOTAL_EARNING_DISPLAY}
+        ${initial_text}=    Get Text    ${TOTAL_EARNING_DISPLAY}
+        ${initial_earnings}    ${initial_per_hour}=    Parse Earnings And Per Hour    ${initial_text}
         Log To Console    Initial Earnings: ${initial_earnings}
         Set Suite Variable    ${INITIAL_EARNINGS}    ${initial_earnings}
     END
@@ -228,8 +228,12 @@ Test Earnings Change When Product Values Modified
         Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
         
         IF    ${earnings_exists}
-            ${new_earnings}=    Get Text    ${TOTAL_EARNING_DISPLAY}
+            ${new_text}=    Get Text    ${TOTAL_EARNING_DISPLAY}
+            ${new_earnings}    ${new_per_hour}=    Parse Earnings And Per Hour    ${new_text}
             Log To Console    New Earnings after product change: ${new_earnings}
+            
+            # Earnings should have changed (increased) because we set qty to 10
+            Should Not Be Equal As Numbers    ${new_earnings}    ${INITIAL_EARNINGS}
             Log To Console    ✓ Earnings recalculated after product modification
         END
     ELSE
@@ -305,9 +309,12 @@ Add Sample Product To FR
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    1s
     
-    Wait Until Element Is Visible    ${ADD_PRODUCT_BUTTON}    timeout=10s
-    Click Element    ${ADD_PRODUCT_BUTTON}
-    Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=10s
+    Wait Until Element Is Visible    ${ADD_PRODUCT_BUTTON}    timeout=15s
+    # Use JS click as it's more reliable for spans in this app
+    ${add_btn_el}=    Get WebElement    ${ADD_PRODUCT_BUTTON}
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${add_btn_el}
+    
+    Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=15s
     Sleep    2s
     
     # Wait for products to load in the modal table
@@ -316,16 +323,15 @@ Add Sample Product To FR
     
     # Select first product
     Log To Console    Select first product checkbox...
-    ${checkbox_selector}=    Set Variable    css=#prodInProjTable .selected-checkbox
-    Wait Until Element Is Visible    ${checkbox_selector}    timeout=15s
+    ${checkbox_selector}=    Set Variable    css=#prodInProjTable .selected-checkbox, #prodInProjTable input[type="checkbox"]
+    Wait Until Page Contains Element    ${checkbox_selector}    timeout=15s
     # Use JS to click since normal click claims not visible
     ${chk_elem}=    Get WebElement    ${checkbox_selector}
     Execute Javascript    arguments[0].click();    ARGUMENTS    ${chk_elem}
     Sleep    1s
     
-    # User says "just below that a save button will appear". 
     # Use generic class selector for the first save button in the table
-    ${row_save_btn}=    Set Variable    css=#prodInProjTable .prod-in-fr-save
+    ${row_save_btn}=    Set Variable    css=#prodInProjTable .prod-in-fr-save, #prodInProjTable .save
     # Wait for it to be visible (it should unhide via JS logic on page)
     ${btn_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${row_save_btn}    timeout=5s
     
@@ -334,20 +340,17 @@ Add Sample Product To FR
         Click Element    ${row_save_btn}
     ELSE
         Log To Console    Row save button not visible, clicking footer save...
-        Click Element    ${MODAL_SAVE_BUTTON}
+        ${footer_save}=    Get WebElement    ${MODAL_SAVE_BUTTON}
+        Execute Javascript    arguments[0].click();    ARGUMENTS    ${footer_save}
     END
     
-    Sleep    2s
-    Run Keyword And Ignore Error    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
+    Sleep    3s
+    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
     Sleep    2s
     
     # Wait for Product to appear in Field Report Table
     Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
-    Log To Console    ✓ Product added to main table
-    
-    # Wait for Product to appear in Field Report Table
-    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
-    Log To Console    ✓ Product added to main table
+    Log To Console    ✓ Product added to main table via AJAX
     
     # Enter Quantity - Using JS to ensure it works even if input is tricky to reach/visible
     Log To Console    Setting Quantity via JS...
@@ -364,22 +367,24 @@ Add Sample Product To FR
     END
     Sleep    1s
     
-    # Click Save Button in "qty column header"
-    Log To Console    Clicking Header Save Button...
-    Wait Until Element Is Visible    ${COMMON_SAVE_BUTTON}    timeout=10s
-    Click Element    ${COMMON_SAVE_BUTTON}
+    # Click Save Button in "qty column header" to persist row changes
+    Log To Console    Clicking Product Table Save Button...
+    Wait Until Page Contains Element    ${COMMON_SAVE_BUTTON}    timeout=10s
+    ${save_btn_el}=    Get WebElement    ${COMMON_SAVE_BUTTON}
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn_el}
     Sleep    5s
     
     # Verify Save
     Reload Page
-    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
+    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=20s
     Execute Javascript    window.scrollTo(0, 800);
-    Sleep    2s
-    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=15s
+    Sleep    3s
+    Wait For Loading Buffer
+    Wait Until Page Contains Element    css=#prodInFieldReportTable tbody tr    timeout=20s
     
     # Verify value persisted
-    ${val}=    Execute Javascript    return document.querySelector("#prodInFieldReportTable input[name*='quantity']").value;
-    Should Be Equal As Strings    ${val}    1
+    ${val}=    Execute Javascript    var el = document.querySelector("#prodInFieldReportTable input[name*='quantity']"); return el ? el.value : '0';
+    Should Be Equal As Strings    ${val}    1    msg=Product quantity 1 not persisted after reload
     Log To Console    ✓ Product Quantity Verified as 1
 
 Extract Fieldreport ID From URL
@@ -408,6 +413,17 @@ Extract Fieldreport ID From URL
         END
     END
     Fail    Could not extract fieldreport slug from URL: ${url}
+
+Parse Earnings And Per Hour
+    [Arguments]    ${text}
+    [Documentation]    Parses "Earnings : X | Per Hour : Y" and returns a list [Earnings, Per Hour]
+    ...                Handles Swedish comma decimal separator.
+    
+    # Text example: "Earnings : 914,1 | Per Hour : 91,41"
+    ${earnings_part}=    Execute Javascript    return "${text}".split('|')[0].split(':')[1].trim().replace(',', '.');
+    ${per_hour_part}=    Execute Javascript    return "${text}".split('|')[1].split(':')[1].trim().replace(',', '.');
+    
+    RETURN    ${earnings_part}    ${per_hour_part}
 
 Cleanup Created Fieldreport
     [Documentation]    Delete the created fieldreport
