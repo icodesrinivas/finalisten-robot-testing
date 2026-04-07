@@ -245,20 +245,9 @@ Test Earnings Change When Product Values Modified
     [Teardown]    Cleanup Created Fieldreport
 
 *** Keywords ***
-Login To Application
-    [Documentation]    Open browser and login to the application
-    Open Browser    ${LOGIN_URL}    ${BROWSER}    options=${CHROME_OPTIONS}
-    Maximize Browser Window
-    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=10s
-    Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Input Text    xpath=//input[@name='password']    ${PASSWORD}
-    Click Button    xpath=//button[@type='submit']
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
-    Log To Console    Successfully logged in
-
 Create Field Report With Product And Hours
     [Documentation]    Create a new field report with total hours and a product
-    Login To Application
+    Open And Login
     
     Log To Console    ======== CREATING FIELD REPORT WITH PRODUCT AND HOURS ========
     Go To    ${FIELDREPORT_CREATE_URL}
