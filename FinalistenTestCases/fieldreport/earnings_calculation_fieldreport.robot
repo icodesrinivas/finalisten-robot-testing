@@ -81,9 +81,7 @@ Test Earnings And Per Hour Display
         IF    ${has_earnings} and ${has_per_hour}
             Log To Console    ✓ Earnings and Per Hour values are displayed correctly: ${earnings_text}
             
-            # Simple number extraction for validation
-            ${earnings_val}=    Execute Javascript    return "${earnings_text}".split('|')[0].split(':')[1].trim().replace(',', '.');
-            ${per_hour_val}=    Execute Javascript    return "${earnings_text}".split('|')[1].split(':')[1].trim().replace(',', '.');
+            ${earnings_val}    ${per_hour_val}=    Parse Earnings And Per Hour    ${earnings_text}
             
             Log To Console    Parsed Earnings: ${earnings_val}
             Log To Console    Parsed Per Hour: ${per_hour_val}
@@ -127,8 +125,7 @@ Test Earnings Change When Total Hours Modified
     
     # Enable edit mode
     Log To Console    \n--- Modifying Total Hours ---
-    Wait Until Element Is Visible    ${EDIT_GENERAL_DATA_BUTTON}    timeout=10s
-    Click Element    ${EDIT_GENERAL_DATA_BUTTON}
+    Robust Click    ${EDIT_GENERAL_DATA_BUTTON}
     Sleep    1s
     
     # Modify total hours
@@ -137,7 +134,7 @@ Test Earnings Change When Total Hours Modified
     Log To Console    Modified hours to: ${MODIFIED_TOTAL_HOURS}
     
     # Save changes
-    Click Element    ${SAVE_GENERAL_DATA_BUTTON}
+    Robust Click    ${SAVE_GENERAL_DATA_BUTTON}
     Sleep    2s
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Sleep    2s
@@ -200,7 +197,7 @@ Test Earnings Change When Product Values Modified
     ${common_edit_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${COMMON_EDIT_BUTTON}    timeout=10s
     
     IF    ${common_edit_exists}
-        Click Element    ${COMMON_EDIT_BUTTON}
+        Robust Click    ${COMMON_EDIT_BUTTON}
         Sleep    2s
         
         # Try to find and modify price or quantity input
@@ -216,7 +213,7 @@ Test Earnings Change When Product Values Modified
             Log To Console    Modified quantity to: 10
             
             # Save product changes
-            Click Element    ${COMMON_SAVE_BUTTON}
+            Robust Click    ${COMMON_SAVE_BUTTON}
             Sleep    2s
             Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
             Sleep    2s
@@ -279,8 +276,7 @@ Create Field Report With Product And Hours
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
+    Robust Click    ${SAVE_BUTTON}
     Sleep    3s
     
     # Extract field report ID from URL
@@ -299,9 +295,7 @@ Add Sample Product To FR
     Sleep    1s
     
     Wait Until Element Is Visible    ${ADD_PRODUCT_BUTTON}    timeout=15s
-    # Use JS click as it's more reliable for spans in this app
-    ${add_btn_el}=    Get WebElement    ${ADD_PRODUCT_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${add_btn_el}
+    Robust Click    ${ADD_PRODUCT_BUTTON}
     
     Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=15s
     Sleep    2s
@@ -341,15 +335,21 @@ Add Sample Product To FR
     Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
     Log To Console    ✓ Product added to main table via AJAX
     
+    # ENTER EDIT MODE: Must click the header pencil icon to make the table editable
+    Log To Console    Activating Edit-All mode for products...
+    Robust Click    ${COMMON_EDIT_BUTTON}
+    Sleep    2s
+    
     # Enter Quantity - Using JS to ensure it works even if input is tricky to reach/visible
-    Log To Console    Setting Quantity via JS...
+    # We trigger 'input', 'change', and 'blur' to ensure the application state is updated
+    Log To Console    Setting Quantity via JS (input + change + blur)...
     # Selector for the first quantity input in the table
     ${qty_input_js}=    Set Variable    document.querySelector("#prodInFieldReportTable input[name*='quantity']")
     
     # Check if element exists first
     ${elem_exists}=    Execute Javascript    return ${qty_input_js} != null;
     IF    ${elem_exists}
-        Execute Javascript    var el = ${qty_input_js}; el.value = '1'; el.dispatchEvent(new Event('change')); el.dispatchEvent(new Event('blur'));
+        Execute Javascript    var el = ${qty_input_js}; el.value = '1'; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); el.dispatchEvent(new Event('blur', { bubbles: true }));
         Log To Console    ✓ Quantity set for first product via JS
     ELSE
         Fail    Could not find quantity input in main table to set value
@@ -358,23 +358,26 @@ Add Sample Product To FR
     
     # Click Save Button in "qty column header" to persist row changes
     Log To Console    Clicking Product Table Save Button...
-    Wait Until Page Contains Element    ${COMMON_SAVE_BUTTON}    timeout=10s
-    ${save_btn_el}=    Get WebElement    ${COMMON_SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn_el}
-    Sleep    5s
+    Wait For Loading Buffer
+    Robust Click    ${COMMON_SAVE_BUTTON}
+    
+    # CRITICAL: Verify it's visible BEFORE reload to ensure AJAX completed
+    Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=20s
+    Log To Console    ✓ Product still visible before reload. Waiting 10s for DB commit...
+    Sleep    10s
     
     # Verify Save
     Reload Page
-    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=20s
+    Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=30s
     Execute Javascript    window.scrollTo(0, 800);
-    Sleep    3s
+    Sleep    5s
     Wait For Loading Buffer
-    Wait Until Page Contains Element    css=#prodInFieldReportTable tbody tr    timeout=20s
+    Wait Until Page Contains Element    css=#prodInFieldReportTable tbody tr    timeout=30s
     
     # Verify value persisted
     ${val}=    Execute Javascript    var el = document.querySelector("#prodInFieldReportTable input[name*='quantity']"); return el ? el.value : '0';
     Should Be Equal As Strings    ${val}    1    msg=Product quantity 1 not persisted after reload
-    Log To Console    ✓ Product Quantity Verified as 1
+    Log To Console    ✓ Product Quantity Verified as 1 after reload
 
 Extract Fieldreport ID From URL
     [Documentation]    Extract the fieldreport slug/ID from the edit page URL

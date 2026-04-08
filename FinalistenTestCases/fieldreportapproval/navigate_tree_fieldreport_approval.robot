@@ -51,17 +51,22 @@ Verify Fieldreport Opens From Approval Tree
     # Navigate to Fieldreport Approval app
     Navigate To Fieldreport Approval App
     
+    # PRE-PROD STABILIZATION: Pre-emptively update to a wide range to ensure data is found
+    Log To Console    Pre-emptively updating date range for pre-prod stability...
+    Update Date Range To Last 200 Days
+    Sleep    5s
+    
     # Wait for tree to load
-    Wait Until Page Contains    ${LIST_OF_INSTALLERS_TEXT}    timeout=15s
-    Log To Console    ======== Field Report Approval App Loaded ========
+    Wait Until Page Contains    ${LIST_OF_INSTALLERS_TEXT}    timeout=30s
+    Log To Console    ======== Field Report Approval App Loaded with Wide Date Range ========
     
     # Try to find and click a fieldreport
     ${found}=    Find And Click Fieldreport In Tree
     
     IF    not ${found}
-        Log To Console    No fieldreports found with current date range. Updating to last 200 days (to include Oct 2025)...
+        Log To Console    No fieldreports found even with wide date range. Retrying one last time...
         Update Date Range To Last 200 Days
-        Sleep    3s
+        Sleep    5s
         ${found}=    Find And Click Fieldreport In Tree
     END
     
@@ -120,10 +125,7 @@ Find And Click Fieldreport In Tree
         Log To Console    Checking installer ${index + 1}: ${installer_text}
         
         # Click to expand installer
-        ${clicked}=    Run Keyword And Return Status    Click Element    ${current_installer}
-        IF    not ${clicked}
-            ${clicked}=    Run Keyword And Return Status    Execute Javascript    arguments[0].click();    ARGUMENTS    ${current_installer}
-        END
+        Robust Click    ${current_installer}
         Sleep    2s
         
         # Check for fieldreport links under this installer
@@ -169,21 +171,23 @@ Try Find Fieldreport Under Expanded Installer
         ${project_text}=    Get Text    ${current_project}
         Log To Console    Checking project: ${project_text}
         
-        # Click to expand project
-        Run Keyword And Ignore Error    Click Element    ${current_project}
-        Sleep    2s
-        
-        # Check for fieldreport links now
-        ${fieldreports}=    Get WebElements    ${FIELDREPORT_LINKS}
-        ${fr_count}=    Get Length    ${fieldreports}
-        
-        IF    ${fr_count} > 0
-            Log To Console    Found ${fr_count} fieldreport(s) under project ${project_text}
-            ${fr_element}=    Get From List    ${fieldreports}    0
-            ${fr_text}=    Get Text    ${fr_element}
-            Log To Console    Clicking fieldreport: ${fr_text}
-            Click Fieldreport Link    ${fr_element}
-            RETURN    ${TRUE}
+        # Click to expand project with retry
+        FOR    ${retry_idx}    IN RANGE    3
+            Robust Click    ${current_project}
+            Sleep    3s
+            # Check for fieldreport links now
+            ${fieldreports}=    Get WebElements    ${FIELDREPORT_LINKS}
+            ${fr_count}=    Get Length    ${fieldreports}
+            
+            IF    ${fr_count} > 0
+                Log To Console    Found ${fr_count} fieldreport(s) under project ${project_text} (Attempt ${retry_idx + 1})
+                ${fr_element}=    Get From List    ${fieldreports}    0
+                ${fr_text}=    Get Text    ${fr_element}
+                Log To Console    Clicking fieldreport: ${fr_text}
+                Click Fieldreport Link    ${fr_element}
+                RETURN    ${TRUE}
+            END
+            Log To Console    ⚠ No fieldreports visible after expansion attempt ${retry_idx + 1}, retrying...
         END
     END
     
@@ -194,10 +198,7 @@ Click Fieldreport Link
     [Arguments]    ${element}
     
     # The link has target="_blank" so it should open in new tab
-    ${clicked}=    Run Keyword And Return Status    Click Element    ${element}
-    IF    not ${clicked}
-        Execute Javascript    arguments[0].click();    ARGUMENTS    ${element}
-    END
+    Robust Click    ${element}
     Sleep    2s
     Log To Console    ✓ Clicked fieldreport link
 

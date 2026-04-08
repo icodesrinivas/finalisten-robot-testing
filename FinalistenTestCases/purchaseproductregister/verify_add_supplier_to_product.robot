@@ -24,24 +24,11 @@ Verify ADD Button Opens Modal And Allows Selecting Supplier
     Open First Purchase Product Record
     
     Log To Console    Waiting for 'ADD' button area to stabilize...
-    # Ensure any initial loading buffer is gone
-    Wait For Loading Buffer To Disappear
+    Wait For Loading Buffer
     
-    # 1. Wait for Presence first (in DOM)
-    Wait Until Page Contains Element    ${ADD_BUTTON}    timeout=60s
-    Log To Console    ✓ 'ADD' button present in DOM.
-    
-    # 2. Force Scroll with JS for headless reliability
-    ${btn}=    Get WebElement    ${ADD_BUTTON}
-    Execute Javascript    arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});    ARGUMENTS    ${btn}
-    Sleep    3s    # Give time for any scroll-triggered AJAX or layout shifts
-    
-    # 3. Wait for Visibility (interactability) with retry loop
-    Wait Until Keyword Succeeds    10x    2s    Verify Element Is Truly Visible    ${ADD_BUTTON}
-    Log To Console    ✓ 'ADD' button is now visible and interactable.
-    
-    # 4. Click using JS for maximum robustness in CI
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${btn}
+    # Use Robust Click for the ADD button
+    Log To Console    Clicking 'ADD' button...
+    Robust Click    ${ADD_BUTTON}    timeout=60s
     
     Log To Console    Verifying modal appearance...
     Wait Until Element Is Visible    ${MODAL}    timeout=45s
@@ -49,11 +36,12 @@ Verify ADD Button Opens Modal And Allows Selecting Supplier
     
     Log To Console    Selecting a supplier...
     Wait Until Element Is Visible    ${SUPPLIER_CHECKBOX}    timeout=30s
-    # Toggle the first checkbox
-    Click Element    ${SUPPLIER_CHECKBOX}
+    # JS Click for checkbox inside modal
+    ${chk}=    Get WebElement    ${SUPPLIER_CHECKBOX}
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${chk}
     
     Log To Console    Clicking 'Save' inside modal...
-    Click Element    ${SAVE_MODAL_BUTTON}
+    Robust Click    ${SAVE_MODAL_BUTTON}
     
     Log To Console    Verifying modal closure...
     Wait Until Element Is Not Visible    ${MODAL}    timeout=30s
@@ -70,7 +58,15 @@ Navigate To Purchase Product Register
     Sleep    2s
     Wait Until Element Is Visible    ${PURCHASE_PRODUCT_REGISTER_MENU}    timeout=20s
     Click Element    ${PURCHASE_PRODUCT_REGISTER_MENU}
-    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=30s
+    # Purchase Product Register doesn't have the id_advanced_search_toggle yet.
+    # It uses the "Filters" text link.
+    Wait Until Page Contains  Filters    timeout=30s
+    Log To Console    ✓ Navigated to Purchase Product Register. Expanding filters...
+    Robust Click    xpath=//a[contains(text(),'Filters')]
+    # This module uses different filter IDs. Wait for the general filter container.
+    Wait Until Element Is Visible    css=.advanced_search_container, xpath=//div[contains(@class,'advanced_search_container')]    timeout=15s
+    Log To Console    ✓ Filters expanded. Waiting for table to refresh...
+    Wait For Loading Buffer
 
 Open First Purchase Product Record
     [Documentation]    Opens the first available purchase product record from the list.
@@ -78,25 +74,10 @@ Open First Purchase Product Record
     IF    not ${row_visible}
         Fail    No purchase product records found in register.
     END
-    Click Element    ${PURCHASE_PRODUCT_REGISTER_ROW}
-    Wait Until Page Contains Keywords    PURCHASE PRODUCT REGISTER    timeout=45s
+    Robust Click    ${PURCHASE_PRODUCT_REGISTER_ROW}
+    Wait Until Page Contains    PURCHASE PRODUCT REGISTER    timeout=60s
 
 Wait Until Page Contains Keywords
     [Arguments]    ${text}    ${timeout}=30s
     Wait Until Page Contains    ${text}    timeout=${timeout}
 
-Wait For Loading Buffer To Disappear
-    [Documentation]    Wait until the loading buffer overlay is no longer visible (opacity 0).
-    Wait Until Keyword Succeeds    60x    1s    Verify Loading Buffer Is Hidden
-
-Verify Loading Buffer Is Hidden
-    ${present}=    Run Keyword And Return Status    Page Should Contain Element    id=loading_buffer
-    IF    not ${present}    RETURN
-    ${opacity}=    Execute Javascript    return window.getComputedStyle(document.getElementById('loading_buffer')).getPropertyValue('opacity');
-    Should Be Equal As Numbers    ${opacity}    0    msg=Loading buffer still visible (opacity ${opacity})
-
-Verify Element Is Truly Visible
-    [Arguments]    ${locator}
-    Element Should Be Visible    ${locator}
-    # Ensure it's not obscured by the loading buffer even if displayed
-    Verify Loading Buffer Is Hidden

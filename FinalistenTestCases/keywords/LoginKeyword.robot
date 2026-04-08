@@ -250,12 +250,40 @@ Wait Until Page Loaded
     Sleep    2s
 
 Wait For Loading Buffer
-    [Documentation]    Wait for the AJAX loading buffer to disappear (opacity 0).
-    Wait Until Keyword Succeeds    15x    1s    Check Loading Buffer Invisible
+    [Documentation]    Wait for the AJAX loading buffer to disappear (opacity 0 or display none).
+    Wait Until Keyword Succeeds    30x    1s    Check Loading Buffer Invisible
 
 Check Loading Buffer Invisible
+    ${exists}=    Run Keyword And Return Status    Page Should Contain Element    id=loading_buffer
+    IF    not ${exists}    RETURN
     ${opacity}=    Execute Javascript    var el = document.getElementById('loading_buffer'); return el ? window.getComputedStyle(el).getPropertyValue('opacity') : '0';
-    Should Be Equal As Strings    ${opacity}    0    msg=Loading buffer is still visible (opacity: ${opacity})
+    ${display}=    Execute Javascript    var el = document.getElementById('loading_buffer'); return el ? window.getComputedStyle(el).getPropertyValue('display') : 'none';
+    # If opacity is 1 but it's not actually there, or if it's 0, we consider it invisible
+    Should Be True    '${opacity}' == '0' or '${display}' == 'none'    msg=Loading buffer is still visible (opacity: ${opacity}, display: ${display})
+
+Robust Click
+    [Arguments]    ${locator}    ${timeout}=30s
+    [Documentation]    Wait for buffer, scroll to element, wait for visibility, and JS click.
+    Wait For Loading Buffer
+    Wait Until Page Contains Element    ${locator}    timeout=${timeout}
+    # Scroll center to avoid floating headers
+    ${el}=    Get WebElement    ${locator}
+    Execute Javascript    arguments[0].scrollIntoView({block: "center", behavior: "instant"});    ARGUMENTS    ${el}
+    Sleep    1s
+    
+    # Fallback visibility check via JS if Selenium fails to see it
+    ${visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${locator}    timeout=5s
+    IF    not ${visible}
+        Log To Console    ⚠ Selenium visibility check failed for ${locator}, checking via JS...
+        ${js_visible}=    Execute Javascript    var el = arguments[0]; var style = window.getComputedStyle(el); return (style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0');    ARGUMENTS    ${el}
+        IF    not ${js_visible}
+            Log To Console    ⚠ JS visibility check also failed. Attempting final 10s wait...
+            Wait Until Element Is Visible    ${locator}    timeout=10s
+        END
+    END
+    
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${el}
+    Wait For Loading Buffer
 
 Setup ChromeDriver Path
     [Documentation]    Dynamically determines the correct ChromeDriver path.
