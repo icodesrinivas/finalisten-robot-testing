@@ -13,25 +13,22 @@ Library          Collections
 Resource         ../keywords/LoginKeyword.robot
 
 *** Variables ***
-# URLs (configurable for different environments)
-${BASE_URL}                       https://preproderp.finalisten.se
-${LOGIN_URL}                      ${BASE_URL}/login/
-${HOMEPAGE_URL}                   ${BASE_URL}/homepage/
-${FIELDREPORT_CREATE_URL}         ${BASE_URL}/fieldreport/create/
-
 # Form Field Selectors
 ${CUSTOMER_DROPDOWN}              id=id_related_customer
 ${PROJECT_DROPDOWN}               id=id_related_project
 ${SUBPROJECT_DROPDOWN}            id=id_related_subproject
 
+# Test State
+${CREATED_FIELDREPORT_ID}         ${EMPTY}
+
 *** Test Cases ***
 Test Customer Change Clears And Reloads Project Dropdown
     [Documentation]    Point 30: Change Customer and verify Project dropdown clears and reloads.
     [Tags]    fieldreport    cascade    dropdown
-    [Setup]    Login To Application
+    [Setup]    Open And Login
     
     Log To Console    ======== TEST: Customer Change Clears Project ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Go To    https://preproderp.finalisten.se/fieldreport/create/
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Select first customer
@@ -79,15 +76,15 @@ Test Customer Change Clears And Reloads Project Dropdown
         Log To Console    ⚠ Only one customer available, cannot test change behavior
     END
     
-    [Teardown]    Close All Browsers
+    [Teardown]    Cleanup Created Fieldreport
 
 Test Project Change Clears And Reloads SubProject Dropdown
     [Documentation]    Point 31: Change Project and verify SubProject dropdown clears and reloads.
     [Tags]    fieldreport    cascade    dropdown
-    [Setup]    Login To Application
+    [Setup]    Open And Login
     
     Log To Console    ======== TEST: Project Change Clears SubProject ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Go To    https://preproderp.finalisten.se/fieldreport/create/
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Select customer
@@ -144,15 +141,15 @@ Test Project Change Clears And Reloads SubProject Dropdown
         Log To Console    ⚠ No projects available for selected customer
     END
     
-    [Teardown]    Close All Browsers
+    [Teardown]    Cleanup Created Fieldreport
 
 Test Projects Belong To Selected Customer
     [Documentation]    Point 32: Verify that Projects shown belong only to selected Customer.
     [Tags]    fieldreport    cascade    dropdown    integrity
-    [Setup]    Login To Application
+    [Setup]    Open And Login
     
     Log To Console    ======== TEST: Projects Belong to Customer ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Go To    https://preproderp.finalisten.se/fieldreport/create/
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Get initial project count (before selecting customer)
@@ -190,15 +187,15 @@ Test Projects Belong To Selected Customer
         Log To Console    ✓ Projects are filtered by Customer selection
     END
     
-    [Teardown]    Close All Browsers
+    [Teardown]    Cleanup Created Fieldreport
 
 Test SubProjects Belong To Selected Project
     [Documentation]    Point 33: Verify that SubProjects shown belong only to selected Project.
     [Tags]    fieldreport    cascade    dropdown    integrity
-    [Setup]    Login To Application
+    [Setup]    Open And Login
     
     Log To Console    ======== TEST: SubProjects Belong to Project ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Go To    https://preproderp.finalisten.se/fieldreport/create/
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Select customer
@@ -243,16 +240,4 @@ Test SubProjects Belong To Selected Project
         END
     END
     
-    [Teardown]    Close All Browsers
-
-*** Keywords ***
-Login To Application
-    [Documentation]    Open browser and login to the application
-    Open Browser    ${LOGIN_URL}    ${BROWSER}    options=${CHROME_OPTIONS}
-    Maximize Browser Window
-    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=10s
-    Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Input Text    xpath=//input[@name='password']    ${PASSWORD}
-    Click Button    xpath=//button[@type='submit']
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
-    Log To Console    Successfully logged in
+    [Teardown]    Cleanup Created Fieldreport

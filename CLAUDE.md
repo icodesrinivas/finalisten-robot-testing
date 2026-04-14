@@ -41,3 +41,4 @@
     - **Database Connectivity**: Ensure `DATABASE_URL` is set to allow the `Open And Login` keyword to update user settings.
     - **Dynamic Data Selection**: To avoid `NoSuchElementException` when hardcoded labels (like "Arcona Aktiebolag") are missing, always use `Setup Dynamic Test Data` at the start of tests. This fetches valid customer, project, and installer names directly from the database and stores them in `${DB_CUSTOMER}`, `${DB_PROJECT}`, and `${DB_INSTALLER}`.
     - **Robust ID Extraction**: Use `Extract And Verify Fieldreport ID` after saving a new record. This ensures the record was successfully created and the ID is available for downstream steps or cleanup.
+- **Standardized Cleanup**: Always use `[Teardown] Cleanup Created Fieldreport` (or custom multi-ID cleanup if multiple are created). This keyword now automatically handles unapproval before deletion to ensure resources are always removed, even in failure scenarios.

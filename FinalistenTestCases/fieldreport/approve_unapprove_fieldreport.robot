@@ -14,26 +14,6 @@ Library          Collections
 Resource         ../keywords/LoginKeyword.robot
 
 *** Variables ***
-# URLs (configurable for different environments)
-${BASE_URL}                       https://preproderp.finalisten.se
-${LOGIN_URL}                      ${BASE_URL}/login/
-${HOMEPAGE_URL}                   ${BASE_URL}/homepage/
-${FIELDREPORT_LIST_URL}           ${BASE_URL}/fieldreport/list/
-${FIELDREPORT_CREATE_URL}         ${BASE_URL}/fieldreport/create/
-
-# Form Field Selectors
-${CUSTOMER_DROPDOWN}              id=id_related_customer
-${PROJECT_DROPDOWN}               id=id_related_project
-${SUBPROJECT_DROPDOWN}            id=id_related_subproject
-${WORK_DATE_INPUT}                id=id_work_date
-${TOTAL_HOURS_INPUT}              id=id_total_work_hours
-${INSTALLER_DROPDOWN}             id=id_installer_name
-${SAVE_BUTTON}                    css=button.save
-
-# Action Buttons
-${APPROVE_BUTTON}                 id=id_fieldreport_approve_btn
-${DELETE_BUTTON}                  id=remove_fieldreport
-
 # Initial Values (for creation)
 ${INITIAL_WORK_DATE}              2025-10-20
 
@@ -122,18 +102,17 @@ Create Test Field Report
     Open And Login
     Setup Dynamic Test Data
     
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Go To    https://preproderp.finalisten.se/fieldreport/create/
     # Use dynamic data and fallback if specific one fails
     Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
-    Input Text    ${WORK_DATE_INPUT}    ${INITIAL_WORK_DATE}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Input Text    id=id_work_date    ${INITIAL_WORK_DATE}
+    Select From List By Index    id=id_installer_name    1
     
     # Save the field report
     # Use explicit click and wait for location change
-    Scroll Element Into View    ${SAVE_BUTTON}
-    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${SAVE_BUTTON}
+    ${save_btn}=    Wait Until Element Is Visible    css=button.save    timeout=10s
+    Click Element    ${save_btn}
     
     # Wait for the redirect to the edit page (URL contains /edit/)
     Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/
@@ -141,80 +120,3 @@ Create Test Field Report
     ${id}=    Extract And Verify Fieldreport ID
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}
     Log To Console    ✓ Created FR: ${id}
-
-Extract And Verify Fieldreport ID
-    [Documentation]    Extracts the field report ID from the current URL and verifies it's valid.
-    ${current_url}=    Get Location
-    Should Contain    ${current_url}    /edit/    msg=Failed to create field report, URL does not contain /edit/
-    ${fieldreport_id}=    Extract Fieldreport ID From URL    ${current_url}
-    Should Not Be Empty    ${fieldreport_id}    msg=Extracted field report ID is empty.
-    Log To Console    Extracted Field Report ID: ${fieldreport_id}
-    RETURN    ${fieldreport_id}
-
-Extract Fieldreport ID From URL
-    [Documentation]    Extract the fieldreport slug/ID from the edit page URL
-    ...                URLs now use alphanumeric slugs like: /fieldreport/list/{SLUG}/edit/
-    [Arguments]    ${url}
-    ${parts}=    Split String    ${url}    /
-    ${num_parts}=    Get Length    ${parts}
-    # Look for the slug which is the part before 'edit' in the URL
-    FOR    ${i}    ${part}    IN ENUMERATE    @{parts}
-        ${next_idx}=    Evaluate    ${i} + 1
-        IF    ${next_idx} < ${num_parts}
-            ${next_part}=    Evaluate    $parts[${next_idx}]
-            IF    '${next_part}' == 'edit'
-                RETURN    ${part}
-            END
-        END
-    END
-    # Fallback: Try matching alphanumeric slug pattern
-    FOR    ${i}    ${part}    IN ENUMERATE    @{parts}
-        ${is_slug}=    Run Keyword And Return Status    Should Match Regexp    ${part}    ^[A-Za-z0-9]{5,8}$
-        IF    ${is_slug}
-            RETURN    ${part}
-        END
-    END
-    Fail    Could not extract fieldreport slug from URL: ${url}
-
-Cleanup Created Fieldreport
-    [Documentation]    Delete the created fieldreport to maintain data cleanliness
-    Log To Console    ======== CLEANUP: Deleting Field Report ========
-    
-    ${has_id}=    Run Keyword And Return Status    Should Not Be Empty    ${CREATED_FIELDREPORT_ID}
-    
-    IF    ${has_id}
-        ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
-        Sleep    2s
-        
-        # First unapprove if approved (delete is disabled for approved reports)
-        ${approve_btn_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${APPROVE_BUTTON}    timeout=5s
-        IF    ${approve_btn_exists}
-            ${btn_value}=    Get Element Attribute    ${APPROVE_BUTTON}    value
-            ${is_approved}=    Run Keyword And Return Status    Should Contain    ${btn_value}    Unapprove
-            IF    ${is_approved}
-                Log To Console    Field Report is approved - unapproving first...
-                Click Element    ${APPROVE_BUTTON}
-                Sleep    1s
-                Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
-                Sleep    2s
-            END
-        END
-        
-        # Now delete
-        ${delete_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${DELETE_BUTTON}    timeout=10s
-        
-        IF    ${delete_exists}
-            Log To Console    Deleting Field Report ID: ${CREATED_FIELDREPORT_ID}
-            # Use JavaScript click to avoid interception
-            ${delete_btn}=    Get WebElement    ${DELETE_BUTTON}
-            Execute Javascript    arguments[0].click();    ARGUMENTS    ${delete_btn}
-            Sleep    1s
-            Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
-            Sleep    2s
-            Log To Console    ✓ Field Report ${CREATED_FIELDREPORT_ID} deleted successfully!
-        END
-    END
-    
-    Close All Browsers
-

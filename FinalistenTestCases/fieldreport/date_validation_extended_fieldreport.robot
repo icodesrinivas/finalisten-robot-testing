@@ -12,13 +12,6 @@ Library          String
 Resource         ../keywords/LoginKeyword.robot
 
 *** Variables ***
-# URLs (configurable for different environments)
-${BASE_URL}                       https://preproderp.finalisten.se
-${LOGIN_URL}                      ${BASE_URL}/login/
-${HOMEPAGE_URL}                   ${BASE_URL}/homepage/
-${FIELDREPORT_LIST_URL}           ${BASE_URL}/fieldreport/list/
-${FIELDREPORT_CREATE_URL}         ${BASE_URL}/fieldreport/create/
-
 # Form Field Selectors
 ${CUSTOMER_DROPDOWN}              id=id_related_customer
 ${PROJECT_DROPDOWN}               id=id_related_project
@@ -26,7 +19,6 @@ ${SUBPROJECT_DROPDOWN}            id=id_related_subproject
 ${WORK_DATE_INPUT}                id=id_work_date
 ${INSTALLER_DROPDOWN}             id=id_installer_name
 ${SAVE_BUTTON}                    css=button.save
-${DELETE_BUTTON}                  id=remove_fieldreport
 
 # Test State
 ${CREATED_FIELDREPORT_ID}         ${EMPTY}
@@ -35,24 +27,15 @@ ${CREATED_FIELDREPORT_ID}         ${EMPTY}
 Test Work Date Today Accepted
     [Documentation]    Point 50: Enter Work Date as today's date and verify FR is created successfully.
     [Tags]    fieldreport    date    validation    positive
-    [Setup]    Login To Application
+    [Setup]    Open And Login
     
     Log To Console    ======== TEST: Work Date = Today ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Go To    https://preproderp.finalisten.se/fieldreport/create/
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields
-    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
-    ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Index    ${PROJECT_DROPDOWN}    1
-    ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
+    Setup Dynamic Test Data
+    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Get today's date in YYYY-MM-DD format
@@ -62,8 +45,8 @@ Test Work Date Today Accepted
     Input Text    ${WORK_DATE_INPUT}    ${today_date}
     
     # Save
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
+    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
+    Click Element    ${save_btn}
     Sleep    3s
     
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
@@ -74,36 +57,27 @@ Test Work Date Today Accepted
     ${saved}=    Run Keyword And Return Status    Should Contain    ${current_url}    /edit/
     
     IF    ${saved}
-        ${fieldreport_id}=    Extract Fieldreport ID From URL    ${current_url}
-        Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}
-        Log To Console    ✓ Today's date accepted - FR created: ${fieldreport_id}
+        ${id}=    Extract And Verify Fieldreport ID
+        Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}
+        Log To Console    ✓ Today's date accepted - FR created: ${id}
     ELSE
         Log To Console    ⚠ Today's date was not accepted
     END
     
-    [Teardown]    Cleanup If Exists
+    [Teardown]    Cleanup Created Fieldreport
 
 Test Work Date Tomorrow Future Validation
     [Documentation]    Point 51: Enter Work Date as tomorrow (future) and verify system validation.
     [Tags]    fieldreport    date    validation    negative    future
-    [Setup]    Login To Application
+    [Setup]    Open And Login
     
     Log To Console    ======== TEST: Work Date = Tomorrow (Future) ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Go To    https://preproderp.finalisten.se/fieldreport/create/
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields
-    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
-    ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Index    ${PROJECT_DROPDOWN}    1
-    ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
+    Setup Dynamic Test Data
+    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Use a far future date (beyond allowed range)
@@ -112,8 +86,8 @@ Test Work Date Tomorrow Future Validation
     Input Text    ${WORK_DATE_INPUT}    ${future_date}
     
     # Try to save
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
+    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
+    Click Element    ${save_btn}
     Sleep    2s
     
     ${alert}=    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
@@ -129,35 +103,26 @@ Test Work Date Tomorrow Future Validation
     ELSE
         ${saved}=    Run Keyword And Return Status    Should Contain    ${current_url}    /edit/
         IF    ${saved}
-            ${fieldreport_id}=    Extract Fieldreport ID From URL    ${current_url}
-            Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}
+            ${id}=    Extract And Verify Fieldreport ID
+            Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}
             Log To Console    ⚠ Future date was ACCEPTED - may need review
         END
     END
     
-    [Teardown]    Cleanup If Exists
+    [Teardown]    Cleanup Created Fieldreport
 
 Test Work Date Weekend Handling
     [Documentation]    Point 52: Enter Work Date on weekend and verify behavior.
     [Tags]    fieldreport    date    validation    weekend
-    [Setup]    Login To Application
+    [Setup]    Open And Login
     
     Log To Console    ======== TEST: Work Date on Weekend ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Go To    https://preproderp.finalisten.se/fieldreport/create/
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields
-    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
-    ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Index    ${PROJECT_DROPDOWN}    1
-    ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
+    Setup Dynamic Test Data
+    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # October 18, 2025 is a Saturday
@@ -166,8 +131,8 @@ Test Work Date Weekend Handling
     Input Text    ${WORK_DATE_INPUT}    ${weekend_date}
     
     # Try to save
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
+    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
+    Click Element    ${save_btn}
     Sleep    3s
     
     ${alert}=    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
@@ -178,40 +143,30 @@ Test Work Date Weekend Handling
     ${saved}=    Run Keyword And Return Status    Should Contain    ${current_url}    /edit/
     
     IF    ${saved}
-        ${fieldreport_id}=    Extract Fieldreport ID From URL    ${current_url}
-        Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}
-        Log To Console    ✓ Weekend date was ACCEPTED - FR created: ${fieldreport_id}
+        ${id}=    Extract And Verify Fieldreport ID
+        Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}
+        Log To Console    ✓ Weekend date was ACCEPTED - FR created: ${id}
     ELSE
         Log To Console    ✓ Weekend date was REJECTED (if weekend restriction exists)
     END
     
-    [Teardown]    Cleanup If Exists
+    [Teardown]    Cleanup Created Fieldreport
 
 Test Leap Year Date Handling
     [Documentation]    Point 53: Enter leap year date (February 29) and verify handling.
     [Tags]    fieldreport    date    validation    leapyear
-    [Setup]    Login To Application
+    [Setup]    Open And Login
     
     Log To Console    ======== TEST: Leap Year Date (Feb 29) ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Go To    https://preproderp.finalisten.se/fieldreport/create/
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields
-    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
-    ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Index    ${PROJECT_DROPDOWN}    1
-    ${element}=    Get WebElement    ${PROJECT_DROPDOWN}
-    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
-    
-    Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
+    Setup Dynamic Test Data
+    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # 2024 is a leap year, Feb 29 exists
-    # Note: This may be in closed period, so we're testing date parsing not period validation
     ${leap_date}=    Set Variable    2024-02-29
     Log To Console    Setting Work Date to leap year date: ${leap_date}
     Input Text    ${WORK_DATE_INPUT}    ${leap_date}
@@ -225,66 +180,22 @@ Test Leap Year Date Handling
     Log To Console    ✓ Leap year date (Feb 29, 2024) is valid date
     
     # Try to save (may fail due to closed period, but date format is valid)
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
+    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
+    Click Element    ${save_btn}
     Sleep    2s
     
     ${alert}=    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
     Log To Console    Alert (expected for closed period): ${alert}
     Sleep    2s
     
+    # If unexpectedly submitted, capture ID for cleanup
+    ${saved}=    Run Keyword And Return Status    Location Should Contain    /edit/
+    IF    ${saved}
+        ${id}=    Extract And Verify Fieldreport ID
+        Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}
+    END
+    
     # The key test is that leap year date is parsed correctly
     Log To Console    ✓ Leap year date format handled correctly
     
-    [Teardown]    Close All Browsers
-
-*** Keywords ***
-Login To Application
-    [Documentation]    Open browser and login to the application
-    Open Browser    ${LOGIN_URL}    ${BROWSER}    options=${CHROME_OPTIONS}
-    Maximize Browser Window
-    Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=10s
-    Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Input Text    xpath=//input[@name='password']    ${PASSWORD}
-    Click Button    xpath=//button[@type='submit']
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=15s
-    Log To Console    Successfully logged in
-
-Extract Fieldreport ID From URL
-    [Documentation]    Extract the fieldreport slug/ID from the edit page URL
-    ...                URLs now use alphanumeric slugs like: /fieldreport/list/{SLUG}/edit/
-    [Arguments]    ${url}
-    ${parts}=    Split String    ${url}    /
-    ${num_parts}=    Get Length    ${parts}
-    # Look for the slug which is the part before 'edit' in the URL
-    FOR    ${i}    ${part}    IN ENUMERATE    @{parts}
-        ${next_idx}=    Evaluate    ${i} + 1
-        IF    ${next_idx} < ${num_parts}
-            ${next_part}=    Evaluate    $parts[${next_idx}]
-            IF    '${next_part}' == 'edit'
-                RETURN    ${part}
-            END
-        END
-    END
-    # Fallback: Try matching alphanumeric slug pattern
-    FOR    ${i}    ${part}    IN ENUMERATE    @{parts}
-        ${is_slug}=    Run Keyword And Return Status    Should Match Regexp    ${part}    ^[A-Za-z0-9]{5,8}$
-        IF    ${is_slug}
-            RETURN    ${part}
-        END
-    END
-    Fail    Could not extract fieldreport slug from URL: ${url}
-
-Cleanup If Exists
-    ${has_id}=    Run Keyword And Return Status    Should Not Be Empty    ${CREATED_FIELDREPORT_ID}
-    IF    ${has_id}
-        ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
-        Sleep    2s
-        ${delete_btn}=    Get WebElement    ${DELETE_BUTTON}
-        Execute Javascript    arguments[0].click();    ARGUMENTS    ${delete_btn}
-        Sleep    1s
-        Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
-        Log To Console    ✓ Cleaned up FR
-    END
-    Close All Browsers
+    [Teardown]    Cleanup Created Fieldreport

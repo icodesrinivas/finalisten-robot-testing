@@ -14,13 +14,6 @@ Library          Collections
 Resource         ../keywords/LoginKeyword.robot
 
 *** Variables ***
-# URLs (configurable for different environments)
-${BASE_URL}                       https://preproderp.finalisten.se
-${LOGIN_URL}                      ${BASE_URL}/login/
-${HOMEPAGE_URL}                   ${BASE_URL}/homepage/
-${FIELDREPORT_LIST_URL}           ${BASE_URL}/fieldreport/list/
-${FIELDREPORT_CREATE_URL}         ${BASE_URL}/fieldreport/create/
-
 # Form Field Selectors
 ${CUSTOMER_DROPDOWN}              id=id_related_customer
 ${PROJECT_DROPDOWN}               id=id_related_project
@@ -33,7 +26,6 @@ ${SAVE_BUTTON}                    css=button.save
 
 # Action Buttons
 ${COPY_BUTTON}                    id=id_fieldreport_copy_button
-${DELETE_BUTTON}                  id=remove_fieldreport
 
 # Initial Values (for creation)
 ${INITIAL_WORK_DATE}              2025-10-31
@@ -79,28 +71,15 @@ Test Copy Field Report Creates Duplicate
     # ======== CLICK COPY BUTTON ========
     Log To Console    \n--- Clicking COPY Button ---
     
-    # Check if button exists and is enabled
-    Element Should Be Visible    ${COPY_BUTTON}
-    
-    # Use JS to click if standard click fails or to debug
-    # Click Element    ${COPY_BUTTON}
-    
-    # Trying JS Click to ensure event firing
-    ${copy_btn}=    Get WebElement    ${COPY_BUTTON}
+    Wait Until Element Is Visible    ${COPY_BUTTON}    timeout=10s
     ${copy_url_attr}=    Get Element Attribute    ${COPY_BUTTON}    url-copy-fieldreport
     Log To Console    Copy URL from attribute: ${copy_url_attr}
     
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${copy_btn}
+    Click Element    ${COPY_BUTTON}
     Sleep    1s
     
-    # Handle confirmation alert if present
-    # We use Run Keyword And Return Status to avoid failing if no alert (since we have fallback)
-    ${alert_status}=    Run Keyword And Return Status    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
-    IF    ${alert_status}
-         Log To Console    ✓ Alert handled (Accepted).
-    ELSE
-         Log To Console    ! No alert appeared.
-    END
+    # Handle confirmation alert
+    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
     
     Sleep    5s
     
@@ -108,96 +87,21 @@ Test Copy Field Report Creates Duplicate
     ${current_url}=    Get Location
     Log To Console    Current URL after Copy attempt: ${current_url}
     
-    # Check if ID changed (extraction logic)
-    ${copied_id_pre}=    Extract Fieldreport ID From URL    ${current_url}
+    # Check if ID changed
+    ${copied_id_pre}=    Run Keyword And Ignore Error    Extract And Verify Fieldreport ID
     
     # FALLBACK: If still on original ID or on list page, try navigating directly
-    IF    '${copied_id_pre}' == '${CREATED_FIELDREPORT_ID}' or '${current_url}' == '${FIELDREPORT_LIST_URL}'
-        Log To Console    ⚠ Copy button click didn't change page or redirected to list. Attempting direct navigation to: ${copy_url_attr}
-        Go To    ${BASE_URL}${copy_url_attr}
+    IF    '${current_url}' == '${FIELDREPORT_LIST_URL}' or '${copied_id_pre}[1]' == '${CREATED_FIELDREPORT_ID}'
+        Log To Console    ⚠ Copy action redirected to list or stayed on same ID. Attempting direct navigation...
+        Go To    https://preproderp.finalisten.se${copy_url_attr}
         Sleep    3s
-        ${current_url}=    Get Location
-        
-        # If we are on list page, find the newest record (presumably the copy)
-        IF    '${current_url}' == '${FIELDREPORT_LIST_URL}'
-            Log To Console    Redirected to list page. Finding newest field report...
-            # The list is usually sorted by newest first
-            Wait Until Element Is Visible    css=.fieldreport_rows    timeout=15s
-            ${newest_link}=    Get Element Attribute    xpath=//tr[contains(@class, 'fieldreport_rows')][1]//a[contains(@href, '/edit/')]    href
-            Log To Console    Found newest edit link: ${newest_link}
-            Go To    ${newest_link}
-            ${current_url}=    Get Location
-        END
-        
-        ${page_text}=    Get Text    tag=body
-        # Check if response contains ID (simple heuristic: look for numbers)
-        Log To Console    Response from Copy Endpoint: ${page_text}
-        
-        # Check if response contains ID (simple heuristic: look for numbers)
-        # If the response is JSON, strictly we should parse it, but let's assume it returns the ID or success msg.
-        # If it redirected, current_url would be different.
-        
-        # Does the response contain a new ID?
-        # Extract all numbers and see if any is > current ID?
-        # Or look for specific JSON pattern: {"id": 12345} ?
-        
-        # If the URL is still the copy URL, we assume we need to manually redirect to the edit page 
-        # based on the content.
-        
-        # Attempt to read slug from text - look for alphanumeric slug pattern following /list/
-        ${slug_matches}=    Get Regexp Matches    ${page_text}    /list/([A-Za-z0-9]{6,8})/    1
-        ${len_slug}=    Get Length    ${slug_matches}
-        IF    ${len_slug} > 0
-             ${possible_slug}=    Set Variable    ${slug_matches}[0]
-             Log To Console    Found possible slug in response using refined regex: ${possible_slug}
-             # Go to Edit page of this slug
-             Go To    ${FIELDREPORT_LIST_URL}${possible_slug}/edit/
-             ${current_url}=    Get Location
-        ELSE
-             # Fallback: try alphanumeric pattern as before but avoid 'fieldreport'
-             ${all_matches}=    Get Regexp Matches    ${page_text}    [A-Za-z0-9]{6,8}
-             ${found_match}=    Set Variable    ${False}
-             FOR    ${match}    IN    @{all_matches}
-                 IF    '${match}' != 'fieldrep' and '${match}' != 'fieldreport'
-                     ${possible_slug}=    Set Variable    ${match}
-                     Log To Console    Found possible slug in response (fallback): ${possible_slug}
-                     Go To    ${FIELDREPORT_LIST_URL}${possible_slug}/edit/
-                     ${current_url}=    Get Location
-                     ${found_match}=    Set Variable    ${True}
-                     BREAK
-                 END
-             END
-             
-             # Fallback: try numeric ID pattern if no slug found
-             IF    not ${found_match}
-                  ${matches}=    Get Regexp Matches    ${page_text}    \\d{5}
-                  ${len_matches}=    Get Length    ${matches}
-                  IF    ${len_matches} > 0
-                       ${possible_id}=    Set Variable    ${matches}[0]
-                       Log To Console    Found possible numeric ID in response: ${possible_id}
-                       Go To    ${FIELDREPORT_LIST_URL}${possible_id}/edit/
-                       ${current_url}=    Get Location
-                  ELSE
-                       Log To Console    Could not find slug or ID in response.
-                  END
-             END
-        END
+        Wait Until Keyword Succeeds    5x    2s    Location Should Contain    /edit/
     END
     
-    # Check for error messages (only if we are back on an edit page or similar)
-    ${page_source}=    Get Source
-    ${has_error}=    Run Keyword And Return Status    Should Contain    ${page_source}    error
-    IF    ${has_error}
-         Log To Console    ⚠ Error keyword found in source (post-copy check).
-    END
-    
-    Should Contain    ${current_url}    /edit/    msg=Should be on edit page of copied field report
-    
-    # Extract copied field report ID
-    ${copied_id}=    Extract Fieldreport ID From URL    ${current_url}
+    ${copied_id}=    Extract And Verify Fieldreport ID
     
     IF    '${copied_id}' == '${CREATED_FIELDREPORT_ID}'
-        Fail    Copy Action Failed: Still on original Field Report ID ${copied_id}. URL: ${current_url}
+        Fail    Copy Action Failed: Still on original Field Report ID ${copied_id}.
     END
     
     Set Suite Variable    ${COPIED_FIELDREPORT_ID}    ${copied_id}
@@ -231,38 +135,20 @@ Test Copy Field Report Creates Duplicate
     Log To Console    ✓ Original Field Report ${CREATED_FIELDREPORT_ID} still exists
     
     Log To Console    \n======== COPY TEST COMPLETED SUCCESSFULLY! ========
-    Log To Console    Original ID: ${CREATED_FIELDREPORT_ID}
-    Log To Console    Copied ID: ${COPIED_FIELDREPORT_ID}
     
     [Teardown]    Cleanup All Fieldreports
 
 *** Keywords ***
-
 Create Field Report For Copy Test
     [Documentation]    Create a new field report for copy testing
     Open And Login
+    Setup Dynamic Test Data
     
     Log To Console    ======== CREATING FIELD REPORT FOR COPY TEST ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Go To    https://preproderp.finalisten.se/fieldreport/create/
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
-    # Select first available customer
-    ${customer_name}=    Select First Available Option And Get Text    ${CUSTOMER_DROPDOWN}
-    Log To Console    Selected Customer: ${customer_name}
-    
-    # Wait for AJAX
-    Sleep    2s
-    
-    # Select first available project
-    ${project_name}=    Select First Available Option And Get Text    ${PROJECT_DROPDOWN}
-    Log To Console    Selected Project: ${project_name}
-    
-    # Wait for AJAX
-    Sleep    2s
-    
-    # Select first available subproject
-    ${subproject_name}=    Select First Available Option And Get Text    ${SUBPROJECT_DROPDOWN}
-    Log To Console    Selected SubProject: ${subproject_name}
+    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
     # Set work date
     Input Text    ${WORK_DATE_INPUT}    ${INITIAL_WORK_DATE}
@@ -277,92 +163,29 @@ Create Field Report For Copy Test
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
-    Sleep    3s
+    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
+    Click Element    ${save_btn}
     
     # Extract field report ID from URL
-    ${current_url}=    Get Location
-    Should Contain    ${current_url}    /edit/    msg=Failed to create field report
-    ${fieldreport_id}=    Extract Fieldreport ID From URL    ${current_url}
-    Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}
-    Log To Console    ✓ Created Field Report ID: ${fieldreport_id}
-
-Select First Available Option And Get Text
-    [Documentation]    Select the first non-empty option from a dropdown and return its text
-    [Arguments]    ${dropdown_locator}
-    ${options}=    Get List Items    ${dropdown_locator}
-    ${count}=    Get Length    ${options}
-    IF    ${count} > 1
-        Select From List By Index    ${dropdown_locator}    1
-        # Trigger change event for dynamic dropdowns
-        ${element}=    Get WebElement    ${dropdown_locator}
-        Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-        ${selected}=    Get Selected List Label    ${dropdown_locator}
-        RETURN    ${selected}
-    ELSE
-        Fail    No options available in dropdown ${dropdown_locator}
-    END
-
-Extract Fieldreport ID From URL
-    [Documentation]    Extract the fieldreport slug/ID from the edit page URL
-    ...                URLs now use alphanumeric slugs like: /fieldreport/list/{SLUG}/edit/
-    [Arguments]    ${url}
-    ${parts}=    Split String    ${url}    /
-    ${num_parts}=    Get Length    ${parts}
-    # Look for the slug which is the part before 'edit' in the URL
-    FOR    ${i}    ${part}    IN ENUMERATE    @{parts}
-        ${next_idx}=    Evaluate    ${i} + 1
-        IF    ${next_idx} < ${num_parts}
-            ${next_part}=    Evaluate    $parts[${next_idx}]
-            IF    '${next_part}' == 'edit'
-                RETURN    ${part}
-            END
-        END
-    END
-    # Fallback: Try matching alphanumeric slug pattern
-    FOR    ${i}    ${part}    IN ENUMERATE    @{parts}
-        ${is_slug}=    Run Keyword And Return Status    Should Match Regexp    ${part}    ^[A-Za-z0-9]{5,8}$
-        IF    ${is_slug}
-            RETURN    ${part}
-        END
-    END
-    Fail    Could not extract fieldreport slug from URL: ${url}
+    Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/
+    ${id}=    Extract And Verify Fieldreport ID
+    Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}
+    Log To Console    ✓ Created Field Report ID: ${id}
 
 Cleanup All Fieldreports
     [Documentation]    Delete both original and copied fieldreports
     Log To Console    ======== CLEANUP: Deleting Field Reports ========
     
     # Delete copied field report first
-    ${has_copied}=    Run Keyword And Return Status    Should Not Be Empty    ${COPIED_FIELDREPORT_ID}
-    IF    ${has_copied}
-        Delete Single Fieldreport    ${COPIED_FIELDREPORT_ID}
+    IF    '${COPIED_FIELDREPORT_ID}' != '${EMPTY}'
+        Log To Console    Cleaning up copied report: ${COPIED_FIELDREPORT_ID}
+        Run Keyword And Ignore Error    Perform Deletion For ID    ${COPIED_FIELDREPORT_ID}
     END
     
     # Delete original field report
-    ${has_original}=    Run Keyword And Return Status    Should Not Be Empty    ${CREATED_FIELDREPORT_ID}
-    IF    ${has_original}
-        Delete Single Fieldreport    ${CREATED_FIELDREPORT_ID}
+    IF    '${CREATED_FIELDREPORT_ID}' != '${EMPTY}'
+        Log To Console    Cleaning up original report: ${CREATED_FIELDREPORT_ID}
+        Run Keyword And Ignore Error    Perform Deletion For ID    ${CREATED_FIELDREPORT_ID}
     END
     
     Close All Browsers
-
-Delete Single Fieldreport
-    [Documentation]    Delete a single fieldreport by ID
-    [Arguments]    ${fieldreport_id}
-    ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${fieldreport_id}/edit/
-    Go To    ${edit_url}
-    Sleep    2s
-    
-    ${delete_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${DELETE_BUTTON}    timeout=10s
-    
-    IF    ${delete_exists}
-        Log To Console    Deleting Field Report ID: ${fieldreport_id}
-        Click Element    ${DELETE_BUTTON}
-        Sleep    1s
-        Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
-        Sleep    2s
-        Log To Console    ✓ Field Report ${fieldreport_id} deleted successfully!
-    ELSE
-        Log To Console    WARNING: Could not delete Field Report ${fieldreport_id}
-    END

@@ -468,6 +468,7 @@ Wait Until Keyword Succeeds    15x    1s    Verify Form Content Refresh    ${old
 
 ## Version History
 
+- **2026-04-14**: Standardized Field Report cleanup logic across the test suite. Enhanced the global `Cleanup Created Fieldreport` keyword in `LoginKeyword.robot` to automatically handle unapproval before deletion, ensuring environment cleanliness even in failure scenarios. Refactored 9 major test files to use centralized login and teardown keywords.
 - **2026-03-18**: Enhanced `verify_add_supplier_to_product.robot` with a more robust waiting strategy (Presence -> Scroll -> Visibility Poll -> JS Click) and increased timeouts to 60s to resolve intermittent CI failures in GitHub Actions.
 - **2026-03-18**: Created `verify_fixed_agreement_delete.robot` to validate Fixed Agreement deletion. Implemented `create_fixed_agreement` DB helper in `DatabaseKeywords.py` with boolean status handling. 
 - **2026-03-11**: Created `verify_add_supplier_to_product.robot` to validate the 'ADD' button functionality in Purchase Product Register. Identified `#supplier_add_button` and corrected row selector to `tr.purchase_product_rows`.

@@ -17,6 +17,7 @@ ${EXECUTABLE_PATH}    ${EMPTY}
 # Global Field Report Variables for cleanup
 ${FIELDREPORT_LIST_URL}           https://preproderp.finalisten.se/fieldreport/list/
 ${DELETE_BUTTON}                  id=remove_fieldreport
+${APPROVE_BUTTON}                 id=id_fieldreport_approve_btn
 ${CREATED_FIELDREPORT_ID}         ${EMPTY}
 
 *** Keywords ***
@@ -218,18 +219,32 @@ Perform Deletion For ID
     Go To    ${edit_url}
     Sleep    2s
     
+    # Check if report is approved (delete button is disabled/hidden for approved reports)
+    ${approve_btn_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${APPROVE_BUTTON}    timeout=5s
+    IF    ${approve_btn_exists}
+        ${btn_value}=    Get Element Attribute    ${APPROVE_BUTTON}    value
+        ${is_approved}=    Run Keyword And Return Status    Should Contain    ${btn_value}    Unapprove
+        IF    ${is_approved}
+            Log To Console    Field Report is approved - unapproving first...
+            Click Element    ${APPROVE_BUTTON}
+            Sleep    1s
+            Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
+            Sleep    2s
+        END
+    END
+
     # Check if delete button exists (to avoid failure if already deleted or page error)
     ${delete_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${DELETE_BUTTON}    timeout=10s
     
     IF    ${delete_exists}
-        Log To Console    Clicking delete button...
+        Log To Console    Clicking delete button for ID: ${id}
         # Use Javascript click for reliability
         ${del_btn}=    Get WebElement    ${DELETE_BUTTON}
         Execute Javascript    arguments[0].click();    ARGUMENTS    ${del_btn}
         Sleep    1s
         
         # Handle the confirmation alert
-        ${alert_present}=    Run Keyword And Return Status    Handle Alert    action=ACCEPT    timeout=5s
+        ${alert_present}=    Run Keyword And Return Status    Handle Alert    action=ACCEPT    timeout=10s
         IF    ${alert_present}
             Log To Console    ✓ Alert accepted.
         ELSE
