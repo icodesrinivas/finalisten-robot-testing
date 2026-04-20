@@ -6,6 +6,7 @@ Resource   ../keywords/LoginKeyword.robot
 *** Variables ***
 ${REGISTER_MENU}      id=register
 ${EMPLOYEES_MENU}     id=employee_app_menu
+${ADVANCED_SEARCH_TOGGLE}    id=id_advanced_search_toggle
 
 *** Test Cases ***
 Verify Employee List Opens Successfully
@@ -24,6 +25,7 @@ Verify Employee List Opens Successfully
     Sleep    2s
     Click Element    ${EMPLOYEES_MENU}
     Sleep    3s
-    Wait Until Page Contains    Filters    timeout=15s
-    Log To Console    "Filters text found. Employee list opened successfully."
+    Wait Until Element Is Visible    ${ADVANCED_SEARCH_TOGGLE}    timeout=30s
+    Element Should Contain    ${ADVANCED_SEARCH_TOGGLE}    Advanced search
+    Log To Console    "Advanced search found. Employee list opened successfully."
     Close Browser
