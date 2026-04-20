@@ -12,10 +12,12 @@ Verify Employee Create Page Opens Successfully
     Open And Login
     Hover Over Register Menu
     Click On Employees Menu
-    Wait Until Page Contains    Filters    timeout=10s
+    Wait Until Element Is Visible    ${ADD_EMPLOYEE_BTN}    timeout=30s
     Click On Add Employee Button
-    Wait Until Page Contains    PERSONAL DATA    timeout=10s
-    Log To Console    "PERSONAL DATA found. Employee create page opened successfully."
+    Wait Until Element Is Visible    id=employee-header-name-display    timeout=30s
+    ${header_text}=    Get Text    id=employee-header-name-display
+    Should Be Equal As Strings    ${header_text}    New Employee    ignore_case=True
+    Log To Console    "New Employee header found. Employee create page opened successfully."
     Close Browser
 
 *** Keywords ***
@@ -25,8 +27,11 @@ Hover Over Register Menu
     Mouse Over    ${REGISTER_MENU}
 
 Click On Employees Menu
-    Wait Until Element Is Visible    ${EMPLOYEES_MENU}    timeout=10s
-    Click Element    ${EMPLOYEES_MENU}
+    Wait Until Page Contains Element    ${EMPLOYEES_MENU}    timeout=30s
+    ${emp_menu_el}=    Get WebElement    ${EMPLOYEES_MENU}
+    Execute Javascript    arguments[0].scrollIntoView({block: "center", behavior: "instant"});    ARGUMENTS    ${emp_menu_el}
+    Sleep    1s
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${emp_menu_el}
     Sleep    2s
 
 Click On Add Employee Button

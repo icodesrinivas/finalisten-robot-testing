@@ -304,6 +304,9 @@ Setup ChromeDriver Path
     [Documentation]    Dynamically determines the correct ChromeDriver path.
     ...                Returns the path to the bundled Mac driver if running locally,
     ...                otherwise returns None to rely on the system PATH (CI).
+    ...                
+    ...                NOTE: Local Chrome auto-updates frequently; default to Selenium-managed
+    ...                driver unless USE_BUNDLED_CHROMEDRIVER=true is explicitly set.
     
     # Check if running in GitHub Actions
     ${is_github_actions}=    Get Environment Variable    GITHUB_ACTIONS    default=false
@@ -314,7 +317,15 @@ Setup ChromeDriver Path
         RETURN    ${None}
     END
     
-    # Default: Use bundled Mac driver
+    # Local default: rely on Selenium Manager / system PATH (more robust with auto-updating Chrome)
+    ${use_bundled}=    Get Environment Variable    USE_BUNDLED_CHROMEDRIVER    default=false
+    IF    '${use_bundled}' != 'true'
+        Log To Console    \n--- LOCAL MAC DETECTED ---
+        Log To Console    Using Selenium-managed driver (bundled ChromeDriver disabled).
+        RETURN    ${None}
+    END
+    
+    # Opt-in: Use bundled Mac driver
     ${local_driver}=    Normalize Path    ${CURDIR}/../../chromedriver-mac-x64/chromedriver
     
     ${exists}=    Run Keyword And Return Status    File Should Exist    ${local_driver}
