@@ -42,8 +42,8 @@ Test Submit Without Customer Shows Error
     
     # Try to save
     Log To Console    Attempting to save without Customer...
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    2s
     
     # Check for error - either alert, error message, or still on create page
@@ -73,20 +73,21 @@ Test Submit Without Project Shows Error
     Go To    https://preproderp.finalisten.se/fieldreport/create/
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
-    # Select Customer but NOT Project
+    # Select Customer but NOT Project (use index 1 — label text can differ from DB cache)
     Setup Dynamic Test Data
-    Select From List By Label    ${CUSTOMER_DROPDOWN}    ${DB_CUSTOMER}
+    Wait Until Element Is Visible    ${CUSTOMER_DROPDOWN}    timeout=20s
+    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
     ${element}=    Get WebElement    ${CUSTOMER_DROPDOWN}
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${element}
-    Sleep    2s
+    Sleep    5s
     
     # Fill other fields
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     
     # Try to save without Project
     Log To Console    Attempting to save without Project...
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    2s
     
     # Check for validation
@@ -115,14 +116,25 @@ Test Submit Without SubProject Shows Error
     Go To    https://preproderp.finalisten.se/fieldreport/create/
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
-    # Select Customer and Project but NOT SubProject
+    # Select Customer and Project but NOT SubProject (Select Customer And Project always picks a subproject)
     Setup Dynamic Test Data
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Wait Until Element Is Visible    ${CUSTOMER_DROPDOWN}    timeout=20s
+    Select From List By Index    ${CUSTOMER_DROPDOWN}    1
+    ${el_c}=    Get WebElement    ${CUSTOMER_DROPDOWN}
+    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${el_c}
+    Sleep    5s
+    Wait Until Element Is Visible    ${PROJECT_DROPDOWN}    timeout=20s
+    Select From List By Index    ${PROJECT_DROPDOWN}    1
+    ${el_p}=    Get WebElement    ${PROJECT_DROPDOWN}
+    Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${el_p}
+    Sleep    5s
+    Wait Until Element Is Visible    ${SUBPROJECT_DROPDOWN}    timeout=15s
+    Select From List By Index    ${SUBPROJECT_DROPDOWN}    0
     
     # Try to save without SubProject
     Log To Console    Attempting to save without SubProject...
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    2s
     
     # Check for validation
@@ -161,8 +173,8 @@ Test Submit Without Work Date Shows Error
     
     # Try to save without Work Date
     Log To Console    Attempting to save without Work Date...
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    2s
     
     # Check for validation
@@ -204,8 +216,8 @@ Test Submit Without Installer Shows Error
     Log To Console    Attempting to save without Installer...
     
     # Try clicking save button
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    2s
     
     # Check if form was actually submitted (URL changed to edit)

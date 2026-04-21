@@ -60,11 +60,12 @@ Navigate To Purchase Product Register
     Click Element    ${PURCHASE_PRODUCT_REGISTER_MENU}
     # Purchase Product Register doesn't have the id_advanced_search_toggle yet.
     # It uses the "Filters" text link.
-    Wait Until Page Contains  Filters    timeout=30s
+    Wait Until Page Contains    Filters    timeout=30s
     Log To Console    ✓ Navigated to Purchase Product Register. Expanding filters...
-    Robust Click    xpath=//a[contains(text(),'Filters')]
-    # This module uses different filter IDs. Wait for the general filter container.
-    Wait Until Element Is Visible    css=.advanced_search_container, xpath=//div[contains(@class,'advanced_search_container')]    timeout=15s
+    # List uses #purchase_product_list_filter (not global advanced_search_container)
+    Wait Until Element Is Visible    id=purchase_product_list_filter    timeout=20s
+    Robust Click    id=purchase_product_list_filter
+    Wait Until Element Is Visible    xpath=//form[@id='purchaseproduct_filter']//input[@name='product_search']    timeout=20s
     Log To Console    ✓ Filters expanded. Waiting for table to refresh...
     Wait For Loading Buffer
 

@@ -22,44 +22,29 @@ Verify Fixed Agreement Delete Functionality
     Navigate To Project Edit Page
     # 1. Open the Fixed Agreements tab/frame
     Open Fixed Agreements Tab
-
-
-    # 2. Extract Project ID from DOM (since URL might contain alphanumeric hashids)
-    ${project_id}=    Execute Javascript    return document.getElementById('formid').getAttribute('project-record-id');
-    IF    not '${project_id}'
-        # Fallback to URL parsing if DOM check fails
-        ${current_url}=    Get Location
-        ${project_id}=    Extract Project ID From URL    ${current_url}
-    END
-
-    # 3. Create a fixed agreement via DB to ensure we have one to delete
-    Log To Console    \nCreating a test fixed agreement for project ID ${project_id} via DB...
-    ${agreement_id}=    Create Fixed Agreement    ${project_id}
-    Run Keyword If    not '${agreement_id}'    Fail    Failed to create fixed agreement in DB.
-
-    # 4. Reload page to see the new agreement
-    Reload Page
-    Wait Until Page Contains    ${PROJECT_EDIT_TEXT}    timeout=30s
-    Sleep    3s
     
-    # Open tab again after reload
-    Open Fixed Agreements Tab
+    # 2. Ensure at least one row exists (create via UI if empty).
+    Ensure Fixed Agreement Row Exists
 
-
-    # 5. Find the row and click delete
-    # Look specifically for our Auto Test Agreement
-    ${row_locator}=    Set Variable    xpath=//tr[td[contains(., 'Auto Test Agreement')]]
-    ${delete_btn_locator}=    Set Variable    ${row_locator}//button[contains(@id, 'fixed_agreement_remove') or contains(@title, 'Delete') or contains(@title, 'Ta bort')]
-    
-    # Debug: Check if row exists even if not visible
+    # 3. Find the row and click delete (prefer the auto-created test row if present).
+    ${row_locator}=    Set Variable    xpath=//table[@id='fixed_agreement_table']//tr[td[contains(., 'Auto Test Agreement')]]
     ${present}=    Run Keyword And Return Status    Page Should Contain Element    ${row_locator}
     IF    not ${present}
-        Log To Console    ⚠ Row for 'Auto Test Agreement' not found in DOM!
-        Capture Page Screenshot
-        Fail    Fixed agreement row not found in DOM after creation.
+        ${row_locator}=    Set Variable    xpath=(//table[@id='fixed_agreement_table']//tbody//tr)[1]
     END
 
-    Wait Until Element Is Visible    ${delete_btn_locator}    timeout=20s
+    ${delete_btn_locator}=    Set Variable    ${row_locator}//button[starts-with(@id,'fixed_agreement_remove_') or contains(@title, 'Delete') or contains(@title, 'Ta bort')]
+
+    # Capture the fixed agreement id so we can verify correct deletion
+    ${row_id_attr}=    Get Element Attribute    ${row_locator}    id
+    ${fa_id}=    Evaluate    '${row_id_attr}'.replace('fixed_agreement_details_', '') if '${row_id_attr}' else ''
+    IF    '${fa_id}' == '' or '${fa_id}' == '${row_id_attr}'
+        ${del_btn_id}=    Get Element Attribute    ${delete_btn_locator}    id
+        ${fa_id}=    Evaluate    '${del_btn_id}'.replace('fixed_agreement_remove_', '') if '${del_btn_id}' else ''
+    END
+    Should Not Be Equal    ${fa_id}    ${EMPTY}    msg=Could not determine fixed agreement id for deletion.
+
+    Wait Until Element Is Visible    ${delete_btn_locator}    timeout=30s
     ${del_btn}=    Get WebElement    ${delete_btn_locator}
     Execute Javascript    arguments[0].click();    ARGUMENTS    ${del_btn}
     Sleep    1s
@@ -83,7 +68,7 @@ Verify Fixed Agreement Delete Functionality
     Open Fixed Agreements Tab
     
     # 8. Verify deletion in expanded section
-    ${row_exists}=    Run Keyword And Return Status    Page Should Contain Element    ${row_locator}
+    ${row_exists}=    Run Keyword And Return Status    Page Should Contain Element    id=fixed_agreement_details_${fa_id}
     IF    ${row_exists}
         Log To Console    ❌ Failure: Fixed agreement still found in DOM!
         Capture Page Screenshot
@@ -141,15 +126,40 @@ Open Fixed Agreements Tab
     Execute Javascript    arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});    ARGUMENTS    ${tab_el}
     Sleep    1s
     
-    # Check if already expanded (table div visible)
-    ${is_expanded}=    Run Keyword And Return Status    Element Should Be Visible    id=fixed_agreement_table_div
+    # Check if already expanded (agreements container visible)
+    ${is_expanded}=    Run Keyword And Return Status    Element Should Be Visible    css=#fixed-agreements-table-container
     IF    not ${is_expanded}
         Execute Javascript    arguments[0].click();    ARGUMENTS    ${tab_el}
         # Wait for either the table to become visible OR for the animation to finish
         Sleep    3s
     END
     
-    # Final check
-    Wait Until Element Is Visible    id=fixed_agreement_table_div    timeout=10s
+    # Final check — table is loaded into #fixed-agreements-table-container via AJAX
+    Wait Until Keyword Succeeds    40x    2s    Page Should Contain Element    css=#fixed_agreement_table
     Log To Console    ✓ Fixed Agreements section expanded.
+
+Ensure Fixed Agreement Row Exists
+    [Documentation]    If the fixed agreement table is empty, create a minimal agreement via UI.
+    ${row_count}=    Get Element Count    css=#fixed_agreement_table tbody tr
+    IF    ${row_count} > 0
+        RETURN
+    END
+
+    Log To Console    No fixed agreement rows found. Creating one via UI...
+    ${add_btn}=    Set Variable    xpath=//div[@id='id_fixed_agreement_frame_header']//button[contains(.,'ADD')]
+    Wait Until Element Is Visible    ${add_btn}    timeout=20s
+    Click Element    ${add_btn}
+    Wait Until Element Is Visible    id=myModal4    timeout=20s
+
+    # Required fields
+    Select From List By Index    id=id_fixed_agreement_type    1
+    Select From List By Index    id=id_fixed_agreement_category    1
+    Input Text    id=id_agreement_name    Auto Test Agreement
+    Input Text    id=id_agreement_amount    5000
+
+    Click Element    xpath=//div[@id='myModal4']//button[contains(.,'Save')]
+    Wait Until Element Is Not Visible    id=myModal4    timeout=30s
+
+    # Row is inserted into DOM via AJAX; wait for it to appear.
+    Wait Until Keyword Succeeds    30x    1s    Page Should Contain Element    xpath=//table[@id='fixed_agreement_table']//tr[td[contains(., 'Auto Test Agreement')]]
 

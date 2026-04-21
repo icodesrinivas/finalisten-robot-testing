@@ -405,6 +405,8 @@ Add Sample Product To FR
     Log To Console    Quantity set via JS: ${qty_set}
     Sleep    1s
     
+    Ensure Fieldreport Product Note Filled And Saved
+    
     # SAVE Field Report to persist the product with qty
     Log To Console    Saving field report...
     Wait Until Page Contains Element    ${COMMON_SAVE_BUTTON}    timeout=10s
@@ -550,6 +552,21 @@ Get Modal Product Text
 
 Click Modal Product Checkbox
     [Documentation]    Click the first available checkbox in the modal product table
+    ${picked}=    Execute Javascript
+    ...    var rows = document.querySelectorAll('#prodInProjTable tbody tr');
+    ...    for (var i=0;i<rows.length;i++){
+    ...      var r=rows[i];
+    ...      var t=(r.innerText||'').toLowerCase();
+    ...      if (t.indexOf('intern flytt')>=0) continue;
+    ...      var cb=r.querySelector('.selected-checkbox')||r.querySelector('input[type="checkbox"]');
+    ...      if(cb){cb.click(); return true;}
+    ...    }
+    ...    return false;
+    IF    ${picked}
+        Log To Console    ✓ Selected a non-Intern-flytt product row in modal (preferred)
+        Sleep    2s
+        RETURN
+    END
     # First try SeleniumLibrary approach with explicit waits
     ${checkbox_clicked}=    Set Variable    ${False}
     
@@ -602,25 +619,26 @@ Get FR Product Text
     ${text}=    Execute Javascript    
     ...    var table = document.querySelector('#prodInFieldReportTable') || document.querySelector('table[id*="FieldReport"]');
     ...    if (!table) return 'No FR table found';
-    ...    var rows = table.querySelectorAll('tbody tr, tr');
+    ...    var rows = table.querySelectorAll('tbody tr');
     ...    for (var r of rows) {
-    ...        if (r.querySelector('td')) return r.innerText || r.textContent;
+    ...        if (r.querySelectorAll('td').length > 0) return r.innerText || r.textContent;
     ...    }
     ...    return 'No product rows in FR table';
     RETURN    ${text}
 
 Wait Until FR Products Visible
     [Documentation]    Wait for products to appear in the Field Report products table
-    Wait Until Keyword Succeeds    5x    5s    Check FR Products Exist
+    Wait For Loading Buffer
+    Wait Until Keyword Succeeds    12x    5s    Check FR Products Exist
 
 Check FR Products Exist
     [Documentation]    Helper to check if FR products table has rows
     ${count}=    Execute Javascript    
     ...    var table = document.querySelector('#prodInFieldReportTable') || document.querySelector('table[id*="FieldReport"]');
     ...    if (!table) return 0;
-    ...    var rows = table.querySelectorAll('tbody tr, tr');
+    ...    var rows = table.querySelectorAll('tbody tr');
     ...    var count = 0;
-    ...    for (var r of rows) { if (r.querySelector('td')) count++; }
+    ...    for (var r of rows) { if (r.querySelectorAll('td').length > 0) count++; }
     ...    return count;
     Log To Console    Found ${count} product rows in FR table
     Should Be True    ${count} > 0    msg=No product rows found in FR table

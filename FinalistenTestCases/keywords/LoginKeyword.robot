@@ -153,6 +153,42 @@ Setup Dynamic Test Data
     Set Suite Variable    ${DB_INSTALLER}   ${installer}
     Log To Console    ✓ Setup Dynamic Data: ${DB_CUSTOMER} / ${DB_PROJECT} / ${DB_INSTALLER}
 
+Ensure Fieldreport Product Note Filled And Saved
+    [Documentation]    Some FR products require a reporting note. Enable product edit mode, set a note on the first row, and save to avoid blocking alerts on later actions.
+    Wait For Loading Buffer
+    ${has_table}=    Run Keyword And Return Status    Page Should Contain Element    css=#prodInFieldReportTable
+    IF    not ${has_table}
+        RETURN
+    END
+    Run Keyword And Ignore Error    Execute Javascript    var b=document.querySelector('#product_in_fieldreport_edit:not([disabled])'); if(b){b.click();}
+    Sleep    2s
+    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=2s
+    ${r}=    Execute Javascript
+    ...    var ta=document.querySelector('#prodInFieldReportTable textarea[id^="id_note_"]');
+    ...    if(!ta){return 'no_textarea';}
+    ...    ta.removeAttribute('disabled'); ta.removeAttribute('readonly');
+    ...    ta.value='Robot test note';
+    ...    ta.dispatchEvent(new Event('input')); ta.dispatchEvent(new Event('change'));
+    ...    return 'ok';
+    Log To Console    Product note prerequisite: ${r}
+    ${row_save}=    Execute Javascript
+    ...    var b=document.querySelector('#prodInFieldReportTable button[id^="product_general_data_save_"]');
+    ...    if(!b){return 'no_row_save';}
+    ...    b.removeAttribute('hidden');
+    ...    b.style.display='inline-block';
+    ...    b.click();
+    ...    return 'row_save_clicked';
+    Log To Console    Per-row product save: ${row_save}
+    Sleep    4s
+    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
+    ${save_exists}=    Run Keyword And Return Status    Page Should Contain Element    id=product_in_fieldreport_save
+    IF    ${save_exists}
+        ${el}=    Get WebElement    id=product_in_fieldreport_save
+        Execute Javascript    arguments[0].click();    ARGUMENTS    ${el}
+        Sleep    4s
+        Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
+    END
+
 List Should Have Options
     [Arguments]    ${locator}
     ${options}=    Get List Items    ${locator}

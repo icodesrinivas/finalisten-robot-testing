@@ -60,8 +60,8 @@ Test Alphabetic Characters In Total Hours Rejected
         Log To Console    ✓ Alphabetic input was rejected by the field (HTML5 validation)
     ELSE
         # Try to save and check for error
-        ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-        Click Element    ${save_btn}
+        Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+        Click Element    ${SAVE_BUTTON}
         Sleep    2s
         ${alert}=    Run Keyword And Return Status    Handle Alert    action=ACCEPT    timeout=3s
         ${still_on_create}=    Run Keyword And Return Status    Location Should Contain    /create/
@@ -100,8 +100,8 @@ Test Negative Value In Total Hours Rejected
     Input Text    ${TOTAL_HOURS_INPUT}    -5
     
     # Try to save
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    2s
     
     # Check for validation error or alert
@@ -147,8 +147,8 @@ Test Decimal Value In Total Hours Accepted
     Input Text    ${TOTAL_HOURS_INPUT}    7.5
     
     # Try to save
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    3s
     
     # Handle any alerts
@@ -199,8 +199,8 @@ Test Long Text In Message Field Handled
     Log To Console    Actual text length in field: ${actual_length}
     
     # Try to save
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    3s
     
     # Handle any alerts

@@ -27,9 +27,10 @@ ${FIELDREPORT_EDIT_URL_PATTERN}    ${BASE_URL}/fieldreport/list/
 ${PRODUCTION_MENU}                 id=production
 ${FIELDREPORT_APPROVAL_MENU}       id=field_report_approval_app_menu
 
-# Tree Selectors
+# Tree Selectors (exclude "List Of Installers" / greyed installers — only real branches)
 ${TREE_CONTAINER}                  css=div.tree_container
-${INSTALLER_LINKS}                 css=a.fieldreport-approval-installer-name
+${INSTALLER_LINKS}                 css=#tree2 li.installer-branch > a.fieldreport-approval-installer-name
+${PROJECT_NAME_LINKS}             css=#tree2 li.project-branch > a
 ${FIELDREPORT_LINKS}               css=a.fieldreport_record_details
 
 # Date Filter
@@ -87,6 +88,10 @@ Navigate To Fieldreport Approval App
     Go To    ${FIELDREPORT_APPROVAL_URL}
     Sleep    2s
     
+    # Expand collapsed filter panel so Search / date controls are usable in CI
+    Run Keyword And Ignore Error    Click Element    id=fr_approval_filter
+    Sleep    2s
+    
     ${page_loaded}=    Run Keyword And Return Status    Wait Until Page Contains    ${LIST_OF_INSTALLERS_TEXT}    timeout=10s
     IF    not ${page_loaded}
         # Fallback to menu navigation
@@ -124,10 +129,10 @@ Find And Click Fieldreport In Tree
         ${installer_text}=    Get Text    ${current_installer}
         Log To Console    Checking installer ${index + 1}: ${installer_text}
         
-        # Click to expand installer
+        # Click to expand installer (lazy-loads projects via AJAX)
         Robust Click    ${current_installer}
-        Sleep    2s
-        
+        Sleep    4s
+
         # Check for fieldreport links under this installer
         ${found}=    Try Find Fieldreport Under Expanded Installer
         IF    ${found}
@@ -158,15 +163,19 @@ Try Find Fieldreport Under Expanded Installer
         RETURN    ${TRUE}
     END
     
-    # Look for project links (they are nested under the expanded installer)
-    # Projects are typically <a> tags that appear after clicking installer
-    ${project_links}=    Get WebElements    xpath=//ul[contains(@class,'collapse') and contains(@class,'show')]//a[not(contains(@class,'fieldreport-approval-installer-name')) and not(contains(@class,'fieldreport_record_details'))]
-    ${project_count}=    Get Length    ${project_links}
+    # Project rows use li.project-branch; allow a short window for lazy-load after expand
+    ${project_count}=    Set Variable    0
+    FOR    ${_}    IN RANGE    16
+        ${project_links}=    Get WebElements    ${PROJECT_NAME_LINKS}
+        ${project_count}=    Get Length    ${project_links}
+        Exit For Loop If    ${project_count} > 0
+        Sleep    0.5s
+    END
     Log To Console    Found ${project_count} project(s) under this installer
     
     FOR    ${proj_index}    IN RANGE    ${project_count}
         # Re-fetch project links
-        ${project_links}=    Get WebElements    xpath=//ul[contains(@class,'collapse') and contains(@class,'show')]//a[not(contains(@class,'fieldreport-approval-installer-name')) and not(contains(@class,'fieldreport_record_details'))]
+        ${project_links}=    Get WebElements    ${PROJECT_NAME_LINKS}
         ${current_project}=    Get From List    ${project_links}    ${proj_index}
         ${project_text}=    Get Text    ${current_project}
         Log To Console    Checking project: ${project_text}
@@ -229,36 +238,33 @@ Verify Fieldreport Edit Page Opened In New Tab
     Log To Console    ✓ Fieldreport edit page verified in new tab
 
 Update Date Range To Last 200 Days
-    [Documentation]    Update the date filter to show data from the last 200 days
+    [Documentation]    Widen the approval window via the embedded daterangepicker (#reportrange).
+    ...                Changing the span triggers a MutationObserver that reloads the installer tree.
     
     Log To Console    Updating date range...
     
-    # Click to open daterangepicker
-    ${date_elements}=    Get WebElements    xpath=//span[contains(@class,'daterangepicker-input')] | //input[contains(@class,'daterangepicker-input')] | //div[contains(@class,'date-range')]
-    ${date_found}=    Get Length    ${date_elements}
-    
-    IF    ${date_found} > 0
-        ${date_element}=    Get From List    ${date_elements}    0
-        Click Element    ${date_element}
-        Sleep    2s
-        
-        # Click "Last Month" as it usually has data in preprod (or This Month)
-        ${preset_options}=    Get WebElements    xpath=//li[contains(text(),'Last Month')] | //li[contains(text(),'This Month')] | //li[contains(text(),'Last 30 Days')]
-        ${preset_count}=    Get Length    ${preset_options}
-        
-        IF    ${preset_count} > 0
-            # Click the second preset option (often 'Last Month')
-            ${option}=    Get From List    ${preset_options}    0
-            Click Element    ${option}
-            Sleep    1s
-            Run Keyword And Ignore Error    Click Element    ${DATE_PICKER_APPLY}
-            Sleep    3s
+    ${opened}=    Run Keyword And Return Status    Wait Until Element Is Visible    id=reportrange    15s
+    IF    ${opened}
+        Click Element    id=reportrange
+        Sleep    1s
+        # Preset labels are English when tests use Open And Login DB language fix
+        ${picked}=    Run Keyword And Return Status    Click Element    xpath=//div[contains(@class,'daterangepicker')]//li[contains(.,'This Month')]
+        IF    not ${picked}
+            Run Keyword And Ignore Error    Click Element    xpath=//div[contains(@class,'daterangepicker')]//li[contains(.,'Last Month')]
         END
+        Sleep    2s
+        Run Keyword And Ignore Error    Press Key    tag=body    ESCAPE
+        Sleep    3s
     ELSE
-        # Last resort: Try refreshing with a wide range in URL if possible, or just refresh
-        Log To Console    Could not find date range selector, refreshing page
+        Log To Console    Could not find #reportrange, reloading page
         Reload Page
         Sleep    3s
     END
+    
+    Run Keyword And Ignore Error    Click Element    id=id_fr_approval_search_btn
+    Sleep    3s
+    Wait For Loading Buffer
+    # Tree is re-fetched asynchronously after span text updates
+    Wait Until Element Is Visible    css=#tree2 li.installer-branch    timeout=45s
     
     Log To Console    ✓ Date range updated

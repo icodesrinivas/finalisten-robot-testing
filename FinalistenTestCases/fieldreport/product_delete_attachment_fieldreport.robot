@@ -220,7 +220,7 @@ Login To Application
 
 Create Field Report With Product
     [Documentation]    Create a new field report and add a product
-    Login To Application
+    Open And Login
     
     Log To Console    ======== CREATING FIELD REPORT WITH PRODUCT ========
     Go To    ${FIELDREPORT_CREATE_URL}
@@ -278,12 +278,23 @@ Add Sample Product To FR
     # Wait for products to load in modal
     Wait For Loading Buffer
     
-    # Select first product
+    # Select a product row that is unlikely to require mandatory reporting notes (avoid known "Intern flytt" row)
     Log To Console    \n--- Selecting Product in Modal ---
     ${checkbox_selector}=    Set Variable    css=#prodInProjTable .selected-checkbox, #prodInProjTable input[type="checkbox"]
     Wait Until Page Contains Element    ${checkbox_selector}    timeout=15s
-    ${chk_elem}=    Get WebElement    ${checkbox_selector}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${chk_elem}
+    ${picked}=    Execute Javascript
+    ...    var rows = document.querySelectorAll('#prodInProjTable tbody tr');
+    ...    for (var i=0;i<rows.length;i++){
+    ...      var r=rows[i];
+    ...      var t=(r.innerText||'').toLowerCase();
+    ...      if (t.indexOf('intern flytt')>=0) continue;
+    ...      var cb=r.querySelector('.selected-checkbox')||r.querySelector('input[type="checkbox"]');
+    ...      if(cb){cb.click(); return true;}
+    ...    }
+    ...    var cb0=document.querySelector('#prodInProjTable .selected-checkbox, #prodInProjTable input[type="checkbox"]');
+    ...    if(cb0){cb0.click(); return true;}
+    ...    return false;
+    Should Be True    ${picked}    msg=Could not select a product in the ADD PRODUCTS modal
     Sleep    1s
     
     # Save in modal
@@ -316,6 +327,8 @@ Add Sample Product To FR
     ...    return false;
     Log To Console    Quantity set via JS: ${qty_set}
     Sleep    1s
+    
+    Ensure Fieldreport Product Note Filled And Saved
     
     # SAVE Field Report to persist the product with qty
     Log To Console    Saving field report...

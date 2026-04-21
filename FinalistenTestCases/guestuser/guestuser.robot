@@ -3,29 +3,27 @@ Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
 
 *** Variables ***
-${REGISTER_MENU}             xpath=//*[@id="register"]
-${SUBCONTRACTOR_MENU}        xpath=//*[@id="subcontractor_app_menu"]
-${SUBCONTRACTOR_ROW}         css=tr.subcontractor_rows
+${REGISTER_MENU}               id=register
+${GUEST_USER_MENU}             xpath=//a[@id='guestuser_app_menu' or contains(@href,'guestuser')]
+${ADVANCED_SEARCH_TOGGLE}      id=id_advanced_search_toggle
 
 *** Test Cases ***
-Verify Subcontractor Edit Page Opens Successfully
+Verify Guest User List Opens Successfully
     Open And Login
-    Hover Over Register Menu
-    Click On Subcontractor Menu
+    Wait Until Page Contains Element    ${REGISTER_MENU}    timeout=45s
     Sleep    2s
-    ${row_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${SUBCONTRACTOR_ROW}    timeout=10s
-    Run Keyword If    ${row_exists}    Click Subcontractor Row And Verify
-    ...    ELSE    Log To Console    "No subcontractor records found. Test skipped."
+    ${reg_el}=    Get WebElement    ${REGISTER_MENU}
+    Execute Javascript    arguments[0].scrollIntoView({block: "center", behavior: "instant"});    ARGUMENTS    ${reg_el}
+    Sleep    1s
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${reg_el}
+    Sleep    1s
+    Wait Until Page Contains Element    ${GUEST_USER_MENU}    timeout=30s
+    ${guest_el}=    Get WebElement    ${GUEST_USER_MENU}
+    Execute Javascript    arguments[0].scrollIntoView({block: "center", behavior: "instant"});    ARGUMENTS    ${guest_el}
+    Sleep    1s
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${guest_el}
+    Sleep    3s
+    Wait Until Element Is Visible    ${ADVANCED_SEARCH_TOGGLE}    timeout=30s
+    Element Should Contain    ${ADVANCED_SEARCH_TOGGLE}    Advanced search
+    Log To Console    "Advanced search found. Guest user list opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Register Menu
-    Mouse Over    ${REGISTER_MENU}
-
-Click On Subcontractor Menu
-    Click Element    ${SUBCONTRACTOR_MENU}
-
-Click Subcontractor Row And Verify
-    Click Element    ${SUBCONTRACTOR_ROW}
-    Wait Until Page Contains    SUBCONTRACTOR    timeout=10s
-    Log To Console    "SUBCONTRACTOR text found. Subcontractor edit page opened successfully."
