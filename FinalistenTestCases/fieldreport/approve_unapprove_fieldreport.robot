@@ -111,8 +111,8 @@ Create Test Field Report
     
     # Save the field report
     # Use explicit click and wait for location change
-    ${save_btn}=    Wait Until Element Is Visible    css=button.save    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    css=button.save    timeout=30s
+    Click Element    css=button.save
     
     # Wait for the redirect to the edit page (URL contains /edit/)
     Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/

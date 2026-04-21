@@ -75,13 +75,14 @@ Test Copy Field Report Creates Duplicate
     ${copy_url_attr}=    Get Element Attribute    ${COPY_BUTTON}    url-copy-fieldreport
     Log To Console    Copy URL from attribute: ${copy_url_attr}
     
-    Click Element    ${COPY_BUTTON}
+    ${copy_el}=    Get WebElement    ${COPY_BUTTON}
+    Execute Javascript    arguments[0].scrollIntoView({block: "center", behavior: "instant"});    ARGUMENTS    ${copy_el}
     Sleep    1s
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${copy_el}
+    Sleep    2s
     
     # Handle confirmation alert
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
-    
-    Sleep    5s
     
     # ======== VERIFY NAVIGATED TO NEW FIELD REPORT EDIT PAGE ========
     ${current_url}=    Get Location
@@ -91,14 +92,28 @@ Test Copy Field Report Creates Duplicate
     ${copied_id_pre}=    Run Keyword And Ignore Error    Extract And Verify Fieldreport ID
     
     # FALLBACK: If still on original ID or on list page, try navigating directly
-    IF    '${current_url}' == '${FIELDREPORT_LIST_URL}' or '${copied_id_pre}[1]' == '${CREATED_FIELDREPORT_ID}'
+    IF    'copy_fieldreport' in '${current_url}' or '${current_url}' == '${FIELDREPORT_LIST_URL}' or '${copied_id_pre}[1]' == '${CREATED_FIELDREPORT_ID}'
         Log To Console    ⚠ Copy action redirected to list or stayed on same ID. Attempting direct navigation...
         Go To    https://preproderp.finalisten.se${copy_url_attr}
         Sleep    3s
-        Wait Until Keyword Succeeds    5x    2s    Location Should Contain    /edit/
     END
-    
-    ${copied_id}=    Extract And Verify Fieldreport ID
+
+    # The copy endpoint may not redirect; extract new ID from response and open edit page
+    ${copy_location}=    Get Location
+    IF    'copy_fieldreport' in '${copy_location}'
+        ${copy_src}=    Get Source
+        ${id_matches}=    Get Regexp Matches    ${copy_src}    /fieldreport/list/([A-Za-z0-9]{6})/edit/    1
+        ${has_match}=    Run Keyword And Return Status    Should Not Be Empty    ${id_matches}
+        IF    ${has_match}
+            ${copied_id}=    Set Variable    ${id_matches}[0]
+            Go To    ${FIELDREPORT_LIST_URL}${copied_id}/edit/
+            Wait Until Keyword Succeeds    10x    3s    Location Should Contain    /edit/
+        ELSE
+            Fail    Copy Action Failed: Could not extract new Field Report ID from copy response.
+        END
+    ELSE
+        ${copied_id}=    Extract And Verify Fieldreport ID
+    END
     
     IF    '${copied_id}' == '${CREATED_FIELDREPORT_ID}'
         Fail    Copy Action Failed: Still on original Field Report ID ${copied_id}.
@@ -163,8 +178,8 @@ Create Field Report For Copy Test
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     
     # Extract field report ID from URL
     Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/

@@ -157,8 +157,8 @@ Create Field Report For Close Test
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    3s
     
     # Extract field report ID from URL

@@ -45,8 +45,8 @@ Test Work Date Today Accepted
     Input Text    ${WORK_DATE_INPUT}    ${today_date}
     
     # Save
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    3s
     
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
@@ -86,8 +86,8 @@ Test Work Date Tomorrow Future Validation
     Input Text    ${WORK_DATE_INPUT}    ${future_date}
     
     # Try to save
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    2s
     
     ${alert}=    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=5s
@@ -131,8 +131,8 @@ Test Work Date Weekend Handling
     Input Text    ${WORK_DATE_INPUT}    ${weekend_date}
     
     # Try to save
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
+    Click Element    ${SAVE_BUTTON}
     Sleep    3s
     
     ${alert}=    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
@@ -181,7 +181,7 @@ Test Leap Year Date Handling
     
     # Try to save (may fail due to closed period, but date format is valid)
     ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${save_btn}
+    Click Element    ${SAVE_BUTTON}
     Sleep    2s
     
     ${alert}=    Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s

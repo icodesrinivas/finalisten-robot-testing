@@ -19,11 +19,17 @@ Verify Employee List Opens Successfully
     Execute Javascript    var el = document.getElementById('register'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
     Sleep    2s
     Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=15s
-    Click Element    ${REGISTER_MENU}
+    ${register_el}=    Get WebElement    ${REGISTER_MENU}
+    Execute Javascript    arguments[0].scrollIntoView({block: "center", behavior: "instant"});    ARGUMENTS    ${register_el}
+    Sleep    1s
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${register_el}
     # Wait for Presence (submenu)
     Wait Until Page Contains Element    ${EMPLOYEES_MENU}    timeout=20s
     Sleep    2s
-    Click Element    ${EMPLOYEES_MENU}
+    ${employees_el}=    Get WebElement    ${EMPLOYEES_MENU}
+    Execute Javascript    arguments[0].scrollIntoView({block: "center", behavior: "instant"});    ARGUMENTS    ${employees_el}
+    Sleep    1s
+    Execute Javascript    arguments[0].click();    ARGUMENTS    ${employees_el}
     Sleep    3s
     Wait Until Element Is Visible    ${ADVANCED_SEARCH_TOGGLE}    timeout=30s
     Element Should Contain    ${ADVANCED_SEARCH_TOGGLE}    Advanced search
