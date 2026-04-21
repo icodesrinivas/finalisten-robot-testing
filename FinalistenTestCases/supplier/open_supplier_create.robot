@@ -12,9 +12,13 @@ Verify Supplier Create Page Opens Successfully
     Open And Login
     Hover Over Register Menu
     Click On Supplier Menu
-    Wait Until Page Contains    Filters    timeout=10s
+    # Modern list view uses the "Advanced search" toggle; keep a fallback for older markup.
+    ${has_adv}=    Run Keyword And Return Status    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=30s
+    IF    not ${has_adv}
+        Wait Until Page Contains    Filters    timeout=30s
+    END
     Click Add Supplier Button
-    Wait Until Page Contains    SUPPLIER    timeout=10s
+    Wait Until Page Contains    SUPPLIER    timeout=30s
     Log To Console    "SUPPLIER text found. Supplier create page opened successfully."
     Close Browser
 

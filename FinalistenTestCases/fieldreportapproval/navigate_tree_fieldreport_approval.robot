@@ -245,12 +245,13 @@ Update Date Range To Last 200 Days
     
     ${opened}=    Run Keyword And Return Status    Wait Until Element Is Visible    id=reportrange    15s
     IF    ${opened}
-        Click Element    id=reportrange
+        # Use JS click to avoid ElementClickInterceptedException in CI/headless
+        Robust Click    id=reportrange
         Sleep    1s
         # Preset labels are English when tests use Open And Login DB language fix
-        ${picked}=    Run Keyword And Return Status    Click Element    xpath=//div[contains(@class,'daterangepicker')]//li[contains(.,'This Month')]
+        ${picked}=    Run Keyword And Return Status    Robust Click    xpath=//div[contains(@class,'daterangepicker')]//li[contains(.,'This Month')]
         IF    not ${picked}
-            Run Keyword And Ignore Error    Click Element    xpath=//div[contains(@class,'daterangepicker')]//li[contains(.,'Last Month')]
+            Run Keyword And Ignore Error    Robust Click    xpath=//div[contains(@class,'daterangepicker')]//li[contains(.,'Last Month')]
         END
         Sleep    2s
         Run Keyword And Ignore Error    Press Key    tag=body    ESCAPE
