@@ -24,7 +24,7 @@ Verify Subcontractor Create Page Opens Successfully
     Sleep    1s
     Execute Javascript    arguments[0].click();    ARGUMENTS    ${menu_el}
     Sleep    3s
-    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=30s
+    Wait Until Page Contains Element    id=id_subcontractor_name_search    timeout=45s
     ${add_el}=    Get WebElement    ${ADD_SUBCONTRACTOR_BUTTON}
     Execute Javascript    arguments[0].scrollIntoView({block: "center", behavior: "instant"});    ARGUMENTS    ${add_el}
     Sleep    1s
