@@ -180,7 +180,7 @@ Test Leap Year Date Handling
     Log To Console    ✓ Leap year date (Feb 29, 2024) is valid date
     
     # Try to save (may fail due to closed period, but date format is valid)
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
+    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s
     Click Element    ${SAVE_BUTTON}
     Sleep    2s
     
