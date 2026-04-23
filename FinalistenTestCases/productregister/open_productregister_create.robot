@@ -5,7 +5,7 @@ Resource   ../keywords/LoginKeyword.robot
 *** Variables ***
 ${REGISTER_MENU}                        xpath=//*[@id="register"]
 ${PRODUCT_REGISTER_MENU}               xpath=//*[@id="product_register_app_menu"]
-${PRODUCT_REGISTER_ADD_BUTTON}         xpath=//a[@href="/products/create/" and @title="Add New Product"]
+${PRODUCT_REGISTER_ADD_BUTTON}         xpath=//a[contains(@href,"/products/create/")]
 
 *** Test Cases ***
 Verify Product Register Create Page Opens Successfully
@@ -22,7 +22,9 @@ Hover Over Register Menu
     Mouse Over    ${REGISTER_MENU}
 
 Click On Product Register Menu
+    Wait Until Element Is Visible    ${PRODUCT_REGISTER_MENU}    timeout=10s
     Click Element    ${PRODUCT_REGISTER_MENU}
 
 Click On Product Register Add Button
+    Wait Until Element Is Visible    ${PRODUCT_REGISTER_ADD_BUTTON}    timeout=10s
     Click Element    ${PRODUCT_REGISTER_ADD_BUTTON}
