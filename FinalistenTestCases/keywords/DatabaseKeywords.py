@@ -169,3 +169,117 @@ class DatabaseKeywords:
             if conn:
                 conn.close()
 
+    def delete_fieldreport_by_slug(self, slug):
+        """
+        Deletes a field report and its related products/attachments directly from DB using the fieldreport slug.
+        This is used as a cleanup fallback when UI deletion fails in CI.
+        """
+        if not self.db_url:
+            print("DATABASE_URL not set, cannot delete field report.")
+            return False
+
+        if not slug:
+            print("No slug provided, skipping delete_fieldreport_by_slug.")
+            return False
+
+        conn = None
+        try:
+            conn = psycopg2.connect(self.db_url, sslmode='require')
+            cur = conn.cursor()
+
+            # Find fieldreport id by slug
+            cur.execute("SELECT id FROM fieldreport_fieldreport WHERE slug = %s", (slug,))
+            row = cur.fetchone()
+            if not row:
+                print(f"No field report found for slug {slug}")
+                cur.close()
+                return False
+
+            fr_id = row[0]
+
+            # Delete attachments -> products -> fieldreport
+            cur.execute(
+                """
+                DELETE FROM fieldreport_productinfieldreportattachment
+                WHERE related_product_in_fieldreport_id IN (
+                    SELECT id FROM fieldreport_productsinfieldreport WHERE fieldreport_id_id = %s
+                )
+                """,
+                (fr_id,),
+            )
+            cur.execute("DELETE FROM fieldreport_productsinfieldreport WHERE fieldreport_id_id = %s", (fr_id,))
+            cur.execute("DELETE FROM fieldreport_fieldreport WHERE id = %s", (fr_id,))
+
+            conn.commit()
+            cur.close()
+            print(f"Deleted field report slug={slug} (id={fr_id}) via DB cleanup.")
+            return True
+        except Exception as e:
+            try:
+                if conn:
+                    conn.rollback()
+            except Exception:
+                pass
+            print(f"Error deleting field report by slug: {str(e)}")
+            return False
+        finally:
+            if conn:
+                conn.close()
+
+    def delete_robot_fieldreports_by_message_prefix(self, prefix="Robot Framework", limit=50):
+        """
+        Deletes recent robot-created field reports (and related products/attachments) by matching message_to_approver prefix.
+        Intended as a safety net for daily CI runs on preprod.
+        """
+        if not self.db_url:
+            print("DATABASE_URL not set, cannot delete robot field reports.")
+            return 0
+
+        conn = None
+        deleted = 0
+        try:
+            conn = psycopg2.connect(self.db_url, sslmode='require')
+            cur = conn.cursor()
+
+            like = prefix + "%"
+            cur.execute(
+                """
+                SELECT id, slug
+                FROM fieldreport_fieldreport
+                WHERE message_to_approver ILIKE %s
+                ORDER BY created_on DESC NULLS LAST
+                LIMIT %s
+                """,
+                (like, int(limit)),
+            )
+            rows = cur.fetchall()
+            for fr_id, slug in rows:
+                cur.execute(
+                    """
+                    DELETE FROM fieldreport_productinfieldreportattachment
+                    WHERE related_product_in_fieldreport_id IN (
+                        SELECT id FROM fieldreport_productsinfieldreport WHERE fieldreport_id_id = %s
+                    )
+                    """,
+                    (fr_id,),
+                )
+                cur.execute("DELETE FROM fieldreport_productsinfieldreport WHERE fieldreport_id_id = %s", (fr_id,))
+                cur.execute("DELETE FROM fieldreport_fieldreport WHERE id = %s", (fr_id,))
+                deleted += 1
+
+            conn.commit()
+            cur.close()
+            print(f"Deleted {deleted} robot field reports with prefix '{prefix}'.")
+            return deleted
+        except Exception as e:
+            try:
+                if conn:
+                    conn.rollback()
+            except Exception:
+                pass
+            print(f"Error deleting robot field reports: {str(e)}")
+            return deleted
+        finally:
+            if conn:
+                conn.close()
+

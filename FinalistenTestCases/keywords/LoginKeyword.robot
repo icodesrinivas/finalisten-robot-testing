@@ -241,8 +241,12 @@ Cleanup Created Fieldreport
         Log To Console    ID to delete: ${CREATED_FIELDREPORT_ID}
         # Use Run Keyword And Ignore Error for the entire navigation and delete process
         Run Keyword And Ignore Error    Perform Deletion For ID    ${CREATED_FIELDREPORT_ID}
+
+        # DB fallback (covers cases where UI delete button is missing or teardown happens mid-failure)
+        Run Keyword And Ignore Error    Delete Fieldreport By Slug    ${CREATED_FIELDREPORT_ID}
     ELSE
-        Log To Console    No field report ID found for cleanup.
+        Log To Console    No field report ID found for cleanup. Running DB safety cleanup by message prefix...
+        Run Keyword And Ignore Error    Delete Robot Fieldreports By Message Prefix    Robot Framework    25
     END
 
     # Always close all browsers in teardown
