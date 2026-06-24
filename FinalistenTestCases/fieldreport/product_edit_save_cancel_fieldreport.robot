@@ -309,9 +309,7 @@ Create Field Report With Product
     
     # Save the field report
     # Use explicit click and wait for location change
-    Scroll Element Into View    ${SAVE_BUTTON}
-    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${SAVE_BUTTON}
+    Robust Click    ${SAVE_BUTTON}
     
     # Wait for the redirect to the edit page (URL contains /edit/)
     Wait Until Field Report Saved To Edit Page

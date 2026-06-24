@@ -243,11 +243,8 @@ Create Field Report For High Value Test
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
-    # Save the field report
-    # Use explicit click and wait for location change
-    Scroll Element Into View    ${SAVE_BUTTON}
-    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${SAVE_BUTTON}
+    # Save the field report (JS click avoids headless MoveTargetOutOfBoundsException)
+    Robust Click    ${SAVE_BUTTON}
     
     # Wait for the redirect to the edit page (URL contains /edit/)
     Wait Until Field Report Saved To Edit Page

@@ -45,80 +45,80 @@ Open And Login
     Wait For Erp Shell Ready
 
 Select Customer And Project
-    [Documentation]    Robustly select customer and project. 
-    ...                If arguments are provided, it tries them first.
-    ...                If not provided or if they fail, it fetches valid data from the DB.
+    [Documentation]    Select customer/project using labels that exist in the form dropdown,
+    ...                cross-checked against the database when DATABASE_URL is available.
     [Arguments]    ${customer}=${EMPTY}    ${project}=${EMPTY}
-    
-    # Initialize dynamic data if not already set or if we need fresh data
-    IF    '${customer}' == '${EMPTY}' or '${project}' == '${EMPTY}'
-        ${db_data}=    Get Valid Customer And Project
-        ${customer}=    Set Variable If    '${customer}' == '${EMPTY}'    ${db_data['customer']}    ${customer}
-        ${project}=    Set Variable If    '${project}' == '${EMPTY}'    ${db_data['project']}    ${project}
+
+    Wait Until Element Is Visible    id=id_related_customer    timeout=30s
+    Wait Until Keyword Succeeds    10x    1s    List Should Have Options    id=id_related_customer
+
+    ${customer_options}=    Get List Items    id=id_related_customer
+    ${pair}=    Get Valid Customer And Project From Options    ${customer_options}
+    ${chosen_customer}=    Set Variable    ${pair['customer']}
+    ${chosen_project}=    Set Variable    ${pair['project']}
+
+    IF    '${customer}' != '${EMPTY}'
+        ${hint_in_options}=    Run Keyword And Return Status    List Should Contain Value    ${customer_options}    ${customer}
+        IF    ${hint_in_options}
+            ${chosen_customer}=    Set Variable    ${customer}
+            IF    '${project}' != '${EMPTY}'
+                ${chosen_project}=    Set Variable    ${project}
+            END
+        END
     END
 
-    Log To Console    ======== DATA SELECTION: ${customer} / ${project} ========
-    
-    # 1. SELECT CUSTOMER
-    Wait Until Element Is Visible    id=id_related_customer    timeout=20s
-    
-    # Try specified/fetched customer
-    ${status}=    Run Keyword And Return Status    Select From List By Label    id=id_related_customer    ${customer}
-    
-    # Fallback: Dynamic Fetch (if provided one failed)
-    IF    not ${status}
-        Log To Console    ⚠ Specified customer '${customer}' not found, fetching valid one from DB...
-        ${db_data_retry}=    Get Valid Customer And Project
-        Log To Console    Fetched from DB: ${db_data_retry['customer']}
-        ${status}=    Run Keyword And Return Status    Select From List By Label    id=id_related_customer    ${db_data_retry['customer']}
-        ${project}=    Set Variable    ${db_data_retry['project']}
-    END
-    
-    # Final fallback to index 1
-    IF    not ${status}
-        Log To Console    ⚠ DB fetching failed or selection failed, selecting customer at index 1...
-        Wait Until Keyword Succeeds    5x    1s    List Should Have Options    id=id_related_customer
+    IF    '${chosen_customer}' == '${NONE}' or '${chosen_customer}' == 'None' or '${chosen_customer}' == '${EMPTY}'
+        Log To Console    ⚠ No customer options found, selecting index 1
         Select From List By Index    id=id_related_customer    1
+        ${chosen_customer}=    Get Selected List Label    id=id_related_customer
+    ELSE
+        Log To Console    ======== DATA SELECTION: ${chosen_customer} / ${chosen_project} ========
+        Select From List By Label    id=id_related_customer    ${chosen_customer}
     END
-    
-    # Trigger AJAX for projects
+
     ${el}=    Get WebElement    id=id_related_customer
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${el}
-    Sleep    5s
-    
-    # 2. SELECT PROJECT
-    Wait Until Element Is Visible    id=id_related_project    timeout=20s
-    
-    # Try specified/fetched project
-    ${p_status}=    Run Keyword And Return Status    Select From List By Label    id=id_related_project    ${project}
-    
-    # Fallback: Index 1
-    IF    not ${p_status}
-        Log To Console    ⚠ Project '${project}' not found, selecting project at index 1...
-        Wait Until Keyword Succeeds    5x    2s    List Should Have Options    id=id_related_project
-        Select From List By Index    id=id_related_project    1
+    Wait Until Keyword Succeeds    15x    1s    Project Dropdown Ready
+
+    ${project_options}=    Get List Items    id=id_related_project
+    ${resolved_project}=    Get Project For Customer From Options    ${chosen_customer}    ${project_options}
+    IF    '${chosen_project}' != '${NONE}' and '${chosen_project}' != 'None' and '${chosen_project}' != '${EMPTY}'
+        ${project_in_options}=    Run Keyword And Return Status    List Should Contain Value    ${project_options}    ${chosen_project}
+        IF    ${project_in_options}
+            ${resolved_project}=    Set Variable    ${chosen_project}
+        END
     END
-    
-    # Trigger AJAX for subprojects
+
+    IF    '${resolved_project}' == '${NONE}' or '${resolved_project}' == 'None' or '${resolved_project}' == '${EMPTY}'
+        Log To Console    ⚠ No matching project label, selecting project index 1
+        Select From List By Index    id=id_related_project    1
+        ${resolved_project}=    Get Selected List Label    id=id_related_project
+    ELSE
+        Select From List By Label    id=id_related_project    ${resolved_project}
+    END
+
     ${el2}=    Get WebElement    id=id_related_project
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${el2}
-    Sleep    3s
-    
-    # 3. SELECT SUBPROJECT
-    Wait Until Element Is Visible    id=id_related_subproject    timeout=15s
-    Wait Until Keyword Succeeds    5x    2s    List Should Have Options    id=id_related_subproject
+    Wait Until Keyword Succeeds    10x    1s    Subproject Dropdown Ready
+
     Select From List By Index    id=id_related_subproject    1
-    
-    Log To Console    ✓ Selection completed successfully.
+    Set Suite Variable    ${DB_CUSTOMER}    ${chosen_customer}
+    Set Suite Variable    ${DB_PROJECT}     ${resolved_project}
+    Log To Console    ✓ Selection completed: ${DB_CUSTOMER} / ${DB_PROJECT}
+
+Project Dropdown Ready
+    Wait Until Element Is Visible    id=id_related_project    timeout=5s
+    List Should Have Options    id=id_related_project
+
+Subproject Dropdown Ready
+    Wait Until Element Is Visible    id=id_related_subproject    timeout=5s
+    List Should Have Options    id=id_related_subproject
 
 Setup Dynamic Test Data
-    [Documentation]    Fetches valid test data from DB and sets as suite variables.
-    ${db_data}=    Get Valid Customer And Project
+    [Documentation]    Fetches installer from DB. Customer/project are resolved from form dropdown at selection time.
     ${installer}=    Get Valid Installer Name
-    Set Suite Variable    ${DB_CUSTOMER}    ${db_data['customer']}
-    Set Suite Variable    ${DB_PROJECT}     ${db_data['project']}
-    Set Suite Variable    ${DB_INSTALLER}   ${installer}
-    Log To Console    ✓ Setup Dynamic Data: ${DB_CUSTOMER} / ${DB_PROJECT} / ${DB_INSTALLER}
+    Set Suite Variable    ${DB_INSTALLER}    ${installer}
+    Log To Console    ✓ Setup Dynamic Data: installer=${DB_INSTALLER} (customer/project resolved from dropdown)
 
 Ensure Fieldreport Product Note Filled And Saved
     [Documentation]    Some FR products require a reporting note. Enable product edit mode, set a note on the first row, and save to avoid blocking alerts on later actions.

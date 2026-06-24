@@ -45,46 +45,133 @@ class DatabaseKeywords:
             if conn:
                 conn.close()
 
+    def _normalize_option_labels(self, options):
+        if not options:
+            return []
+        labels = []
+        for option in options:
+            text = str(option).strip()
+            if not text or text in ('---------', '--', 'Select', 'Välj'):
+                continue
+            labels.append(text)
+        return labels
+
+    def get_valid_customer_and_project_from_options(self, customer_options):
+        """
+        Pick a customer/project pair that exists in both the DB and the create-form dropdown.
+        customer_options: list of visible <option> labels from id_related_customer.
+        """
+        labels = self._normalize_option_labels(customer_options)
+        if not labels:
+            return {"customer": None, "project": None}
+
+        if not self.db_url:
+            print("DATABASE_URL not set, using first available customer option.")
+            return {"customer": labels[0], "project": None}
+
+        conn = None
+        try:
+            conn = psycopg2.connect(self.db_url, sslmode='require')
+            cur = conn.cursor()
+            query = """
+                SELECT c.name, p.project_name
+                FROM account_customer c
+                JOIN projects_project p ON c.id = p.related_customer_id
+                WHERE COALESCE(c.is_active, TRUE) = TRUE
+                  AND COALESCE(p.is_active, TRUE) = TRUE
+                  AND c.name = ANY(%s)
+                ORDER BY c.id, p.id
+                LIMIT 1
+            """
+            cur.execute(query, (labels,))
+            result = cur.fetchone()
+            if result:
+                return {"customer": result[0], "project": result[1]}
+            print(f"No DB customer/project match for dropdown options: {labels[:5]}")
+            return {"customer": labels[0], "project": None}
+        except Exception as e:
+            print(f"Error matching customer options to DB: {str(e)}")
+            self._debug_list_tables_and_columns()
+            return {"customer": labels[0], "project": None}
+        finally:
+            if conn:
+                conn.close()
+
+    def get_project_for_customer_from_options(self, customer_name, project_options):
+        """
+        Pick a project for the selected customer that exists in the project dropdown.
+        """
+        labels = self._normalize_option_labels(project_options)
+        if not labels:
+            return None
+
+        if not customer_name or not self.db_url:
+            return labels[0]
+
+        conn = None
+        try:
+            conn = psycopg2.connect(self.db_url, sslmode='require')
+            cur = conn.cursor()
+            query = """
+                SELECT p.project_name
+                FROM account_customer c
+                JOIN projects_project p ON c.id = p.related_customer_id
+                WHERE c.name = %s
+                  AND COALESCE(p.is_active, TRUE) = TRUE
+                  AND p.project_name = ANY(%s)
+                ORDER BY p.id
+                LIMIT 1
+            """
+            cur.execute(query, (customer_name, labels))
+            result = cur.fetchone()
+            return result[0] if result else labels[0]
+        except Exception as e:
+            print(f"Error matching project options to DB: {str(e)}")
+            return labels[0]
+        finally:
+            if conn:
+                conn.close()
+
     def get_valid_customer_and_project(self):
         """
         Fetches a customer name and a related project name from the database.
-        Returns a dictionary with 'customer' and 'project' keys.
+        Prefer get_valid_customer_and_project_from_options() when the form is open.
         """
         if not self.db_url:
-            print("DATABASE_URL not set, returning fallback customer and project.")
-            return {"customer": "Arcona Aktiebolag", "project": "Systemkameran"}
+            print("DATABASE_URL not set, customer/project must be chosen from form dropdown.")
+            return {"customer": None, "project": None}
 
         conn = None
         try:
             conn = psycopg2.connect(self.db_url, sslmode='require')
             cur = conn.cursor()
             
-            # Query to find a customer who has at least one project
-            # This handles the AJAX dependency where project depends on customer
             query = """
                 SELECT c.name, p.project_name 
                 FROM account_customer c
                 JOIN projects_project p ON c.id = p.related_customer_id
-                WHERE p.is_active = True AND c.is_active = True
+                WHERE COALESCE(p.is_active, TRUE) = TRUE AND COALESCE(c.is_active, TRUE) = TRUE
+                ORDER BY c.id, p.id
                 LIMIT 1
             """
             cur.execute(query)
             result = cur.fetchone()
             
             if not result:
-                # Fallback to any customer and project if no perfect match (unlikely in real DB)
-                cur.execute("SELECT name FROM account_customer WHERE is_active = True LIMIT 1")
+                cur.execute("SELECT name FROM account_customer WHERE COALESCE(is_active, TRUE) = TRUE LIMIT 1")
                 cust = cur.fetchone()
-                cur.execute("SELECT project_name FROM projects_project WHERE is_active = True LIMIT 1")
+                cur.execute("SELECT project_name FROM projects_project WHERE COALESCE(is_active, TRUE) = TRUE LIMIT 1")
                 proj = cur.fetchone()
-                return {"customer": cust[0] if cust else "Arcona Aktiebolag", 
-                        "project": proj[0] if proj else "Systemkameran"}
+                return {
+                    "customer": cust[0] if cust else None,
+                    "project": proj[0] if proj else None,
+                }
             
             return {"customer": result[0], "project": result[1]}
         except Exception as e:
             print(f"Error fetching data from DB: {str(e)}")
             self._debug_list_tables_and_columns()
-            return {"customer": "Arcona Aktiebolag", "project": "Systemkameran"}
+            return {"customer": None, "project": None}
         finally:
             if conn:
                 conn.close()
