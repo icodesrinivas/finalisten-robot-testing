@@ -11,6 +11,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs (configurable for different environments)
@@ -60,7 +61,7 @@ Test Fields Copied From Sales Product To FR Product
     [Setup]    Create Field Report For Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: Fields Copied From Sales Product ========
     
@@ -159,7 +160,7 @@ Test Modify FR Product Sales Product Unchanged
     [Setup]    Create Field Report With Product
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: FR Product Modification Isolated ========
     
@@ -220,7 +221,7 @@ Test Add Same Product Twice Duplicate Handling
     [Setup]    Create Field Report With Product
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: Add Duplicate Product ========
     
@@ -278,7 +279,7 @@ Test Add Product With Zero Quantity
     [Setup]    Create Field Report With Product
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: Product With Zero Quantity ========
     
@@ -341,7 +342,7 @@ Create Field Report For Test
     Open And Login
     Setup Dynamic Test Data
     
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
@@ -454,7 +455,7 @@ Cleanup Created Fieldreport
     
     IF    ${has_id}
         ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
+        Navigate To Legacy Full Url    ${edit_url}
         Sleep    2s
         
         ${delete_btn}=    Get WebElement    ${DELETE_BUTTON}

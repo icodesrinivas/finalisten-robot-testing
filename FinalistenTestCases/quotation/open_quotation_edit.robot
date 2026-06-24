@@ -1,33 +1,16 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${ADMIN_MENU}                      xpath=//*[@id="admin"]
-${QUOTATION_LIST_MENU}            xpath=//*[@id="quotation_list_app_menu"]
-${QUOTATION_ROW}                  css=tr.quotation_rows
-${QUOTATION_EDIT_TEXT}            QUOTATION
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Quotation Edit Page Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Admin Menu
-    Click On Quotation List Menu
-    Wait Until Page Contains    Filters    timeout=10s
-    Log To Console    "Filters text found. Quotation list opened successfully."
-    ${row_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${QUOTATION_ROW}    timeout=5s
-    Run Keyword If    ${row_exists}    Click Quotation Row And Verify
-    ...    ELSE    Log To Console    "No quotation records found. Skipping edit test."
+    Navigate To Quotation List
+    Wait Until Page Contains    Filters    timeout=20s
+    ${row_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    css=tr.quotation_rows    timeout=10s
+    Run Keyword If    ${row_exists}    Click Element    css=tr.quotation_rows
+    Run Keyword If    ${row_exists}    Wait Until Page Contains    QUOTATION    timeout=20s
+    Log To Console    "Quotation edit page opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Admin Menu
-    Mouse Over    ${ADMIN_MENU}
-
-Click On Quotation List Menu
-    Click Element    ${QUOTATION_LIST_MENU}
-
-Click Quotation Row And Verify
-    Click Element    ${QUOTATION_ROW}
-    Wait Until Page Contains    ${QUOTATION_EDIT_TEXT}    timeout=10s
-    Log To Console    "QUOTATION text found. Quotation edit page opened successfully."

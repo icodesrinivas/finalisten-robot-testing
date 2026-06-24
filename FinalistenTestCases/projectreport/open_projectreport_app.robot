@@ -1,24 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${REPORTS_MENU}                  xpath=//*[@id="reports"]
-${PROJECT_REPORT_MENU}          xpath=//*[@id="project_report_app_menu"]
-${PROJECT_REPORT_TEXT}          List Of Projects
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Project Report App Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Reports Menu
-    Click On Project Report Menu
-    Wait Until Page Contains    ${PROJECT_REPORT_TEXT}    timeout=10s
-    Log To Console    "List Of Projects found. Project Report App opened successfully."
+    Navigate To Project Report
+    Wait Until Page Contains    List Of Projects    timeout=20s
+    Log To Console    "Project report app opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Reports Menu
-    Mouse Over    ${REPORTS_MENU}
-
-Click On Project Report Menu
-    Click Element    ${PROJECT_REPORT_MENU}

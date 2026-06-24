@@ -1,23 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${REGISTER_MENU}                        xpath=//*[@id="register"]
-${PRODUCT_REGISTER_MENU}               xpath=//*[@id="product_register_app_menu"]
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
-Verify Product Register List Page Opens Successfully
+Verify Product Register List Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Register Menu
-    Click On Product Register Menu
-    Wait Until Page Contains    Filters    timeout=10s
-    Log To Console    "Filters text found. Product Register list view opened successfully."
+    Navigate To Product Register List
+    Wait Until Page Contains    Filters    timeout=20s
+    Log To Console    "Product register list opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Register Menu
-    Mouse Over    ${REGISTER_MENU}
-
-Click On Product Register Menu
-    Click Element    ${PRODUCT_REGISTER_MENU}

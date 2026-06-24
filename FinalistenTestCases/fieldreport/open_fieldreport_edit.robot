@@ -1,11 +1,10 @@
 *** Settings ***
 Library    SeleniumLibrary
 Library    DateTime
-Library    String
 Resource   ../keywords/LoginKeyword.robot
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Variables ***
-${FIELDREPORT_LIST_URL}      https://preproderp.finalisten.se/fieldreport/list/
 ${FILTER_FRAME_HEADER}       id=fieldreport_list_filter
 ${START_WORK_DATE_INPUT}     id=start_work_date
 ${END_WORK_DATE_INPUT}       id=end_work_date
@@ -15,10 +14,9 @@ ${FIELD_REPORT_LINK}         xpath=//tr[contains(@class, 'fieldreport_rows')]//a
 
 *** Test Cases ***
 Verify Field Report Edit Page Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    # Navigate directly to field report list (more reliable in headless)
-    Go To    ${FIELDREPORT_LIST_URL}
-    Sleep    5s
+    Navigate To Field Report List
     Open Field Report Edit Page
     Verify Field Report Edit Page Content
     Close Browser
@@ -28,7 +26,7 @@ Open Field Report Edit Page
     [Documentation]    Find a field report and open its edit page
     Wait Until Element Is Visible    ${FILTER_FRAME_HEADER}    timeout=30s
     Execute Javascript    document.getElementById('fieldreport_list_filter').click();
-    Sleep    3s
+    Wait Until Page Contains Element    ${START_WORK_DATE_INPUT}    timeout=10s
     Wait Until Page Contains Element    ${SEARCH_BUTTON_XPATH}    timeout=15s
     
     ${today}=    Get Current Date    result_format=%Y-%m-%d
@@ -48,7 +46,7 @@ Open Field Report Edit Page
         ${filter_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${START_WORK_DATE_INPUT}
         IF    not ${filter_visible}
             Execute Javascript    document.getElementById('fieldreport_list_filter').click();
-            Sleep    2s
+            Wait Until Page Contains Element    ${START_WORK_DATE_INPUT}    timeout=10s
         END
         
         Clear Element Text    ${START_WORK_DATE_INPUT}
@@ -58,7 +56,7 @@ Open Field Report Edit Page
         
         ${search_btn}=    Get WebElement    ${SEARCH_BUTTON_XPATH}
         Execute Javascript    arguments[0].click();    ARGUMENTS    ${search_btn}
-        Sleep    3s
+        Wait Until Keyword Succeeds    15x    1s    Field Report Rows Or Continue Search
         
         # Prepare for next window if this one fails
         ${current_end_date}=    Set Variable    ${current_start_date}
@@ -71,9 +69,12 @@ Open Field Report Edit Page
     ${edit_url}=    Get Element Attribute    ${link_elem}    href
     Log To Console    Found edit URL: ${edit_url}
     
-    # Navigate directly to the edit URL
-    Go To    ${edit_url}
-    Sleep    5s
+    Navigate To Legacy Full Url    ${edit_url}
+    Wait Until Page Contains Element    id=id_related_customer    timeout=30s
+
+Field Report Rows Or Continue Search
+    ${visible}=    Run Keyword And Return Status    Element Should Be Visible    ${FIELD_REPORT_ROW}
+    IF    not ${visible}    Fail    No rows yet
 
 Verify Field Report Edit Page Content
     [Documentation]    Verify we are on the field report edit page

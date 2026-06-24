@@ -57,7 +57,7 @@ Test Create Field Report And Verify Stored Values
     [Setup]    Login To PreProd
     
     # Navigate to create page
-    Go To    ${PREPROD_FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Select first available customer
@@ -262,7 +262,7 @@ Cleanup Created Fieldreport
     IF    ${has_id}
         # Navigate to the edit page if not already there
         ${edit_url}=    Set Variable    ${PREPROD_FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
+        Navigate To Legacy Full Url    ${edit_url}
         Sleep    2s
         
         # Check if delete button exists and click it

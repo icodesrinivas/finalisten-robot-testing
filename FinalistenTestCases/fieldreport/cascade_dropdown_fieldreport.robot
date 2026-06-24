@@ -11,6 +11,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # Form Field Selectors
@@ -28,7 +29,7 @@ Test Customer Change Clears And Reloads Project Dropdown
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Customer Change Clears Project ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Select first customer
@@ -84,7 +85,7 @@ Test Project Change Clears And Reloads SubProject Dropdown
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Project Change Clears SubProject ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Select customer
@@ -149,7 +150,7 @@ Test Projects Belong To Selected Customer
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Projects Belong to Customer ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Get initial project count (before selecting customer)
@@ -195,7 +196,7 @@ Test SubProjects Belong To Selected Project
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: SubProjects Belong to Project ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Select customer

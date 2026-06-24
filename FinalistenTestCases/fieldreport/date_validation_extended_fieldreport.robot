@@ -10,6 +10,7 @@ Library          SeleniumLibrary
 Library          DateTime
 Library          String
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # Form Field Selectors
@@ -30,7 +31,7 @@ Test Work Date Today Accepted
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Work Date = Today ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields
@@ -72,7 +73,7 @@ Test Work Date Tomorrow Future Validation
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Work Date = Tomorrow (Future) ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields
@@ -117,7 +118,7 @@ Test Work Date Weekend Handling
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Work Date on Weekend ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields
@@ -158,7 +159,7 @@ Test Leap Year Date Handling
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Leap Year Date (Feb 29) ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields

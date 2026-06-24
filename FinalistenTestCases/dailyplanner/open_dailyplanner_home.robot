@@ -1,24 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${PRODUCTION_MENU}                xpath=//*[@id="production"]
-${DAILY_PLANNER_MENU}            xpath=//*[@id="daily_planner_app_menu"]
-${DAILY_PLANNER_TEXT}           Kanban Board
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Daily Planner Board Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Production Menu
-    Double Click On Daily Planner Menu
-    Wait Until Page Contains    ${DAILY_PLANNER_TEXT}    timeout=10s
-    Log To Console    "Kanban Board text found. Daily Planner board opened successfully."
+    Navigate To Daily Planner Home
+    Wait Until Page Contains    Kanban Board    timeout=20s
+    Log To Console    "Daily planner home opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Production Menu
-    Mouse Over    ${PRODUCTION_MENU}
-
-Double Click On Daily Planner Menu
-    Double Click Element    ${DAILY_PLANNER_MENU}

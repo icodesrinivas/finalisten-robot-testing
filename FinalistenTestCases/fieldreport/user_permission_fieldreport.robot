@@ -13,6 +13,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs (configurable for different environments)
@@ -52,7 +53,7 @@ Test Admin User Can View All Field Reports
     [Setup]    Login As Admin
     
     Log To Console    ======== TEST: Admin Can View All FRs ========
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
     
     Search Until Records Are Found
@@ -92,7 +93,7 @@ Test Regular User View Own Field Reports
     [Setup]    Login As Regular User
     
     Log To Console    ======== TEST: Regular User Own FRs Only ========
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     
     # Check if user has access to list
     ${has_access}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=10s
@@ -128,7 +129,7 @@ Test Guest User Read Only Access
     [Setup]    Login As Guest User
     
     Log To Console    ======== TEST: Guest User Read-Only Access ========
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     
     # Check if guest has access
     ${has_access}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=10s

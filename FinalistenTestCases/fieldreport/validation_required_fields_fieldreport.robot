@@ -11,6 +11,7 @@ Library          SeleniumLibrary
 Library          DateTime
 Library          String
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # Form Field Selectors
@@ -34,7 +35,7 @@ Test Submit Without Customer Shows Error
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Submit Without Customer ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill all fields EXCEPT Customer
@@ -70,7 +71,7 @@ Test Submit Without Project Shows Error
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Submit Without Project ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Select Customer but NOT Project (use index 1 — label text can differ from DB cache)
@@ -113,7 +114,7 @@ Test Submit Without SubProject Shows Error
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Submit Without SubProject ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Select Customer and Project but NOT SubProject (Select Customer And Project always picks a subproject)
@@ -160,7 +161,7 @@ Test Submit Without Work Date Shows Error
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Submit Without Work Date ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill all fields EXCEPT Work Date
@@ -200,7 +201,7 @@ Test Submit Without Installer Shows Error
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Submit Without Installer ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill all fields EXCEPT Installer

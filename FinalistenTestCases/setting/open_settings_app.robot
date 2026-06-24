@@ -1,24 +1,14 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${REGISTER_MENU}                  xpath=//*[@id="register"]
-${SETTINGS_APP_MENU}             xpath=//*[@id="settings_app_menu"]
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Settings App Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Register Menu
-    Click On Settings App Menu
-    Wait Until Page Contains    Settings       timeout=15s
-    Wait Until Page Contains    Fieldreport    timeout=15s
-    Log To Console    "Settings and Fieldreport texts found. Settings app opened successfully."
+    Navigate To Old Settings App
+    Wait Until Page Contains    Settings    timeout=20s
+    Wait Until Page Contains    Fieldreport    timeout=20s
+    Log To Console    "Settings app opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Register Menu
-    Mouse Over    ${REGISTER_MENU}
-
-Click On Settings App Menu
-    Click Element    ${SETTINGS_APP_MENU}

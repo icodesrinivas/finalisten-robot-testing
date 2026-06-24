@@ -11,6 +11,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs (configurable for different environments)
@@ -56,7 +57,7 @@ Test Approved FR Products Are Read Only
     [Setup]    Create Field Report With Product
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${APPROVE_BUTTON}    timeout=15s
     Log To Console    ======== TEST: Approved FR Products Read-Only ========
     
@@ -104,7 +105,7 @@ Test Approved FR General Data Is Read Only
     [Setup]    Create Field Report For High Value Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${APPROVE_BUTTON}    timeout=15s
     Log To Console    ======== TEST: Approved FR General Data Read-Only ========
     
@@ -148,7 +149,7 @@ Test Unapproved FR Fields Become Editable
     [Setup]    Create Field Report For High Value Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${APPROVE_BUTTON}    timeout=15s
     Log To Console    ======== TEST: Unapproved FR Fields Become Editable ========
     
@@ -195,7 +196,7 @@ Test Approve Empty FR Behavior
     [Setup]    Create Field Report For High Value Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${APPROVE_BUTTON}    timeout=15s
     Log To Console    ======== TEST: Approve Empty FR (No Products) ========
     
@@ -236,7 +237,7 @@ Create Field Report For High Value Test
     Open And Login
     Setup Dynamic Test Data
     
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
@@ -249,7 +250,7 @@ Create Field Report For High Value Test
     Click Element    ${SAVE_BUTTON}
     
     # Wait for the redirect to the edit page (URL contains /edit/)
-    Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/
+    Wait Until Field Report Saved To Edit Page
     
     ${id}=    Extract And Verify Fieldreport ID
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}
@@ -328,7 +329,7 @@ Cleanup Created Fieldreport
     
     IF    ${has_id}
         ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
+        Navigate To Legacy Full Url    ${edit_url}
         Sleep    2s
         
         ${delete_btn}=    Get WebElement    ${DELETE_BUTTON}
@@ -348,7 +349,7 @@ Cleanup Approved Fieldreport
     
     IF    ${has_id}
         ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
+        Navigate To Legacy Full Url    ${edit_url}
         Sleep    2s
         
         # Unapprove first

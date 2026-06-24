@@ -2,10 +2,9 @@
 Library          SeleniumLibrary
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
-${REGISTER_MENU}                  xpath=//*[@id="register"]
-${SETTINGS_APP_MENU}             xpath=//*[@id="settings_app_menu"]
 ${PENCIL_ICONS_SELECTOR}         css=i.global-setting-pencil
 ${FORM_CONTAINER}                id=id_global_setting_data
 ${SAVE_BUTTON}                   css=#id_global_setting_data button.save
@@ -85,11 +84,5 @@ Verify Form Content Refresh
     Should Not Be Empty    ${current_content}    msg=Form container is empty
     Should Not Be Equal    ${current_content}    ${previous_content}    msg=Form content has not changed yet
 Navigate To Settings App
-    [Documentation]    Navigates to the Settings application via the Register menu.
-    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=20s
-    Mouse Over    ${REGISTER_MENU}
-    Wait Until Element Is Visible    ${SETTINGS_APP_MENU}    timeout=10s
-    Click Element    ${SETTINGS_APP_MENU}
-    Wait Until Location Contains    /global_setting/    timeout=20s
-    Wait Until Page Contains    Settings    timeout=20s
-    Sleep    1s
+    [Documentation]    Navigates to the legacy Settings application inside the React shell iframe.
+    Navigate To Old Settings App

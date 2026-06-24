@@ -1,31 +1,15 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${REGISTER_MENU}                        xpath=//*[@id="register"]
-${PRODUCT_REGISTER_MENU}               xpath=//*[@id="product_register_app_menu"]
-${PRODUCT_REGISTER_ROW}                css=tr.product_register_rows
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
-Verify Product Register Edit Page Opens Successfully
+Verify Edit Product Register Page Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Register Menu
-    Click On Product Register Menu
-    Sleep    3s
-    ${row_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PRODUCT_REGISTER_ROW}    timeout=10s
-    Run Keyword If    ${row_exists}    Click Product Register Row And Verify
-    ...    ELSE    Log To Console    "No product register records found. Test skipped."
+    Navigate To Product Register List
+    Wait Until Element Is Visible    css=tr.product_rows    timeout=20s
+    Click Element    css=tr.product_rows
+    Wait Until Page Contains    PRODUCT    timeout=30s
+    Log To Console    "Product register edit page opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Register Menu
-    Mouse Over    ${REGISTER_MENU}
-
-Click On Product Register Menu
-    Click Element    ${PRODUCT_REGISTER_MENU}
-
-Click Product Register Row And Verify
-    Click Element    ${PRODUCT_REGISTER_ROW}
-    Wait Until Page Contains    SALES PRODUCT    timeout=10s
-    Log To Console    "SALES PRODUCT text found. Edit view opened successfully."

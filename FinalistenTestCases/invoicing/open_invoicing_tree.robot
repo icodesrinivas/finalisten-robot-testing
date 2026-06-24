@@ -1,24 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${ADMIN_MENU}                    xpath=//*[@id="admin"]
-${INVOICING_MENU}               xpath=//*[@id="invoicing_app_menu"]
-${FILTERS_TEXT}                 Filters
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Invoicing App Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Admin Menu
-    Click On Invoicing Menu
-    Wait Until Page Contains    ${FILTERS_TEXT}    timeout=10s
-    Log To Console    "Filters text found. Invoicing app opened successfully."
+    Navigate To Invoicing Tree
+    Wait Until Page Contains    Filters    timeout=20s
+    Log To Console    "Invoicing app opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Admin Menu
-    Mouse Over    ${ADMIN_MENU}
-
-Click On Invoicing Menu
-    Click Element    ${INVOICING_MENU}

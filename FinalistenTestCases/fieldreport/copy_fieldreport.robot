@@ -12,6 +12,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # Form Field Selectors
@@ -48,7 +49,7 @@ Test Copy Field Report Creates Duplicate
     
     # Navigate to edit page
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${COPY_BUTTON}    timeout=15s
     Log To Console    ======== TESTING COPY FUNCTIONALITY FOR FIELD REPORT ${CREATED_FIELDREPORT_ID} ========
     
@@ -106,8 +107,8 @@ Test Copy Field Report Creates Duplicate
         ${has_match}=    Run Keyword And Return Status    Should Not Be Empty    ${id_matches}
         IF    ${has_match}
             ${copied_id}=    Set Variable    ${id_matches}[0]
-            Go To    ${FIELDREPORT_LIST_URL}${copied_id}/edit/
-            Wait Until Keyword Succeeds    10x    3s    Location Should Contain    /edit/
+            Navigate To Field Report List${copied_id}/edit/
+            Wait Until Field Report Saved To Edit Page
         ELSE
             Fail    Copy Action Failed: Could not extract new Field Report ID from copy response.
         END
@@ -160,7 +161,7 @@ Create Field Report For Copy Test
     Setup Dynamic Test Data
     
     Log To Console    ======== CREATING FIELD REPORT FOR COPY TEST ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
@@ -182,7 +183,7 @@ Create Field Report For Copy Test
     Click Element    ${SAVE_BUTTON}
     
     # Extract field report ID from URL
-    Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/
+    Wait Until Field Report Saved To Edit Page
     ${id}=    Extract And Verify Fieldreport ID
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}
     Log To Console    ✓ Created Field Report ID: ${id}

@@ -16,6 +16,7 @@ Library          Collections
 Library          Process
 Library          OperatingSystem
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs
@@ -61,7 +62,7 @@ Verify Fieldreport With Inactive Installer Can Be Edited And Saved
     Log To Console    ======== TEST: Inactive Installer Edit Regression ========
     
     # Step 1: Navigate to fieldreport list
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
     Log To Console    ✓ Fieldreport list loaded
     
@@ -132,7 +133,7 @@ Find Fieldreport With Installer
     
     # Navigate directly to the edit page using the slug
     ${edit_url}=    Set Variable    ${BASE_URL}/fieldreport/list/${slug}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Sleep    5s
     
     # Wait for page to load

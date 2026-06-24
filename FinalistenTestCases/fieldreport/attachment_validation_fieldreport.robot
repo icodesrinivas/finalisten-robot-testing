@@ -11,6 +11,7 @@ Library          DateTime
 Library          String
 Library          OperatingSystem
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs (configurable for different environments)
@@ -55,7 +56,7 @@ Test Upload Large File Size Limit
     [Setup]    Create Field Report With Product
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: Large File Size Limit ========
     
@@ -102,7 +103,7 @@ Test Upload Unsupported File Type
     [Setup]    Create Field Report With Product
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: Unsupported File Type ========
     
@@ -147,7 +148,7 @@ Test Upload Multiple Attachments
     [Setup]    Create Field Report With Product
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: Multiple Attachments ========
     
@@ -213,7 +214,7 @@ Test Download Attachment Integrity
     [Setup]    Create Field Report With Product
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: Download Attachment Integrity ========
     
@@ -268,7 +269,7 @@ Create Field Report With Product
     Open And Login
     Setup Dynamic Test Data
     
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
@@ -350,7 +351,7 @@ Cleanup Created Fieldreport
     ${has_id}=    Run Keyword And Return Status    Should Not Be Empty    ${CREATED_FIELDREPORT_ID}
     IF    ${has_id}
         ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
+        Navigate To Legacy Full Url    ${edit_url}
         Sleep    2s
         ${delete_btn}=    Get WebElement    ${DELETE_BUTTON}
         Execute Javascript    arguments[0].click();    ARGUMENTS    ${delete_btn}

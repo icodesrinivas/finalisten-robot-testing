@@ -1,39 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-*** Variables ***
-${REGISTER_MENU}     id=register
-${CUSTOMERS_MENU}    id=customers_app_menu
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Customer List Opens Successfully
     Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    # Wait for Presence (id=register) which is more robust in headless
-    Wait Until Page Contains Element    ${REGISTER_MENU}    timeout=45s
-    Sleep    3s
-    # Scroll to ensure element is in viewport
-    Execute Javascript    var el = document.getElementById('register'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
-    Sleep    2s
-    Hover Over Register Menu
-    # Wait for Presence (submenu)
-    Wait Until Page Contains Element    ${CUSTOMERS_MENU}    timeout=20s
-    Sleep    2s
-    Click On Customers Menu
-    Sleep    3s
-    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=15s
-    Log To Console    "Advanced search toggle found. Customer list opened successfully."
+    Navigate To Customers App
+    Page Should Contain Element    ${CUSTOMER_SEARCH_INPUT}
+    Log To Console    "Customer list opened successfully (React UI)."
     Close Browser
-
-*** Keywords ***
-Hover Over Register Menu
-    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=30s
-    Sleep    1s
-    Mouse Over    ${REGISTER_MENU}
-
-Click On Customers Menu
-    Wait Until Element Is Visible    ${CUSTOMERS_MENU}    timeout=10s
-    Click Element    ${CUSTOMERS_MENU}
-    Sleep    2s

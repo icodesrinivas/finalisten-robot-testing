@@ -11,6 +11,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs (configurable for different environments)
@@ -46,7 +47,7 @@ Test Navigate Through List Pages
     [Setup]    Login To Application
     
     Log To Console    ======== TEST: Navigate Through List Pages ========
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
     
     Search Until Records Are Found
@@ -92,7 +93,7 @@ Test Page Number And Record Count Display
     [Setup]    Login To Application
     
     Log To Console    ======== TEST: Page Number and Record Count ========
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
     
     Search Until Records Are Found
@@ -135,7 +136,7 @@ Test Navigate To Last Page
     [Setup]    Login To Application
     
     Log To Console    ======== TEST: Navigate to Last Page ========
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
     
     Search Until Records Are Found
@@ -196,7 +197,7 @@ Test Page Position Maintained After Detail View
     [Setup]    Login To Application
     
     Log To Console    ======== TEST: Page Position After Detail View ========
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
     
     Search Until Records Are Found
@@ -243,7 +244,7 @@ Test Page Position Maintained After Detail View
             Sleep    2s
             
             # Or navigate back to list URL with same filters
-            Go To    ${FIELDREPORT_LIST_URL}
+            Navigate To Field Report List
             Wait Until Page Contains Element    ${FILTER_TOGGLE}    timeout=15s
             
             # Note: Page position may not be maintained without session state

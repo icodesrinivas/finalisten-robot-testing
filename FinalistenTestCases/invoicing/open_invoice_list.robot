@@ -1,24 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${ADMIN_MENU}                      xpath=//*[@id="admin"]
-${INVOICE_LIST_MENU}              xpath=//*[@id="invoice_list_app_menu"]
-${FILTERS_TEXT}                   Filters
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Invoice List View Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Admin Menu
-    Click On Invoice List Menu
-    Wait Until Page Contains    ${FILTERS_TEXT}    timeout=10s
-    Log To Console    "Filters text found. Invoice List View opened successfully."
+    Navigate To Invoice List
+    Wait Until Page Contains    Filters    timeout=20s
+    Log To Console    "Invoice list view opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Admin Menu
-    Mouse Over    ${ADMIN_MENU}
-
-Click On Invoice List Menu
-    Click Element    ${INVOICE_LIST_MENU}

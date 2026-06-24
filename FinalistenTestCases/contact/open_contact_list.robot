@@ -1,28 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${REGISTER_MENU}      id=register
-${CONTACTS_MENU}      id=contacts_app_menu
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Contact List Opens Successfully
     Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    # Wait for Presence (id=register) which is more robust in headless
-    Wait Until Page Contains Element    ${REGISTER_MENU}    timeout=45s
-    Sleep    3s
-    # Scroll to ensure element is in viewport
-    Execute Javascript    var el = document.getElementById('register'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
-    Sleep    2s
-    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=15s
-    Click Element    ${REGISTER_MENU}
-    # Wait for Presence (submenu)
-    Wait Until Page Contains Element    ${CONTACTS_MENU}    timeout=20s
-    Sleep    2s
-    Click Element    ${CONTACTS_MENU}
-    Sleep    3s
-    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=15s
-    Log To Console    "Advanced search toggle found. Contact list opened successfully."
+    Navigate To Contacts App
+    Page Should Contain Element    ${CONTACT_SEARCH_INPUT}
+    Log To Console    "Contact list opened successfully (React UI)."
     Close Browser

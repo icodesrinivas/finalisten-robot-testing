@@ -1,24 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${REPORTS_MENU}                  xpath=//*[@id="reports"]
-${INVOICE_REPORT_MENU}          xpath=//*[@id="invoice_report_app_menu"]
-${INVOICE_REPORT_TEXT}          List Of Projects
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
-Verify Project Report App Opens Successfully
+Verify Invoice Report App Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Reports Menu
-    Click On Invoice Report Menu
-    Wait Until Page Contains    ${INVOICE_REPORT_TEXT}    timeout=10s
-    Log To Console    "List Of Projects found. Invoice Report App opened successfully."
+    Navigate To Invoice Report
+    Wait Until Page Contains    Filters    timeout=20s
+    Log To Console    "Invoice report app opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Reports Menu
-    Mouse Over    ${REPORTS_MENU}
-
-Click On Invoice Report Menu
-    Click Element    ${INVOICE_REPORT_MENU}

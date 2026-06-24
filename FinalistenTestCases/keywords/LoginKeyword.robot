@@ -2,6 +2,7 @@
 Library    SeleniumLibrary
 Library    OperatingSystem
 Library    DatabaseKeywords.py
+Resource   NavigationKeyword.robot
 
 
 *** Variables ***
@@ -23,59 +24,25 @@ ${CREATED_FIELDREPORT_ID}         ${EMPTY}
 *** Keywords ***
 Open And Login
     Register Keyword To Run On Failure    Capture Page Screenshot
+    Sanitize ChromeDriver Path
     ${path}=    Setup ChromeDriver Path
     Open Browser    ${URL}    ${BROWSER}    options=${CHROME_OPTIONS}    executable_path=${path}
     Set Window Size    1920    1080
     Maximize Browser Window
-    Set Selenium Implicit Wait    15s
+    Set Selenium Implicit Wait    10s
     Set Selenium Timeout    60s
-    Sleep    5s
     
     # Force Language to English via direct DB query as early as possible
     Force User Language To English    ${USERNAME}
     
     Handle SSL Warning
     
-    # Wait for page to fully load
-
-    Execute Javascript    return document.readyState === 'complete'
-    Sleep    3s
-    
-    # Use Presence check first as it's more robust in headless mode
     Wait Until Page Contains Element    xpath=//input[@name='username']    timeout=30s
     Input Text    xpath=//input[@name='username']    ${USERNAME}
-    Wait Until Page Contains Element    xpath=//input[@name='password']    timeout=20s
     Input Text    xpath=//input[@name='password']    ${PASSWORD}
     Click Button    ${LOGIN_BUTTON}
-    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=30s
-    
-    # Wait for page to fully load after login
-    Sleep    8s
-    Execute Javascript    return document.readyState === 'complete'
-    Execute Javascript    window.scrollTo(0, 0);
-    Sleep    2s
-    
-    # MOBILE/HEADLESS FALLBACK: Try multiple approaches to ensure menu is accessible
-    ${is_visible}=    Run Keyword And Return Status    Element Should Be Visible    id=register
-    IF    not ${is_visible}
-        Log To Console    Register menu not visible, trying fallback approaches...
-        # Try clicking navbar toggler for mobile view
-        ${toggler_exists}=    Run Keyword And Return Status    Page Should Contain Element    css=.navbar-toggler
-        IF    ${toggler_exists}
-            ${toggler_visible}=    Run Keyword And Return Status    Element Should Be Visible    css=.navbar-toggler
-            IF    ${toggler_visible}
-                Click Element    css=.navbar-toggler
-                Sleep    3s
-            END
-        END
-        # Try scrolling to make element visible
-        Execute Javascript    var el = document.getElementById('register'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
-        Sleep    2s
-    END
-    
-    # Final wait for navigation element with longer timeout
-    Wait Until Page Contains Element    id=register    timeout=30s
-    Sleep    3s
+    Wait Until Location Contains    ${HOMEPAGE_URL}    timeout=45s
+    Wait For Erp Shell Ready
 
 Select Customer And Project
     [Documentation]    Robustly select customer and project. 
@@ -199,14 +166,23 @@ List Should Have Options
 Extract And Verify Fieldreport ID
     [Documentation]    Extract ID from current URL and verify it is not empty.
     ${current_url}=    Get Location
-    ${id}=    Run Keyword If    '/edit/' in '${current_url}'    Evaluate    $current_url.split('/')[-3]
-    ...    ELSE IF    '/list/' in '${current_url}' and '${current_url}'.endswith('/') == False    Evaluate    $current_url.split('/')[-2]
-    ...    ELSE    Set Variable    ${EMPTY}
-    
+    ${id}=    Extract Fieldreport Id From Url    ${current_url}
+    IF    '${id}' == '${EMPTY}'
+        Select Legacy Content Frame
+        ${iframe_url}=    Execute Javascript    return window.location.href
+        Unselect Frame
+        ${id}=    Extract Fieldreport Id From Url    ${iframe_url}
+    END
     IF    '${id}' == '${EMPTY}'
         Fail    Failed to extract Field Report ID from URL: ${current_url}. Field Report was likely not created or saved successfully.
     END
-    
+    RETURN    ${id}
+
+Extract Fieldreport Id From Url
+    [Arguments]    ${current_url}
+    ${id}=    Run Keyword If    '/edit/' in '${current_url}'    Evaluate    $current_url.split('/')[-3]
+    ...    ELSE IF    '/list/' in '${current_url}' and not '${current_url}'.endswith('/')    Evaluate    $current_url.split('/')[-2]
+    ...    ELSE    Set Variable    ${EMPTY}
     RETURN    ${id}
 
 Handle SSL Warning
@@ -256,8 +232,7 @@ Perform Deletion For ID
     [Arguments]    ${id}
     # Navigate directly to the edit page's delete functionality
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${id}/edit/
-    Go To    ${edit_url}
-    Sleep    2s
+    Navigate To Legacy Full Url    ${edit_url}
     
     # Check if report is approved (delete button is disabled/hidden for approved reports)
     ${approve_btn_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${APPROVE_BUTTON}    timeout=5s
@@ -379,3 +354,7 @@ Setup ChromeDriver Path
         Log To Console    ⚠ Bundled driver not found at ${local_driver}. Falling back to system PATH.
         RETURN    ${None}
     END
+
+Sanitize ChromeDriver Path
+    [Documentation]    Removes stale /usr/local/bin chromedriver from PATH so Selenium Manager can match Chrome.
+    Evaluate    __import__('os').environ.update({'PATH': ':'.join([p for p in __import__('os').environ.get('PATH', '').split(':') if p not in ('/usr/local/bin',)])})

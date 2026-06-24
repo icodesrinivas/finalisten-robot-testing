@@ -13,6 +13,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs (configurable for different environments)
@@ -61,7 +62,7 @@ Test Open ADD Product Modal
     [Setup]    Create Field Report For Product Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TESTING ADD PRODUCT MODAL ========
     
@@ -100,7 +101,7 @@ Test Product Modal Search Functionality
     [Setup]    Create Field Report For Product Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TESTING PRODUCT SEARCH FUNCTIONALITY ========
     
@@ -148,7 +149,7 @@ Test Product Modal Pagination
     [Setup]    Create Field Report For Product Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TESTING PRODUCT MODAL PAGINATION ========
     
@@ -208,7 +209,7 @@ Test Select Product With Row Save Button
     [Setup]    Create Field Report For Product Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TESTING ROW-WISE PRODUCT SAVE ========
     
@@ -266,7 +267,7 @@ Test Select Product With Modal Save Button
     [Setup]    Create Field Report For Product Test
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TESTING MODAL SAVE BUTTON ========
     
@@ -321,7 +322,7 @@ Create Field Report For Product Test
     Open And Login
     Setup Dynamic Test Data
     
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
     # Set work date
@@ -372,7 +373,7 @@ Cleanup Created Fieldreport
     
     IF    ${has_id}
         ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
+        Navigate To Legacy Full Url    ${edit_url}
         Sleep    2s
         
         ${delete_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${DELETE_BUTTON}    timeout=10s

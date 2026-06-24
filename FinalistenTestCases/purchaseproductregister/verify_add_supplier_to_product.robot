@@ -2,10 +2,9 @@
 Library    SeleniumLibrary
 Library    Collections
 Resource   ../keywords/LoginKeyword.robot
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Variables ***
-${REGISTER_MENU}                                      xpath=//*[@id="register"]
-${PURCHASE_PRODUCT_REGISTER_MENU}                    xpath=//*[@id="purchase_product_register_app_menu"]
 ${PURCHASE_PRODUCT_REGISTER_ROW}                     css=tr.purchase_product_rows
 ${ADD_BUTTON}                                        id=supplier_add_button
 ${MODAL}                                             id=myModal3
@@ -52,12 +51,8 @@ Verify ADD Button Opens Modal And Allows Selecting Supplier
 
 *** Keywords ***
 Navigate To Purchase Product Register
-    [Documentation]    Navigates to the Purchase Product Register via the Register menu.
-    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=30s
-    Mouse Over    ${REGISTER_MENU}
-    Sleep    2s
-    Wait Until Element Is Visible    ${PURCHASE_PRODUCT_REGISTER_MENU}    timeout=20s
-    Click Element    ${PURCHASE_PRODUCT_REGISTER_MENU}
+    [Documentation]    Navigates to the Purchase Product Register inside the React shell iframe.
+    Navigate To Purchase Product Register List
     # Purchase Product Register doesn't have the id_advanced_search_toggle yet.
     # It uses the "Filters" text link.
     Wait Until Page Contains    Filters    timeout=30s

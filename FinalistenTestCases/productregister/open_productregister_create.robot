@@ -1,30 +1,14 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${REGISTER_MENU}                        xpath=//*[@id="register"]
-${PRODUCT_REGISTER_MENU}               xpath=//*[@id="product_register_app_menu"]
-${PRODUCT_REGISTER_ADD_BUTTON}         xpath=//a[contains(@href,"/products/create/")]
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Product Register Create Page Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Register Menu
-    Click On Product Register Menu
-    Click On Product Register Add Button
-    Wait Until Page Contains    SALES PRODUCT    timeout=10s
-    Log To Console    "SALES PRODUCT text found. Create view opened successfully."
+    Navigate To Product Register List
+    Click Element    xpath=//a[contains(@href,'product_new')]
+    Wait Until Page Contains    PRODUCT    timeout=30s
+    Log To Console    "Product register create page opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Register Menu
-    Mouse Over    ${REGISTER_MENU}
-
-Click On Product Register Menu
-    Wait Until Element Is Visible    ${PRODUCT_REGISTER_MENU}    timeout=10s
-    Click Element    ${PRODUCT_REGISTER_MENU}
-
-Click On Product Register Add Button
-    Wait Until Element Is Visible    ${PRODUCT_REGISTER_ADD_BUTTON}    timeout=10s
-    Click Element    ${PRODUCT_REGISTER_ADD_BUTTON}

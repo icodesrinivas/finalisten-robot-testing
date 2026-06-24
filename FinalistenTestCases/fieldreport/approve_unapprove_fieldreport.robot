@@ -12,6 +12,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # Initial Values (for creation)
@@ -29,7 +30,7 @@ Test Approve And Unapprove Field Report
     
     # Navigate to edit page
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${APPROVE_BUTTON}    timeout=15s
     Log To Console    ======== TESTING APPROVE/UNAPPROVE FOR FIELD REPORT ${CREATED_FIELDREPORT_ID} ========
     
@@ -84,8 +85,8 @@ Test Approve And Unapprove Field Report
     Sleep    2s
     
     # Refresh page
-    Reload Page
-    Wait Until Page Contains Element    ${APPROVE_BUTTON}    timeout=15s
+    Reload Legacy Content Page
+    Wait Until Page Contains Element    ${APPROVE_BUTTON}    timeout=30s
     
     # Verify approved status persisted
     ${button_after_refresh}=    Get Element Attribute    ${APPROVE_BUTTON}    value
@@ -102,7 +103,7 @@ Create Test Field Report
     Open And Login
     Setup Dynamic Test Data
     
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     # Use dynamic data and fallback if specific one fails
     Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
@@ -115,7 +116,7 @@ Create Test Field Report
     Click Element    css=button.save
     
     # Wait for the redirect to the edit page (URL contains /edit/)
-    Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/
+    Wait Until Field Report Saved To Edit Page
     
     ${id}=    Extract And Verify Fieldreport ID
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${id}

@@ -10,6 +10,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs (configurable for different environments)
@@ -64,7 +65,7 @@ Test Earnings And Per Hour Display
     [Setup]    Create Field Report With Product And Hours
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TESTING EARNINGS AND PER HOUR DISPLAY ========
     
@@ -107,7 +108,7 @@ Test Earnings Change When Total Hours Modified
     [Setup]    Create Field Report With Product And Hours
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TESTING PER HOUR CALCULATION WITH HOURS CHANGE ========
     
@@ -170,7 +171,7 @@ Test Earnings Change When Product Values Modified
     [Setup]    Create Field Report With Product And Hours
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
@@ -247,7 +248,7 @@ Create Field Report With Product And Hours
     Open And Login
     
     Log To Console    ======== CREATING FIELD REPORT WITH PRODUCT AND HOURS ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Select first available customer
@@ -411,7 +412,7 @@ Cleanup Created Fieldreport
     
     IF    ${has_id}
         ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
+        Navigate To Legacy Full Url    ${edit_url}
         Sleep    2s
         
         ${delete_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${DELETE_BUTTON}    timeout=10s

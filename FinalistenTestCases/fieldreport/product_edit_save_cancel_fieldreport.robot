@@ -13,6 +13,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs (configurable for different environments)
@@ -64,7 +65,7 @@ Test Common Edit Button Enables All Fields
     [Setup]    Create Field Report With Product
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
@@ -117,7 +118,7 @@ Test Row Wise Edit Button
     [Setup]    Create Field Report With Product
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
@@ -160,7 +161,7 @@ Test Common Save Button Persists Changes
     [Setup]    Create Field Report With Product
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
@@ -297,7 +298,7 @@ Create Field Report With Product
     Setup Dynamic Test Data
     
     Log To Console    ======== CREATING FIELD REPORT WITH PRODUCT ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
     # Set work date
@@ -313,7 +314,7 @@ Create Field Report With Product
     Click Element    ${SAVE_BUTTON}
     
     # Wait for the redirect to the edit page (URL contains /edit/)
-    Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/
+    Wait Until Field Report Saved To Edit Page
     
     ${fieldreport_id}=    Extract And Verify Fieldreport ID
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}
@@ -424,7 +425,7 @@ Cleanup Created Fieldreport
     
     IF    ${has_id}
         ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
+        Navigate To Legacy Full Url    ${edit_url}
         Sleep    2s
         
         ${delete_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${DELETE_BUTTON}    timeout=10s

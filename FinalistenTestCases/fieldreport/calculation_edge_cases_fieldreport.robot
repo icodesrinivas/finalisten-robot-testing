@@ -11,6 +11,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs (configurable for different environments)
@@ -58,7 +59,7 @@ Test Zero Total Hours Per Hour Calculation
     [Setup]    Create Field Report With Product And Hours
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: Zero Total Hours (Division by Zero) ========
     
@@ -113,7 +114,7 @@ Test Very Large Total Hours Calculation
     [Setup]    Create Field Report With Product And Hours
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: Very Large Total Hours ========
     
@@ -160,7 +161,7 @@ Test Negative Product Price Earnings Calculation
     [Setup]    Create Field Report With Product And Hours
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: Negative Product Price ========
     
@@ -220,7 +221,7 @@ Test Modify Quantity Updates Earnings
     [Setup]    Create Field Report With Product And Hours
     
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Log To Console    ======== TEST: Quantity Change Updates Earnings ========
     
@@ -288,7 +289,7 @@ Create Field Report With Product And Hours
     Open And Login
     Setup Dynamic Test Data
     
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
     
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
@@ -369,7 +370,7 @@ Cleanup Created Fieldreport
     ${has_id}=    Run Keyword And Return Status    Should Not Be Empty    ${CREATED_FIELDREPORT_ID}
     IF    ${has_id}
         ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
+        Navigate To Legacy Full Url    ${edit_url}
         Sleep    2s
         ${delete_btn}=    Get WebElement    ${DELETE_BUTTON}
         Execute Javascript    arguments[0].click();    ARGUMENTS    ${delete_btn}

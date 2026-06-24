@@ -14,19 +14,11 @@ Documentation    Test case for navigating the Fieldreport Approval tree structur
 Library          SeleniumLibrary
 Library          Collections
 Library          DateTime
-Library          String
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
-# URLs
 ${BASE_URL}                        https://preproderp.finalisten.se
-${FIELDREPORT_APPROVAL_URL}        ${BASE_URL}/fieldreport/fieldreport_approval/
-${FIELDREPORT_EDIT_URL_PATTERN}    ${BASE_URL}/fieldreport/list/
-
-# Menu Selectors
-${PRODUCTION_MENU}                 id=production
-${FIELDREPORT_APPROVAL_MENU}       id=field_report_approval_app_menu
-
 # Tree Selectors (exclude "List Of Installers" / greyed installers — only real branches)
 ${TREE_CONTAINER}                  css=div.tree_container
 ${INSTALLER_LINKS}                 css=#tree2 li.installer-branch > a.fieldreport-approval-installer-name
@@ -82,29 +74,11 @@ Verify Fieldreport Opens From Approval Tree
 
 *** Keywords ***
 Navigate To Fieldreport Approval App
-    [Documentation]    Navigate to the Field Report Approval app via Production menu
-    
-    # Try direct navigation first (more reliable)
-    Go To    ${FIELDREPORT_APPROVAL_URL}
-    Sleep    2s
-    
-    # Expand collapsed filter panel so Search / date controls are usable in CI
+    [Documentation]    Navigate to the Field Report Approval app inside the React shell iframe.
+    Navigate To Legacy Path    /fieldreport/fieldreport_approval/
+    Select Legacy Content Frame
     Run Keyword And Ignore Error    Click Element    id=fr_approval_filter
-    Sleep    2s
-    
-    ${page_loaded}=    Run Keyword And Return Status    Wait Until Page Contains    ${LIST_OF_INSTALLERS_TEXT}    timeout=10s
-    IF    not ${page_loaded}
-        # Fallback to menu navigation
-        Log To Console    Direct navigation failed, trying menu navigation...
-        Go To    ${BASE_URL}/homepage/
-        Sleep    2s
-        Mouse Over    ${PRODUCTION_MENU}
-        Sleep    1s
-        Wait Until Element Is Visible    ${FIELDREPORT_APPROVAL_MENU}    timeout=5s
-        Click Element    ${FIELDREPORT_APPROVAL_MENU}
-        Wait Until Page Contains    ${LIST_OF_INSTALLERS_TEXT}    timeout=15s
-    END
-    
+    Wait Until Page Contains    ${LIST_OF_INSTALLERS_TEXT}    timeout=30s
     Log To Console    ✓ Field Report Approval app loaded
 
 Find And Click Fieldreport In Tree
@@ -224,10 +198,9 @@ Verify Fieldreport Edit Page Opened In New Tab
     # Switch to the new tab (last one in the list)
     ${new_tab}=    Get From List    ${handles}    -1
     Switch Window    ${new_tab}
-    Sleep    3s
-    
-    # Wait for page to load
-    Wait Until Page Contains Element    ${FIELDREPORT_EDIT_PAGE_MARKER}    timeout=20s
+    Wait For Legacy Iframe Ready
+    Select Legacy Content Frame
+    Wait Until Page Contains Element    ${FIELDREPORT_EDIT_PAGE_MARKER}    timeout=30s
     
     # Verify URL pattern
     ${current_url}=    Get Location

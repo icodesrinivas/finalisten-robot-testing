@@ -13,6 +13,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # Form Field Selectors
@@ -51,7 +52,7 @@ Test Close Button And Reopen Field Report
     
     # Navigate to edit page
     ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Go To    ${edit_url}
+    Navigate To Legacy Full Url    ${edit_url}
     Wait Until Page Contains Element    ${CLOSE_BUTTON}    timeout=15s
     Log To Console    ======== TESTING CLOSE BUTTON FOR FIELD REPORT ${CREATED_FIELDREPORT_ID} ========
     
@@ -139,7 +140,7 @@ Create Field Report For Close Test
     Setup Dynamic Test Data
     
     Log To Console    ======== CREATING FIELD REPORT FOR CLOSE TEST ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
@@ -162,7 +163,7 @@ Create Field Report For Close Test
     Sleep    3s
     
     # Extract field report ID from URL
-    Wait Until Keyword Succeeds    5x    5s    Location Should Contain    /edit/
+    Wait Until Field Report Saved To Edit Page
     ${fieldreport_id}=    Extract And Verify Fieldreport ID
     Set Suite Variable    ${CREATED_FIELDREPORT_ID}    ${fieldreport_id}
     Log To Console    ✓ Created Field Report ID: ${fieldreport_id}

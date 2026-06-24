@@ -10,6 +10,7 @@ Library          SeleniumLibrary
 Library          DateTime
 Library          String
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # Form Field Selectors
@@ -35,7 +36,7 @@ Test Alphabetic Characters In Total Hours Rejected
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Alphabetic Characters in Total Hours ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields
@@ -86,7 +87,7 @@ Test Negative Value In Total Hours Rejected
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Negative Value in Total Hours ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields
@@ -133,7 +134,7 @@ Test Decimal Value In Total Hours Accepted
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Decimal Value in Total Hours ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields
@@ -179,7 +180,7 @@ Test Long Text In Message Field Handled
     [Setup]    Open And Login
     
     Log To Console    ======== TEST: Long Text in Message Field ========
-    Go To    https://preproderp.finalisten.se/fieldreport/create/
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill required fields

@@ -7,6 +7,7 @@ Library          SeleniumLibrary
 Library          DateTime
 Library          String
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # Navigation Elements
@@ -312,39 +313,18 @@ Test Filter Section Collapse And Expand
 
 *** Keywords ***
 Navigate To Field Report List
-    [Documentation]    Login and navigate to the Field Report list view
+    [Documentation]    Login and navigate to the Field Report list view (React shell + legacy iframe).
     Open And Login
-    ${status}=    Run Keyword And Return Status    Wait Until Keyword Succeeds    2x    5s    Navigate Via Menu
-    IF    not ${status}
-        Log To Console    ⚠ Menu navigation failed. Navigating directly to URL...
-        Go To    ${FIELDREPORT_LIST_URL}
-    END
-    Wait Until Keyword Succeeds    3x    5s    Wait Until Page Contains Element    ${FILTER_SECTION_HEADER}    timeout=10s
+    Navigate To Legacy Path    /fieldreport/list/
+    Select Legacy Content Frame
+    Wait Until Keyword Succeeds    3x    5s    Wait Until Page Contains Element    ${FILTER_SECTION_HEADER}    timeout=15s
     ${count}=    Get Element Count    ${FIELD_REPORT_ROWS}
     IF    ${count} == 0
         Log To Console    No records found with default filters. Performing initial rolling search...
         Search Until Records Are Found
     END
 
-Navigate Via Menu
-    Hover Over Production Menu
-    Click On Field Report Menu
-    Wait Until Page Contains Element    ${FILTER_SECTION_HEADER}    timeout=10s
-    Sleep    3s
 
-Hover Over Production Menu
-    [Documentation]    Hover over the Production menu to reveal submenu
-    Wait Until Page Contains Element    ${PRODUCTION_MENU}    timeout=20s
-    Execute Javascript    var el = document.getElementById('production'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
-    Sleep    2s
-    Wait Until Element Is Visible    ${PRODUCTION_MENU}    timeout=15s
-    Mouse Over    ${PRODUCTION_MENU}
-    Sleep    1s
-
-Click On Field Report Menu
-    [Documentation]    Click on the Field Report submenu item
-    Wait Until Element Is Visible    ${FIELD_REPORT_MENU}    timeout=15s
-    Click Element    ${FIELD_REPORT_MENU}
 
 Expand Filter Section
     [Documentation]    Expand the filter section if not already expanded
@@ -363,8 +343,8 @@ Safe Expand Filter Section
     IF    not ${has_filter}
         # Page may not have loaded correctly - try navigating directly
         Log To Console    ⚠ Filter element not in page source. Reloading page...
-        Go To    ${FIELDREPORT_LIST_URL}
-        Sleep    5s
+        Navigate To Legacy Path    /fieldreport/list/
+        Select Legacy Content Frame
     END
     
     # Wait for filter section with shorter timeout, try multiple selectors

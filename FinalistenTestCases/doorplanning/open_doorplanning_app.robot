@@ -1,23 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${PRODUCTION_MENU}                   xpath=//*[@id="production"]
-${DOOR_PLANNING_MENU}               xpath=//*[@id="doorplanning_app_menu"]
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Door Planning Board Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Production Menu
-    Click On Door Planning Menu
+    Navigate To Door Planning Board
     Wait Until Page Contains    Sales Week    timeout=30s
-    Log To Console    "Sales Week text found. Door Planning Board opened successfully."
+    Log To Console    "Door planning board opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Production Menu
-    Mouse Over    ${PRODUCTION_MENU}
-
-Click On Door Planning Menu
-    Click Element    ${DOOR_PLANNING_MENU}

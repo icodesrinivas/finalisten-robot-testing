@@ -1,24 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${PRODUCTION_MENU}                xpath=//*[@id="production"]
-${PROJECT_MENU}                   xpath=//*[@id="project_app_menu"]
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
-Verify Project List View Opens Successfully
+Verify Project List Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Production Menu
-    Click On Project Menu
-    Sleep    2s
-    Wait Until Page Contains Element    xpath=//*[@id="project_list_filter"]    timeout=10s
-    Log To Console    "Project list page loaded successfully."
+    Navigate To Project List
+    Wait Until Page Contains    Filters    timeout=20s
+    Log To Console    "Project list opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Production Menu
-    Mouse Over    ${PRODUCTION_MENU}
-
-Click On Project Menu
-    Click Element    ${PROJECT_MENU}

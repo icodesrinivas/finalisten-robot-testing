@@ -3,11 +3,9 @@ Library    SeleniumLibrary
 Library    String
 Library    ../keywords/DatabaseKeywords.py
 Resource   ../keywords/LoginKeyword.robot
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Variables ***
-${PRODUCTION_MENU}                xpath=//*[@id="production"]
-${PROJECT_MENU}                   xpath=//*[@id="project_app_menu"]
-${PROJECT_LIST_URL}               /projects/list/
 ${PROJECT_ROW}                    css=tr.project_rows
 ${PROJECT_EDIT_TEXT}              GENERAL DATA
 
@@ -62,6 +60,8 @@ Verify Fixed Agreement Delete Functionality
     # Reload page to confirm server-side deletion
     Log To Console    Reloading page for server-side verification...
     Reload Page
+    Wait For Legacy Iframe Ready
+    Select Legacy Content Frame
     Wait Until Page Contains    ${PROJECT_EDIT_TEXT}    timeout=30s
     Open Fixed Agreements Tab
     
@@ -79,39 +79,12 @@ Verify Fixed Agreement Delete Functionality
 
 *** Keywords ***
 Navigate To Project Edit Page
-    Hover Over Production Menu
-    Click On Project Menu
-    
-    Wait Until Location Contains    ${PROJECT_LIST_URL}    timeout=15s
-    ${row_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${PROJECT_ROW}    timeout=15s
-    
-    IF    ${row_exists}
-        ${row}=    Get WebElement    ${PROJECT_ROW}
-        Execute Javascript    arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});    ARGUMENTS    ${row}
-        Sleep    1s
-        Double Click Element    ${PROJECT_ROW}
-        # Handle the possible "EditGeneralDataButton" or simple load
-        Wait Until Page Contains    ${PROJECT_EDIT_TEXT}    timeout=30s
-    ELSE
-        Fail    Failed to find project records on the project list page (${PROJECT_LIST_URL}).
-    END
-
-Hover Over Production Menu
-    Wait Until Page Contains Element    ${PRODUCTION_MENU}    timeout=20s
-    Execute Javascript    var el = document.getElementById('production'); if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
-    Sleep    2s
-    Wait Until Element Is Visible    ${PRODUCTION_MENU}    timeout=15s
-    Click Element    ${PRODUCTION_MENU}
-    Sleep    1s
-
-Click On Project Menu
-    Wait Until Element Is Visible    ${PROJECT_MENU}    timeout=15s
-    Click Element    ${PROJECT_MENU}
-    
-    ${status}=    Run Keyword And Return Status    Wait Until Location Contains    ${PROJECT_LIST_URL}    timeout=5s
-    IF    not ${status}
-        Execute Javascript    document.getElementById('project_app_menu').click();
-    END
+    Navigate To Project List
+    Wait Until Element Is Visible    ${PROJECT_ROW}    timeout=20s
+    ${row}=    Get WebElement    ${PROJECT_ROW}
+    Execute Javascript    arguments[0].scrollIntoView({block: 'center'});    ARGUMENTS    ${row}
+    Double Click Element    ${PROJECT_ROW}
+    Wait Until Page Contains    ${PROJECT_EDIT_TEXT}    timeout=30s
 
 Extract Project ID From URL
     [Arguments]    ${url}

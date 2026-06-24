@@ -1,31 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${REGISTER_MENU}       xpath=//*[@id="register"]
-${CONTACTS_MENU}       xpath=//*[@id="contacts_app_menu"]
-${ADD_CONTACT_BTN}     xpath=//*[@id="id_add_contact"]
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Contact Create Page Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Register Menu
-    Click On Contacts Menu
-    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=10s
-    Log To Console    "Advanced search toggle found."
-    Click Element    ${ADD_CONTACT_BTN}
-    Wait Until Page Contains    CONTACT DATA    timeout=10s
-    Log To Console    "CONTACT DATA found. Contact Create page opened successfully."
+    Navigate To Contacts App
+    Open Contact Create Dialog
+    Log To Console    "Contact create dialog opened successfully (React UI)."
     Close Browser
-
-*** Keywords ***
-Hover Over Register Menu
-    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=30s
-    Sleep    1s
-    Mouse Over    ${REGISTER_MENU}
-
-Click On Contacts Menu
-    Wait Until Element Is Visible    ${CONTACTS_MENU}    timeout=10s
-    Click Element    ${CONTACTS_MENU}
-    Sleep    2s

@@ -2,18 +2,15 @@
 Library          SeleniumLibrary
 Library          OperatingSystem
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
-${SETTINGS_URL}    https://preproderp.finalisten.se/setting/
 ${OUTPUT_FILE}     ${OUTPUT DIR}/settings_page_source.html
 
 *** Test Cases ***
 Dump Settings Page Source
     Open And Login
-    Mouse Over    xpath=//*[@id="register"]
-    Sleep    1s
-    Click Element    xpath=//*[@id="settings_app_menu"]
-    Sleep    3s
+    Navigate To Old Settings App
     ${source}=    Get Source
     Create File    ${OUTPUT_FILE}    ${source}
     Log To Console    Settings page source saved to ${OUTPUT_FILE}

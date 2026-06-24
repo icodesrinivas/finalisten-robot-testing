@@ -1,33 +1,19 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Variables ***
-${REGISTER_MENU}         xpath=//*[@id="register"]
-${CUSTOMERS_MENU}        xpath=//*[@id="customers_app_menu"]
-${ADD_CUSTOMER_BUTTON}   xpath=//a[@href="/account/customers/create/" and @title="Add New Customer"]
+${LEGACY_CUSTOMER_CREATE_URL}    https://preproderp.finalisten.se/account/customers/create/
 
 *** Test Cases ***
-Verify Customer Create Page Opens Successfully
+Verify Customer Registry Opens From Legacy Create Route
+    [Documentation]    Legacy /account/customers/create/ now redirects to the React customer registry.
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Register Menu
-    Click On Customers Menu
-    Wait Until Page Contains Element    id=id_advanced_search_toggle    timeout=10s
-    Click On Add Customer Button
-    Wait Until Page Contains    CUSTOMER DATA    timeout=60s
-    Log To Console    "Customer create page opened successfully."
+    Go To    ${LEGACY_CUSTOMER_CREATE_URL}
+    Wait Until Location Contains    /register/customers/list    timeout=30s
+    Wait For Customers List Loaded
+    Verify Customer Registry Actions Visible
+    Log To Console    "Legacy create route redirects to React customer registry."
     Close Browser
-
-*** Keywords ***
-Hover Over Register Menu
-    Wait Until Element Is Visible    ${REGISTER_MENU}    timeout=30s
-    Sleep    1s
-    Mouse Over    ${REGISTER_MENU}
-
-Click On Customers Menu
-    Wait Until Element Is Visible    ${CUSTOMERS_MENU}    timeout=10s
-    Click Element    ${CUSTOMERS_MENU}
-    Sleep    2s
-
-Click On Add Customer Button
-    Click Element    ${ADD_CUSTOMER_BUTTON}

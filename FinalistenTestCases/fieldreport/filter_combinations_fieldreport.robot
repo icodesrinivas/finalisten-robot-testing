@@ -11,6 +11,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs (configurable for different environments)
@@ -41,7 +42,7 @@ Test Customer And Project Filter Combined
     [Setup]    Login To Application
     
     Log To Console    ======== TEST: Customer + Project Filter Combined ========
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     Sleep    5s
     Execute Javascript    return document.readyState === 'complete'
     Expand Filters
@@ -85,7 +86,7 @@ Test Date Range And Approval Status Filter Combined
     [Setup]    Login To Application
     
     Log To Console    ======== TEST: Date Range + Approval Status Filter Combined ========
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     Expand Filters
     
     # Set specific date range
@@ -120,7 +121,7 @@ Test Installer And Product Description Filter Combined
     [Setup]    Login To Application
     
     Log To Console    ======== TEST: Installer + Product Description Filter Combined ========
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     Expand Filters
     Set Wide Date Range
     
@@ -154,7 +155,7 @@ Test Clear All Filters Shows All Results
     [Setup]    Login To Application
     
     Log To Console    ======== TEST: Clear All Filters ========
-    Go To    ${FIELDREPORT_LIST_URL}
+    Navigate To Field Report List
     Expand Filters
     
     # Apply restrictive filters

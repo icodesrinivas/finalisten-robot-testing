@@ -1,23 +1,13 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${REGISTER_MENU}             xpath=//*[@id="register"]
-${SUBCONTRACTOR_MENU}        xpath=//*[@id="subcontractor_app_menu"]
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
 Verify Subcontractor List Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Register Menu
-    Click On Subcontractor Menu
-    Wait Until Page Contains    Name    timeout=20s
-    Log To Console    "Filters text found. Subcontractor list opened successfully."
+    Navigate To Subcontractor List
+    Wait Until Page Contains    Filters    timeout=20s
+    Log To Console    "Subcontractor list opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Register Menu
-    Mouse Over    ${REGISTER_MENU}
-
-Click On Subcontractor Menu
-    Click Element    ${SUBCONTRACTOR_MENU}

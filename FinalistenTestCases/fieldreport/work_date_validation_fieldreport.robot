@@ -13,6 +13,7 @@ Library          DateTime
 Library          String
 Library          Collections
 Resource         ../keywords/LoginKeyword.robot
+Resource         ../keywords/NavigationKeyword.robot
 
 *** Variables ***
 # URLs (configurable for different environments)
@@ -52,7 +53,7 @@ Test Create Field Report With Valid Work Date
     [Setup]    Login To Application
     
     Log To Console    ======== TESTING VALID WORK DATE ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill in required fields
@@ -117,7 +118,7 @@ Test Reject Field Report With Closed Period Date
     [Setup]    Login To Application
     
     Log To Console    ======== TESTING CLOSED PERIOD DATE ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill in required fields
@@ -192,7 +193,7 @@ Test Reject Field Report With Future Date
     [Setup]    Login To Application
     
     Log To Console    ======== TESTING FUTURE DATE VALIDATION ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill in required fields
@@ -259,7 +260,7 @@ Test Boundary Work Date Within Range
     [Setup]    Login To Application
     
     Log To Console    ======== TESTING BOUNDARY DATE ========
-    Go To    ${FIELDREPORT_CREATE_URL}
+    Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     Log To Console    \n--- Testing Boundary Date: ${BOUNDARY_DATE} ---
@@ -358,7 +359,7 @@ Cleanup Created Fieldreport
     
     IF    ${has_id}
         ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-        Go To    ${edit_url}
+        Navigate To Legacy Full Url    ${edit_url}
         Sleep    2s
         
         ${delete_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${DELETE_BUTTON}    timeout=10s

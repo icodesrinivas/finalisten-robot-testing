@@ -1,31 +1,14 @@
 *** Settings ***
 Library    SeleniumLibrary
 Resource   ../keywords/LoginKeyword.robot
-
-*** Variables ***
-${PRODUCTION_MENU}                xpath=//*[@id="production"]
-${PROJECT_MENU}                   xpath=//*[@id="project_app_menu"]
-${PROJECT_ADD_BUTTON}            xpath=//a[@href="/projects/create/" and @title="Add New Project"]
-${PROJECT_CREATE_TEXT}           GENERAL DATA
+Resource   ../keywords/NavigationKeyword.robot
 
 *** Test Cases ***
-Verify Project Create View Opens Successfully
+Verify Project Create Page Opens Successfully
+    Register Keyword To Run On Failure    Capture Page Screenshot
     Open And Login
-    Hover Over Production Menu
-    Click On Project Menu
-    Sleep    2s
-    Wait Until Page Contains Element    ${PROJECT_ADD_BUTTON}    timeout=10s
-    Click On Project Add Button
-    Wait Until Page Contains    ${PROJECT_CREATE_TEXT}    timeout=10s
-    Log To Console    "GENERAL DATA text found. Project Create view opened successfully."
+    Navigate To Project List
+    Click Element    xpath=//a[contains(@href,'project_new')]
+    Wait Until Page Contains    GENERAL DATA    timeout=30s
+    Log To Console    "Project create page opened successfully."
     Close Browser
-
-*** Keywords ***
-Hover Over Production Menu
-    Mouse Over    ${PRODUCTION_MENU}
-
-Click On Project Menu
-    Click Element    ${PROJECT_MENU}
-
-Click On Project Add Button
-    Click Element    ${PROJECT_ADD_BUTTON}
