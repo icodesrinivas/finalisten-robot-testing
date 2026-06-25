@@ -42,7 +42,7 @@ ${PRODUCT_MODAL}                  id=myModal3
 ${MODAL_SAVE_BUTTON}              css=.prodinfr_save_button
 ${PRODUCT_CHECKBOX}               css=#myTable .selected-checkbox
 ${MODAL_CANCEL_BUTTON}            xpath=//div[@id='myModal3']//button[contains(text(),'Cancel')]
-${COMMON_EDIT_BUTTON}             id=common_edit_product
+${COMMON_EDIT_BUTTON}             id=product_in_fieldreport_edit
 
 # Test Values
 ${VALID_WORK_DATE}                2025-10-15
@@ -56,19 +56,21 @@ Test Approved FR Products Are Read Only
     [Tags]    fieldreport    approval    workflow    readonly
     [Setup]    Create Field Report With Product
     
-    ${edit_url}=    Set Variable    ${FIELDREPORT_LIST_URL}${CREATED_FIELDREPORT_ID}/edit/
-    Navigate To Legacy Full Url    ${edit_url}
-    Wait Until Page Contains Element    ${APPROVE_BUTTON}    timeout=15s
+    Wait Until Page Contains Element    css=input[id^='id_quantity_']    timeout=15s
     Log To Console    ======== TEST: Approved FR Products Read-Only ========
+
+    # STEP 1: Input quantity and save the new product row
+    Log To Console    Inputting quantity '1' for the new product...
+    Input Text    css=input[id^='id_quantity_']    1
     
-    # Check products can be edited before approval
-    Execute Javascript    window.scrollTo(0, 800);
-    Sleep    1s
-    ${edit_before}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${COMMON_EDIT_BUTTON}    timeout=5s
-    Log To Console    Product edit button visible before approval: ${edit_before}
-    
-    # Approve the FR
+    Log To Console    Saving the product row via the qty column header save button...
+    Click Element    id=product_in_fieldreport_save
+    Sleep    3s
+    Log To Console    ✓ Saved product row with quantity.
+
+    # STEP 2: Approve the Field Report
     Log To Console    Approving Field Report...
+    Scroll Element Into View    ${APPROVE_BUTTON}
     Click Element    ${APPROVE_BUTTON}
     Sleep    2s
     Run Keyword And Ignore Error    Handle Alert    action=ACCEPT    timeout=3s
@@ -79,23 +81,30 @@ Test Approved FR Products Are Read Only
     Should Contain    ${btn_value}    Unapprove    msg=FR should be approved
     Log To Console    ✓ Field Report approved (button shows: ${btn_value})
     
-    # Check if product edit button is still visible/enabled
-    Execute Javascript    window.scrollTo(0, 800);
-    Sleep    1s
-    ${edit_after}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${COMMON_EDIT_BUTTON}    timeout=5s
-    
-    IF    ${edit_after}
-        # Check if button is disabled
-        ${btn_class}=    Get Element Attribute    ${COMMON_EDIT_BUTTON}    class
-        ${is_disabled}=    Run Keyword And Return Status    Should Contain    ${btn_class}    disabled
-        IF    ${is_disabled}
-            Log To Console    ✓ Product edit button is disabled after approval
-        ELSE
-            Log To Console    ⚠ Product edit button might still be active (check manually)
-        END
+    # STEP 3: Verify the read-only state after approval
+    Log To Console    Verifying read-only state after approval...
+
+    # 1. Verify the main "Edit All" button is not visible or is disabled
+    ${edit_all_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${COMMON_EDIT_BUTTON}    timeout=5s
+    IF    ${edit_all_visible}
+        Element Should Be Disabled    ${COMMON_EDIT_BUTTON}
+        Log To Console    ✓ Header 'Edit All' button is correctly disabled.
     ELSE
-        Log To Console    ✓ Product edit button is hidden after approval
+        Log To Console    ✓ Header 'Edit All' button is correctly hidden.
     END
+
+    # 2. Verify the individual row "Edit" buttons are not visible
+    Element Should Not Be Visible    css=.product_in_fieldreport_edit_button
+    Log To Console    ✓ Row-level 'Edit' buttons are correctly hidden.
+
+    # 3. Verify input fields are disabled
+    Wait Until Page Contains Element    css=input[id^='id_quantity_']    timeout=10s
+    Element Should Be Disabled    css=input[id^='id_quantity_']
+    ${desc_exists}=    Run Keyword And Return Status    Page Should Contain Element    css=textarea[id^='id_description_']
+    IF    ${desc_exists}
+        Element Should Be Disabled    css=textarea[id^='id_description_']
+    END
+    Log To Console    ✓ Product input fields are correctly disabled.
     
     [Teardown]    Cleanup Approved Fieldreport
 
@@ -238,7 +247,12 @@ Create Field Report For High Value Test
     Setup Dynamic Test Data
     
     Navigate To Field Report Create Page
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
+    
+    # Wait for sub-project dropdown to be populated after project selection
+    Sleep    2s
+    Wait Until Element Is Visible    ${SUBPROJECT_DROPDOWN}    timeout=15s
+    Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
