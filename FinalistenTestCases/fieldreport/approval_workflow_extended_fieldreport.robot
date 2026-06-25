@@ -252,10 +252,10 @@ Create Field Report For High Value Test
     # Wait for sub-project dropdown to be populated after project selection
     Sleep    2s
     Wait Until Element Is Visible    ${SUBPROJECT_DROPDOWN}    timeout=15s
-    Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
+    Robust Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report (JS click avoids headless MoveTargetOutOfBoundsException)
     Robust Click    ${SAVE_BUTTON}

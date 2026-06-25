@@ -69,11 +69,11 @@ Select Customer And Project
 
     IF    '${chosen_customer}' == '${NONE}' or '${chosen_customer}' == 'None' or '${chosen_customer}' == '${EMPTY}'
         Log To Console    ⚠ No customer options found, selecting index 1
-        Select From List By Index    id=id_related_customer    1
+        Robust Select From List By Index    id=id_related_customer    1
         ${chosen_customer}=    Get Selected List Label    id=id_related_customer
     ELSE
         Log To Console    ======== DATA SELECTION: ${chosen_customer} / ${chosen_project} ========
-        Select From List By Label    id=id_related_customer    ${chosen_customer}
+        Robust Select From List By Label    id=id_related_customer    ${chosen_customer}
     END
 
     ${el}=    Get WebElement    id=id_related_customer
@@ -91,17 +91,17 @@ Select Customer And Project
 
     IF    '${resolved_project}' == '${NONE}' or '${resolved_project}' == 'None' or '${resolved_project}' == '${EMPTY}'
         Log To Console    ⚠ No matching project label, selecting project index 1
-        Select From List By Index    id=id_related_project    1
+        Robust Select From List By Index    id=id_related_project    1
         ${resolved_project}=    Get Selected List Label    id=id_related_project
     ELSE
-        Select From List By Label    id=id_related_project    ${resolved_project}
+        Robust Select From List By Label    id=id_related_project    ${resolved_project}
     END
 
     ${el2}=    Get WebElement    id=id_related_project
     Execute Javascript    arguments[0].dispatchEvent(new Event('change'));    ARGUMENTS    ${el2}
     Wait Until Keyword Succeeds    10x    1s    Subproject Dropdown Ready
 
-    Select From List By Index    id=id_related_subproject    1
+    Robust Select From List By Index    id=id_related_subproject    1
     Set Suite Variable    ${DB_CUSTOMER}    ${chosen_customer}
     Set Suite Variable    ${DB_PROJECT}     ${resolved_project}
     Log To Console    ✓ Selection completed: ${DB_CUSTOMER} / ${DB_PROJECT}
@@ -358,3 +358,32 @@ Setup ChromeDriver Path
 Sanitize ChromeDriver Path
     [Documentation]    Removes stale /usr/local/bin chromedriver from PATH so Selenium Manager can match Chrome.
     Evaluate    __import__('os').environ.update({'PATH': ':'.join([p for p in __import__('os').environ.get('PATH', '').split(':') if p not in ('/usr/local/bin',)])})
+
+Robust Select From List By Label
+    [Arguments]    ${locator}    ${label}
+    Wait Until Element Is Visible    ${locator}    timeout=10s
+    ${el}=    Get WebElement    ${locator}
+    Execute Javascript    
+    ...    var select = arguments[0];
+    ...    var label = arguments[1];
+    ...    for (var i = 0; i < select.options.length; i++) {
+    ...        if (select.options[i].text === label) {
+    ...            select.selectedIndex = i;
+    ...            select.dispatchEvent(new Event('change'));
+    ...            break;
+    ...        }
+    ...    }
+    ...    ARGUMENTS    ${el}    ${label}
+
+Robust Select From List By Index
+    [Arguments]    ${locator}    ${index}
+    Wait Until Element Is Visible    ${locator}    timeout=10s
+    ${el}=    Get WebElement    ${locator}
+    Execute Javascript    
+    ...    var select = arguments[0];
+    ...    var idx = parseInt(arguments[1]);
+    ...    if (idx >= 0 && idx < select.options.length) {
+    ...        select.selectedIndex = idx;
+    ...        select.dispatchEvent(new Event('change'));
+    ...    }
+    ...    ARGUMENTS    ${el}    ${index}
