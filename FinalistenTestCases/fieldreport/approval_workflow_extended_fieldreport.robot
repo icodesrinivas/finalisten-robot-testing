@@ -254,8 +254,9 @@ Create Field Report For High Value Test
     Wait Until Element Is Visible    ${SUBPROJECT_DROPDOWN}    timeout=15s
     Robust Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     
+    ${VALID_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
-    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report (JS click avoids headless MoveTargetOutOfBoundsException)
     Robust Click    ${SAVE_BUTTON}

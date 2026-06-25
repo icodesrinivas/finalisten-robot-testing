@@ -262,6 +262,7 @@ Create Field Report For Editing
     Log To Console    Selected SubProject: ${subproject_name}
     
     # Set work date
+    ${INITIAL_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${INITIAL_WORK_DATE}
     Log To Console    Set Work Date: ${INITIAL_WORK_DATE}
     

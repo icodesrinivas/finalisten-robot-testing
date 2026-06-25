@@ -267,6 +267,7 @@ Create Field Report With Product And Hours
     Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     
     # Set work date
+    ${INITIAL_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${INITIAL_WORK_DATE}
     
     # Set total hours
@@ -274,7 +275,7 @@ Create Field Report With Product And Hours
     Log To Console    Set Total Hours: ${INITIAL_TOTAL_HOURS}
     
     # Select installer
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
     Robust Click    ${SAVE_BUTTON}

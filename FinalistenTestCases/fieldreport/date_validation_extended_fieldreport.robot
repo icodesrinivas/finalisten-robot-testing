@@ -36,8 +36,8 @@ Test Work Date Today Accepted
     
     # Fill required fields
     Setup Dynamic Test Data
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Select Customer And Project
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Get today's date in YYYY-MM-DD format
     # Note: Using October 2025 as "today" since that's the open period in pre-prod
@@ -78,8 +78,8 @@ Test Work Date Tomorrow Future Validation
     
     # Fill required fields
     Setup Dynamic Test Data
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Select Customer And Project
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Use a far future date (beyond allowed range)
     ${future_date}=    Set Variable    2027-01-15
@@ -123,8 +123,8 @@ Test Work Date Weekend Handling
     
     # Fill required fields
     Setup Dynamic Test Data
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Select Customer And Project
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # October 18, 2025 is a Saturday
     ${weekend_date}=    Set Variable    2025-10-18
@@ -164,8 +164,8 @@ Test Leap Year Date Handling
     
     # Fill required fields
     Setup Dynamic Test Data
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Select Customer And Project
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # 2024 is a leap year, Feb 29 exists
     ${leap_date}=    Set Variable    2024-02-29

@@ -79,7 +79,7 @@ Test Create Field Report With Valid Work Date
     Log To Console    Set Work Date: ${VALID_WORK_DATE}
     
     # Select installer
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save
     ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
@@ -144,7 +144,7 @@ Test Reject Field Report With Closed Period Date
     Log To Console    Set Work Date: ${INVALID_CLOSED_PERIOD_DATE}
     
     # Select installer
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Attempt to save
     ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
@@ -219,7 +219,7 @@ Test Reject Field Report With Future Date
     Log To Console    Set Work Date: ${INVALID_FUTURE_DATE}
     
     # Select installer
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Attempt to save
     ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
@@ -285,7 +285,7 @@ Test Boundary Work Date Within Range
     Log To Console    Set Work Date: ${BOUNDARY_DATE}
     
     # Select installer
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save
     ${save_btn}=    Get WebElement    ${SAVE_BUTTON}

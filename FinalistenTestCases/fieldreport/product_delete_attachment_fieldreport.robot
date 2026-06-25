@@ -243,10 +243,11 @@ Create Field Report With Product
     Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     
     # Set work date
+    ${INITIAL_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${INITIAL_WORK_DATE}
     
     # Select installer
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
     ${save_btn}=    Get WebElement    ${SAVE_BUTTON}

@@ -343,10 +343,11 @@ Create Field Report For Test
     Setup Dynamic Test Data
     
     Navigate To Field Report Create Page
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
     
+    ${VALID_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
     Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}

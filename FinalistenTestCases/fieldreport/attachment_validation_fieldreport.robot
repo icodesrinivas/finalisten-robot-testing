@@ -64,7 +64,7 @@ Test Upload Large File Size Limit
     Sleep    2s
     
     # Check for file input
-    ${file_input_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${FILE_INPUT}    timeout=5s
+    ${file_input_exists}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${FILE_INPUT}    timeout=5s
     
     IF    ${file_input_exists}
         # Create a "large" test file (1MB of data)
@@ -110,7 +110,7 @@ Test Upload Unsupported File Type
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
     
-    ${file_input_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${FILE_INPUT}    timeout=5s
+    ${file_input_exists}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${FILE_INPUT}    timeout=5s
     
     IF    ${file_input_exists}
         # Create test file with unusual extension
@@ -155,7 +155,7 @@ Test Upload Multiple Attachments
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
     
-    ${file_input_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${FILE_INPUT}    timeout=5s
+    ${file_input_exists}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${FILE_INPUT}    timeout=5s
     
     IF    ${file_input_exists}
         # Create first test file
@@ -170,7 +170,7 @@ Test Upload Multiple Attachments
         Log To Console    Uploaded first attachment
         
         # Reload page to get fresh state
-        Reload Page
+        Reload Legacy Content Page
         Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
         Execute Javascript    window.scrollTo(0, 800);
         Sleep    2s
@@ -180,7 +180,7 @@ Test Upload Multiple Attachments
         Create File    ${file2}    Second attachment content
         
         # Upload second file
-        ${file_input_still_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${FILE_INPUT}    timeout=5s
+        ${file_input_still_exists}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${FILE_INPUT}    timeout=5s
         IF    ${file_input_still_exists}
             Choose File    ${FILE_INPUT}    ${file2}
             Sleep    2s
@@ -221,7 +221,7 @@ Test Download Attachment Integrity
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
     
-    ${file_input_exists}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${FILE_INPUT}    timeout=5s
+    ${file_input_exists}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${FILE_INPUT}    timeout=5s
     
     IF    ${file_input_exists}
         # Upload a file first
@@ -236,7 +236,7 @@ Test Download Attachment Integrity
         Sleep    2s
         
         # Reload to see uploaded attachment
-        Reload Page
+        Reload Legacy Content Page
         Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
         Execute Javascript    window.scrollTo(0, 800);
         Sleep    2s
@@ -277,11 +277,11 @@ Create Field Report With Product
     Wait Until Element Is Visible    ${SUBPROJECT_DROPDOWN}    timeout=15s
     Robust Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     
+    ${VALID_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
+    Robust Click    ${SAVE_BUTTON}
     Sleep    3s
     
     ${fieldreport_id}=    Extract And Verify Fieldreport ID
@@ -297,7 +297,24 @@ Create Field Report With Product
     
     # Wait for products in modal
     Wait Until Element Is Visible    ${PRODUCT_CHECKBOX}    timeout=30s
-    Click Element    ${PRODUCT_CHECKBOX}
+    
+    # Try selecting "Ändrings- och tilläggsarbeten (ÄTA)" product first
+    ${ata_selected}=    Execute Javascript
+    ...    var trs = document.querySelectorAll('#prodInProjTable tbody tr');
+    ...    for (var i = 0; i < trs.length; i++) {
+    ...        if (trs[i].textContent.includes('Ändrings- och tilläggsarbeten') || trs[i].textContent.includes('ÄTA')) {
+    ...            var cb = trs[i].querySelector('.selected-checkbox, input[type="checkbox"]');
+    ...            if (cb) { cb.click(); return true; }
+    ...        }
+    ...    }
+    ...    return false;
+    
+    IF    not ${ata_selected}
+        Log To Console    ⚠ "Ändrings- och tilläggsarbeten (ÄTA)" product not found in modal, clicking first product as fallback
+        Click Element    ${PRODUCT_CHECKBOX}
+    ELSE
+        Log To Console    ✓ Selected "Ändrings- och tilläggsarbeten (ÄTA)" product for attachments
+    END
     Sleep    1s
     
     Execute Javascript    document.querySelector('#myModal3 .modal-content').scrollTo(0, 9999);
@@ -309,17 +326,14 @@ Create Field Report With Product
     
     # Wait for AJAX row and persistent save
     Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
-    Log To Console    Setting quantity to 1 via JavaScript...
-    ${qty_set}=    Execute Javascript
-    ...    var qtyInput = document.querySelector('#prodInFieldReportTable input[id^="id_quantity_"]');
-    ...    if (qtyInput) { qtyInput.value = '1'; qtyInput.dispatchEvent(new Event('change')); return true; }
-    ...    return false;
-    Log To Console    Quantity set via JS: ${qty_set}
+    Sleep    2s
+    Log To Console    Inputting quantity '1' via standard Selenium typing...
+    Input Text    css=input[id^='id_quantity_']    1
     Sleep    1s
     
     Wait Until Element Is Visible    ${COMMON_SAVE_BUTTON}    timeout=10s
     Click Element    ${COMMON_SAVE_BUTTON}
-    Sleep    3s
+    Wait For Loading Buffer
     Reload Legacy Content Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Execute Javascript    window.scrollTo(0, 800);

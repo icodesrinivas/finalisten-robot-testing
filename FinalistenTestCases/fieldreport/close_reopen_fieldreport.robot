@@ -143,9 +143,10 @@ Create Field Report For Close Test
     Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
     
     # Set work date
+    ${INITIAL_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${INITIAL_WORK_DATE}
     
     # Set total hours
@@ -155,7 +156,7 @@ Create Field Report For Close Test
     Input Text    ${MESSAGE_TO_APPROVER}    ${INITIAL_MESSAGE}
     
     # Select installer
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
     Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=30s

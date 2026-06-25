@@ -39,6 +39,7 @@ Test Submit Without Customer Shows Error
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     # Fill all fields EXCEPT Customer
+    ${VALID_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     
     # Try to save
@@ -166,8 +167,8 @@ Test Submit Without Work Date Shows Error
     
     # Fill all fields EXCEPT Work Date
     Setup Dynamic Test Data
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Select Customer And Project
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Clear Work Date if it has default value
     Clear Element Text    ${WORK_DATE_INPUT}
@@ -206,7 +207,7 @@ Test Submit Without Installer Shows Error
     
     # Fill all fields EXCEPT Installer
     Setup Dynamic Test Data
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     
     # Do NOT select Installer (explicitly set to empty via JS to trigger validation)

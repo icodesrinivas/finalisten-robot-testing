@@ -110,17 +110,22 @@ Create Field Report For Delete Test
     Navigate To Field Report Create Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
+    
+    # Wait for sub-project dropdown to be populated after project selection
+    Sleep    2s
+    Wait Until Element Is Visible    ${SUBPROJECT_DROPDOWN}    timeout=15s
+    Robust Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     
     # Set work date
+    ${INITIAL_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${INITIAL_WORK_DATE}
     
     # Select installer
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
-    ${save_btn}=    Wait Until Element Is Visible    ${SAVE_BUTTON}    timeout=10s
-    Click Element    ${SAVE_BUTTON}
+    Robust Click    ${SAVE_BUTTON}
     
     # Wait for the redirect to the edit page (URL contains /edit/)
     Wait Until Field Report Saved To Edit Page

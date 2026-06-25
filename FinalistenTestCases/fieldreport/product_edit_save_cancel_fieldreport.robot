@@ -299,13 +299,14 @@ Create Field Report With Product
     
     Log To Console    ======== CREATING FIELD REPORT WITH PRODUCT ========
     Navigate To Field Report Create Page
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
     
     # Set work date
+    ${INITIAL_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${INITIAL_WORK_DATE}
     
     # Select installer
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Save the field report
     # Use explicit click and wait for location change

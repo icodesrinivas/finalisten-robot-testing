@@ -87,7 +87,7 @@ Test Zero Total Hours Per Hour Calculation
     Sleep    2s
     
     # Refresh and check earnings
-    Reload Page
+    Reload Legacy Content Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     ${hours_after}=    Get Value    ${TOTAL_HOURS_INPUT}
@@ -135,7 +135,7 @@ Test Very Large Total Hours Calculation
     Sleep    2s
     
     # Refresh and verify
-    Reload Page
+    Reload Legacy Content Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     
     ${hours_after}=    Get Value    ${TOTAL_HOURS_INPUT}
@@ -198,7 +198,7 @@ Test Negative Product Price Earnings Calculation
             Sleep    2s
             
             # Check if negative price was accepted
-            Reload Page
+            Reload Legacy Content Page
             Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
             
             IF    ${earnings_exists}
@@ -260,7 +260,7 @@ Test Modify Quantity Updates Earnings
             Sleep    2s
             
             # Refresh and check new earnings
-            Reload Page
+            Reload Legacy Content Page
             Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
             
             IF    ${earnings_exists}
@@ -290,14 +290,19 @@ Create Field Report With Product And Hours
     Setup Dynamic Test Data
     
     Navigate To Field Report Create Page
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
     
+    # Wait for sub-project dropdown to be populated after project selection
+    Sleep    2s
+    Wait Until Element Is Visible    ${SUBPROJECT_DROPDOWN}    timeout=15s
+    Robust Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
+    
+    ${VALID_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     Input Text    ${TOTAL_HOURS_INPUT}    8
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
-    ${save_btn}=    Get WebElement    ${SAVE_BUTTON}
-    Execute Javascript    arguments[0].click();    ARGUMENTS    ${save_btn}
+    Robust Click    ${SAVE_BUTTON}
     Sleep    3s
     
     ${current_url}=    Get Location
@@ -312,7 +317,23 @@ Create Field Report With Product And Hours
     Click Element    ${ADD_PRODUCT_BUTTON}
     Wait Until Element Is Visible    ${PRODUCT_MODAL}    timeout=10s
     Sleep    2s
-    Click Element    ${PRODUCT_CHECKBOX}
+    # Try selecting "Ändrings- och tilläggsarbeten (ÄTA)" product first
+    ${ata_selected}=    Execute Javascript
+    ...    var trs = document.querySelectorAll('#prodInProjTable tbody tr');
+    ...    for (var i = 0; i < trs.length; i++) {
+    ...        if (trs[i].textContent.includes('Ändrings- och tilläggsarbeten') || trs[i].textContent.includes('ÄTA')) {
+    ...            var cb = trs[i].querySelector('.selected-checkbox, input[type="checkbox"]');
+    ...            if (cb) { cb.click(); return true; }
+    ...        }
+    ...    }
+    ...    return false;
+    
+    IF    not ${ata_selected}
+        Log To Console    ⚠ "Ändrings- och tilläggsarbeten (ÄTA)" product not found in modal, clicking first product as fallback
+        Click Element    ${PRODUCT_CHECKBOX}
+    ELSE
+        Log To Console    ✓ Selected "Ändrings- och tilläggsarbeten (ÄTA)" product for calculations
+    END
     Sleep    1s
     Execute Javascript    document.querySelector('#myModal3 .modal-content').scrollTo(0, 9999);
     Sleep    1s
@@ -323,18 +344,15 @@ Create Field Report With Product And Hours
     
     # Wait for AJAX row and Save with Qty
     Wait Until Element Is Visible    css=#prodInFieldReportTable tbody tr    timeout=30s
-    Log To Console    Setting quantity to 1 via JavaScript...
-    ${qty_set}=    Execute Javascript
-    ...    var qtyInput = document.querySelector('#prodInFieldReportTable input[id^="id_quantity_"]');
-    ...    if (qtyInput) { qtyInput.value = '1'; qtyInput.dispatchEvent(new Event('change')); return true; }
-    ...    return false;
-    Log To Console    Quantity set via JS: ${qty_set}
+    Sleep    2s
+    Log To Console    Inputting quantity '1' via standard Selenium typing...
+    Input Text    css=input[id^='id_quantity_']    1
     Sleep    1s
     
     Wait Until Element Is Visible    ${COMMON_SAVE_BUTTON}    timeout=10s
     Click Element    ${COMMON_SAVE_BUTTON}
-    Sleep    3s
-    Reload Page
+    Wait For Loading Buffer
+    Reload Legacy Content Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s

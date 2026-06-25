@@ -41,9 +41,10 @@ Test Alphabetic Characters In Total Hours Rejected
     
     # Fill required fields
     Setup Dynamic Test Data
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
+    ${VALID_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Enter alphabetic characters in Total Hours
     Log To Console    Entering alphabetic characters 'abc' in Total Hours...
@@ -92,9 +93,9 @@ Test Negative Value In Total Hours Rejected
     
     # Fill required fields
     Setup Dynamic Test Data
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Enter negative value in Total Hours
     Log To Console    Entering negative value '-5' in Total Hours...
@@ -139,9 +140,9 @@ Test Decimal Value In Total Hours Accepted
     
     # Fill required fields
     Setup Dynamic Test Data
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Enter decimal value in Total Hours
     Log To Console    Entering decimal value '7.5' in Total Hours...
@@ -185,9 +186,9 @@ Test Long Text In Message Field Handled
     
     # Fill required fields
     Setup Dynamic Test Data
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
-    Select From List By Index    ${INSTALLER_DROPDOWN}    1
+    Robust Select From List By Index    ${INSTALLER_DROPDOWN}    1
     
     # Generate very long text (1000 characters)
     ${long_text}=    Evaluate    "A" * 1000

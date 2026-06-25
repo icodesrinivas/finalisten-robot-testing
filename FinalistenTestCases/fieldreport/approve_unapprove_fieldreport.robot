@@ -105,8 +105,9 @@ Create Test Field Report
     
     Navigate To Field Report Create Page
     # Use dynamic data and fallback if specific one fails
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
     
+    ${INITIAL_WORK_DATE}=    Get Current Date    result_format=%Y-%m-%d
     Input Text    id=id_work_date    ${INITIAL_WORK_DATE}
     Select From List By Index    id=id_installer_name    1
     
