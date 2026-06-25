@@ -270,7 +270,12 @@ Create Field Report With Product
     Setup Dynamic Test Data
     
     Navigate To Field Report Create Page
-    Select Customer And Project    customer=${DB_CUSTOMER}    project=${DB_PROJECT}
+    Select Customer And Project
+    
+    # Wait for sub-project dropdown to be populated after project selection
+    Sleep    2s
+    Wait Until Element Is Visible    ${SUBPROJECT_DROPDOWN}    timeout=15s
+    Robust Select From List By Index    ${SUBPROJECT_DROPDOWN}    1
     
     Input Text    ${WORK_DATE_INPUT}    ${VALID_WORK_DATE}
     Select From List By Index    ${INSTALLER_DROPDOWN}    1
@@ -315,7 +320,7 @@ Create Field Report With Product
     Wait Until Element Is Visible    ${COMMON_SAVE_BUTTON}    timeout=10s
     Click Element    ${COMMON_SAVE_BUTTON}
     Sleep    3s
-    Reload Page
+    Reload Legacy Content Page
     Wait Until Page Contains Element    ${CUSTOMER_DROPDOWN}    timeout=15s
     Execute Javascript    window.scrollTo(0, 800);
     Sleep    2s
